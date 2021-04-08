@@ -2,6 +2,7 @@ package com.example.proyecto;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -27,8 +28,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void registrarse(View view) {
-        //cambiamos de vista
-
-
+        Intent registro = new Intent(MainActivity.this, RegisterActivity.class);
+        MainActivity.this.startActivity(registro);
+        finish();
     }
 }

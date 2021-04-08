@@ -1,108 +1,125 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/txtPassword"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:onClick="registrarse"
-    android:orientation="vertical"
-    android:padding="48dp"
-    tools:context=".MainActivity">
+    android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="@string/registro"
-        android:textSize="25sp" />
-
-    <EditText
-        android:id="@+id/txtAlias"
+    <LinearLayout
+        android:id="@+id/linear"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:hint="@string/correo"
-        android:inputType="text" />
+        android:layout_height="match_parent"
+        android:onClick="registrarse"
+        android:orientation="vertical"
+        android:padding="48dp"
+        tools:context=".MainActivity">
 
-    <EditText
-        android:id="@+id/txtContrasena"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:hint="@string/contraseña"
-        android:inputType="text"/>
-
-    <EditText
-        android:id="@+id/editTextDate"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="date"
-        android:hint="Fecha de nacimiento"/>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="67dp">
-
-        <CheckBox
-            android:id="@+id/checkBox2"
-            android:layout_width="135dp"
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Administrador"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/checkBox"
-            app:layout_constraintHorizontal_bias="0.533"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.473" />
+            android:layout_gravity="center"
+            android:text="@string/registro"
+            android:textSize="25sp" />
 
-        <CheckBox
-            android:id="@+id/checkBox"
-            android:layout_width="135dp"
+        <EditText
+            android:id="@+id/txtAlias"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:hint="@string/correo"
+            android:inputType="text" />
+
+        <EditText
+            android:id="@+id/txtContrasena"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:hint="@string/contraseña"
+            android:inputType="text" />
+
+        <EditText
+            android:id="@+id/editTextDate"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="3dp"
-            android:text="Jugador"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.909"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.473" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            android:ems="10"
+            android:hint="Fecha de nacimiento"
+            android:inputType="date" />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="114dp">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="67dp">
 
-        <ImageView
-            android:id="@+id/imgView"
-            android:layout_width="134dp"
-            android:layout_height="110dp"
-            android:layout_weight="0"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/buttonLoadPicture"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"></ImageView>
+            <CheckBox
+                android:id="@+id/checkBox2"
+                android:layout_width="135dp"
+                android:layout_height="wrap_content"
+                android:text="Administrador"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/checkBox"
+                app:layout_constraintHorizontal_bias="0.533"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.473" />
+
+            <CheckBox
+                android:id="@+id/checkBox"
+                android:layout_width="135dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="3dp"
+                android:text="Jugador"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.909"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.473" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="114dp">
+
+            <ImageView
+                android:id="@+id/imgView"
+                android:layout_width="134dp"
+                android:layout_height="110dp"
+                android:layout_weight="0"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/buttonLoadPicture"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"></ImageView>
+
+            <Button
+                android:id="@+id/buttonLoadPicture"
+                android:layout_width="125dp"
+                android:layout_height="56dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="28dp"
+                android:text="Load Picture"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.915"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"></Button>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <Button
-            android:id="@+id/buttonLoadPicture"
-            android:layout_width="125dp"
-            android:layout_height="56dp"
-            android:layout_gravity="center"
-            android:layout_marginTop="28dp"
-            android:text="Load Picture"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.915"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"></Button>
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <Button
-        android:id="@+id/button2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Registrar" />
+            android:id="@+id/button2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Registrarse" />
 
 
-</LinearLayout>
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="5dp"
+        android:onClick="volverLogin"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/linear"
+        android:src="@drawable/leftarrow"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
