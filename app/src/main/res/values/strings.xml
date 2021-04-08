@@ -1,3 +1,12 @@
 <resources>
-    <string name="app_name">proyecto</string>
+    <string name="app_name">Actividad_Layout</string>
+    <string name="description">Imagen</string>
+    <string name="InicioSession">Inicio de Sesión</string>
+    <string name="login">Iniciar Sesión</string>
+    <string name="olvido">Registrarse</string>
+    <string name="correo">Usuario</string>
+    <string name="contraseña">Contraseña</string>
+    <string name="producto">Producto</string>
+    <string name="cantidad">Cantidad</string>
+    <string name="subtotal">Subtotal</string>
 </resources>
