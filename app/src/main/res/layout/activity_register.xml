@@ -71,5 +71,38 @@
             app:layout_constraintVertical_bias="0.473" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="114dp">
+
+        <ImageView
+            android:id="@+id/imgView"
+            android:layout_width="134dp"
+            android:layout_height="110dp"
+            android:layout_weight="0"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/buttonLoadPicture"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"></ImageView>
+
+        <Button
+            android:id="@+id/buttonLoadPicture"
+            android:layout_width="125dp"
+            android:layout_height="56dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="28dp"
+            android:text="Load Picture"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.915"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"></Button>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Registrar" />
+
 
 </LinearLayout>
