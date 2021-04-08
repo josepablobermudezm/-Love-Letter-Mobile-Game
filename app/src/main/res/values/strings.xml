@@ -9,4 +9,5 @@
     <string name="producto">Producto</string>
     <string name="cantidad">Cantidad</string>
     <string name="subtotal">Subtotal</string>
+    <string name="registro">Registro de usuario</string>
 </resources>
