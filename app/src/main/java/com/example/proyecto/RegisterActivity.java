@@ -3,13 +3,12 @@ package com.example.proyecto;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.database.Cursor;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RadioButton;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -32,6 +31,15 @@ public class RegisterActivity extends AppCompatActivity {
 
     public void registrarse(View view){
         //me registro
+        EditText aliasAux = (EditText) findViewById(R.id.txtAlias);
+        EditText contrasenaAux = (EditText) findViewById(R.id.txtContrasena);
+        EditText fechaNacimientoAux = (EditText) findViewById(R.id.editTextDate);
+        RadioButton administradorAux = (RadioButton) findViewById(R.id.radioButtonAdministrador);
+        RadioButton jugadorAux = (RadioButton) findViewById(R.id.radioButtonJugador);
+        String nombre = aliasAux.getText().toString();
+        String contrasena = contrasenaAux.getText().toString();
+        String fechaNacimiento = fechaNacimientoAux.getText().toString();
+        String tipoUsuario = administradorAux.isChecked() ? "A" : jugadorAux.isChecked() ? "J" : null;
 
     }
 

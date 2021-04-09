@@ -45,35 +45,24 @@
             android:hint="Fecha de nacimiento"
             android:inputType="date" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <RadioGroup
+            android:id="@+id/grupoRadio"
             android:layout_width="match_parent"
             android:layout_height="67dp">
 
-            <CheckBox
-                android:id="@+id/checkBoxAdministrador"
-                android:layout_width="135dp"
-                android:layout_height="wrap_content"
+            <RadioButton
+                android:id="@+id/radioButtonAdministrador"
+                android:layout_width="134dp"
+                android:layout_height="35dp"
                 android:text="Administrador"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/checkBoxJugador"
-                app:layout_constraintHorizontal_bias="0.533"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.473" />
+               />
 
-            <CheckBox
-                android:id="@+id/checkBoxJugador"
+            <RadioButton
+                android:id="@+id/radioButtonJugador"
                 android:layout_width="135dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="3dp"
-                android:text="Jugador"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.909"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.473" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                android:layout_height="35dp"
+                android:text="Jugador" />
+        </RadioGroup>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
