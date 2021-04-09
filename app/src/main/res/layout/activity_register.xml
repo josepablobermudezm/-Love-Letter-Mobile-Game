@@ -50,19 +50,19 @@
             android:layout_height="67dp">
 
             <CheckBox
-                android:id="@+id/checkBox2"
+                android:id="@+id/checkBoxAdministrador"
                 android:layout_width="135dp"
                 android:layout_height="wrap_content"
                 android:text="Administrador"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/checkBox"
+                app:layout_constraintEnd_toStartOf="@+id/checkBoxJugador"
                 app:layout_constraintHorizontal_bias="0.533"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.473" />
 
             <CheckBox
-                android:id="@+id/checkBox"
+                android:id="@+id/checkBoxJugador"
                 android:layout_width="135dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="3dp"
@@ -80,21 +80,22 @@
             android:layout_height="114dp">
 
             <ImageView
-                android:id="@+id/imgView"
+                android:id="@+id/IVPreviewImage"
                 android:layout_width="134dp"
                 android:layout_height="110dp"
                 android:layout_weight="0"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/buttonLoadPicture"
+                app:layout_constraintEnd_toStartOf="@+id/BSelectImage"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"></ImageView>
 
             <Button
-                android:id="@+id/buttonLoadPicture"
+                android:id="@+id/BSelectImage"
                 android:layout_width="125dp"
                 android:layout_height="56dp"
                 android:layout_gravity="center"
                 android:layout_marginTop="28dp"
+                android:onClick="loadPicture"
                 android:text="Load Picture"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.915"
