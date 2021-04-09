@@ -1,5 +1,6 @@
 package com.example.proyecto;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -9,6 +10,13 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
+
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -33,14 +41,46 @@ public class RegisterActivity extends AppCompatActivity {
         //me registro
         EditText aliasAux = (EditText) findViewById(R.id.txtAlias);
         EditText contrasenaAux = (EditText) findViewById(R.id.txtContrasena);
-        EditText fechaNacimientoAux = (EditText) findViewById(R.id.editTextDate);
+        // EditText fechaNacimientoAux = (EditText) findViewById(R.id.editTextDate);
         RadioButton administradorAux = (RadioButton) findViewById(R.id.radioButtonAdministrador);
         RadioButton jugadorAux = (RadioButton) findViewById(R.id.radioButtonJugador);
         String nombre = aliasAux.getText().toString();
         String contrasena = contrasenaAux.getText().toString();
-        String fechaNacimiento = fechaNacimientoAux.getText().toString();
-        String tipoUsuario = administradorAux.isChecked() ? "A" : jugadorAux.isChecked() ? "J" : null;
+        // String fechaNacimiento = fechaNacimientoAux.getText().toString();
+        String rol = administradorAux.isChecked() ? "A" : jugadorAux.isChecked() ? "J" : null;
+        System.out.println("métodos de registro");
 
+        Response.Listener<String> respuesta = new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response){
+                try {
+                    response = response.replaceFirst("<font>.*?</font>", "");
+                    int jsonStart = response.indexOf("{");
+                    int jsonEnd = response.lastIndexOf("}");
+
+                    if (jsonStart >= 0 && jsonEnd >= 0 && jsonEnd > jsonStart) {
+                        response = response.substring(jsonStart, jsonEnd + 1);
+                    } else {
+                        // deal with the absence of JSON content here
+                    }
+                    JSONObject jsonRespuesta = new JSONObject(response);
+                    boolean ok = jsonRespuesta.getBoolean("success");
+                    if(ok){
+                        Intent i = new Intent(RegisterActivity.this, MainActivity.class);
+                        RegisterActivity.this.startActivity(i);
+                        RegisterActivity.this.finish();
+                    }else{
+                        AlertDialog.Builder alerta = new AlertDialog.Builder(RegisterActivity.this);
+                        alerta.setMessage("Fallo en el registro").setNegativeButton("Reintentar", null).create().show();
+                    }
+                }catch(JSONException e){
+                    e.getMessage();
+                }
+            }
+        };
+        RegistroRequest r = new RegistroRequest(nombre, contrasena, rol, respuesta);
+        RequestQueue cola = Volley.newRequestQueue(RegisterActivity.this);
+        cola.add(r);
     }
 
     public void loadPicture(View view){
