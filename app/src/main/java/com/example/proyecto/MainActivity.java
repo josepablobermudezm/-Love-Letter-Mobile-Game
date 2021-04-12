@@ -35,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onResponse(String response){
                 try {
+                    System.out.println(response);
                     response = response.replaceFirst("<font>.*?</font>", "");
                     int jsonStart = response.indexOf("{");
                     int jsonEnd = response.lastIndexOf("}");
@@ -47,14 +48,28 @@ public class MainActivity extends AppCompatActivity {
                     JSONObject jsonRespuesta = new JSONObject(response);
                     boolean ok = jsonRespuesta.getBoolean("success");
                     if(ok){
+                        String u_id = jsonRespuesta.getString("u_id");
                         String alias = jsonRespuesta.getString("u_alias");
+                        String u_fechaNacimiento = jsonRespuesta.getString("u_fechaNacimiento");
                         String password = jsonRespuesta.getString("u_password");
                         String rol = jsonRespuesta.getString("u_rol");
+                        String u_cantidadPartidasJugadas = jsonRespuesta.getString("u_cantidadPartidasJugadas");
+                        String u_cantidadPartidasGanadas = jsonRespuesta.getString("u_cantidadPartidasGanadas");
+                        String u_cantidadAmigos = jsonRespuesta.getString("u_cantidadAmigos");
+                        String u_nivel = jsonRespuesta.getString("u_nivel");
+                        String u_experiencia = jsonRespuesta.getString("u_experiencia");
 
                         Intent usuariosActivity = new Intent(MainActivity.this, UsuariosActivity.class);
+                        usuariosActivity.putExtra("u_id", u_id);
                         usuariosActivity.putExtra("u_alias", alias);
+                        usuariosActivity.putExtra("u_fechaNacimiento", u_fechaNacimiento);
                         usuariosActivity.putExtra("u_password", password);
                         usuariosActivity.putExtra("u_rol", rol);
+                        usuariosActivity.putExtra("u_cantidadPartidasJugadas", u_cantidadPartidasJugadas);
+                        usuariosActivity.putExtra("u_cantidadPartidasGanadas", u_cantidadPartidasGanadas);
+                        usuariosActivity.putExtra("u_cantidadAmigos", u_cantidadAmigos);
+                        usuariosActivity.putExtra("u_nivel", u_nivel);
+                        usuariosActivity.putExtra("u_experiencia", u_experiencia);
                         MainActivity.this.startActivity(usuariosActivity);
                         MainActivity.this.finish();
                     }else{
@@ -66,12 +81,10 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         };
-        LoginRequest r = new LoginRequest(txtAlias, txtContrasena,respuesta);
+        System.out.println(txtAlias + "  " + txtContrasena);
+        LoginRequest r = new LoginRequest(txtAlias, txtContrasena, respuesta);
         RequestQueue cola = Volley.newRequestQueue(MainActivity.this);
         cola.add(r);
-
-        txtAliasAux.setText("");
-        txtContrasenaAux.setText("");
     }
 
     public void registrarse(View view) {

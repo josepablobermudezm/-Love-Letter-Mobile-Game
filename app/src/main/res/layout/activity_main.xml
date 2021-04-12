@@ -5,7 +5,6 @@
     android:id="@+id/txtPassword"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:onClick="registrarse"
     android:orientation="vertical"
     android:padding="48dp"
     tools:context=".MainActivity">
@@ -54,6 +53,7 @@
         android:layout_gravity="center_horizontal"
         android:layout_weight="0"
         android:gravity="center_vertical"
+        android:onClick="registrarse"
         android:text="@string/olvido"
         android:textColor="@color/texto_selector"
         android:textSize="18sp" />

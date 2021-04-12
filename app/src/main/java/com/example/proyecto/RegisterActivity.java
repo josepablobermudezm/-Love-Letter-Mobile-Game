@@ -41,18 +41,18 @@ public class RegisterActivity extends AppCompatActivity {
         //me registro
         EditText aliasAux = (EditText) findViewById(R.id.txtAlias);
         EditText contrasenaAux = (EditText) findViewById(R.id.txtContrasena);
-        // EditText fechaNacimientoAux = (EditText) findViewById(R.id.editTextDate);
+        EditText fechaNacimientoAux = (EditText) findViewById(R.id.editTextDate);
         RadioButton administradorAux = (RadioButton) findViewById(R.id.radioButtonAdministrador);
         RadioButton jugadorAux = (RadioButton) findViewById(R.id.radioButtonJugador);
         String nombre = aliasAux.getText().toString();
         String contrasena = contrasenaAux.getText().toString();
-        // String fechaNacimiento = fechaNacimientoAux.getText().toString();
+        String fechaNacimiento = fechaNacimientoAux.getText().toString();
         String rol = administradorAux.isChecked() ? "A" : jugadorAux.isChecked() ? "J" : null;
-        System.out.println("métodos de registro");
 
         Response.Listener<String> respuesta = new Response.Listener<String>() {
             @Override
             public void onResponse(String response){
+                System.out.println(response);
                 try {
                     response = response.replaceFirst("<font>.*?</font>", "");
                     int jsonStart = response.indexOf("{");
@@ -64,6 +64,7 @@ public class RegisterActivity extends AppCompatActivity {
                         // deal with the absence of JSON content here
                     }
                     JSONObject jsonRespuesta = new JSONObject(response);
+                    System.out.println(jsonRespuesta);
                     boolean ok = jsonRespuesta.getBoolean("success");
                     if(ok){
                         Intent i = new Intent(RegisterActivity.this, MainActivity.class);
@@ -75,10 +76,12 @@ public class RegisterActivity extends AppCompatActivity {
                     }
                 }catch(JSONException e){
                     e.getMessage();
+                    System.out.println(e.getMessage());
                 }
             }
         };
-        RegistroRequest r = new RegistroRequest(nombre, contrasena, rol, respuesta);
+        RegistroRequest r = new RegistroRequest(nombre, fechaNacimiento, contrasena, rol, 0, 0,
+                0, 0, 0, respuesta);
         RequestQueue cola = Volley.newRequestQueue(RegisterActivity.this);
         cola.add(r);
     }

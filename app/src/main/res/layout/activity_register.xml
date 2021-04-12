@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
     <ImageView
         android:id="@+id/imageView2"
@@ -53,7 +57,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="Fecha de nacimiento"
+            android:hint="dd/mm/yyyy"
             android:inputType="date" />
 
         <RadioGroup
@@ -75,33 +79,36 @@
                 android:text="Jugador" />
         </RadioGroup>
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="51dp">
+            android:layout_height="109dp">
 
             <ImageView
                 android:id="@+id/IVPreviewImage"
                 android:layout_width="134dp"
                 android:layout_height="110dp"
-                android:layout_weight="0"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/BSelectImage"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"></ImageView>
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="1.0"></ImageView>
 
             <Button
                 android:id="@+id/BSelectImage"
                 android:layout_width="125dp"
                 android:layout_height="56dp"
-                android:layout_gravity="center"
-                android:layout_marginTop="28dp"
+                android:layout_marginStart="29dp"
                 android:onClick="loadPicture"
                 android:text="Load Picture"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.915"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toEndOf="@+id/IVPreviewImage"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"></Button>
-        </LinearLayout>
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="1.0"></Button>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <Button
             android:id="@+id/button2"
@@ -114,3 +121,6 @@
     </LinearLayout>
 
 </LinearLayout>
+
+</ScrollView>
+
