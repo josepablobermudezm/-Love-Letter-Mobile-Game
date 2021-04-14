@@ -15,8 +15,6 @@ public class LoginRequest extends StringRequest {
         parametros = new HashMap<>();
         parametros.put("u_alias", u_alias+"");
         parametros.put("u_password", u_password+"");
-
-        System.out.println(parametros);
     }
 
     @Override

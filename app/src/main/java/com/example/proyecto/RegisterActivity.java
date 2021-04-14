@@ -31,8 +31,7 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     public void volverLogin(View view){
-        System.out.println("yo mama");
-        Intent login = new Intent(RegisterActivity.this, MainActivity.class);
+        Intent login = new Intent(RegisterActivity.this, LoginActivity.class);
         RegisterActivity.this.startActivity(login);
         finish();
     }
@@ -67,7 +66,7 @@ public class RegisterActivity extends AppCompatActivity {
                     System.out.println(jsonRespuesta);
                     boolean ok = jsonRespuesta.getBoolean("success");
                     if(ok){
-                        Intent i = new Intent(RegisterActivity.this, MainActivity.class);
+                        Intent i = new Intent(RegisterActivity.this, LoginActivity.class);
                         RegisterActivity.this.startActivity(i);
                         RegisterActivity.this.finish();
                     }else{
