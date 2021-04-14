@@ -50,7 +50,7 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:hint="@string/contraseña"
-            android:inputType="text" />
+            android:inputType="textPassword" />
 
         <EditText
             android:id="@+id/editTextDate"
