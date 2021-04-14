@@ -58,19 +58,20 @@ public class LoginActivity extends AppCompatActivity {
                         String u_nivel = jsonRespuesta.getString("u_nivel");
                         String u_experiencia = jsonRespuesta.getString("u_experiencia");
 
-                        Intent usuariosActivity = new Intent(LoginActivity.this, UsuariosActivity.class);
-                        usuariosActivity.putExtra("u_id", u_id);
-                        usuariosActivity.putExtra("u_alias", alias);
-                        usuariosActivity.putExtra("u_password", password);
-                        usuariosActivity.putExtra("u_rol", rol);
-                        usuariosActivity.putExtra("u_picture", u_picture);
-                        usuariosActivity.putExtra("u_fechaNacimiento", u_fechaNacimiento);
-                        usuariosActivity.putExtra("u_cantidadPartidasJugadas", u_cantidadPartidasJugadas);
-                        usuariosActivity.putExtra("u_cantidadPartidasGanadas", u_cantidadPartidasGanadas);
-                        usuariosActivity.putExtra("u_cantidadAmigos", u_cantidadAmigos);
-                        usuariosActivity.putExtra("u_nivel", u_nivel);
-                        usuariosActivity.putExtra("u_experiencia", u_experiencia);
-                        LoginActivity.this.startActivity(usuariosActivity);
+                        //decidimos a que vista enviarlo dependiendo de que rol tenga
+                        Intent nextActivity = new Intent(LoginActivity.this, rol.equals("A") ? UsuariosActivity.class : LobbyActivity.class);
+                        nextActivity.putExtra("u_id", u_id);
+                        nextActivity.putExtra("u_alias", alias);
+                        nextActivity.putExtra("u_password", password);
+                        nextActivity.putExtra("u_rol", rol);
+                        nextActivity.putExtra("u_picture", u_picture);
+                        nextActivity.putExtra("u_fechaNacimiento", u_fechaNacimiento);
+                        nextActivity.putExtra("u_cantidadPartidasJugadas", u_cantidadPartidasJugadas);
+                        nextActivity.putExtra("u_cantidadPartidasGanadas", u_cantidadPartidasGanadas);
+                        nextActivity.putExtra("u_cantidadAmigos", u_cantidadAmigos);
+                        nextActivity.putExtra("u_nivel", u_nivel);
+                        nextActivity.putExtra("u_experiencia", u_experiencia);
+                        LoginActivity.this.startActivity(nextActivity);
                         LoginActivity.this.finish();
                     }else{
                         AlertDialog.Builder alerta = new AlertDialog.Builder(LoginActivity.this);
