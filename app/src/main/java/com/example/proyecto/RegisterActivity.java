@@ -65,6 +65,7 @@ public class RegisterActivity extends AppCompatActivity {
                     JSONObject jsonRespuesta = new JSONObject(response);
                     System.out.println(jsonRespuesta);
                     boolean ok = jsonRespuesta.getBoolean("success");
+                    System.out.println(ok);
                     if(ok){
                         Intent i = new Intent(RegisterActivity.this, LoginActivity.class);
                         RegisterActivity.this.startActivity(i);

@@ -1,6 +1,9 @@
 package com.example.proyecto;
 
+import android.graphics.Color;
 import android.os.Bundle;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.content.Intent;
 
@@ -17,12 +20,14 @@ import org.json.JSONObject;
 public class UsuariosActivity extends AppCompatActivity {
 
     private TextView mTextView;
+    private LinearLayout parentLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_usuarios);
         mTextView = (TextView) findViewById(R.id.text);
+        parentLayout = (LinearLayout) findViewById(R.id.parentLayout);
         Intent i = this.getIntent();
         Usuario usuarioLogueado = new Usuario( Integer.parseInt(i.getStringExtra("u_id")), Integer.parseInt(i.getStringExtra("u_cantidadPartidasJugadas")),
                 Integer.parseInt(i.getStringExtra("u_cantidadPartidasGanadas")), Integer.parseInt(i.getStringExtra("u_cantidadAmigos")),
@@ -59,5 +64,40 @@ public class UsuariosActivity extends AppCompatActivity {
         UsuariosRequest r = new UsuariosRequest(respuesta);
         RequestQueue cola = Volley.newRequestQueue(UsuariosActivity.this);
         cola.add(r);
+
+        //calculando dps
+
+
+        // Agregando usuarios
+        LinearLayout userLinear = new LinearLayout(this);
+        userLinear.setOrientation(LinearLayout.HORIZONTAL);
+        userLinear.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+        userLinear.setBackgroundColor(Color.parseColor("#c4c4c4"));
+        // userLinear.setPadding(0,padding,0,0);
+
+        ImageView imageView = new ImageView(this);
+        imageView.setImageResource(R.drawable.perfil);
+        imageView.setLayoutParams(new LinearLayout.LayoutParams(calcularPixeles(100),
+                calcularPixeles(100)));
+        userLinear.addView(imageView);
+
+        LinearLayout dataLinear = new LinearLayout(this);
+        dataLinear.setOrientation(LinearLayout.VERTICAL);
+        dataLinear.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, 200));
+
+        TextView txt_alias = new TextView(this);
+        txt_alias.setText("JosePablo");
+        txt_alias.setTag("nombre" + "5");
+        txt_alias.setLayoutParams(new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.FILL_PARENT,
+                50));
+        dataLinear.addView(txt_alias);
+        parentLayout.addView(userLinear);
+        userLinear.addView(dataLinear);
+    }
+
+    public int calcularPixeles(int dps){
+        final float scale = this.getResources().getDisplayMetrics().density;
+        return (int) (dps * scale + 0.5f);
     }
 }
