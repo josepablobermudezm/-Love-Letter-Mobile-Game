@@ -1,12 +1,16 @@
 package com.example.proyecto;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.Gravity;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.content.Intent;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
@@ -19,9 +23,6 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.ArrayList;
-import java.util.Iterator;
 
 public class UsuariosActivity extends AppCompatActivity {
 
@@ -117,19 +118,64 @@ public class UsuariosActivity extends AppCompatActivity {
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 50));
         TextView txt_fechaNacimiento = new TextView(this);
-        txt_fechaNacimiento.setText("Fecha de Nacimiento: " + usuario.getU_fechaNacimiento());
+        txt_fechaNacimiento.setText("Fec.Nac:" + usuario.getU_fechaNacimiento());
         txt_fechaNacimiento.setLayoutParams(new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 50));
         dataLinear.addView(txt_alias);
         dataLinear.addView(txt_nivel);
         dataLinear.addView(txt_fechaNacimiento);
+
+        LinearLayout buttonLinear = new LinearLayout(this);
+        buttonLinear.setOrientation(LinearLayout.VERTICAL);
+        buttonLinear.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
+        buttonLinear.setPadding(calcularPixeles(10), calcularPixeles(10), calcularPixeles(10), calcularPixeles(10));
+        buttonLinear.setGravity(Gravity.RIGHT);
+
+        ImageView editbutton = new ImageView(this);
+        editbutton.setImageResource(R.drawable.edit);
+        editbutton.setLayoutParams(new LinearLayout.LayoutParams(calcularPixeles(28),
+                calcularPixeles(28)));
+        setMargins(editbutton, 0, 0, 0, 35);
+
+        editbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // put code on click operation
+                System.out.println("se elimina el usuario");
+            }
+        });
+
+        ImageView deletebutton = new ImageView(this);
+        deletebutton.setImageResource(R.drawable.delete);
+        deletebutton.setLayoutParams(new LinearLayout.LayoutParams(calcularPixeles(28),
+                calcularPixeles(28)));
+
+        deletebutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // put code on click operation
+                System.out.println("se elimina el usuario");
+            }
+        });
         parentLayout.addView(userLinear);
         userLinear.addView(dataLinear);
+        buttonLinear.addView(editbutton);
+        buttonLinear.addView(deletebutton);
+        userLinear.addView(buttonLinear);
+
     }
 
     public int calcularPixeles(int dps) {
         final float scale = this.getResources().getDisplayMetrics().density;
         return (int) (dps * scale + 0.5f);
+    }
+
+    private void setMargins (View view, int left, int top, int right, int bottom) {
+        if (view.getLayoutParams() instanceof ViewGroup.MarginLayoutParams) {
+            ViewGroup.MarginLayoutParams p = (ViewGroup.MarginLayoutParams) view.getLayoutParams();
+            p.setMargins(left, top, right, bottom);
+            view.requestLayout();
+        }
     }
 }
