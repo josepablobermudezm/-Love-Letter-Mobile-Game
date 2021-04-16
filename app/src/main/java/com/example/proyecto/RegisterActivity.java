@@ -51,7 +51,6 @@ public class RegisterActivity extends AppCompatActivity {
         Response.Listener<String> respuesta = new Response.Listener<String>() {
             @Override
             public void onResponse(String response){
-                System.out.println(response);
                 try {
                     response = response.replaceFirst("<font>.*?</font>", "");
                     int jsonStart = response.indexOf("{");
@@ -63,9 +62,7 @@ public class RegisterActivity extends AppCompatActivity {
                         // deal with the absence of JSON content here
                     }
                     JSONObject jsonRespuesta = new JSONObject(response);
-                    System.out.println(jsonRespuesta);
                     boolean ok = jsonRespuesta.getBoolean("success");
-                    System.out.println(ok);
                     if(ok){
                         Intent i = new Intent(RegisterActivity.this, LoginActivity.class);
                         RegisterActivity.this.startActivity(i);

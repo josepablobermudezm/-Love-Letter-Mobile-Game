@@ -24,10 +24,13 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.stream.Collectors;
+
 public class UsuariosActivity extends AppCompatActivity {
 
     private TextView mTextView;
     private LinearLayout parentLayout;
+    private LinearLayout parentLayout2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,15 +38,13 @@ public class UsuariosActivity extends AppCompatActivity {
         setContentView(R.layout.activity_usuarios);
         mTextView = (TextView) findViewById(R.id.text);
         parentLayout = (LinearLayout) findViewById(R.id.parentLayout);
+        parentLayout2 = (LinearLayout) findViewById(R.id.parentLayout2);
         Intent i = this.getIntent();
         Usuario usuarioLogueado = new Usuario(Integer.parseInt(i.getStringExtra("u_id")), Integer.parseInt(i.getStringExtra("u_cantidadPartidasJugadas")),
                 Integer.parseInt(i.getStringExtra("u_cantidadPartidasGanadas")), Integer.parseInt(i.getStringExtra("u_cantidadAmigos")),
                 Integer.parseInt(i.getStringExtra("u_nivel")), Integer.parseInt(i.getStringExtra("u_experiencia")),
                 i.getStringExtra("u_alias"), i.getStringExtra("u_password"), i.getStringExtra("u_rol"),
                 i.getStringExtra("u_picture"), i.getStringExtra("u_fechaNacimiento"));
-
-        System.out.println(usuarioLogueado.toString());
-
         // obtenemos todos los usuarios
         Response.Listener<String> respuesta = new Response.Listener<String>() {
             @RequiresApi(api = Build.VERSION_CODES.N)
@@ -83,9 +84,6 @@ public class UsuariosActivity extends AppCompatActivity {
         UsuariosRequest r = new UsuariosRequest(respuesta);
         RequestQueue cola = Volley.newRequestQueue(UsuariosActivity.this);
         cola.add(r);
-
-        //calculando dps
-
     }
 
     public void agregarUsuarios(Usuario usuario) {
@@ -142,7 +140,7 @@ public class UsuariosActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // put code on click operation
-                System.out.println("se elimina el usuario");
+                System.out.println("se edita el usuario");
             }
         });
 
@@ -154,16 +152,44 @@ public class UsuariosActivity extends AppCompatActivity {
         deletebutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // put code on click operation
-                System.out.println("se elimina el usuario");
+                // eliminamos el usuario
+                Response.Listener<String> respuesta = new Response.Listener<String>() {
+                    @RequiresApi(api = Build.VERSION_CODES.N)
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            response = response.replaceFirst("<font>.*?</font>", "");
+                            int jsonStart = response.indexOf("{");
+                            int jsonEnd = response.lastIndexOf("}");
+                            if (jsonStart >= 0 && jsonEnd >= 0 && jsonEnd > jsonStart) {
+                                response = response.substring(jsonStart, jsonEnd + 1);
+                            }
+                            JSONObject jsonRespuesta = new JSONObject(response);
+                            boolean ok = jsonRespuesta.getBoolean("success");
+                            if (ok) {
+                                System.out.println(jsonRespuesta);
+                                Usuario.usuarios.remove(Usuario.usuarios.stream().filter(x->x.getU_id() == usuario.getU_id()).findAny().get());// eliminamos usuario de lista
+                                parentLayout2.removeAllViews();// limpiamos la vista
+                                Usuario.usuarios.forEach(x->agregarUsuarios(x));// volvemos a cargar los usuarios
+                            } else {
+                                AlertDialog.Builder alerta = new AlertDialog.Builder(UsuariosActivity.this);
+                                alerta.setMessage("Fallo al eliminar el usuario").setNegativeButton("Reintentar", null).create().show();
+                            }
+                        } catch (JSONException e) {
+                            e.getMessage();
+                        }
+                    }
+                };
+                UsuariosRequest r = new UsuariosRequest(String.valueOf(usuario.getU_id()), respuesta);
+                RequestQueue cola = Volley.newRequestQueue(UsuariosActivity.this);
+                cola.add(r);
             }
         });
-        parentLayout.addView(userLinear);
+        parentLayout2.addView(userLinear);
         userLinear.addView(dataLinear);
         buttonLinear.addView(editbutton);
         buttonLinear.addView(deletebutton);
         userLinear.addView(buttonLinear);
-
     }
 
     public int calcularPixeles(int dps) {
