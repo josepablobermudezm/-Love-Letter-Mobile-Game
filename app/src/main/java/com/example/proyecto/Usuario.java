@@ -1,9 +1,13 @@
 package com.example.proyecto;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+
 public class Usuario {
     private int u_id, u_cantidadPartidasJugadas, u_cantidadPartidasGanadas, u_cantidadAmigos, u_nivel, u_experiencia;
     private String u_alias, u_password, u_rol, u_picture;
     private String u_fechaNacimiento;
+    public static ArrayList<Usuario> usuarios = new ArrayList();
 
     public Usuario(int u_id, int u_cantidadPartidasJugadas, int u_cantidadPartidasGanadas, int u_cantidadAmigos, int u_nivel, int u_experiencia, String u_alias, String u_password, String u_rol, String u_picture, String u_fechaNacimiento) {
         this.u_id = u_id;
@@ -105,6 +109,14 @@ public class Usuario {
 
     public void setU_fechaNacimiento(String u_fechaNacimiento) {
         this.u_fechaNacimiento = u_fechaNacimiento;
+    }
+
+    public static ArrayList getUsuarios() {
+        return usuarios;
+    }
+
+    public static void setUsuarios(ArrayList usuarios) {
+        Usuario.usuarios = usuarios;
     }
 
     @Override
