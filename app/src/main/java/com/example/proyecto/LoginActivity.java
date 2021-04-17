@@ -40,8 +40,6 @@ public class LoginActivity extends AppCompatActivity {
 
                     if (jsonStart >= 0 && jsonEnd >= 0 && jsonEnd > jsonStart) {
                         response = response.substring(jsonStart, jsonEnd + 1);
-                    } else {
-                        // deal with the absence of JSON content here
                     }
                     JSONObject jsonRespuesta = new JSONObject(response);
                     boolean ok = jsonRespuesta.getBoolean("success");
@@ -60,17 +58,10 @@ public class LoginActivity extends AppCompatActivity {
 
                         //decidimos a que vista enviarlo dependiendo de que rol tenga
                         Intent nextActivity = new Intent(LoginActivity.this, rol.equals("A") ? UsuariosActivity.class : LobbyActivity.class);
-                        nextActivity.putExtra("u_id", u_id);
-                        nextActivity.putExtra("u_alias", alias);
-                        nextActivity.putExtra("u_password", password);
-                        nextActivity.putExtra("u_rol", rol);
-                        nextActivity.putExtra("u_picture", u_picture);
-                        nextActivity.putExtra("u_fechaNacimiento", u_fechaNacimiento);
-                        nextActivity.putExtra("u_cantidadPartidasJugadas", u_cantidadPartidasJugadas);
-                        nextActivity.putExtra("u_cantidadPartidasGanadas", u_cantidadPartidasGanadas);
-                        nextActivity.putExtra("u_cantidadAmigos", u_cantidadAmigos);
-                        nextActivity.putExtra("u_nivel", u_nivel);
-                        nextActivity.putExtra("u_experiencia", u_experiencia);
+                        Usuario usuarioLogueado = new Usuario(Integer.parseInt(u_id), Integer.parseInt(u_cantidadPartidasJugadas),
+                                Integer.parseInt(u_cantidadPartidasGanadas), Integer.parseInt(u_cantidadAmigos), Integer.parseInt(u_nivel),
+                                Integer.parseInt(u_experiencia), alias, password, rol, u_picture, u_fechaNacimiento);
+                        Usuario.usuarioLogueado = usuarioLogueado;// usuario logueado global
                         LoginActivity.this.startActivity(nextActivity);
                         LoginActivity.this.finish();
                     }else{
@@ -89,6 +80,7 @@ public class LoginActivity extends AppCompatActivity {
 
     public void registrarse(View view) {
         Intent registro = new Intent(LoginActivity.this, RegisterActivity.class);
+        registro.putExtra("UsuariosActivity", "false");
         LoginActivity.this.startActivity(registro);
         finish();
     }

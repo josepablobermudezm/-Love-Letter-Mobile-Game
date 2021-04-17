@@ -39,12 +39,6 @@ public class UsuariosActivity extends AppCompatActivity {
         mTextView = (TextView) findViewById(R.id.text);
         parentLayout = (LinearLayout) findViewById(R.id.parentLayout);
         parentLayout2 = (LinearLayout) findViewById(R.id.parentLayout2);
-        Intent i = this.getIntent();
-        Usuario usuarioLogueado = new Usuario(Integer.parseInt(i.getStringExtra("u_id")), Integer.parseInt(i.getStringExtra("u_cantidadPartidasJugadas")),
-                Integer.parseInt(i.getStringExtra("u_cantidadPartidasGanadas")), Integer.parseInt(i.getStringExtra("u_cantidadAmigos")),
-                Integer.parseInt(i.getStringExtra("u_nivel")), Integer.parseInt(i.getStringExtra("u_experiencia")),
-                i.getStringExtra("u_alias"), i.getStringExtra("u_password"), i.getStringExtra("u_rol"),
-                i.getStringExtra("u_picture"), i.getStringExtra("u_fechaNacimiento"));
         // obtenemos todos los usuarios
         Response.Listener<String> respuesta = new Response.Listener<String>() {
             @RequiresApi(api = Build.VERSION_CODES.N)
@@ -167,7 +161,6 @@ public class UsuariosActivity extends AppCompatActivity {
                             JSONObject jsonRespuesta = new JSONObject(response);
                             boolean ok = jsonRespuesta.getBoolean("success");
                             if (ok) {
-                                System.out.println(jsonRespuesta);
                                 Usuario.usuarios.remove(Usuario.usuarios.stream().filter(x->x.getU_id() == usuario.getU_id()).findAny().get());// eliminamos usuario de lista
                                 parentLayout2.removeAllViews();// limpiamos la vista
                                 Usuario.usuarios.forEach(x->agregarUsuarios(x));// volvemos a cargar los usuarios
@@ -203,5 +196,12 @@ public class UsuariosActivity extends AppCompatActivity {
             p.setMargins(left, top, right, bottom);
             view.requestLayout();
         }
+    }
+
+    public void createUser(View view){
+        Intent registro = new Intent(UsuariosActivity.this, RegisterActivity.class);
+        registro.putExtra("UsuariosActivity", "true");
+        UsuariosActivity.this.startActivity(registro);
+        finish();
     }
 }

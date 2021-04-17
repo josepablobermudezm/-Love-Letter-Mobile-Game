@@ -1,13 +1,15 @@
 package com.example.proyecto;
 
+import java.io.Serializable;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
-public class Usuario {
+public class Usuario implements Serializable {
     private int u_id, u_cantidadPartidasJugadas, u_cantidadPartidasGanadas, u_cantidadAmigos, u_nivel, u_experiencia;
     private String u_alias, u_password, u_rol, u_picture;
     private String u_fechaNacimiento;
     public static ArrayList<Usuario> usuarios = new ArrayList();
+    public static Usuario usuarioLogueado = new Usuario();
 
     public Usuario(int u_id, int u_cantidadPartidasJugadas, int u_cantidadPartidasGanadas, int u_cantidadAmigos, int u_nivel, int u_experiencia, String u_alias, String u_password, String u_rol, String u_picture, String u_fechaNacimiento) {
         this.u_id = u_id;
@@ -21,6 +23,12 @@ public class Usuario {
         this.u_rol = u_rol;
         this.u_picture = u_picture;
         this.u_fechaNacimiento = u_fechaNacimiento;
+    }
+    public Usuario() {
+    }
+    public static class ChildClass implements Serializable {
+
+        public ChildClass() {}
     }
 
     public int getU_id() {

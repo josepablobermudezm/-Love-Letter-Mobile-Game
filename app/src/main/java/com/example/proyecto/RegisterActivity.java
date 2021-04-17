@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
@@ -23,16 +24,21 @@ public class RegisterActivity extends AppCompatActivity {
     int SELECT_PICTURE = 200;
 
     ImageView IVPreviewImage;
+    String usuariosActivity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+        Button registerButton = (Button)findViewById(R.id.registerButton);
+        Intent i = this.getIntent();
+        usuariosActivity = i.getStringExtra("UsuariosActivity");
+        registerButton.setText(usuariosActivity.equals("false") ? "Registrarse" : "Registrar");
     }
 
     public void volverLogin(View view){
-        Intent login = new Intent(RegisterActivity.this, LoginActivity.class);
-        RegisterActivity.this.startActivity(login);
+        Intent nextView = new Intent(RegisterActivity.this, usuariosActivity.equals("false") ? LoginActivity.class : UsuariosActivity.class);
+        RegisterActivity.this.startActivity(nextView);
         finish();
     }
 
@@ -64,16 +70,15 @@ public class RegisterActivity extends AppCompatActivity {
                     JSONObject jsonRespuesta = new JSONObject(response);
                     boolean ok = jsonRespuesta.getBoolean("success");
                     if(ok){
-                        Intent i = new Intent(RegisterActivity.this, LoginActivity.class);
-                        RegisterActivity.this.startActivity(i);
-                        RegisterActivity.this.finish();
+                        Intent nextView = new Intent(RegisterActivity.this, usuariosActivity.equals("false") ? LoginActivity.class : UsuariosActivity.class);
+                        RegisterActivity.this.startActivity(nextView);
+                        finish();
                     }else{
                         AlertDialog.Builder alerta = new AlertDialog.Builder(RegisterActivity.this);
                         alerta.setMessage("Fallo en el registro").setNegativeButton("Reintentar", null).create().show();
                     }
                 }catch(JSONException e){
                     e.getMessage();
-                    System.out.println(e.getMessage());
                 }
             }
         };
