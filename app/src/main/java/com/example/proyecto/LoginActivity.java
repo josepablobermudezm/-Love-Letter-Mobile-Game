@@ -81,6 +81,7 @@ public class LoginActivity extends AppCompatActivity {
     public void registrarse(View view) {
         Intent registro = new Intent(LoginActivity.this, RegisterActivity.class);
         registro.putExtra("UsuariosActivity", "false");
+        registro.putExtra("editActivity", "false");
         LoginActivity.this.startActivity(registro);
         finish();
     }

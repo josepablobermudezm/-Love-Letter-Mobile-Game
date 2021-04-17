@@ -134,7 +134,12 @@ public class UsuariosActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // put code on click operation
-                System.out.println("se edita el usuario");
+                Intent registro = new Intent(UsuariosActivity.this, RegisterActivity.class);
+                registro.putExtra("editActivity", "true");
+                registro.putExtra("editUsuario", usuario);
+                registro.putExtra("UsuariosActivity", "false");
+                UsuariosActivity.this.startActivity(registro);
+                finish();
             }
         });
 
@@ -185,6 +190,14 @@ public class UsuariosActivity extends AppCompatActivity {
         userLinear.addView(buttonLinear);
     }
 
+    public void createUser(View view){
+        Intent registro = new Intent(UsuariosActivity.this, RegisterActivity.class);
+        registro.putExtra("UsuariosActivity", "true");
+        registro.putExtra("editActivity", "false");
+        UsuariosActivity.this.startActivity(registro);
+        finish();
+    }
+
     public int calcularPixeles(int dps) {
         final float scale = this.getResources().getDisplayMetrics().density;
         return (int) (dps * scale + 0.5f);
@@ -196,12 +209,5 @@ public class UsuariosActivity extends AppCompatActivity {
             p.setMargins(left, top, right, bottom);
             view.requestLayout();
         }
-    }
-
-    public void createUser(View view){
-        Intent registro = new Intent(UsuariosActivity.this, RegisterActivity.class);
-        registro.putExtra("UsuariosActivity", "true");
-        UsuariosActivity.this.startActivity(registro);
-        finish();
     }
 }

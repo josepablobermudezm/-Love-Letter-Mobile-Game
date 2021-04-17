@@ -25,34 +25,55 @@ public class RegisterActivity extends AppCompatActivity {
 
     ImageView IVPreviewImage;
     String usuariosActivity;
+    String editActivity;
+    EditText aliasAux;
+    EditText contrasenaAux;
+    EditText fechaNacimientoAux;
+    RadioButton administradorAux;
+    RadioButton jugadorAux;
+    Usuario editusuario = new Usuario();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         Button registerButton = (Button)findViewById(R.id.registerButton);
+        aliasAux = (EditText) findViewById(R.id.txtAlias);
+        contrasenaAux = (EditText) findViewById(R.id.txtContrasena);
+        fechaNacimientoAux = (EditText) findViewById(R.id.editTextDate);
+        administradorAux = (RadioButton) findViewById(R.id.radioButtonAdministrador);
+        jugadorAux = (RadioButton) findViewById(R.id.radioButtonJugador);
         Intent i = this.getIntent();
         usuariosActivity = i.getStringExtra("UsuariosActivity");
-        registerButton.setText(usuariosActivity.equals("false") ? "Registrarse" : "Registrar");
+        editActivity = i.getStringExtra("editActivity");
+        registerButton.setText(usuariosActivity.equals("true") ? "Registrar" : editActivity.equals("true") ? "Editar" : "Registrarse");
+
+        if(editActivity.equals("true")){
+            editusuario = (Usuario) i.getSerializableExtra("editUsuario");
+            aliasAux.setText(editusuario.getU_alias());
+            contrasenaAux.setText(editusuario.getU_password());
+            fechaNacimientoAux.setText(editusuario.getU_fechaNacimiento());
+            administradorAux.setChecked(editusuario.getU_rol().equals("A"));
+            jugadorAux.setChecked(editusuario.getU_rol().equals("J"));
+        }
     }
 
     public void volverLogin(View view){
-        Intent nextView = new Intent(RegisterActivity.this, usuariosActivity.equals("false") ? LoginActivity.class : UsuariosActivity.class);
+        Intent nextView = new Intent(RegisterActivity.this,
+                usuariosActivity.equals("true") || editActivity.equals("true") ? UsuariosActivity.class : LoginActivity.class);
         RegisterActivity.this.startActivity(nextView);
         finish();
     }
 
     public void registrarse(View view){
-        //me registro
-        EditText aliasAux = (EditText) findViewById(R.id.txtAlias);
-        EditText contrasenaAux = (EditText) findViewById(R.id.txtContrasena);
-        EditText fechaNacimientoAux = (EditText) findViewById(R.id.editTextDate);
-        RadioButton administradorAux = (RadioButton) findViewById(R.id.radioButtonAdministrador);
-        RadioButton jugadorAux = (RadioButton) findViewById(R.id.radioButtonJugador);
         String nombre = aliasAux.getText().toString();
         String contrasena = contrasenaAux.getText().toString();
         String fechaNacimiento = fechaNacimientoAux.getText().toString();
         String rol = administradorAux.isChecked() ? "A" : jugadorAux.isChecked() ? "J" : null;
+        editusuario.setU_alias(nombre);
+        editusuario.setU_password(contrasena);
+        editusuario.setU_fechaNacimiento(fechaNacimiento);
+        editusuario.setU_rol(rol);
 
         Response.Listener<String> respuesta = new Response.Listener<String>() {
             @Override
@@ -68,24 +89,33 @@ public class RegisterActivity extends AppCompatActivity {
                         // deal with the absence of JSON content here
                     }
                     JSONObject jsonRespuesta = new JSONObject(response);
+                    System.out.println(jsonRespuesta);
                     boolean ok = jsonRespuesta.getBoolean("success");
                     if(ok){
-                        Intent nextView = new Intent(RegisterActivity.this, usuariosActivity.equals("false") ? LoginActivity.class : UsuariosActivity.class);
+                        Intent nextView = new Intent(RegisterActivity.this,
+                                usuariosActivity.equals("true") || editActivity.equals("true") ? UsuariosActivity.class : LoginActivity.class);
                         RegisterActivity.this.startActivity(nextView);
                         finish();
                     }else{
                         AlertDialog.Builder alerta = new AlertDialog.Builder(RegisterActivity.this);
-                        alerta.setMessage("Fallo en el registro").setNegativeButton("Reintentar", null).create().show();
+                        alerta.setMessage(editActivity.equals("true") ? "Hubo un error en la edición" : "Fallo en el registro")
+                                .setNegativeButton("Reintentar", null).create().show();
                     }
                 }catch(JSONException e){
                     e.getMessage();
                 }
             }
         };
-        RegistroRequest r = new RegistroRequest(nombre, fechaNacimiento, contrasena, rol, 0, 0,
-                0, 0, 0, respuesta);
-        RequestQueue cola = Volley.newRequestQueue(RegisterActivity.this);
-        cola.add(r);
+        if(editActivity.equals("true")){
+            UsuariosRequest r = new UsuariosRequest(editusuario, respuesta);
+            RequestQueue cola = Volley.newRequestQueue(RegisterActivity.this);
+            cola.add(r);
+        }else{
+            RegistroRequest r = new RegistroRequest(nombre, fechaNacimiento, contrasena, rol, 0, 0,
+                    0, 0, 0, respuesta);
+            RequestQueue cola = Volley.newRequestQueue(RegisterActivity.this);
+            cola.add(r);
+        }
     }
 
     public void loadPicture(View view){
