@@ -190,7 +190,7 @@ public class UsuariosActivity extends AppCompatActivity {
                                 Usuario.usuarios.forEach(x->agregarUsuarios(x));// volvemos a cargar los usuarios
 
                                 //Si el usuario se elimina a si mismo, lo envíamos al login
-                                if(Usuario.usuarioLogueado.getU_id() == usuario.getU_id())){
+                                if(Usuario.usuarioLogueado.getU_id() == usuario.getU_id()){
                                     Intent login = new Intent(UsuariosActivity.this, LoginActivity.class);
                                     UsuariosActivity.this.startActivity(login);
                                     finish();
