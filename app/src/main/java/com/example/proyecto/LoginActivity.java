@@ -56,8 +56,8 @@ public class LoginActivity extends AppCompatActivity {
                         String u_nivel = jsonRespuesta.getString("u_nivel");
                         String u_experiencia = jsonRespuesta.getString("u_experiencia");
 
-                        //decidimos a que vista enviarlo dependiendo de que rol tenga
-                        Intent nextActivity = new Intent(LoginActivity.this, rol.equals("A") ? UsuariosActivity.class : LobbyActivity.class);
+
+                        Intent nextActivity = new Intent(LoginActivity.this, LobbyActivity.class);
                         Usuario usuarioLogueado = new Usuario(Integer.parseInt(u_id), Integer.parseInt(u_cantidadPartidasJugadas),
                                 Integer.parseInt(u_cantidadPartidasGanadas), Integer.parseInt(u_cantidadAmigos), Integer.parseInt(u_nivel),
                                 Integer.parseInt(u_experiencia), alias, password, rol, u_picture, u_fechaNacimiento);

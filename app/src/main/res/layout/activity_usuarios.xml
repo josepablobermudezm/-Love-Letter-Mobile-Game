@@ -18,6 +18,17 @@
         android:layout_width="match_parent"
         android:layout_height="50dp">
 
+        <ImageView
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_marginStart="16dp"
+            android:onClick="volverLobby"
+            android:src="@drawable/leftarrow"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.533" />
+
         <TextView
             android:id="@+id/textView3"
             android:layout_width="wrap_content"
@@ -31,7 +42,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
-            android:id="@+id/imageView"
+            android:id="@+id/imageViewPlus"
             android:layout_width="35dp"
             android:layout_height="35dp"
             android:onClick="createUser"

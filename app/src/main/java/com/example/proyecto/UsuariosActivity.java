@@ -15,6 +15,7 @@ import android.widget.TextView;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -31,6 +32,7 @@ public class UsuariosActivity extends AppCompatActivity {
     private TextView mTextView;
     private LinearLayout parentLayout;
     private LinearLayout parentLayout2;
+    private ConstraintLayout parentLayout3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +41,12 @@ public class UsuariosActivity extends AppCompatActivity {
         mTextView = (TextView) findViewById(R.id.text);
         parentLayout = (LinearLayout) findViewById(R.id.parentLayout);
         parentLayout2 = (LinearLayout) findViewById(R.id.parentLayout2);
+        parentLayout3 = (ConstraintLayout) findViewById(R.id.parentLayout3);
+        ImageView plus = (ImageView) findViewById(R.id.imageViewPlus);
+
+        // Si el usuario es un Jugador no puede crear más usuarios
+        parentLayout3.removeView(Usuario.usuarioLogueado.getU_rol().equals("A") ? null : plus);
+
         // obtenemos todos los usuarios
         Response.Listener<String> respuesta = new Response.Listener<String>() {
             @RequiresApi(api = Build.VERSION_CODES.N)
@@ -60,8 +68,19 @@ public class UsuariosActivity extends AppCompatActivity {
                                 Integer.parseInt(elemento.getString("u_nivel")), Integer.parseInt(elemento.getString("u_experiencia")),
                                 elemento.getString("u_alias"), elemento.getString("u_password"), elemento.getString("u_rol"),
                                 elemento.getString("u_picture"), elemento.getString("u_fechaNacimiento"));
-                        agregarUsuarios(usuario);
-                        Usuario.usuarios.add(usuario);
+
+                        // En caso de que el usuario logueado sea un jugar sólo vamos a agregar este a la vista
+                        // sólo puede gestionar su cuenta
+                        if(Usuario.usuarioLogueado.getU_rol().equals("J")){
+                            if(Usuario.usuarioLogueado.getU_id()==usuario.getU_id()){
+                                agregarUsuarios(usuario);
+                                Usuario.usuarios.add(usuario);
+                            }
+                        }
+                        else{
+                            agregarUsuarios(usuario);
+                            Usuario.usuarios.add(usuario);
+                        }
                     }
                     boolean ok = jsonRespuesta.getBoolean("success");
                     if (ok) {
@@ -209,5 +228,11 @@ public class UsuariosActivity extends AppCompatActivity {
             p.setMargins(left, top, right, bottom);
             view.requestLayout();
         }
+    }
+
+    public void volverLobby(View view){
+        Intent lobby = new Intent(UsuariosActivity.this, LobbyActivity.class);
+        UsuariosActivity.this.startActivity(lobby);
+        finish();
     }
 }

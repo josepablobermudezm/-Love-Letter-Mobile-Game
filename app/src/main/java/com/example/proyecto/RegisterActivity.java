@@ -108,6 +108,10 @@ public class RegisterActivity extends AppCompatActivity {
         };
         if(editActivity.equals("true")){
             UsuariosRequest r = new UsuariosRequest(editusuario, respuesta);
+            // si el usuario que se está editando es el usuario logueado se debe actualizar el objeto estático
+            if(Usuario.usuarioLogueado.getU_id()==editusuario.getU_id()){
+                Usuario.usuarioLogueado = editusuario;
+            }
             RequestQueue cola = Volley.newRequestQueue(RegisterActivity.this);
             cola.add(r);
         }else{

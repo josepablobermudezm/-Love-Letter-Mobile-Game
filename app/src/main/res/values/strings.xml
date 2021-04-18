@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Actividad_Layout</string>
+    <string name="app_name">WIN A DATE</string>
     <string name="description">Imagen</string>
     <string name="InicioSession">Inicio de Sesión</string>
     <string name="login">Iniciar Sesión</string>
@@ -25,5 +25,5 @@
     values-round/strings.xml for round devices.
     -->
     <string name="hello_world">Hello Square World!</string>
-    <string name="title_activity_lobby">LobbyActivity</string>
+    <string name="title_activity_lobby">WIN A DATE</string>
 </resources>
