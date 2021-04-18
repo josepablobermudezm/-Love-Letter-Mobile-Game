@@ -69,7 +69,7 @@ public class UsuariosActivity extends AppCompatActivity {
                                 elemento.getString("u_alias"), elemento.getString("u_password"), elemento.getString("u_rol"),
                                 elemento.getString("u_picture"), elemento.getString("u_fechaNacimiento"));
 
-                        // En caso de que el usuario logueado sea un jugar sólo vamos a agregar este a la vista
+                        // En caso de que el usuario logueado sea un jugador sólo vamos a agregar este a la vista
                         // sólo puede gestionar su cuenta
                         if(Usuario.usuarioLogueado.getU_rol().equals("J")){
                             if(Usuario.usuarioLogueado.getU_id()==usuario.getU_id()){
@@ -188,6 +188,14 @@ public class UsuariosActivity extends AppCompatActivity {
                                 Usuario.usuarios.remove(Usuario.usuarios.stream().filter(x->x.getU_id() == usuario.getU_id()).findAny().get());// eliminamos usuario de lista
                                 parentLayout2.removeAllViews();// limpiamos la vista
                                 Usuario.usuarios.forEach(x->agregarUsuarios(x));// volvemos a cargar los usuarios
+
+                                //Si el usuario se elimina a si mismo, lo envíamos al login
+                                if(Usuario.usuarioLogueado.getU_rol().equals("J")
+                                        || (Usuario.usuarioLogueado.getU_rol().equals("A") && Usuario.usuarioLogueado.getU_id() == usuario.getU_id())){
+                                    Intent login = new Intent(UsuariosActivity.this, LoginActivity.class);
+                                    UsuariosActivity.this.startActivity(login);
+                                    finish();
+                                }
                             } else {
                                 AlertDialog.Builder alerta = new AlertDialog.Builder(UsuariosActivity.this);
                                 alerta.setMessage("Fallo al eliminar el usuario").setNegativeButton("Reintentar", null).create().show();
