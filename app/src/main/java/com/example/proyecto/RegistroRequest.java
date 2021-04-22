@@ -25,8 +25,6 @@ public class RegistroRequest extends StringRequest {
         parametros.put("u_cantidadAmigos", u_cantidadAmigos + "");
         parametros.put("u_nivel", u_nivel + "");
         parametros.put("u_experiencia", u_experiencia + "");
-
-        System.out.println(parametros);
     }
 
     @Override

@@ -9,6 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/cardview_dark_background"
+        android:onClick="crearPartida"
         android:orientation="vertical"
         android:padding="20dp">
 
@@ -26,8 +27,7 @@
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="350dp"
-            android:src="@drawable/inicio">
-        </ImageView>
+            android:src="@drawable/inicio"></ImageView>
 
     </LinearLayout>
 </ScrollView>

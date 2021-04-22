@@ -66,6 +66,9 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     public void registrarse(View view){
+
+        System.out.println("boton");
+
         String nombre = aliasAux.getText().toString();
         String contrasena = contrasenaAux.getText().toString();
         String fechaNacimiento = fechaNacimientoAux.getText().toString();
@@ -78,7 +81,9 @@ public class RegisterActivity extends AppCompatActivity {
         Response.Listener<String> respuesta = new Response.Listener<String>() {
             @Override
             public void onResponse(String response){
+                System.out.println("hola, estoy aquí ");
                 try {
+                    System.out.println(response);
                     response = response.replaceFirst("<font>.*?</font>", "");
                     int jsonStart = response.indexOf("{");
                     int jsonEnd = response.lastIndexOf("}");
@@ -115,6 +120,7 @@ public class RegisterActivity extends AppCompatActivity {
             RequestQueue cola = Volley.newRequestQueue(RegisterActivity.this);
             cola.add(r);
         }else{
+            System.out.println("Estoy aquí ");
             RegistroRequest r = new RegistroRequest(nombre, fechaNacimiento, contrasena, rol, 0, 0,
                     0, 0, 0, respuesta);
             RequestQueue cola = Volley.newRequestQueue(RegisterActivity.this);
