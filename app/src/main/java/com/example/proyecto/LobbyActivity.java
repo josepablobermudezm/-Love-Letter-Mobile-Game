@@ -32,20 +32,15 @@ public class LobbyActivity extends AppCompatActivity {
     Usuario usuarioLogueado = new Usuario();
     LinearLayout parentLayout;
     private WebSocket webSocket;
-    private String SERVER_PATH = "ws://echo.websocket.org";
+    private String SERVER_PATH = "ws://192.168.1.7:3000";
     private RecyclerView recyclerView;
     public Button PlayButton;
-    private MessageAdapter messageAdapter;
+    private MessageAdapter messageAdapter = new MessageAdapter();;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lobby);
-
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
-                != PackageManager.PERMISSION_GRANTED)
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 10);
-
 
         mTextView = (TextView) findViewById(R.id.text);
 
@@ -69,17 +64,11 @@ public class LobbyActivity extends AppCompatActivity {
             PlayButton = new Button(this);
             PlayButton.setText("NUEVA PARTIDA");
             parentLayout.addView(PlayButton);
-
-            PlayButton.setOnClickListener(new View.OnClickListener(){
-                @Override
-                public void onClick(View v) {
-                    //enviamos un mensaje de inicio de partida
-                }
-            });
         }
 
         parentLayout.addView(usuarioButton);
         parentLayout.addView(AcercaButton);
+        initiateSocketConnection();
     }
 
 

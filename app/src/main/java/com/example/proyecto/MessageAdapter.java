@@ -18,7 +18,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MessageAdapter extends RecyclerView.Adapter {
+public class MessageAdapter {
 
     private static final int TYPE_MESSAGE_SENT = 0;
     private static final int TYPE_MESSAGE_RECEIVED = 1;
@@ -29,8 +29,8 @@ public class MessageAdapter extends RecyclerView.Adapter {
     public MessageAdapter (LayoutInflater inflater) {
         this.inflater = inflater;
     }
+    public MessageAdapter(){}
 
-    @Override
     public int getItemViewType(int position) {
         JSONObject message = messages.get(position);
         try {
@@ -49,16 +49,10 @@ public class MessageAdapter extends RecyclerView.Adapter {
         return -1;
     }
 
-    @NonNull
-    @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return null;
-    }
-
-    @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-
-        JSONObject message = messages.get(position);
+    public void onBindViewHolder() {
+        JSONObject message = messages.get(getItemCount()-1);
+        String tipoMensaje = getItemViewType(getItemCount()-1) ==1 ? "Recibido" : "Enviado";
+        System.out.println(tipoMensaje);
         try {
             if (message.getBoolean("isSent")) {
                 if (message.has("message")) {
@@ -75,13 +69,12 @@ public class MessageAdapter extends RecyclerView.Adapter {
         }
     }
 
-    @Override
     public int getItemCount() {
         return messages.size();
     }
 
     public void addItem (JSONObject jsonObject) {
         messages.add(jsonObject);
-        notifyDataSetChanged();
+       onBindViewHolder();
     }
 }
