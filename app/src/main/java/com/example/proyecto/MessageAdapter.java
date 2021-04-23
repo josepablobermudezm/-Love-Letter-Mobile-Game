@@ -51,7 +51,7 @@ public class MessageAdapter {
 
     public void onBindViewHolder() {
         JSONObject message = messages.get(getItemCount()-1);
-        String tipoMensaje = getItemViewType(getItemCount()-1) ==1 ? "Recibido" : "Enviado";
+        String tipoMensaje = getItemViewType(getItemCount()-1) == 1 ? "Recibido" : "Enviado";
         System.out.println(tipoMensaje);
         try {
             if (message.getBoolean("isSent")) {

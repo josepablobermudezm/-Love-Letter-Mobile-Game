@@ -9,7 +9,7 @@ import java.util.Map;
 
 public class RegistroRequest extends StringRequest {
 
-    private static final String ruta = "https://movilesproyecto.000webhostapp.com/registro.php";
+    private static final String ruta = "http://winadate.atwebpages.com/registro.php";
     private Map<String, String> parametros;
 
     public RegistroRequest(String u_alias, String fechaNacimiento, String u_password, String u_rol,

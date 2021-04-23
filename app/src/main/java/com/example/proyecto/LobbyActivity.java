@@ -32,7 +32,7 @@ public class LobbyActivity extends AppCompatActivity {
     Usuario usuarioLogueado = new Usuario();
     LinearLayout parentLayout;
     private WebSocket webSocket;
-    private String SERVER_PATH = "ws://192.168.1.7:3000";
+    private String SERVER_PATH = "link://192.168.1.7:3000";
     private RecyclerView recyclerView;
     public Button PlayButton;
     private MessageAdapter messageAdapter = new MessageAdapter();;
@@ -132,5 +132,4 @@ public class LobbyActivity extends AppCompatActivity {
             }
         });
      }
-
 }

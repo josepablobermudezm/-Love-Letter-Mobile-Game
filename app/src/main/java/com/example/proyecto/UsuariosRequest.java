@@ -8,7 +8,7 @@ import java.util.Map;
 
 public class UsuariosRequest extends StringRequest {
 
-    private static final String ruta = "https://movilesproyecto.000webhostapp.com/usuarios/usuarios.php";
+    private static final String ruta = "http://winadate.atwebpages.com/usuarios/usuarios.php";
     Map<String, String> parametros = new HashMap<String, String>();
 
     public UsuariosRequest(Response.Listener<String> listener){
@@ -16,13 +16,13 @@ public class UsuariosRequest extends StringRequest {
     }
 
     public UsuariosRequest(String u_id, Response.Listener<String> listener){
-        super(Method.POST, "https://movilesproyecto.000webhostapp.com/usuarios/deleteUsuarios.php", listener, null);
+        super(Method.POST, "http://winadate.atwebpages.com/usuarios/deleteUsuarios.php", listener, null);
         parametros = new HashMap<>();
         parametros.put("u_id", u_id+"");
     }
 
     public UsuariosRequest(Usuario usuario, Response.Listener<String> listener){
-        super(Method.POST, "https://movilesproyecto.000webhostapp.com/usuarios/editUsuarios.php", listener, null);
+        super(Method.POST, "http://winadate.atwebpages.com/usuarios/editUsuarios.php", listener, null);
         parametros = new HashMap<>();
         System.out.println("estamos en el edit");
         parametros.put("u_id", usuario.getU_id()+"");
