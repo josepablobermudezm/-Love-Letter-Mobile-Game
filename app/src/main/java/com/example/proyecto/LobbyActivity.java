@@ -68,7 +68,7 @@ public class LobbyActivity extends AppCompatActivity {
 
         parentLayout.addView(usuarioButton);
         parentLayout.addView(AcercaButton);
-        initiateSocketConnection();
+        //initiateSocketConnection();
     }
 
 
