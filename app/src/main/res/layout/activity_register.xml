@@ -28,7 +28,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:padding="48dp"
-        tools:context=".LoginActivity">
+        tools:context=".login.LoginActivity">
 
         <TextView
             android:id="@+id/textView"

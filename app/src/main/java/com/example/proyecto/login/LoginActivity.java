@@ -1,4 +1,4 @@
-package com.example.proyecto;
+package com.example.proyecto.login;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,6 +11,10 @@ import android.widget.EditText;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
+import com.example.proyecto.LobbyActivity;
+import com.example.proyecto.R;
+import com.example.proyecto.registro.RegisterActivity;
+import com.example.proyecto.usuarios.Usuario;
 
 import org.json.JSONException;
 import org.json.JSONObject;

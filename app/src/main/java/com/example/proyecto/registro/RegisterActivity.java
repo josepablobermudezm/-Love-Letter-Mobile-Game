@@ -1,4 +1,4 @@
-package com.example.proyecto;
+package com.example.proyecto.registro;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,6 +15,11 @@ import android.widget.RadioButton;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
+import com.example.proyecto.R;
+import com.example.proyecto.usuarios.Usuario;
+import com.example.proyecto.usuarios.UsuariosActivity;
+import com.example.proyecto.usuarios.UsuariosRequest;
+import com.example.proyecto.login.LoginActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;

@@ -1,7 +1,6 @@
-package com.example.proyecto;
+package com.example.proyecto.usuarios;
 
 import java.io.Serializable;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class Usuario implements Serializable {

@@ -9,7 +9,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import org.json.JSONObject;
@@ -21,10 +20,8 @@ import okhttp3.Response;
 import okhttp3.WebSocket;
 import okhttp3.WebSocketListener;
 
-import androidx.recyclerview.widget.RecyclerView;
-
-import android.Manifest;
-import android.content.pm.PackageManager;
+import com.example.proyecto.usuarios.Usuario;
+import com.example.proyecto.usuarios.UsuariosActivity;
 
 public class LobbyActivity extends AppCompatActivity {
 

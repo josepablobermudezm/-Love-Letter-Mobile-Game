@@ -1,4 +1,4 @@
-package com.example.proyecto;
+package com.example.proyecto.registro;
 
 import com.android.volley.Request;
 import com.android.volley.Response;

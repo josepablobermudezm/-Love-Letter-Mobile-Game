@@ -1,4 +1,4 @@
-package com.example.proyecto;
+package com.example.proyecto.usuarios;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
@@ -20,12 +19,14 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
+import com.example.proyecto.LobbyActivity;
+import com.example.proyecto.R;
+import com.example.proyecto.login.LoginActivity;
+import com.example.proyecto.registro.RegisterActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.stream.Collectors;
 
 public class UsuariosActivity extends AppCompatActivity {
 
