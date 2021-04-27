@@ -44,15 +44,17 @@ public class LobbyActivity extends AppCompatActivity {
         parentLayout = (LinearLayout) findViewById(R.id.padre);
 
         Button logrosButton = new Button(this);
-        logrosButton.setText("Logros");
-        logrosButton.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                Intent nextActivity = new Intent(LobbyActivity.this, LogrosActivity.class);
-                LobbyActivity.this.startActivity(nextActivity);
-                LobbyActivity.this.finish();
-            }
-        });
+        if(Usuario.usuarioLogueado.getU_rol().equals("J")) {
+            logrosButton.setText("Logros");
+            logrosButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent nextActivity = new Intent(LobbyActivity.this, LogrosActivity.class);
+                    LobbyActivity.this.startActivity(nextActivity);
+                    LobbyActivity.this.finish();
+                }
+            });
+        }
 
         Button AcercaButton = new Button(this);
         AcercaButton.setText("ACERCA DE");
@@ -84,7 +86,9 @@ public class LobbyActivity extends AppCompatActivity {
 
         parentLayout.addView(usuarioButton);
         parentLayout.addView(AcercaButton);
-        parentLayout.addView(logrosButton);
+        if(Usuario.usuarioLogueado.getU_rol().equals("J")) {
+            parentLayout.addView(logrosButton);
+        }
         //initiateSocketConnection();
     }
 
