@@ -20,7 +20,6 @@ import okhttp3.Response;
 import okhttp3.WebSocket;
 import okhttp3.WebSocketListener;
 
-import com.example.proyecto.usuarios.Usuario;
 import com.example.proyecto.usuarios.UsuariosActivity;
 
 public class LobbyActivity extends AppCompatActivity {
@@ -43,6 +42,18 @@ public class LobbyActivity extends AppCompatActivity {
 
         Intent i = this.getIntent();
         parentLayout = (LinearLayout) findViewById(R.id.padre);
+
+        Button logrosButton = new Button(this);
+        logrosButton.setText("Logros");
+        logrosButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Intent nextActivity = new Intent(LobbyActivity.this, LogrosActivity.class);
+                LobbyActivity.this.startActivity(nextActivity);
+                LobbyActivity.this.finish();
+            }
+        });
+
         Button AcercaButton = new Button(this);
         AcercaButton.setText("ACERCA DE");
         AcercaButton.setOnClickListener(new View.OnClickListener(){
@@ -73,6 +84,7 @@ public class LobbyActivity extends AppCompatActivity {
 
         parentLayout.addView(usuarioButton);
         parentLayout.addView(AcercaButton);
+        parentLayout.addView(logrosButton);
         //initiateSocketConnection();
     }
 

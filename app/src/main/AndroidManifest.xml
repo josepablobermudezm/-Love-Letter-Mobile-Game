@@ -17,7 +17,15 @@
         android:theme="@style/Theme.Proyecto"
         android:usesCleartextTraffic="true">
 
+
+        <!--
+               Set to true if your app is Standalone, that is, it does not require the handheld
+               app to run.
+        -->
+
+
         <activity android:name=".usuarios.UsuariosActivity" />
+        <activity android:name=".LogrosActivity" />
         <activity android:name=".AboutUsActivity" />
         <activity android:name=".LobbyActivity" />
         <activity android:name=".registro.RegisterActivity" />

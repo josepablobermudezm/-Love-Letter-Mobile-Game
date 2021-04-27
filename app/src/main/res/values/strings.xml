@@ -27,4 +27,5 @@
     <string name="hello_world">Hello Square World!</string>
     <string name="title_activity_lobby">WIN A DATE</string>
     <string name="title_activity_about_us">AboutUsActivity</string>
+    <string name="title_activity_logros">LogrosActivity</string>
 </resources>

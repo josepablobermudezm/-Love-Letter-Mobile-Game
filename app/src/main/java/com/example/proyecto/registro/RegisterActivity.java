@@ -16,7 +16,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
 import com.example.proyecto.R;
-import com.example.proyecto.usuarios.Usuario;
+import com.example.proyecto.Usuario;
 import com.example.proyecto.usuarios.UsuariosActivity;
 import com.example.proyecto.usuarios.UsuariosRequest;
 import com.example.proyecto.login.LoginActivity;

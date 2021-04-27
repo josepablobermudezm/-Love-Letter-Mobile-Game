@@ -21,6 +21,7 @@ import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
 import com.example.proyecto.LobbyActivity;
 import com.example.proyecto.R;
+import com.example.proyecto.Usuario;
 import com.example.proyecto.login.LoginActivity;
 import com.example.proyecto.registro.RegisterActivity;
 
