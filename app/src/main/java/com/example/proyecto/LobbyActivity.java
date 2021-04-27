@@ -45,6 +45,14 @@ public class LobbyActivity extends AppCompatActivity {
         parentLayout = (LinearLayout) findViewById(R.id.padre);
         Button AcercaButton = new Button(this);
         AcercaButton.setText("ACERCA DE");
+        AcercaButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Intent nextActivity = new Intent(LobbyActivity.this, AboutUsActivity.class);
+                LobbyActivity.this.startActivity(nextActivity);
+                LobbyActivity.this.finish();
+            }
+        });
 
         Button usuarioButton = new Button(this);
         usuarioButton.setText(Usuario.usuarioLogueado.getU_rol().equals("A") ? "USUARIOS" : "CUENTA");
