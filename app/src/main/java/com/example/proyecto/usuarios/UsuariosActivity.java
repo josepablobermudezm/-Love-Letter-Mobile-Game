@@ -48,6 +48,12 @@ public class UsuariosActivity extends AppCompatActivity {
         // Si el usuario es un Jugador no puede crear más usuarios
         parentLayout3.removeView(Usuario.usuarioLogueado.getU_rol().equals("A") ? null : plus);
 
+        cargarUsuarios();
+
+    }
+
+    private void cargarUsuarios(){
+
         // obtenemos todos los usuarios
         Response.Listener<String> respuesta = new Response.Listener<String>() {
             @RequiresApi(api = Build.VERSION_CODES.N)
@@ -186,9 +192,10 @@ public class UsuariosActivity extends AppCompatActivity {
                             JSONObject jsonRespuesta = new JSONObject(response);
                             boolean ok = jsonRespuesta.getBoolean("success");
                             if (ok) {
-                                Usuario.usuarios.remove(Usuario.usuarios.stream().filter(x->x.getU_id() == usuario.getU_id()).findAny().get());// eliminamos usuario de lista
+                                //Usuario.usuarios.remove(Usuario.usuarios.stream().filter(x->x.getU_id() == usuario.getU_id()).findAny().get());// eliminamos usuario de lista
                                 parentLayout2.removeAllViews();// limpiamos la vista
-                                Usuario.usuarios.forEach(x->agregarUsuarios(x));// volvemos a cargar los usuarios
+                                cargarUsuarios();
+                                //Usuario.usuarios.forEach(x->agregarUsuarios(x));// volvemos a cargar los usuarios
 
                                 //Si el usuario se elimina a si mismo, lo envíamos al login
                                 if(Usuario.usuarioLogueado.getU_id() == usuario.getU_id()){
