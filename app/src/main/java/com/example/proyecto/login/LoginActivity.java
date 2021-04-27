@@ -14,7 +14,7 @@ import com.android.volley.toolbox.Volley;
 import com.example.proyecto.LobbyActivity;
 import com.example.proyecto.R;
 import com.example.proyecto.registro.RegisterActivity;
-import com.example.proyecto.Usuario;
+import com.example.proyecto.usuarios.Usuario;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -28,7 +28,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void iniciarSesion(View view){
-        EditText txtAliasAux = (EditText) findViewById(R.id.txtAlias);
+        EditText txtAliasAux = (EditText) findViewById(R.id.txtNivel);
         EditText txtContrasenaAux = (EditText) findViewById(R.id.txtContrasena);
 
         String txtAlias = txtAliasAux.getText().toString();

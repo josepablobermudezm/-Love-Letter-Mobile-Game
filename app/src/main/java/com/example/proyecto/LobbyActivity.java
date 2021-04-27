@@ -20,6 +20,7 @@ import okhttp3.Response;
 import okhttp3.WebSocket;
 import okhttp3.WebSocketListener;
 
+import com.example.proyecto.usuarios.Usuario;
 import com.example.proyecto.usuarios.UsuariosActivity;
 
 public class LobbyActivity extends AppCompatActivity {
@@ -81,6 +82,14 @@ public class LobbyActivity extends AppCompatActivity {
         if(Usuario.usuarioLogueado.getU_rol().equals("J")){
             PlayButton = new Button(this);
             PlayButton.setText("NUEVA PARTIDA");
+            PlayButton.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View v) {
+                    Intent nextActivity = new Intent(LobbyActivity.this, PartidaActivity.class);
+                    LobbyActivity.this.startActivity(nextActivity);
+                    LobbyActivity.this.finish();
+                }
+            });
             parentLayout.addView(PlayButton);
         }
 

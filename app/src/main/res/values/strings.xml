@@ -28,4 +28,6 @@
     <string name="title_activity_lobby">WIN A DATE</string>
     <string name="title_activity_about_us">AboutUsActivity</string>
     <string name="title_activity_logros">LogrosActivity</string>
+    <string name="title_activity_partida">PartidaActivity</string>
+    <string name="title_activity_crear_partida">CrearPartidaActivity</string>
 </resources>

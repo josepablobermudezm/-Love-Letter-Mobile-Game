@@ -24,7 +24,7 @@
         android:textSize="25sp" />
 
     <EditText
-        android:id="@+id/txtAlias"
+        android:id="@+id/txtNivel"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:hint="@string/correo"

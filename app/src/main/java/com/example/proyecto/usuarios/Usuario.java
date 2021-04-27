@@ -1,4 +1,4 @@
-package com.example.proyecto;
+package com.example.proyecto.usuarios;
 
 import java.io.Serializable;
 import java.util.ArrayList;

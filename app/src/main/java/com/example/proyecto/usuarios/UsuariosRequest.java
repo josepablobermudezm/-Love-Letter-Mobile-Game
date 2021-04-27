@@ -2,7 +2,6 @@ package com.example.proyecto.usuarios;
 
 import com.android.volley.Response;
 import com.android.volley.toolbox.StringRequest;
-import com.example.proyecto.Usuario;
 
 import java.util.HashMap;
 import java.util.Map;

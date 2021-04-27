@@ -16,7 +16,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
 import com.example.proyecto.R;
-import com.example.proyecto.Usuario;
+import com.example.proyecto.usuarios.Usuario;
 import com.example.proyecto.usuarios.UsuariosActivity;
 import com.example.proyecto.usuarios.UsuariosRequest;
 import com.example.proyecto.login.LoginActivity;
@@ -43,7 +43,7 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         Button registerButton = (Button)findViewById(R.id.registerButton);
-        aliasAux = (EditText) findViewById(R.id.txtAlias);
+        aliasAux = (EditText) findViewById(R.id.txtNivel);
         contrasenaAux = (EditText) findViewById(R.id.txtContrasena);
         fechaNacimientoAux = (EditText) findViewById(R.id.editTextDate);
         administradorAux = (RadioButton) findViewById(R.id.radioButtonAdministrador);
