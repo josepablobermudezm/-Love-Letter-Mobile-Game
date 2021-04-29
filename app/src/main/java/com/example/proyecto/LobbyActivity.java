@@ -32,7 +32,8 @@ public class LobbyActivity extends AppCompatActivity {
     private String SERVER_PATH = "link://192.168.1.7:3000";
     private RecyclerView recyclerView;
     public Button PlayButton;
-    private MessageAdapter messageAdapter = new MessageAdapter();;
+    private MessageAdapter messageAdapter = new MessageAdapter();
+    ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +46,7 @@ public class LobbyActivity extends AppCompatActivity {
         parentLayout = (LinearLayout) findViewById(R.id.padre);
 
         Button logrosButton = new Button(this);
-        if(Usuario.usuarioLogueado.getU_rol().equals("J")) {
+        if (Usuario.usuarioLogueado.getU_rol().equals("J")) {
             logrosButton.setText("Logros");
             logrosButton.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -59,7 +60,7 @@ public class LobbyActivity extends AppCompatActivity {
 
         Button AcercaButton = new Button(this);
         AcercaButton.setText("ACERCA DE");
-        AcercaButton.setOnClickListener(new View.OnClickListener(){
+        AcercaButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent nextActivity = new Intent(LobbyActivity.this, AboutUsActivity.class);
@@ -70,7 +71,7 @@ public class LobbyActivity extends AppCompatActivity {
 
         Button usuarioButton = new Button(this);
         usuarioButton.setText(Usuario.usuarioLogueado.getU_rol().equals("A") ? "USUARIOS" : "CUENTA");
-        usuarioButton.setOnClickListener(new View.OnClickListener(){
+        usuarioButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent nextActivity = new Intent(LobbyActivity.this, UsuariosActivity.class);
@@ -78,36 +79,34 @@ public class LobbyActivity extends AppCompatActivity {
                 LobbyActivity.this.finish();
             }
         });
+        PlayButton = new Button(this);
+        PlayButton.setText(Usuario.usuarioLogueado.getU_rol().equals("A") ?"PARTIDAS":"NUEVA PARTIDA");
+        PlayButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent nextActivity = new Intent(LobbyActivity.this, PartidaActivity.class);
+                LobbyActivity.this.startActivity(nextActivity);
+                LobbyActivity.this.finish();
+            }
+        });
 
-        if(Usuario.usuarioLogueado.getU_rol().equals("J")){
-            PlayButton = new Button(this);
-            PlayButton.setText("NUEVA PARTIDA");
-            PlayButton.setOnClickListener(new View.OnClickListener(){
-                @Override
-                public void onClick(View v) {
-                    Intent nextActivity = new Intent(LobbyActivity.this, PartidaActivity.class);
-                    LobbyActivity.this.startActivity(nextActivity);
-                    LobbyActivity.this.finish();
-                }
-            });
-            parentLayout.addView(PlayButton);
-        }
+        parentLayout.addView(PlayButton);
+
 
         parentLayout.addView(usuarioButton);
         parentLayout.addView(AcercaButton);
-        if(Usuario.usuarioLogueado.getU_rol().equals("J")) {
+        if (Usuario.usuarioLogueado.getU_rol().equals("J")) {
             parentLayout.addView(logrosButton);
         }
         //initiateSocketConnection();
     }
 
 
-
-    public void crearPartida(){
+    public void crearPartida() {
 
     }
 
-    private void initiateSocketConnection(){
+    private void initiateSocketConnection() {
         OkHttpClient cliente = new OkHttpClient();
         Request request = new Request.Builder().url(SERVER_PATH).build();
         webSocket = cliente.newWebSocket(request, new SocketListener());
@@ -161,5 +160,5 @@ public class LobbyActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
         });
-     }
+    }
 }

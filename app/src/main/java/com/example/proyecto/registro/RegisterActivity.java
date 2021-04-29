@@ -45,9 +45,9 @@ public class RegisterActivity extends AppCompatActivity {
         Button registerButton = (Button)findViewById(R.id.registerButton);
         aliasAux = (EditText) findViewById(R.id.txtNivel);
         contrasenaAux = (EditText) findViewById(R.id.txtContrasena);
-        fechaNacimientoAux = (EditText) findViewById(R.id.editTextDate);
-        administradorAux = (RadioButton) findViewById(R.id.radioButtonAdministrador);
-        jugadorAux = (RadioButton) findViewById(R.id.radioButtonJugador);
+        fechaNacimientoAux = (EditText) findViewById(R.id.txtcantJugadores);
+        administradorAux = (RadioButton) findViewById(R.id.rbPrivado);
+        jugadorAux = (RadioButton) findViewById(R.id.rbPublica);
         Intent i = this.getIntent();
         usuariosActivity = i.getStringExtra("UsuariosActivity");
         editActivity = i.getStringExtra("editActivity");
@@ -72,8 +72,6 @@ public class RegisterActivity extends AppCompatActivity {
 
     public void registrarse(View view){
 
-        System.out.println("boton");
-
         String nombre = aliasAux.getText().toString();
         String contrasena = contrasenaAux.getText().toString();
         String fechaNacimiento = fechaNacimientoAux.getText().toString();
@@ -86,9 +84,8 @@ public class RegisterActivity extends AppCompatActivity {
         Response.Listener<String> respuesta = new Response.Listener<String>() {
             @Override
             public void onResponse(String response){
-                System.out.println("hola, estoy aquí ");
                 try {
-                    System.out.println(response);
+
                     response = response.replaceFirst("<font>.*?</font>", "");
                     int jsonStart = response.indexOf("{");
                     int jsonEnd = response.lastIndexOf("}");
@@ -99,7 +96,6 @@ public class RegisterActivity extends AppCompatActivity {
                         // deal with the absence of JSON content here
                     }
                     JSONObject jsonRespuesta = new JSONObject(response);
-                    System.out.println(jsonRespuesta);
                     boolean ok = jsonRespuesta.getBoolean("success");
                     if(ok){
                         Intent nextView = new Intent(RegisterActivity.this,
@@ -116,6 +112,7 @@ public class RegisterActivity extends AppCompatActivity {
                 }
             }
         };
+
         if(editActivity.equals("true")){
             UsuariosRequest r = new UsuariosRequest(editusuario, respuesta);
             // si el usuario que se está editando es el usuario logueado se debe actualizar el objeto estático

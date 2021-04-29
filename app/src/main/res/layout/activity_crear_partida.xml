@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/cardview_dark_background"
     android:fillViewport="true">
 
     <LinearLayout
@@ -36,6 +37,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:text="Crear Partida"
+                android:textColor="@color/white"
                 android:textSize="25sp" />
 
             <EditText
@@ -43,31 +45,37 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:hint="Nivel de reconocimiento"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"
                 android:inputType="text" />
 
             <EditText
-                android:id="@+id/editTextDate"
+                android:id="@+id/txtcantJugadores"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:hint="Cantidad de jugadores (2-6)"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"
                 android:inputType="date" />
 
             <RadioGroup
-                android:id="@+id/grupoRadio"
+                android:id="@+id/groupRadio"
                 android:layout_width="match_parent"
                 android:layout_height="67dp">
 
                 <RadioButton
-                    android:id="@+id/radioButtonAdministrador"
+                    android:id="@+id/rbPrivado"
                     android:layout_width="134dp"
                     android:layout_height="35dp"
-                    android:text="Privada" />
+                    android:text="Privada"
+                    android:textColor="@color/white" />
 
                 <RadioButton
-                    android:id="@+id/radioButtonJugador"
+                    android:id="@+id/rbPublica"
                     android:layout_width="135dp"
                     android:layout_height="35dp"
+                    android:textColor="@color/white"
                     android:text="Publica" />
             </RadioGroup>
 
