@@ -22,6 +22,7 @@ import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
 import com.example.proyecto.LobbyActivity;
 import com.example.proyecto.R;
+import com.example.proyecto.usuarios.Usuario;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -43,7 +44,6 @@ public class PartidaActivity extends AppCompatActivity {
     }
 
     private void cargarPartidas(){
-
         // obtenemos todas las partidas
         Response.Listener<String> respuesta = new Response.Listener<String>() {
             @RequiresApi(api = Build.VERSION_CODES.N)
@@ -109,6 +109,7 @@ public class PartidaActivity extends AppCompatActivity {
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 65));
         txt_jugadores.setTextColor(Color.parseColor("#FFFFFF"));
+        dataLinear.addView(txt_id);
         if(partida.getP_tipo().equals("PR")) {
             TextView txtnivel = new TextView(this);
             txtnivel.setText("Nivel:" + partida.getP_nivelMinimo());
@@ -118,9 +119,7 @@ public class PartidaActivity extends AppCompatActivity {
             txtnivel.setTextColor(Color.parseColor("#FFFFFF"));
             dataLinear.addView(txtnivel);
         }
-        dataLinear.addView(txt_id);
         dataLinear.addView(txt_jugadores);
-
 
         LinearLayout buttonLinear = new LinearLayout(this);
         buttonLinear.setOrientation(LinearLayout.VERTICAL);
@@ -134,25 +133,24 @@ public class PartidaActivity extends AppCompatActivity {
                 calcularPixeles(28)));
         setMargins(editbutton, 0, 0, 0, 35);
 
-        /*editbutton.setOnClickListener(new View.OnClickListener() {
+        editbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // put code on click operation
-                Intent registro = new Intent(partidasActivity.this, RegisterActivity.class);
-                registro.putExtra("editActivity", "true");
-                registro.putExtra("editUsuario", usuario);
-                registro.putExtra("partidasActivity", "false");
-                partidasActivity.this.startActivity(registro);
+                Intent nextView = new Intent(PartidaActivity.this, CrearPartidaActivity.class);
+                nextView.putExtra("editActivity", "true");
+                nextView.putExtra("editPartida", partida);
+                nextView.putExtra("partidasActivity", "false");
+                PartidaActivity.this.startActivity(nextView);
                 finish();
             }
-        });*/
+        });
 
         ImageView deletebutton = new ImageView(this);
         deletebutton.setImageResource(R.drawable.delete);
         deletebutton.setLayoutParams(new LinearLayout.LayoutParams(calcularPixeles(28),
                 calcularPixeles(28)));
 
-        /*deletebutton.setOnClickListener(new View.OnClickListener() {
+        deletebutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // eliminamos el usuario
@@ -170,19 +168,10 @@ public class PartidaActivity extends AppCompatActivity {
                             JSONObject jsonRespuesta = new JSONObject(response);
                             boolean ok = jsonRespuesta.getBoolean("success");
                             if (ok) {
-                                //Usuario.partidas.remove(Usuario.partidas.stream().filter(x->x.getU_id() == usuario.getU_id()).findAny().get());// eliminamos usuario de lista
                                 parentLayout2.removeAllViews();// limpiamos la vista
-                                cargarpartidas();
-                                //Usuario.partidas.forEach(x->agregarpartidas(x));// volvemos a cargar los partidas
-
-                                //Si el usuario se elimina a si mismo, lo envíamos al login
-                                if(Usuario.usuarioLogueado.getU_id() == usuario.getU_id()){
-                                    Intent login = new Intent(partidasActivity.this, LoginActivity.class);
-                                    partidasActivity.this.startActivity(login);
-                                    finish();
-                                }
+                                cargarPartidas();
                             } else {
-                                AlertDialog.Builder alerta = new AlertDialog.Builder(partidasActivity.this);
+                                AlertDialog.Builder alerta = new AlertDialog.Builder(PartidaActivity.this);
                                 alerta.setMessage("Fallo al eliminar el usuario").setNegativeButton("Reintentar", null).create().show();
                             }
                         } catch (JSONException e) {
@@ -190,11 +179,11 @@ public class PartidaActivity extends AppCompatActivity {
                         }
                     }
                 };
-                partidasRequest r = new partidasRequest(String.valueOf(usuario.getU_id()), respuesta);
-                RequestQueue cola = Volley.newRequestQueue(partidasActivity.this);
+                PartidaRequest r = new PartidaRequest(String.valueOf(partida.getP_id()), respuesta);
+                RequestQueue cola = Volley.newRequestQueue(PartidaActivity.this);
                 cola.add(r);
             }
-        });*/
+        });
         parentLayout2.addView(partidaLinear);
         partidaLinear.addView(dataLinear);
         buttonLinear.addView(editbutton);
@@ -218,6 +207,7 @@ public class PartidaActivity extends AppCompatActivity {
     public void crearPartida(View view){
         //Redirecciona a la otra vista
         Intent nextActivity = new Intent(PartidaActivity.this, CrearPartidaActivity.class);
+        nextActivity.putExtra("editActivity", "false");
         PartidaActivity.this.startActivity(nextActivity);
         PartidaActivity.this.finish();
     }

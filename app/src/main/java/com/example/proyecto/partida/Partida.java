@@ -2,9 +2,10 @@ package com.example.proyecto.partida;
 
 import com.example.proyecto.usuarios.Usuario;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Partida {
+public class Partida implements Serializable {
     private Integer p_id;
     private Integer p_cantidadJugadores;
     private String p_tipo;

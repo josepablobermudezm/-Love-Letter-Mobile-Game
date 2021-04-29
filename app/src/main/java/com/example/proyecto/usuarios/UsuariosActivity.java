@@ -44,16 +44,12 @@ public class UsuariosActivity extends AppCompatActivity {
         parentLayout2 = (LinearLayout) findViewById(R.id.parentLayout2);
         parentLayout3 = (ConstraintLayout) findViewById(R.id.parentLayout3);
         ImageView plus = (ImageView) findViewById(R.id.imageViewPlus);
-
         // Si el usuario es un Jugador no puede crear más usuarios
         parentLayout3.removeView(Usuario.usuarioLogueado.getU_rol().equals("A") ? null : plus);
-
         cargarUsuarios();
-
     }
 
     private void cargarUsuarios(){
-
         // obtenemos todos los usuarios
         Response.Listener<String> respuesta = new Response.Listener<String>() {
             @RequiresApi(api = Build.VERSION_CODES.N)
@@ -75,7 +71,6 @@ public class UsuariosActivity extends AppCompatActivity {
                                 Integer.parseInt(elemento.getString("u_nivel")), Integer.parseInt(elemento.getString("u_experiencia")),
                                 elemento.getString("u_alias"), elemento.getString("u_password"), elemento.getString("u_rol"),
                                 elemento.getString("u_picture"), elemento.getString("u_fechaNacimiento"));
-
                         // En caso de que el usuario logueado sea un jugador sólo vamos a agregar este a la vista
                         // sólo puede gestionar su cuenta
                         if(Usuario.usuarioLogueado.getU_rol().equals("J")){
@@ -193,11 +188,8 @@ public class UsuariosActivity extends AppCompatActivity {
                             JSONObject jsonRespuesta = new JSONObject(response);
                             boolean ok = jsonRespuesta.getBoolean("success");
                             if (ok) {
-                                //Usuario.usuarios.remove(Usuario.usuarios.stream().filter(x->x.getU_id() == usuario.getU_id()).findAny().get());// eliminamos usuario de lista
                                 parentLayout2.removeAllViews();// limpiamos la vista
                                 cargarUsuarios();
-                                //Usuario.usuarios.forEach(x->agregarUsuarios(x));// volvemos a cargar los usuarios
-
                                 //Si el usuario se elimina a si mismo, lo envíamos al login
                                 if(Usuario.usuarioLogueado.getU_id() == usuario.getU_id()){
                                     Intent login = new Intent(UsuariosActivity.this, LoginActivity.class);

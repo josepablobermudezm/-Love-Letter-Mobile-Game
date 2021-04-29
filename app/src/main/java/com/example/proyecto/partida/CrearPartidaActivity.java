@@ -20,6 +20,7 @@ import com.example.proyecto.registro.RegisterActivity;
 import com.example.proyecto.registro.RegistroRequest;
 import com.example.proyecto.usuarios.Usuario;
 import com.example.proyecto.usuarios.UsuariosActivity;
+import com.example.proyecto.usuarios.UsuariosRequest;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -30,11 +31,21 @@ public class CrearPartidaActivity extends AppCompatActivity {
 
     private TextView mTextView;
     private Partida partida;
+    String editActivity;
+    Partida editPartida;
+    EditText txtNivel;
+    EditText txtcantJugadores;
+    RadioButton rbPrivado, rbPublica;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_crear_partida);
+
+        txtNivel = (EditText) findViewById(R.id.txtNivel);
+        txtcantJugadores = (EditText) findViewById(R.id.txtcantJugadores);
+        rbPrivado = (RadioButton) findViewById(R.id.rbPrivado);
+        rbPublica = (RadioButton) findViewById(R.id.rbPublica);
 
         mTextView = (TextView) findViewById(R.id.text);
         ((RadioGroup) findViewById(R.id.groupRadio)).setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
@@ -51,6 +62,19 @@ public class CrearPartidaActivity extends AppCompatActivity {
                 }
             }
         });
+
+        Intent i = this.getIntent();
+        editActivity = i.getStringExtra("editActivity");
+
+
+
+        if(editActivity.equals("true")){
+            editPartida = (Partida) i.getSerializableExtra("editPartida");
+            txtNivel.setText(String.valueOf(editPartida.getP_nivelMinimo()));
+            txtcantJugadores.setText(String.valueOf(editPartida.getP_cantidadJugadores()));
+            rbPrivado.setChecked(editPartida.getP_tipo().equals("PR"));
+            rbPublica.setChecked(editPartida.getP_tipo().equals("PU"));
+        }
     }
 
     public void volverPartida(View view) {
@@ -78,7 +102,7 @@ public class CrearPartidaActivity extends AppCompatActivity {
                         //No esta entre el rango
                     }
                 } else {
-                    //Mesnaje de jugadores vaccio
+                    //Mensaje de jugadores vaccio
                     AlertDialog.Builder alerta = new AlertDialog.Builder(CrearPartidaActivity.this);
                     alerta.setMessage("El nivel mínimo no puede ser negativo.")
                             .setNegativeButton("Reintentar", null).create().show();
@@ -113,31 +137,29 @@ public class CrearPartidaActivity extends AppCompatActivity {
 
     private String generarCodigo(){
         String codigo = "";
-        Random rnd = new Random();
-        for (int j = 0; j < 7; j++)
-        {
+        for (int j = 0; j < 7; j++) {
             codigo += (char)Math.floor(Math.random()*(24)+65);
         }
         return codigo;
     }
 
     public void crearPartida(View view) {
-
         //creamos partida
         String p_nivelMinimo = ((EditText) findViewById(R.id.txtNivel)).getText().toString();
-
         String p_cantidadJugadores = ((EditText) findViewById(R.id.txtcantJugadores)).getText().toString();
-
         String p_codigo = generarCodigo();
         RadioButton rbPublico = ((RadioButton) findViewById(R.id.rbPublica));
         //RadioButton rbPrivate = ((RadioButton) findViewById(R.id.rbPrivado));
-
         String p_tipo = rbPublico.isChecked() ? "PU" : "PR";
         int p_fkUsuario = Usuario.usuarioLogueado.getU_id();
-
         //Ingresa los datos de la partida
-        partida = new Partida(null, (p_cantidadJugadores.isEmpty()) ? null : Integer.valueOf(p_cantidadJugadores), p_tipo, p_codigo, (p_nivelMinimo.isEmpty()) ? null : Integer.valueOf(p_nivelMinimo), p_fkUsuario);
 
+        if(editActivity.equals("true")) {
+            editPartida.setP_cantidadJugadores((p_cantidadJugadores.isEmpty()) ? null : Integer.valueOf(p_cantidadJugadores));
+            editPartida.setP_nivelMinimo((p_nivelMinimo.isEmpty()) ? null : Integer.valueOf(p_nivelMinimo));
+            editPartida.setP_tipo(p_tipo);
+        }
+        partida = new Partida(null, (p_cantidadJugadores.isEmpty()) ? null : Integer.valueOf(p_cantidadJugadores), p_tipo, p_codigo, (p_nivelMinimo.isEmpty()) ? null : Integer.valueOf(p_nivelMinimo), p_fkUsuario);
 
         if (isValidado()) {
             Response.Listener<String> respuesta = new Response.Listener<String>() {
@@ -168,10 +190,16 @@ public class CrearPartidaActivity extends AppCompatActivity {
                 }
             };
 
-            PartidaRequest r = new PartidaRequest(partida.getP_cantidadJugadores(), partida.getP_tipo(),
-                    partida.getP_codigo(), partida.getP_nivelMinimo(), partida.getP_fkUsuario(), respuesta);
-            RequestQueue cola = Volley.newRequestQueue(CrearPartidaActivity.this);
-            cola.add(r);
+            if(editActivity.equals("true")){
+                PartidaRequest r = new PartidaRequest(editPartida, respuesta);
+                RequestQueue cola = Volley.newRequestQueue(CrearPartidaActivity.this);
+                cola.add(r);
+            }else{
+                PartidaRequest r = new PartidaRequest(partida.getP_cantidadJugadores(), partida.getP_tipo(),
+                        partida.getP_codigo(), partida.getP_nivelMinimo(), partida.getP_fkUsuario(), respuesta);
+                RequestQueue cola = Volley.newRequestQueue(CrearPartidaActivity.this);
+                cola.add(r);
+            }
         }
 
     }

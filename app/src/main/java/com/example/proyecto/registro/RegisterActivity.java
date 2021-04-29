@@ -76,10 +76,12 @@ public class RegisterActivity extends AppCompatActivity {
         String contrasena = contrasenaAux.getText().toString();
         String fechaNacimiento = fechaNacimientoAux.getText().toString();
         String rol = administradorAux.isChecked() ? "A" : jugadorAux.isChecked() ? "J" : null;
-        editusuario.setU_alias(nombre);
-        editusuario.setU_password(contrasena);
-        editusuario.setU_fechaNacimiento(fechaNacimiento);
-        editusuario.setU_rol(rol);
+        if(editActivity.equals("true")) {
+            editusuario.setU_alias(nombre);
+            editusuario.setU_password(contrasena);
+            editusuario.setU_fechaNacimiento(fechaNacimiento);
+            editusuario.setU_rol(rol);
+        }
 
         Response.Listener<String> respuesta = new Response.Listener<String>() {
             @Override
