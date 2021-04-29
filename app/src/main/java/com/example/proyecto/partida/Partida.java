@@ -2,18 +2,21 @@ package com.example.proyecto.partida;
 
 import com.example.proyecto.usuarios.Usuario;
 
+import java.util.ArrayList;
+
 public class Partida {
     private Integer p_id;
     private Integer p_cantidadJugadores;
     private String p_tipo;
     private String p_codigo;
     private Integer p_nivelMinimo;
-    private Usuario p_fkUsuario;
+    private Integer p_fkUsuario;
+    public static ArrayList<Partida> partidas = new ArrayList<>();
 
     public Partida() {
     }
 
-    public Partida(Integer p_id, Integer p_cantidadJugadores, String p_tipo, String p_codigo, Integer p_nivelMinimo, Usuario p_fkUsuario) {
+    public Partida(Integer p_id, Integer p_cantidadJugadores, String p_tipo, String p_codigo, Integer p_nivelMinimo, Integer p_fkUsuario) {
         this.p_id = p_id;
         this.p_cantidadJugadores = p_cantidadJugadores;
         this.p_tipo = p_tipo;
@@ -62,11 +65,11 @@ public class Partida {
         this.p_nivelMinimo = p_nivelMinimo;
     }
 
-    public Usuario getP_fkUsuario() {
+    public Integer getP_fkUsuario() {
         return p_fkUsuario;
     }
 
-    public void setP_fkUsuario(Usuario p_fkUsuario) {
+    public void setP_fkUsuario(Integer p_fkUsuario) {
         this.p_fkUsuario = p_fkUsuario;
     }
 

@@ -133,7 +133,7 @@ public class CrearPartidaActivity extends AppCompatActivity {
         //RadioButton rbPrivate = ((RadioButton) findViewById(R.id.rbPrivado));
 
         String p_tipo = rbPublico.isChecked() ? "PU" : "PR";
-        Usuario p_fkUsuario = Usuario.usuarioLogueado;
+        int p_fkUsuario = Usuario.usuarioLogueado.getU_id();
 
         //Ingresa los datos de la partida
         partida = new Partida(null, (p_cantidadJugadores.isEmpty()) ? null : Integer.valueOf(p_cantidadJugadores), p_tipo, p_codigo, (p_nivelMinimo.isEmpty()) ? null : Integer.valueOf(p_nivelMinimo), p_fkUsuario);
@@ -169,7 +169,7 @@ public class CrearPartidaActivity extends AppCompatActivity {
             };
 
             PartidaRequest r = new PartidaRequest(partida.getP_cantidadJugadores(), partida.getP_tipo(),
-                    partida.getP_codigo(), partida.getP_nivelMinimo(), partida.getP_fkUsuario().getU_id(), respuesta);
+                    partida.getP_codigo(), partida.getP_nivelMinimo(), partida.getP_fkUsuario(), respuesta);
             RequestQueue cola = Volley.newRequestQueue(CrearPartidaActivity.this);
             cola.add(r);
         }

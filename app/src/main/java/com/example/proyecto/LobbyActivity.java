@@ -24,6 +24,8 @@ import com.example.proyecto.partida.PartidaActivity;
 import com.example.proyecto.usuarios.Usuario;
 import com.example.proyecto.usuarios.UsuariosActivity;
 
+import java.util.Random;
+
 public class LobbyActivity extends AppCompatActivity {
 
     private TextView mTextView;

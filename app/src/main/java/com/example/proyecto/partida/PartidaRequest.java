@@ -8,8 +8,13 @@ import java.util.Map;
 
 public class PartidaRequest extends StringRequest {
 
-    private static final String ruta = "http://winadate.atwebpages.com/partidas/partida.php";
+    private static final String ruta = "http://winadate.atwebpages.com/partidas/partidas.php";
     private Map<String, String> parametros;
+
+    public PartidaRequest(Response.Listener<String> listener) {
+        super(Method.POST, ruta, listener, null);
+    }
+
     public PartidaRequest(Integer p_cantidadJugadores, String p_tipo, String p_codigo ,Integer p_nivelMinimo, Integer p_fkUsuario, Response.Listener<String> listener){
         super(Method.POST, ruta, listener, null);
 
@@ -24,6 +29,7 @@ public class PartidaRequest extends StringRequest {
         System.out.println(parametros);
 
     }
+
     @Override
     protected Map<String, String> getParams() {
         return parametros;
