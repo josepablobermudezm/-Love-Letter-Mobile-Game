@@ -122,7 +122,6 @@ public class RegisterActivity extends AppCompatActivity {
             RequestQueue cola = Volley.newRequestQueue(RegisterActivity.this);
             cola.add(r);
         }else{
-            System.out.println("Estoy aquí ");
             RegistroRequest r = new RegistroRequest(nombre, fechaNacimiento, contrasena, rol, 0, 0,
                     0, 0, 0, respuesta);
             RequestQueue cola = Volley.newRequestQueue(RegisterActivity.this);

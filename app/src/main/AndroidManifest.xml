@@ -16,9 +16,9 @@
 
         <activity android:name=".usuarios.UsuariosActivity" />
         <activity android:name=".LogrosActivity" />
-        <activity android:name=".CrearPartidaActivity" />
+        <activity android:name=".partida.CrearPartidaActivity" />
         <activity android:name=".AboutUsActivity" />
-        <activity android:name=".PartidaActivity" />
+        <activity android:name=".partida.PartidaActivity" />
         <activity android:name=".LobbyActivity" />
         <activity android:name=".registro.RegisterActivity" />
         <activity android:name=".login.LoginActivity">
