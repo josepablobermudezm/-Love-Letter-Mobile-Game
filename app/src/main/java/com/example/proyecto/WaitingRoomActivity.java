@@ -1,4 +1,4 @@
-package com.example.proyecto.partida;
+package com.example.proyecto;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -7,10 +7,8 @@ import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RadioButton;
 import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
@@ -20,16 +18,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
-import com.example.proyecto.LobbyActivity;
-import com.example.proyecto.R;
-import com.example.proyecto.WaitingRoomActivity;
+import com.example.proyecto.partida.CrearPartidaActivity;
+import com.example.proyecto.partida.Partida;
+import com.example.proyecto.partida.PartidaActivity;
+import com.example.proyecto.partida.PartidaRequest;
 import com.example.proyecto.usuarios.Usuario;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class PartidaActivity extends AppCompatActivity {
+public class WaitingRoomActivity extends AppCompatActivity {
 
     private TextView mTextView;
     private LinearLayout parentLayout;
@@ -38,56 +37,14 @@ public class PartidaActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_partida);
+        setContentView(R.layout.activity_waitingroom);
         parentLayout2 = (LinearLayout) findViewById(R.id.parentLayout2);
         mTextView = (TextView) findViewById(R.id.text);
-        cargarPartidas();
     }
 
-    private void cargarPartidas(){
-        // obtenemos todas las partidas
-        Response.Listener<String> respuesta = new Response.Listener<String>() {
-            @RequiresApi(api = Build.VERSION_CODES.N)
-            @Override
-            public void onResponse(String response) {
-                try {
-                    response = response.replaceFirst("<font>.*?</font>", "");
-                    int jsonStart = response.indexOf("{");
-                    int jsonEnd = response.lastIndexOf("}");
-                    if (jsonStart >= 0 && jsonEnd >= 0 && jsonEnd > jsonStart) {
-                        response = response.substring(jsonStart, jsonEnd + 1);
-                    }
-                    JSONObject jsonRespuesta = new JSONObject(response);
-                    JSONArray partidas = jsonRespuesta.getJSONArray("partidas");
-                    for (int x = 0; x < partidas.length(); x++) {
-                        JSONObject elemento = partidas.getJSONObject(x);
-                        Partida partida = new Partida(Integer.parseInt(elemento.getString("p_id")), Integer.parseInt(elemento.getString("p_cantidadJugadores")),
-                                elemento.getString("p_tipo"), elemento.getString("p_codigo"),
-                                Integer.parseInt(elemento.getString("p_nivelMinimo")), Integer.parseInt(elemento.getString("p_nivelMinimo")));
-                            agregarPartidas(partida);
-                            Partida.partidas.add(partida);
-                    }
-                    boolean ok = jsonRespuesta.getBoolean("success");
-                    if (ok) {
-                        System.out.println(jsonRespuesta);
-                    } else {
-                        AlertDialog.Builder alerta = new AlertDialog.Builder(PartidaActivity.this);
-                        alerta.setMessage("Fallo en la partida").setNegativeButton("Reintentar", null).create().show();
-                    }
-                } catch (JSONException e) {
-                    e.getMessage();
-                }
-            }
-        };
-
-        PartidaRequest r = new PartidaRequest(respuesta);
-        RequestQueue cola = Volley.newRequestQueue(PartidaActivity.this);
-        cola.add(r);
-    }
-
-    public void agregarPartidas(Partida partida) {
-        // Agregando partidas
-        LinearLayout partidaLinear = new LinearLayout(this);
+    public void agregarWaitingRooms(Partida partida) {
+        // Agregando WaitingRooms
+        /*LinearLayout partidaLinear = new LinearLayout(this);
         partidaLinear.setOrientation(LinearLayout.HORIZONTAL);
         partidaLinear.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
         partidaLinear.setBackgroundColor(Color.parseColor("#524f4f"));
@@ -137,11 +94,11 @@ public class PartidaActivity extends AppCompatActivity {
             editbutton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent nextView = new Intent(PartidaActivity.this, CrearPartidaActivity.class);
+                    Intent nextView = new Intent(WaitingRoomActivity.this, CrearPartidaActivity.class);
                     nextView.putExtra("editActivity", "true");
                     nextView.putExtra("editPartida", partida);
-                    nextView.putExtra("partidasActivity", "false");
-                    PartidaActivity.this.startActivity(nextView);
+                    nextView.putExtra("WaitingRoomsActivity", "false");
+                    WaitingRoomActivity.this.startActivity(nextView);
                     finish();
                 }
             });
@@ -171,7 +128,48 @@ public class PartidaActivity extends AppCompatActivity {
                                 boolean ok = jsonRespuesta.getBoolean("success");
                                 if (ok) {
                                     parentLayout2.removeAllViews();// limpiamos la vista
-                                    cargarPartidas();
+                                    cargarWaitingRooms();
+                                } else {
+                                    AlertDialog.Builder alerta = new AlertDialog.Builder(WaitingRoomActivity.this);
+                                    alerta.setMessage("Fallo al eliminar el usuario").setNegativeButton("Reintentar", null).create().show();
+                                }
+                            } catch (JSONException e) {
+                                e.getMessage();
+                            }
+                        }
+                    };
+                    PartidaRequest r = new PartidaRequest(String.valueOf(partida.getP_id()), respuesta);
+                    RequestQueue cola = Volley.newRequestQueue(WaitingRoomActivity.this);
+                    cola.add(r);
+                }
+            });
+        }
+
+        ImageView joinbutton = new ImageView(this);
+        if(Usuario.usuarioLogueado.getU_rol().equals("J")){
+            joinbutton.setImageResource(R.drawable.join);
+            joinbutton.setLayoutParams(new LinearLayout.LayoutParams(calcularPixeles(28),
+                    calcularPixeles(28)));
+            joinbutton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // eliminamos el usuario
+                    /*Response.Listener<String> respuesta = new Response.Listener<String>() {
+                        @RequiresApi(api = Build.VERSION_CODES.N)
+                        @Override
+                        public void onResponse(String response) {
+                            try {
+                                response = response.replaceFirst("<font>.*?</font>", "");
+                                int jsonStart = response.indexOf("{");
+                                int jsonEnd = response.lastIndexOf("}");
+                                if (jsonStart >= 0 && jsonEnd >= 0 && jsonEnd > jsonStart) {
+                                    response = response.substring(jsonStart, jsonEnd + 1);
+                                }
+                                JSONObject jsonRespuesta = new JSONObject(response);
+                                boolean ok = jsonRespuesta.getBoolean("success");
+                                if (ok) {
+                                    parentLayout2.removeAllViews();// limpiamos la vista
+                                    cargarWaitingRooms();
                                 } else {
                                     AlertDialog.Builder alerta = new AlertDialog.Builder(PartidaActivity.this);
                                     alerta.setMessage("Fallo al eliminar el usuario").setNegativeButton("Reintentar", null).create().show();
@@ -188,48 +186,6 @@ public class PartidaActivity extends AppCompatActivity {
             });
         }
 
-        ImageView joinbutton = new ImageView(this);
-        if(Usuario.usuarioLogueado.getU_rol().equals("J")){
-            joinbutton.setImageResource(R.drawable.join);
-            joinbutton.setLayoutParams(new LinearLayout.LayoutParams(calcularPixeles(28),
-                    calcularPixeles(28)));
-            joinbutton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    // agregamos el usuario a la partida
-                    Response.Listener<String> respuesta = new Response.Listener<String>() {
-                        @RequiresApi(api = Build.VERSION_CODES.N)
-                        @Override
-                        public void onResponse(String response) {
-                            try {
-                                response = response.replaceFirst("<font>.*?</font>", "");
-                                int jsonStart = response.indexOf("{");
-                                int jsonEnd = response.lastIndexOf("}");
-                                if (jsonStart >= 0 && jsonEnd >= 0 && jsonEnd > jsonStart) {
-                                    response = response.substring(jsonStart, jsonEnd + 1);
-                                }
-                                JSONObject jsonRespuesta = new JSONObject(response);
-                                boolean ok = jsonRespuesta.getBoolean("success");
-                                if (ok) {
-                                    Intent nextActivity = new Intent(PartidaActivity.this, WaitingRoomActivity.class);
-                                    PartidaActivity.this.startActivity(nextActivity);
-                                    PartidaActivity.this.finish();
-                                } else {
-                                    AlertDialog.Builder alerta = new AlertDialog.Builder(PartidaActivity.this);
-                                    alerta.setMessage("Fallo al unirse a la partida").setNegativeButton("Reintentar", null).create().show();
-                                }
-                            } catch (JSONException e) {
-                                e.getMessage();
-                            }
-                        }
-                    };
-                    PartidaRequest r = new PartidaRequest(Usuario.usuarioLogueado.getU_id(), partida.getP_id(), respuesta);
-                    RequestQueue cola = Volley.newRequestQueue(PartidaActivity.this);
-                    cola.add(r);
-                }
-            });
-        }
-
         parentLayout2.addView(partidaLinear);
         partidaLinear.addView(dataLinear);
         if(Usuario.usuarioLogueado.getU_rol().equals("A")) {
@@ -238,7 +194,7 @@ public class PartidaActivity extends AppCompatActivity {
         }else if(Usuario.usuarioLogueado.getU_rol().equals("J")){
             buttonLinear.addView(joinbutton);
         }
-        partidaLinear.addView(buttonLinear);
+        partidaLinear.addView(buttonLinear);*/
     }
 
     public int calcularPixeles(int dps) {
@@ -254,17 +210,16 @@ public class PartidaActivity extends AppCompatActivity {
         }
     }
 
-    public void crearPartida(View view){
+    public void empezarPartida(View view){
         //Redirecciona a la otra vista
-        Intent nextActivity = new Intent(PartidaActivity.this, CrearPartidaActivity.class);
-        nextActivity.putExtra("editActivity", "false");
-        PartidaActivity.this.startActivity(nextActivity);
-        PartidaActivity.this.finish();
+        /*Intent nextActivity = new Intent(WaitingRoomActivity.this, CrearPartidaActivity.class);
+        WaitingRoomActivity.this.startActivity(nextActivity);
+        WaitingRoomActivity.this.finish();*/
     }
 
     public void volverLobby(View view){
-        Intent nextActivity = new Intent(PartidaActivity.this, LobbyActivity.class);
-        PartidaActivity.this.startActivity(nextActivity);
-        PartidaActivity.this.finish();
+        Intent nextActivity = new Intent(WaitingRoomActivity.this, PartidaActivity.class);
+        WaitingRoomActivity.this.startActivity(nextActivity);
+        WaitingRoomActivity.this.finish();
     }
 }
