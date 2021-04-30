@@ -153,8 +153,37 @@ public class WaitingRoomActivity extends AppCompatActivity {
     }
 
     public void volverLobby(View view){
-        Intent nextActivity = new Intent(WaitingRoomActivity.this, PartidaActivity.class);
-        WaitingRoomActivity.this.startActivity(nextActivity);
-        WaitingRoomActivity.this.finish();
+        System.out.println("hola");
+        Response.Listener<String> respuesta = new Response.Listener<String>() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
+            @Override
+            public void onResponse(String response) {
+                try {
+                    response = response.replaceFirst("<font>.*?</font>", "");
+                    int jsonStart = response.indexOf("{");
+                    int jsonEnd = response.lastIndexOf("}");
+                    if (jsonStart >= 0 && jsonEnd >= 0 && jsonEnd > jsonStart) {
+                        response = response.substring(jsonStart, jsonEnd + 1);
+                    }
+                    JSONObject jsonRespuesta = new JSONObject(response);
+                    boolean ok = jsonRespuesta.getBoolean("success");
+                    System.out.println(jsonRespuesta);
+                    if (ok) {
+                        Intent nextActivity = new Intent(WaitingRoomActivity.this, PartidaActivity.class);
+                        WaitingRoomActivity.this.startActivity(nextActivity);
+                        WaitingRoomActivity.this.finish();
+                    } else {
+                        AlertDialog.Builder alerta = new AlertDialog.Builder(WaitingRoomActivity.this);
+                        alerta.setMessage("Fallo al salir de partida").setNegativeButton("Reintentar", null).create().show();
+                    }
+                } catch (JSONException e) {
+                    e.getMessage();
+                }
+            }
+        };
+
+        PartidaRequest r = new PartidaRequest(String.valueOf(Usuario.usuarioLogueado.getU_id()), p_id, respuesta);
+        RequestQueue cola = Volley.newRequestQueue(WaitingRoomActivity.this);
+        cola.add(r);
     }
 }

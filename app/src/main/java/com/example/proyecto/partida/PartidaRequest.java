@@ -31,6 +31,7 @@ public class PartidaRequest extends StringRequest {
         parametros.put("p_tipo", p_tipo+"");
         parametros.put("p_codigo", p_codigo+"");
         parametros.put("p_nivelMinimo", p_nivelMinimo+"");
+        parametros.put("p_estado", "A");
         parametros.put("p_fkUsuario", p_fkUsuario+"");
     }
 
@@ -47,7 +48,15 @@ public class PartidaRequest extends StringRequest {
 
     //agregamos en tb_partida_usuario
     public PartidaRequest(int pu_fkUsuario, int pu_fkPartida, Response.Listener<String> listener){
-        super(Method.POST, "http://winadate.atwebpages.com/partidas/partidaUsuario.php", listener, null);
+        super(Method.POST, "http://winadate.atwebpages.com/UsuarioXPartida/partidaUsuario.php", listener, null);
+        parametros = new HashMap<>();
+        parametros.put("pu_fkUsuario", pu_fkUsuario+"");
+        parametros.put("pu_fkPartida", pu_fkPartida+"");
+    }
+
+    //eliminamos en tb_partida_usuario por usuario y partida
+    public PartidaRequest(String pu_fkUsuario, String pu_fkPartida, Response.Listener<String> listener){
+        super(Method.POST, "http://winadate.atwebpages.com/UsuarioXPartida/deleteUsuarioxPartida.php", listener, null);
         parametros = new HashMap<>();
         parametros.put("pu_fkUsuario", pu_fkUsuario+"");
         parametros.put("pu_fkPartida", pu_fkPartida+"");
@@ -55,7 +64,7 @@ public class PartidaRequest extends StringRequest {
 
     //traemos usuarios x partida
     public PartidaRequest(int p_id, Response.Listener<String> listener) {
-        super(Method.POST, "http://winadate.atwebpages.com/partidas/UsuariosXPartida.php", listener, null);
+        super(Method.POST, "http://winadate.atwebpages.com/UsuarioXPartida/UsuariosXPartida.php", listener, null);
         parametros = new HashMap<>();
         parametros.put("p_id", p_id+"");
     }
