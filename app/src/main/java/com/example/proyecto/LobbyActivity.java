@@ -20,6 +20,7 @@ import okhttp3.Response;
 import okhttp3.WebSocket;
 import okhttp3.WebSocketListener;
 
+import com.example.proyecto.login.LoginActivity;
 import com.example.proyecto.partida.PartidaActivity;
 import com.example.proyecto.usuarios.Usuario;
 import com.example.proyecto.usuarios.UsuariosActivity;
@@ -61,6 +62,17 @@ public class LobbyActivity extends AppCompatActivity {
             });
         }
 
+        Button CerrarSesionButton = new Button(this);
+        CerrarSesionButton.setText("Cerrar Sesión");
+        CerrarSesionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent nextActivity = new Intent(LobbyActivity.this, LoginActivity.class);
+                LobbyActivity.this.startActivity(nextActivity);
+                LobbyActivity.this.finish();
+            }
+        });
+
         Button AcercaButton = new Button(this);
         AcercaButton.setText("ACERCA DE");
         AcercaButton.setOnClickListener(new View.OnClickListener() {
@@ -101,6 +113,7 @@ public class LobbyActivity extends AppCompatActivity {
         if (Usuario.usuarioLogueado.getU_rol().equals("J")) {
             parentLayout.addView(logrosButton);
         }
+        parentLayout.addView(CerrarSesionButton);
         //initiateSocketConnection();
     }
 

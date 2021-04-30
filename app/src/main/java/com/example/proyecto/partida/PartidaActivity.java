@@ -212,12 +212,13 @@ public class PartidaActivity extends AppCompatActivity {
                                 boolean ok = jsonRespuesta.getBoolean("success");
                                 if (ok) {
                                     Intent nextActivity = new Intent(PartidaActivity.this, WaitingRoomActivity.class);
+                                    nextActivity.putExtra("administrador", partida.getP_fkUsuario() == Usuario.usuarioLogueado.getU_id() ? "true" : "false");
                                     nextActivity.putExtra("p_id", partida.getP_id().toString());
                                     PartidaActivity.this.startActivity(nextActivity);
                                     PartidaActivity.this.finish();
                                 } else {
                                     AlertDialog.Builder alerta = new AlertDialog.Builder(PartidaActivity.this);
-                                    alerta.setMessage("Fallo al unirse a la partida").setNegativeButton("Reintentar", null).create().show();
+                                    alerta.setMessage("Error al unirse a la partida").setNegativeButton("Reintentar", null).create().show();
                                 }
                             } catch (JSONException e) {
                                 e.getMessage();

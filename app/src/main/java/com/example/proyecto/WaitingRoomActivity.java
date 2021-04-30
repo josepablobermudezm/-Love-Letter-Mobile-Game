@@ -14,6 +14,7 @@ import android.widget.TextView;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -41,16 +42,22 @@ public class WaitingRoomActivity extends AppCompatActivity {
     private LinearLayout parentLayout2;
     private ArrayList<Usuario> Usuarios = new ArrayList<>();
     private String p_id;
+    private String administrador;
+    private ImageView imageViewStart;
+    private ConstraintLayout parentLayout3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_waitingroom);
         parentLayout2 = (LinearLayout) findViewById(R.id.parentLayout2);
+        parentLayout3 = (ConstraintLayout) findViewById(R.id.parentLayout3);
         mTextView = (TextView) findViewById(R.id.text);
+        imageViewStart = (ImageView) findViewById(R.id.imageViewStart);
         Intent i = this.getIntent();
         p_id = i.getStringExtra("p_id");
-
+        administrador = i.getStringExtra("administrador");
+        parentLayout3.removeView(administrador.equals("true") ? null : imageViewStart);
         CargarUsuarios();
     }
 

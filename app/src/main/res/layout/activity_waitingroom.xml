@@ -46,11 +46,11 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
-                android:id="@+id/imageViewPlus"
+                android:id="@+id/imageViewStart"
                 android:layout_width="35dp"
                 android:layout_height="35dp"
                 android:onClick="empezarPartida"
-                android:src="@drawable/flagdisabled"
+                android:src="@drawable/start"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.933"
