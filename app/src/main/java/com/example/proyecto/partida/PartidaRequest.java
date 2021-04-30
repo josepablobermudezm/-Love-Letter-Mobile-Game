@@ -53,6 +53,13 @@ public class PartidaRequest extends StringRequest {
         parametros.put("pu_fkPartida", pu_fkPartida+"");
     }
 
+    //traemos usuarios x partida
+    public PartidaRequest(int p_id, Response.Listener<String> listener) {
+        super(Method.POST, "http://winadate.atwebpages.com/partidas/UsuariosXPartida.php", listener, null);
+        parametros = new HashMap<>();
+        parametros.put("p_id", p_id+"");
+    }
+
     @Override
     protected Map<String, String> getParams() {
         return parametros;

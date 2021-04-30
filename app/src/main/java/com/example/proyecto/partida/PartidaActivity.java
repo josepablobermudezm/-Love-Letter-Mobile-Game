@@ -212,6 +212,7 @@ public class PartidaActivity extends AppCompatActivity {
                                 boolean ok = jsonRespuesta.getBoolean("success");
                                 if (ok) {
                                     Intent nextActivity = new Intent(PartidaActivity.this, WaitingRoomActivity.class);
+                                    nextActivity.putExtra("p_id", partida.getP_id());
                                     PartidaActivity.this.startActivity(nextActivity);
                                     PartidaActivity.this.finish();
                                 } else {
