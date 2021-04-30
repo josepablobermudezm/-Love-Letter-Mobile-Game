@@ -40,7 +40,7 @@ public class WaitingRoomActivity extends AppCompatActivity {
     private LinearLayout parentLayout;
     private LinearLayout parentLayout2;
     private ArrayList<Usuario> Usuarios = new ArrayList<>();
-    private int p_id;
+    private String p_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +49,7 @@ public class WaitingRoomActivity extends AppCompatActivity {
         parentLayout2 = (LinearLayout) findViewById(R.id.parentLayout2);
         mTextView = (TextView) findViewById(R.id.text);
         Intent i = this.getIntent();
-        p_id = Integer.parseInt(i.getStringExtra("p_id"));
+        p_id = i.getStringExtra("p_id");
 
         CargarUsuarios();
     }
@@ -91,7 +91,7 @@ public class WaitingRoomActivity extends AppCompatActivity {
             }
         };
 
-        PartidaRequest r = new PartidaRequest(p_id,respuesta);
+        PartidaRequest r = new PartidaRequest(Integer.valueOf(p_id),respuesta);
         RequestQueue cola = Volley.newRequestQueue(WaitingRoomActivity.this);
         cola.add(r);
     }
