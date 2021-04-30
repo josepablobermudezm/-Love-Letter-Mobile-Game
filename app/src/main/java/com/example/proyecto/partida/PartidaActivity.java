@@ -128,66 +128,114 @@ public class PartidaActivity extends AppCompatActivity {
         buttonLinear.setGravity(Gravity.RIGHT);
 
         ImageView editbutton = new ImageView(this);
-        editbutton.setImageResource(R.drawable.edit);
-        editbutton.setLayoutParams(new LinearLayout.LayoutParams(calcularPixeles(28),
-                calcularPixeles(28)));
-        setMargins(editbutton, 0, 0, 0, 35);
-
-        editbutton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent nextView = new Intent(PartidaActivity.this, CrearPartidaActivity.class);
-                nextView.putExtra("editActivity", "true");
-                nextView.putExtra("editPartida", partida);
-                nextView.putExtra("partidasActivity", "false");
-                PartidaActivity.this.startActivity(nextView);
-                finish();
-            }
-        });
+        if(Usuario.usuarioLogueado.getU_rol().equals("A")){
+            editbutton.setImageResource(R.drawable.edit);
+            editbutton.setLayoutParams(new LinearLayout.LayoutParams(calcularPixeles(28),
+                    calcularPixeles(28)));
+            setMargins(editbutton, 0, 0, 0, 35);
+            editbutton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent nextView = new Intent(PartidaActivity.this, CrearPartidaActivity.class);
+                    nextView.putExtra("editActivity", "true");
+                    nextView.putExtra("editPartida", partida);
+                    nextView.putExtra("partidasActivity", "false");
+                    PartidaActivity.this.startActivity(nextView);
+                    finish();
+                }
+            });
+        }
 
         ImageView deletebutton = new ImageView(this);
-        deletebutton.setImageResource(R.drawable.delete);
-        deletebutton.setLayoutParams(new LinearLayout.LayoutParams(calcularPixeles(28),
-                calcularPixeles(28)));
-
-        deletebutton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // eliminamos el usuario
-                Response.Listener<String> respuesta = new Response.Listener<String>() {
-                    @RequiresApi(api = Build.VERSION_CODES.N)
-                    @Override
-                    public void onResponse(String response) {
-                        try {
-                            response = response.replaceFirst("<font>.*?</font>", "");
-                            int jsonStart = response.indexOf("{");
-                            int jsonEnd = response.lastIndexOf("}");
-                            if (jsonStart >= 0 && jsonEnd >= 0 && jsonEnd > jsonStart) {
-                                response = response.substring(jsonStart, jsonEnd + 1);
+        if(Usuario.usuarioLogueado.getU_rol().equals("A")){
+            deletebutton.setImageResource(R.drawable.delete);
+            deletebutton.setLayoutParams(new LinearLayout.LayoutParams(calcularPixeles(28),
+                    calcularPixeles(28)));
+            deletebutton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // eliminamos el usuario
+                    Response.Listener<String> respuesta = new Response.Listener<String>() {
+                        @RequiresApi(api = Build.VERSION_CODES.N)
+                        @Override
+                        public void onResponse(String response) {
+                            try {
+                                response = response.replaceFirst("<font>.*?</font>", "");
+                                int jsonStart = response.indexOf("{");
+                                int jsonEnd = response.lastIndexOf("}");
+                                if (jsonStart >= 0 && jsonEnd >= 0 && jsonEnd > jsonStart) {
+                                    response = response.substring(jsonStart, jsonEnd + 1);
+                                }
+                                JSONObject jsonRespuesta = new JSONObject(response);
+                                boolean ok = jsonRespuesta.getBoolean("success");
+                                if (ok) {
+                                    parentLayout2.removeAllViews();// limpiamos la vista
+                                    cargarPartidas();
+                                } else {
+                                    AlertDialog.Builder alerta = new AlertDialog.Builder(PartidaActivity.this);
+                                    alerta.setMessage("Fallo al eliminar el usuario").setNegativeButton("Reintentar", null).create().show();
+                                }
+                            } catch (JSONException e) {
+                                e.getMessage();
                             }
-                            JSONObject jsonRespuesta = new JSONObject(response);
-                            boolean ok = jsonRespuesta.getBoolean("success");
-                            if (ok) {
-                                parentLayout2.removeAllViews();// limpiamos la vista
-                                cargarPartidas();
-                            } else {
-                                AlertDialog.Builder alerta = new AlertDialog.Builder(PartidaActivity.this);
-                                alerta.setMessage("Fallo al eliminar el usuario").setNegativeButton("Reintentar", null).create().show();
-                            }
-                        } catch (JSONException e) {
-                            e.getMessage();
                         }
-                    }
-                };
-                PartidaRequest r = new PartidaRequest(String.valueOf(partida.getP_id()), respuesta);
-                RequestQueue cola = Volley.newRequestQueue(PartidaActivity.this);
-                cola.add(r);
-            }
-        });
+                    };
+                    PartidaRequest r = new PartidaRequest(String.valueOf(partida.getP_id()), respuesta);
+                    RequestQueue cola = Volley.newRequestQueue(PartidaActivity.this);
+                    cola.add(r);
+                }
+            });
+        }
+
+        ImageView joinbutton = new ImageView(this);
+        if(Usuario.usuarioLogueado.getU_rol().equals("J")){
+            joinbutton.setImageResource(R.drawable.join);
+            joinbutton.setLayoutParams(new LinearLayout.LayoutParams(calcularPixeles(28),
+                    calcularPixeles(28)));
+            joinbutton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // eliminamos el usuario
+                    /*Response.Listener<String> respuesta = new Response.Listener<String>() {
+                        @RequiresApi(api = Build.VERSION_CODES.N)
+                        @Override
+                        public void onResponse(String response) {
+                            try {
+                                response = response.replaceFirst("<font>.*?</font>", "");
+                                int jsonStart = response.indexOf("{");
+                                int jsonEnd = response.lastIndexOf("}");
+                                if (jsonStart >= 0 && jsonEnd >= 0 && jsonEnd > jsonStart) {
+                                    response = response.substring(jsonStart, jsonEnd + 1);
+                                }
+                                JSONObject jsonRespuesta = new JSONObject(response);
+                                boolean ok = jsonRespuesta.getBoolean("success");
+                                if (ok) {
+                                    parentLayout2.removeAllViews();// limpiamos la vista
+                                    cargarPartidas();
+                                } else {
+                                    AlertDialog.Builder alerta = new AlertDialog.Builder(PartidaActivity.this);
+                                    alerta.setMessage("Fallo al eliminar el usuario").setNegativeButton("Reintentar", null).create().show();
+                                }
+                            } catch (JSONException e) {
+                                e.getMessage();
+                            }
+                        }
+                    };
+                    PartidaRequest r = new PartidaRequest(String.valueOf(partida.getP_id()), respuesta);
+                    RequestQueue cola = Volley.newRequestQueue(PartidaActivity.this);
+                    cola.add(r);*/
+                }
+            });
+        }
+
         parentLayout2.addView(partidaLinear);
         partidaLinear.addView(dataLinear);
-        buttonLinear.addView(editbutton);
-        buttonLinear.addView(deletebutton);
+        if(Usuario.usuarioLogueado.getU_rol().equals("A")) {
+            buttonLinear.addView(editbutton);
+            buttonLinear.addView(deletebutton);
+        }else if(Usuario.usuarioLogueado.getU_rol().equals("J")){
+            buttonLinear.addView(joinbutton);
+        }
         partidaLinear.addView(buttonLinear);
     }
 
