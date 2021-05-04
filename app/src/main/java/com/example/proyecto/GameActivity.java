@@ -61,7 +61,7 @@ public class GameActivity extends AppCompatActivity {
                 int channelId = 1;
 
                 Request request = new Request.Builder()
-                        .url("http://winadate.atwebpages.com/websocket.php/v3/1?apikey=dwRO3yR7VvymQk1HfYHqJBK22coq0TnEW90aqcN4&notify_self")
+                        .url("wss://us-nyc-1.websocket.me/v3/1?api_key=dwRO3yR7VvymQk1HfYHqJBK22coq0TnEW90aqcN4&notify_self")
                         .build();
 
                 PieSocketListener listener =  new PieSocketListener();
