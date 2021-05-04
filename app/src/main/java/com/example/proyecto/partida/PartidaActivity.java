@@ -59,11 +59,13 @@ public class PartidaActivity extends AppCompatActivity {
                     }
                     JSONObject jsonRespuesta = new JSONObject(response);
                     JSONArray partidas = jsonRespuesta.getJSONArray("partidas");
+                    System.out.println("oooooooooooooooooooooooooooooooooooooooooooo");
+                    System.out.println(partidas);
                     for (int x = 0; x < partidas.length(); x++) {
                         JSONObject elemento = partidas.getJSONObject(x);
                         Partida partida = new Partida(Integer.parseInt(elemento.getString("p_id")), Integer.parseInt(elemento.getString("p_cantidadJugadores")),
                                 elemento.getString("p_tipo"), elemento.getString("p_codigo"),
-                                Integer.parseInt(elemento.getString("p_nivelMinimo")), Integer.parseInt(elemento.getString("p_nivelMinimo")));
+                                Integer.parseInt(elemento.getString("p_nivelMinimo")), Integer.parseInt(elemento.getString("p_fkUsuario")));
                             agregarPartidas(partida);
                             Partida.partidas.add(partida);
                     }
@@ -212,6 +214,8 @@ public class PartidaActivity extends AppCompatActivity {
                                 boolean ok = jsonRespuesta.getBoolean("success");
                                 if (ok) {
                                     Intent nextActivity = new Intent(PartidaActivity.this, WaitingRoomActivity.class);
+                                    System.out.println(partida);
+                                    System.out.println(partida.getP_fkUsuario() + " == " + Usuario.usuarioLogueado.getU_id());
                                     nextActivity.putExtra("administrador", partida.getP_fkUsuario() == Usuario.usuarioLogueado.getU_id() ? "true" : "false");
                                     nextActivity.putExtra("p_id", partida.getP_id().toString());
                                     PartidaActivity.this.startActivity(nextActivity);

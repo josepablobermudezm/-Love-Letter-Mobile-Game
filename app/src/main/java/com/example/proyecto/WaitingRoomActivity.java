@@ -45,6 +45,7 @@ public class WaitingRoomActivity extends AppCompatActivity {
     private String administrador;
     private ImageView imageViewStart;
     private ConstraintLayout parentLayout3;
+    private int cantidadUsuarios = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,11 +58,12 @@ public class WaitingRoomActivity extends AppCompatActivity {
         Intent i = this.getIntent();
         p_id = i.getStringExtra("p_id");
         administrador = i.getStringExtra("administrador");
+        System.out.println(administrador);
         parentLayout3.removeView(administrador.equals("true") ? null : imageViewStart);
-        CargarUsuarios();
+        CargarUsuarios("cargarUsuarios");
     }
 
-    public void CargarUsuarios(){
+    public void CargarUsuarios(String valor){
         Response.Listener<String> respuesta = new Response.Listener<String>() {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
@@ -75,15 +77,22 @@ public class WaitingRoomActivity extends AppCompatActivity {
                     }
                     JSONObject jsonRespuesta = new JSONObject(response);
                     JSONArray usuarios = jsonRespuesta.getJSONArray("Usuarios");
-                    for (int x = 0; x < usuarios.length(); x++) {
-                        JSONObject elemento = usuarios.getJSONObject(x);
-                        Usuario usuario = new Usuario(Integer.parseInt(elemento.getString("u_id")), Integer.parseInt(elemento.getString("u_cantidadPartidasJugadas")),
-                                Integer.parseInt(elemento.getString("u_cantidadPartidasGanadas")), Integer.parseInt(elemento.getString("u_cantidadAmigos")),
-                                Integer.parseInt(elemento.getString("u_nivel")), Integer.parseInt(elemento.getString("u_experiencia")),
-                                elemento.getString("u_alias"), elemento.getString("u_password"), elemento.getString("u_rol"),
-                                elemento.getString("u_picture"), elemento.getString("u_fechaNacimiento"));
-                        agregarWaitingRooms(usuario);
-                        //Usuarios.add(usuario);
+                    if(valor.equals("cargarUsuarios")){
+                        for (int x = 0; x < usuarios.length(); x++) {
+                            JSONObject elemento = usuarios.getJSONObject(x);
+                            Usuario usuario = new Usuario(Integer.parseInt(elemento.getString("u_id")), Integer.parseInt(elemento.getString("u_cantidadPartidasJugadas")),
+                                    Integer.parseInt(elemento.getString("u_cantidadPartidasGanadas")), Integer.parseInt(elemento.getString("u_cantidadAmigos")),
+                                    Integer.parseInt(elemento.getString("u_nivel")), Integer.parseInt(elemento.getString("u_experiencia")),
+                                    elemento.getString("u_alias"), elemento.getString("u_password"), elemento.getString("u_rol"),
+                                    elemento.getString("u_picture"), elemento.getString("u_fechaNacimiento"));
+                            agregarWaitingRooms(usuario);
+                            //Usuarios.add(usuario);
+                        }
+                    }else if(valor.equals("cantidadUsuarios")){
+                        for (int x = 0; x < usuarios.length(); x++) {
+                            JSONObject elemento = usuarios.getJSONObject(x);
+                            System.out.println(elemento);
+                        }
                     }
                     boolean ok = jsonRespuesta.getBoolean("success");
                     if (ok) {
@@ -102,6 +111,7 @@ public class WaitingRoomActivity extends AppCompatActivity {
         RequestQueue cola = Volley.newRequestQueue(WaitingRoomActivity.this);
         cola.add(r);
     }
+
     public void agregarWaitingRooms(Usuario usuario) {
         // Agregando usuarios
         LinearLayout userLinear = new LinearLayout(this);
@@ -154,9 +164,12 @@ public class WaitingRoomActivity extends AppCompatActivity {
 
     public void empezarPartida(View view){
         //Redirecciona a la otra vista
-        /*Intent nextActivity = new Intent(WaitingRoomActivity.this, CrearPartidaActivity.class);
+
+        CargarUsuarios("cantidadUsuarios");
+
+        Intent nextActivity = new Intent(WaitingRoomActivity.this, GameActivity.class);
         WaitingRoomActivity.this.startActivity(nextActivity);
-        WaitingRoomActivity.this.finish();*/
+        WaitingRoomActivity.this.finish();
     }
 
     public void volverLobby(View view){
