@@ -63,8 +63,9 @@ public class PartidaRequest extends StringRequest {
     }
 
     //traemos usuarios x partida
-    public PartidaRequest(int p_id, Response.Listener<String> listener) {
-        super(Method.POST, "http://winadate.atwebpages.com/UsuarioXPartida/UsuariosXPartida.php", listener, null);
+    public PartidaRequest(int p_id, Response.Listener<String> listener, String ruta) {
+        super(Method.POST, ruta.equals("UsuariosXPartida") ? "http://winadate.atwebpages.com/UsuarioXPartida/UsuariosXPartida.php"
+                : "http://winadate.atwebpages.com/UsuarioXPartida/UsuariosXPartidaCount.php", listener, null);
         parametros = new HashMap<>();
         parametros.put("p_id", p_id+"");
     }

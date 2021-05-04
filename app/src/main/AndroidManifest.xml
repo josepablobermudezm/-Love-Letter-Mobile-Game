@@ -16,6 +16,7 @@
 
         <activity android:name=".usuarios.UsuariosActivity" />
         <activity android:name=".WaitingRoomActivity" />
+        <activity android:name=".GameActivity" />
         <activity android:name=".LogrosActivity" />
         <activity android:name=".partida.CrearPartidaActivity" />
         <activity android:name=".AboutUsActivity" />

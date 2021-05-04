@@ -18,6 +18,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.proyecto.login.LoginActivity;
 import com.example.proyecto.partida.CrearPartidaActivity;
@@ -41,7 +42,7 @@ public class WaitingRoomActivity extends AppCompatActivity {
     private LinearLayout parentLayout;
     private LinearLayout parentLayout2;
     private ArrayList<Usuario> Usuarios = new ArrayList<>();
-    private String p_id;
+    private Partida partida;
     private String administrador;
     private ImageView imageViewStart;
     private ConstraintLayout parentLayout3;
@@ -56,14 +57,14 @@ public class WaitingRoomActivity extends AppCompatActivity {
         mTextView = (TextView) findViewById(R.id.text);
         imageViewStart = (ImageView) findViewById(R.id.imageViewStart);
         Intent i = this.getIntent();
-        p_id = i.getStringExtra("p_id");
+        partida = (Partida) i.getSerializableExtra("partida");
         administrador = i.getStringExtra("administrador");
         System.out.println(administrador);
         parentLayout3.removeView(administrador.equals("true") ? null : imageViewStart);
         CargarUsuarios("cargarUsuarios");
     }
 
-    public void CargarUsuarios(String valor){
+    public int CargarUsuarios(String valor){
         Response.Listener<String> respuesta = new Response.Listener<String>() {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
@@ -89,14 +90,14 @@ public class WaitingRoomActivity extends AppCompatActivity {
                             //Usuarios.add(usuario);
                         }
                     }else if(valor.equals("cantidadUsuarios")){
-                        for (int x = 0; x < usuarios.length(); x++) {
-                            JSONObject elemento = usuarios.getJSONObject(x);
-                            System.out.println(elemento);
-                        }
+                        System.out.println("cantidad de usuarios");
+                        JSONObject elemento = usuarios.getJSONObject(0);
+                        cantidadUsuarios = Integer.valueOf(elemento.getString("COUNT(*)"));
+                        System.out.println(cantidadUsuarios);
                     }
                     boolean ok = jsonRespuesta.getBoolean("success");
                     if (ok) {
-                        System.out.println(jsonRespuesta);
+                        //System.out.println(jsonRespuesta);
                     } else {
                         AlertDialog.Builder alerta = new AlertDialog.Builder(WaitingRoomActivity.this);
                         alerta.setMessage("Error obteniendo los usuarios").setNegativeButton("Reintentar", null).create().show();
@@ -106,10 +107,15 @@ public class WaitingRoomActivity extends AppCompatActivity {
                 }
             }
         };
-
-        PartidaRequest r = new PartidaRequest(Integer.valueOf(p_id),respuesta);
+        PartidaRequest r = null;
+        if(valor.equals("cargarUsuarios")){
+            r = new PartidaRequest(Integer.valueOf(partida.getP_id()),respuesta, "UsuariosXPartida");
+        }else if(valor.equals("cantidadUsuarios")){
+            r = new PartidaRequest(Integer.valueOf(partida.getP_id()), respuesta, "UsuariosXPartidaCount");
+        }
         RequestQueue cola = Volley.newRequestQueue(WaitingRoomActivity.this);
         cola.add(r);
+        return cantidadUsuarios;
     }
 
     public void agregarWaitingRooms(Usuario usuario) {
@@ -165,15 +171,23 @@ public class WaitingRoomActivity extends AppCompatActivity {
     public void empezarPartida(View view){
         //Redirecciona a la otra vista
 
-        CargarUsuarios("cantidadUsuarios");
+        System.out.println(CargarUsuarios("cantidadUsuarios") + "<="  + partida.getP_cantidadJugadores());
 
-        Intent nextActivity = new Intent(WaitingRoomActivity.this, GameActivity.class);
-        WaitingRoomActivity.this.startActivity(nextActivity);
-        WaitingRoomActivity.this.finish();
+        /*if(CargarUsuarios("cantidadUsuarios") >= partida.getP_cantidadJugadores()){
+            System.out.println("yooooooooooooooooooooo");
+            Intent nextActivity = new Intent(WaitingRoomActivity.this, GameActivity.class);
+            WaitingRoomActivity.this.startActivity(nextActivity);
+            WaitingRoomActivity.this.finish();
+        }else{
+            System.out.println("yooooooooooooooooooooo2");
+            AlertDialog.Builder alerta = new AlertDialog.Builder(WaitingRoomActivity.this);
+            alerta.setMessage("Cantidad de jugadores insuficiente").setNegativeButton("Reintentar", null).create().show();
+        }*/
+
+
     }
 
     public void volverLobby(View view){
-        System.out.println("hola");
         Response.Listener<String> respuesta = new Response.Listener<String>() {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
@@ -202,7 +216,7 @@ public class WaitingRoomActivity extends AppCompatActivity {
             }
         };
 
-        PartidaRequest r = new PartidaRequest(String.valueOf(Usuario.usuarioLogueado.getU_id()), p_id, respuesta);
+        PartidaRequest r = new PartidaRequest(String.valueOf(Usuario.usuarioLogueado.getU_id()), String.valueOf(partida.getP_id()), respuesta);
         RequestQueue cola = Volley.newRequestQueue(WaitingRoomActivity.this);
         cola.add(r);
     }
