@@ -50,7 +50,14 @@
             android:id="@+id/parentLayout2"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"/>
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/connect"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Conectar" />
+        </LinearLayout>
     </LinearLayout>
 
 </ScrollView>
