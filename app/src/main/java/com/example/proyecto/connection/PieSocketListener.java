@@ -12,12 +12,13 @@ public class PieSocketListener extends WebSocketListener {
 
     @Override
     public void onOpen(WebSocket webSocket, Response response) {
-        webSocket.send("Hello World!");
+        webSocket.send("nuevoUsuario");
     }
 
     @Override
     public void onMessage(WebSocket webSocket, String text) {
         output("Received : " + text);
+        System.out.println(text);
     }
 
     @Override
