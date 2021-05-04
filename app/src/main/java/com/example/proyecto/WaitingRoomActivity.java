@@ -64,7 +64,7 @@ public class WaitingRoomActivity extends AppCompatActivity {
         CargarUsuarios("cargarUsuarios");
     }
 
-    public int CargarUsuarios(String valor){
+    public void CargarUsuarios(String valor){
         Response.Listener<String> respuesta = new Response.Listener<String>() {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
@@ -78,23 +78,18 @@ public class WaitingRoomActivity extends AppCompatActivity {
                     }
                     JSONObject jsonRespuesta = new JSONObject(response);
                     JSONArray usuarios = jsonRespuesta.getJSONArray("Usuarios");
-                    if(valor.equals("cargarUsuarios")){
-                        for (int x = 0; x < usuarios.length(); x++) {
-                            JSONObject elemento = usuarios.getJSONObject(x);
-                            Usuario usuario = new Usuario(Integer.parseInt(elemento.getString("u_id")), Integer.parseInt(elemento.getString("u_cantidadPartidasJugadas")),
-                                    Integer.parseInt(elemento.getString("u_cantidadPartidasGanadas")), Integer.parseInt(elemento.getString("u_cantidadAmigos")),
-                                    Integer.parseInt(elemento.getString("u_nivel")), Integer.parseInt(elemento.getString("u_experiencia")),
-                                    elemento.getString("u_alias"), elemento.getString("u_password"), elemento.getString("u_rol"),
-                                    elemento.getString("u_picture"), elemento.getString("u_fechaNacimiento"));
-                            agregarWaitingRooms(usuario);
-                            //Usuarios.add(usuario);
-                        }
-                    }else if(valor.equals("cantidadUsuarios")){
-                        System.out.println("cantidad de usuarios");
-                        JSONObject elemento = usuarios.getJSONObject(0);
-                        cantidadUsuarios = Integer.valueOf(elemento.getString("COUNT(*)"));
-                        System.out.println(cantidadUsuarios);
+                    for (int x = 0; x < usuarios.length(); x++) {
+                        JSONObject elemento = usuarios.getJSONObject(x);
+                        Usuario usuario = new Usuario(Integer.parseInt(elemento.getString("u_id")), Integer.parseInt(elemento.getString("u_cantidadPartidasJugadas")),
+                                Integer.parseInt(elemento.getString("u_cantidadPartidasGanadas")), Integer.parseInt(elemento.getString("u_cantidadAmigos")),
+                                Integer.parseInt(elemento.getString("u_nivel")), Integer.parseInt(elemento.getString("u_experiencia")),
+                                elemento.getString("u_alias"), elemento.getString("u_password"), elemento.getString("u_rol"),
+                                elemento.getString("u_picture"), elemento.getString("u_fechaNacimiento"));
+                        agregarWaitingRooms(usuario);
+                        //Usuarios.add(usuario);
                     }
+                    cantidadUsuarios = usuarios.length();
+                    System.out.println(cantidadUsuarios);
                     boolean ok = jsonRespuesta.getBoolean("success");
                     if (ok) {
                         //System.out.println(jsonRespuesta);
@@ -108,14 +103,9 @@ public class WaitingRoomActivity extends AppCompatActivity {
             }
         };
         PartidaRequest r = null;
-        if(valor.equals("cargarUsuarios")){
-            r = new PartidaRequest(Integer.valueOf(partida.getP_id()),respuesta, "UsuariosXPartida");
-        }else if(valor.equals("cantidadUsuarios")){
-            r = new PartidaRequest(Integer.valueOf(partida.getP_id()), respuesta, "UsuariosXPartidaCount");
-        }
+        r = new PartidaRequest(Integer.valueOf(partida.getP_id()),respuesta, "UsuariosXPartida");
         RequestQueue cola = Volley.newRequestQueue(WaitingRoomActivity.this);
         cola.add(r);
-        return cantidadUsuarios;
     }
 
     public void agregarWaitingRooms(Usuario usuario) {
@@ -170,21 +160,15 @@ public class WaitingRoomActivity extends AppCompatActivity {
 
     public void empezarPartida(View view){
         //Redirecciona a la otra vista
-
-        System.out.println(CargarUsuarios("cantidadUsuarios") + "<="  + partida.getP_cantidadJugadores());
-
-        /*if(CargarUsuarios("cantidadUsuarios") >= partida.getP_cantidadJugadores()){
-            System.out.println("yooooooooooooooooooooo");
+        if(cantidadUsuarios >= partida.getP_cantidadJugadores()){
+            System.out.println("se está cumpliendo");
             Intent nextActivity = new Intent(WaitingRoomActivity.this, GameActivity.class);
             WaitingRoomActivity.this.startActivity(nextActivity);
             WaitingRoomActivity.this.finish();
         }else{
-            System.out.println("yooooooooooooooooooooo2");
             AlertDialog.Builder alerta = new AlertDialog.Builder(WaitingRoomActivity.this);
             alerta.setMessage("Cantidad de jugadores insuficiente").setNegativeButton("Reintentar", null).create().show();
-        }*/
-
-
+        }
     }
 
     public void volverLobby(View view){
