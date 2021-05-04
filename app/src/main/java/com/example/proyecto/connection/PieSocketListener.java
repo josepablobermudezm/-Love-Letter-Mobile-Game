@@ -12,24 +12,23 @@ public class PieSocketListener extends WebSocketListener {
 
     @Override
     public void onOpen(WebSocket webSocket, Response response) {
-        webSocket.send("nuevoUsuario");
+        webSocket.send("nuevoUsuario Jose");
     }
 
     @Override
     public void onMessage(WebSocket webSocket, String text) {
-        output("Received : " + text);
-        System.out.println(text);
+        System.out.println("Received : " + text);
     }
 
     @Override
     public void onClosing(WebSocket webSocket, int code, String reason) {
         webSocket.close(NORMAL_CLOSURE_STATUS, null);
-        output("Closing : " + code + " / " + reason);
+        System.out.println("Closing : " + code + " / " + reason);
     }
 
     @Override
     public void onFailure(WebSocket webSocket, Throwable t, Response response) {
-        output("Error : " + t.getMessage());
+        System.out.println("Error : " + t.getMessage());
     }
 
     public void output(String text){
