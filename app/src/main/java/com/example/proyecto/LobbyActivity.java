@@ -57,7 +57,7 @@ public class LobbyActivity extends AppCompatActivity {
                 public void onClick(View v) {
                     Intent nextActivity = new Intent(LobbyActivity.this, LogrosActivity.class);
                     LobbyActivity.this.startActivity(nextActivity);
-                    LobbyActivity.this.finish();
+
                 }
             });
         }
@@ -69,7 +69,7 @@ public class LobbyActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent nextActivity = new Intent(LobbyActivity.this, LoginActivity.class);
                 LobbyActivity.this.startActivity(nextActivity);
-                LobbyActivity.this.finish();
+
             }
         });
 
@@ -80,7 +80,7 @@ public class LobbyActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent nextActivity = new Intent(LobbyActivity.this, AboutUsActivity.class);
                 LobbyActivity.this.startActivity(nextActivity);
-                LobbyActivity.this.finish();
+
             }
         });
 
@@ -91,7 +91,7 @@ public class LobbyActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent nextActivity = new Intent(LobbyActivity.this, UsuariosActivity.class);
                 LobbyActivity.this.startActivity(nextActivity);
-                LobbyActivity.this.finish();
+
             }
         });
         PlayButton = new Button(this);
@@ -101,7 +101,7 @@ public class LobbyActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent nextActivity = new Intent(LobbyActivity.this, PartidaActivity.class);
                 LobbyActivity.this.startActivity(nextActivity);
-                LobbyActivity.this.finish();
+
             }
         });
 

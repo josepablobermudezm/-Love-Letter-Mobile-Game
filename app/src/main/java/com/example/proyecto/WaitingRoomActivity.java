@@ -164,7 +164,7 @@ public class WaitingRoomActivity extends AppCompatActivity {
             System.out.println("se está cumpliendo");
             Intent nextActivity = new Intent(WaitingRoomActivity.this, GameActivity.class);
             WaitingRoomActivity.this.startActivity(nextActivity);
-            WaitingRoomActivity.this.finish();
+
         }else{
             AlertDialog.Builder alerta = new AlertDialog.Builder(WaitingRoomActivity.this);
             alerta.setMessage("Cantidad de jugadores insuficiente").setNegativeButton("Reintentar", null).create().show();
@@ -183,9 +183,10 @@ public class WaitingRoomActivity extends AppCompatActivity {
                     if (jsonStart >= 0 && jsonEnd >= 0 && jsonEnd > jsonStart) {
                         response = response.substring(jsonStart, jsonEnd + 1);
                     }
+
                     JSONObject jsonRespuesta = new JSONObject(response);
                     boolean ok = jsonRespuesta.getBoolean("success");
-                    System.out.println(jsonRespuesta);
+
                     if (ok) {
                         Intent nextActivity = new Intent(WaitingRoomActivity.this, PartidaActivity.class);
                         WaitingRoomActivity.this.startActivity(nextActivity);

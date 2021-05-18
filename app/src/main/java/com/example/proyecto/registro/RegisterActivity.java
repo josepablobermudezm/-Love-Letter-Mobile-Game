@@ -152,6 +152,7 @@ public class RegisterActivity extends AppCompatActivity {
                 if (null != selectedImageUri) {
                     // pone la imagen en la vista
                     ImageView imageView = (ImageView) findViewById(R.id.IVPreviewImage);
+                    System.out.println("URL   "+ selectedImageUri);
                     imageView.setImageURI(selectedImageUri);
                 }
             }

@@ -30,4 +30,8 @@
     <string name="title_activity_logros">LogrosActivity</string>
     <string name="title_activity_partida">PartidaActivity</string>
     <string name="title_activity_crear_partida">CrearPartidaActivity</string>
+    <string name="logro_nivel">Alcanza el nivel 10</string>
+    <string name="logro_amigos">Juega con 5 amigos</string>
+    <string name="logro_victorias">15 victorias obtenidas</string>
+    <string name="logro_cantidad">20 partidas jugadas</string>
 </resources>

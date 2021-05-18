@@ -57,6 +57,7 @@ public class PartidaActivity extends AppCompatActivity {
                     if (jsonStart >= 0 && jsonEnd >= 0 && jsonEnd > jsonStart) {
                         response = response.substring(jsonStart, jsonEnd + 1);
                     }
+
                     JSONObject jsonRespuesta = new JSONObject(response);
                     JSONArray partidas = jsonRespuesta.getJSONArray("partidas");
                     for (int x = 0; x < partidas.length(); x++) {
@@ -142,7 +143,7 @@ public class PartidaActivity extends AppCompatActivity {
                     nextView.putExtra("editPartida", partida);
                     nextView.putExtra("partidasActivity", "false");
                     PartidaActivity.this.startActivity(nextView);
-                    finish();
+
                 }
             });
         }
@@ -215,7 +216,7 @@ public class PartidaActivity extends AppCompatActivity {
                                     nextActivity.putExtra("administrador", partida.getP_fkUsuario() == Usuario.usuarioLogueado.getU_id() ? "true" : "false");
                                     nextActivity.putExtra("partida", partida);
                                     PartidaActivity.this.startActivity(nextActivity);
-                                    PartidaActivity.this.finish();
+
                                 } else {
                                     AlertDialog.Builder alerta = new AlertDialog.Builder(PartidaActivity.this);
                                     alerta.setMessage("Error al unirse a la partida").setNegativeButton("Reintentar", null).create().show();
@@ -261,7 +262,7 @@ public class PartidaActivity extends AppCompatActivity {
         Intent nextActivity = new Intent(PartidaActivity.this, CrearPartidaActivity.class);
         nextActivity.putExtra("editActivity", "false");
         PartidaActivity.this.startActivity(nextActivity);
-        PartidaActivity.this.finish();
+
     }
 
     public void volverLobby(View view){
