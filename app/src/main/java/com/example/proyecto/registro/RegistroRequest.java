@@ -12,14 +12,17 @@ public class RegistroRequest extends StringRequest {
     private static final String ruta = "http://winadate.atwebpages.com/registro.php";
     private Map<String, String> parametros;
 
-    public RegistroRequest(String u_alias, String fechaNacimiento, String u_password, String u_rol,
+    public RegistroRequest(String u_alias, String fechaNacimiento, String u_password, String u_rol, byte[] u_picture,
             int u_cantidadPartidasJugadas, int u_cantidadPartidasGanadas, int u_cantidadAmigos, int u_nivel, int u_experiencia, Response.Listener<String> listener) {
         super(Request.Method.POST, ruta, listener, null);
         parametros = new HashMap<>();
+        System.out.println("mostrando el byte1 antes de enviarlo en el registro request");
+        System.out.println(u_picture);
         parametros.put("u_alias", u_alias + "");
         parametros.put("u_fechaNacimiento", fechaNacimiento + "");
         parametros.put("u_password", u_password + "");
         parametros.put("u_rol", u_rol + "");
+        parametros.put("u_picture", u_picture + "");
         parametros.put("u_cantidadPartidasJugadas", u_cantidadPartidasJugadas + "");
         parametros.put("u_cantidadPartidasGanadas", u_cantidadPartidasGanadas + "");
         parametros.put("u_cantidadAmigos", u_cantidadAmigos + "");

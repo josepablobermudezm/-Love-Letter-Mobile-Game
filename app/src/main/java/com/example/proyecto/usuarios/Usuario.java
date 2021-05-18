@@ -5,12 +5,13 @@ import java.util.ArrayList;
 
 public class Usuario implements Serializable {
     private int u_id, u_cantidadPartidasJugadas, u_cantidadPartidasGanadas, u_cantidadAmigos, u_nivel, u_experiencia;
-    private String u_alias, u_password, u_rol, u_picture;
+    private String u_alias, u_password, u_rol;
+    private byte[] u_picture;
     private String u_fechaNacimiento;
     public static ArrayList<Usuario> usuarios = new ArrayList();
     public static Usuario usuarioLogueado = new Usuario();
 
-    public Usuario(int u_id, int u_cantidadPartidasJugadas, int u_cantidadPartidasGanadas, int u_cantidadAmigos, int u_nivel, int u_experiencia, String u_alias, String u_password, String u_rol, String u_picture, String u_fechaNacimiento) {
+    public Usuario(int u_id, int u_cantidadPartidasJugadas, int u_cantidadPartidasGanadas, int u_cantidadAmigos, int u_nivel, int u_experiencia, String u_alias, String u_password, String u_rol, byte[] u_picture, String u_fechaNacimiento) {
         this.u_id = u_id;
         this.u_cantidadPartidasJugadas = u_cantidadPartidasJugadas;
         this.u_cantidadPartidasGanadas = u_cantidadPartidasGanadas;
@@ -23,6 +24,7 @@ public class Usuario implements Serializable {
         this.u_picture = u_picture;
         this.u_fechaNacimiento = u_fechaNacimiento;
     }
+
     public Usuario() {
     }
     public static class ChildClass implements Serializable {
@@ -102,11 +104,11 @@ public class Usuario implements Serializable {
         this.u_rol = u_rol;
     }
 
-    public String getU_picture() {
+    public byte[] getU_picture() {
         return u_picture;
     }
 
-    public void setU_picture(String u_picture) {
+    public void setU_picture(byte[] u_picture) {
         this.u_picture = u_picture;
     }
 

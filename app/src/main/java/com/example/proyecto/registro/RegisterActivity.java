@@ -4,6 +4,9 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
@@ -24,19 +27,22 @@ import com.example.proyecto.login.LoginActivity;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
+
 public class RegisterActivity extends AppCompatActivity {
 
     int SELECT_PICTURE = 200;
 
-    ImageView IVPreviewImage;
-    String usuariosActivity;
-    String editActivity;
-    EditText aliasAux;
-    EditText contrasenaAux;
-    EditText fechaNacimientoAux;
-    RadioButton administradorAux;
-    RadioButton jugadorAux;
-    Usuario editusuario = new Usuario();
+    private ImageView IVPreviewImage;
+    private String usuariosActivity;
+    private String editActivity;
+    private EditText aliasAux;
+    private EditText contrasenaAux;
+    private EditText fechaNacimientoAux;
+    private RadioButton administradorAux;
+    private RadioButton jugadorAux;
+    private Usuario editusuario = new Usuario();
+    private byte byte1[];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,7 +93,6 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onResponse(String response){
                 try {
-
                     response = response.replaceFirst("<font>.*?</font>", "");
                     int jsonStart = response.indexOf("{");
                     int jsonEnd = response.lastIndexOf("}");
@@ -98,6 +103,8 @@ public class RegisterActivity extends AppCompatActivity {
                         // deal with the absence of JSON content here
                     }
                     JSONObject jsonRespuesta = new JSONObject(response);
+                    System.out.println("RESPUESTA RESPUESTA RESPUESTA REPSUESAT ");
+                    System.out.println(response);
                     boolean ok = jsonRespuesta.getBoolean("success");
                     if(ok){
                         Intent nextView = new Intent(RegisterActivity.this,
@@ -124,7 +131,9 @@ public class RegisterActivity extends AppCompatActivity {
             RequestQueue cola = Volley.newRequestQueue(RegisterActivity.this);
             cola.add(r);
         }else{
-            RegistroRequest r = new RegistroRequest(nombre, fechaNacimiento, contrasena, rol, 0, 0,
+            System.out.println("mostrando el byte1 antes de enviarlo en el registerActivity");
+            System.out.println(byte1);
+            RegistroRequest r = new RegistroRequest(nombre, fechaNacimiento, contrasena, rol, byte1, 0, 0,
                     0, 0, 0, respuesta);
             RequestQueue cola = Volley.newRequestQueue(RegisterActivity.this);
             cola.add(r);
@@ -152,10 +161,21 @@ public class RegisterActivity extends AppCompatActivity {
                 if (null != selectedImageUri) {
                     // pone la imagen en la vista
                     ImageView imageView = (ImageView) findViewById(R.id.IVPreviewImage);
-                    System.out.println("URL   "+ selectedImageUri);
                     imageView.setImageURI(selectedImageUri);
+                    BitmapDrawable drawable = (BitmapDrawable) imageView.getDrawable();
+                    Bitmap bitmap = drawable.getBitmap();
+                    byte1 = getBytesFromBitmap(bitmap);
                 }
             }
         }
+    }
+
+    public static byte[] getBytesFromBitmap(Bitmap bitmap) {
+        if (bitmap!=null) {
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 70, stream);
+            return stream.toByteArray();
+        }
+        return null;
     }
 }

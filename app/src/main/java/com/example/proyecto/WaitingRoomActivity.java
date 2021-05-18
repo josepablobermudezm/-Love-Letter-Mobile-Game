@@ -84,7 +84,7 @@ public class WaitingRoomActivity extends AppCompatActivity {
                                 Integer.parseInt(elemento.getString("u_cantidadPartidasGanadas")), Integer.parseInt(elemento.getString("u_cantidadAmigos")),
                                 Integer.parseInt(elemento.getString("u_nivel")), Integer.parseInt(elemento.getString("u_experiencia")),
                                 elemento.getString("u_alias"), elemento.getString("u_password"), elemento.getString("u_rol"),
-                                elemento.getString("u_picture"), elemento.getString("u_fechaNacimiento"));
+                                elemento.getString("u_picture").getBytes(), elemento.getString("u_fechaNacimiento"));
                         agregarWaitingRooms(usuario);
                         //Usuarios.add(usuario);
                     }
