@@ -12,7 +12,7 @@ public class RegistroRequest extends StringRequest {
     private static final String ruta = "http://winadate.atwebpages.com/registro.php";
     private Map<String, String> parametros;
 
-    public RegistroRequest(String u_alias, String fechaNacimiento, String u_password, String u_rol, byte[] u_picture,
+    public RegistroRequest(String u_alias, String fechaNacimiento, String u_password, String u_rol, String u_picture,
             int u_cantidadPartidasJugadas, int u_cantidadPartidasGanadas, int u_cantidadAmigos, int u_nivel, int u_experiencia, Response.Listener<String> listener) {
         super(Request.Method.POST, ruta, listener, null);
         parametros = new HashMap<>();

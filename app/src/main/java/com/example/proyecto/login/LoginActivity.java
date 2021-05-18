@@ -52,7 +52,7 @@ public class LoginActivity extends AppCompatActivity {
                         String alias = jsonRespuesta.getString("u_alias");
                         String password = jsonRespuesta.getString("u_password");
                         String rol = jsonRespuesta.getString("u_rol");
-                        byte[] u_picture = jsonRespuesta.getString("u_picture").getBytes();
+                        String u_picture = jsonRespuesta.getString("u_picture");
                         String u_fechaNacimiento = jsonRespuesta.getString("u_fechaNacimiento");
                         String u_cantidadPartidasJugadas = jsonRespuesta.getString("u_cantidadPartidasJugadas");
                         String u_cantidadPartidasGanadas = jsonRespuesta.getString("u_cantidadPartidasGanadas");

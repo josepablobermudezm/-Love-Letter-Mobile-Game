@@ -9,6 +9,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Base64;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -43,6 +44,7 @@ public class RegisterActivity extends AppCompatActivity {
     private RadioButton jugadorAux;
     private Usuario editusuario = new Usuario();
     private byte byte1[];
+    private String encodedImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -132,8 +134,8 @@ public class RegisterActivity extends AppCompatActivity {
             cola.add(r);
         }else{
             System.out.println("mostrando el byte1 antes de enviarlo en el registerActivity");
-            System.out.println(byte1);
-            RegistroRequest r = new RegistroRequest(nombre, fechaNacimiento, contrasena, rol, byte1, 0, 0,
+            System.out.println(encodedImage);
+            RegistroRequest r = new RegistroRequest(nombre, fechaNacimiento, contrasena, rol, encodedImage, 0, 0,
                     0, 0, 0, respuesta);
             RequestQueue cola = Volley.newRequestQueue(RegisterActivity.this);
             cola.add(r);
@@ -165,6 +167,7 @@ public class RegisterActivity extends AppCompatActivity {
                     BitmapDrawable drawable = (BitmapDrawable) imageView.getDrawable();
                     Bitmap bitmap = drawable.getBitmap();
                     byte1 = getBytesFromBitmap(bitmap);
+                    encodedImage = Base64.encodeToString(byte1, Base64.DEFAULT);
                 }
             }
         }
