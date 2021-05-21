@@ -66,9 +66,10 @@ public class WaitingRoomActivity extends AppCompatActivity {
         partida = (Partida) i.getSerializableExtra("partida");
         administrador = i.getStringExtra("administrador");
         parentLayout3.removeView(administrador.equals("true") ? null : imageViewStart);
-        //CargarUsuarios("cargarUsuarios");
+        CargarUsuarios("cargarUsuarios");
 
         if(i.getStringExtra("listenerPieSocket").equals("true")){
+            System.out.println("AQUÍ ENTRA FIJO");
             //web socket
             OkHttpClient client = new OkHttpClient();
             Log.d("PieSocket","Connecting");
@@ -78,7 +79,7 @@ public class WaitingRoomActivity extends AppCompatActivity {
                     .url("wss://us-nyc-1.websocket.me/v3/1?api_key=dwRO3yR7VvymQk1HfYHqJBK22coq0TnEW90aqcN4&notify_self")
                     .build();
             PieSocketListener listener =  new PieSocketListener("nuevoUsuario-" + partida.getP_id(),
-                    this, partida, administrador, parentLayout2, Usuario.usuarioLogueado);
+                    this, partida, administrador);
             WebSocket ws = client.newWebSocket(request, listener);
         }
     }
