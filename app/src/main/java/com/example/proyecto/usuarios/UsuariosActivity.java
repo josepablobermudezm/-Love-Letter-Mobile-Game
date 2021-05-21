@@ -131,20 +131,25 @@ public class UsuariosActivity extends AppCompatActivity {
         txt_alias.setLayoutParams(new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 50));
+        txt_alias.setTextColor(Color.WHITE);
         TextView txt_nivel = new TextView(this);
         txt_nivel.setText("Nivel: " + usuario.getU_nivel());
         txt_nivel.setLayoutParams(new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 50));
+        txt_nivel.setTextColor(Color.WHITE);
         TextView txt_fechaNacimiento = new TextView(this);
         txt_fechaNacimiento.setText("Fec.Nac:" + usuario.getU_fechaNacimiento());
         txt_fechaNacimiento.setLayoutParams(new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 50));
+        txt_fechaNacimiento.setTextColor(Color.WHITE);
+
         dataLinear.addView(txt_alias);
         dataLinear.addView(txt_nivel);
         dataLinear.addView(txt_fechaNacimiento);
 
+        dataLinear.setBackgroundColor((Color.parseColor("#6D6969")));
         LinearLayout buttonLinear = new LinearLayout(this);
         buttonLinear.setOrientation(LinearLayout.VERTICAL);
         buttonLinear.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
@@ -215,7 +220,10 @@ public class UsuariosActivity extends AppCompatActivity {
                 cola.add(r);
             }
         });
+
         parentLayout2.addView(userLinear);
+        userLinear.setBackgroundColor((Color.parseColor("#6D6969")));
+
         userLinear.addView(dataLinear);
         buttonLinear.addView(editbutton);
         buttonLinear.addView(deletebutton);

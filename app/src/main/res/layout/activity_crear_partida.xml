@@ -88,8 +88,9 @@
                 android:id="@+id/registerButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="GUARDAR"
-                android:onClick="crearPartida"/>
+                android:backgroundTint="@color/gray"
+                android:onClick="crearPartida"
+                android:text="GUARDAR" />
 
 
         </LinearLayout>

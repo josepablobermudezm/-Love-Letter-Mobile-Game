@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/cardview_dark_background"
     android:orientation="vertical"
     android:padding="48dp"
     tools:context=".login.LoginActivity">
@@ -21,26 +22,32 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:text="@string/InicioSession"
+        android:textColor="@color/white"
         android:textSize="25sp" />
 
     <EditText
         android:id="@+id/txtNivel"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="70dp"
         android:hint="@string/correo"
-        android:inputType="text" />
+        android:inputType="text"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white" />
 
     <EditText
         android:id="@+id/txtContrasena"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="70dp"
         android:hint="@string/contraseña"
-        android:inputType="textPassword"/>
+        android:inputType="textPassword"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white" />
 
     <Button
         android:id="@+id/button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:backgroundTint="@color/gray"
         android:onClick="iniciarSesion"
         android:text="@string/login" />
 
