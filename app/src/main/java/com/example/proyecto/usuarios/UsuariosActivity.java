@@ -110,7 +110,7 @@ public class UsuariosActivity extends AppCompatActivity {
         LinearLayout userLinear = new LinearLayout(this);
         userLinear.setOrientation(LinearLayout.HORIZONTAL);
         userLinear.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-        userLinear.setBackgroundColor(Color.parseColor("#e8e8e8"));
+        userLinear.setBackgroundColor((Color.parseColor("#6D6969")));
         userLinear.setPadding(calcularPixeles(10), calcularPixeles(10), calcularPixeles(10), calcularPixeles(10));
 
         ImageView imageView = new ImageView(this);
@@ -224,7 +224,6 @@ public class UsuariosActivity extends AppCompatActivity {
         });
 
         parentLayout2.addView(userLinear);
-        userLinear.setBackgroundColor((Color.parseColor("#6D6969")));
 
         userLinear.addView(dataLinear);
         buttonLinear.addView(editbutton);

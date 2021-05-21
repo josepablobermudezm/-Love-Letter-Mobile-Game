@@ -1,6 +1,14 @@
 package com.example.proyecto.connection;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
+
+import com.example.proyecto.WaitingRoomActivity;
+import com.example.proyecto.partida.Partida;
+import com.example.proyecto.registro.RegisterActivity;
+import com.example.proyecto.usuarios.UsuariosActivity;
 
 import okhttp3.Response;
 import okhttp3.WebSocket;
@@ -10,9 +18,15 @@ public class PieSocketListener extends WebSocketListener {
 
     private static final int NORMAL_CLOSURE_STATUS = 1000;
     private String text;
+    private Context context;
+    private Partida partida;
+    private String administrador;
 
-    public PieSocketListener(String text) {
+    public PieSocketListener(String text, Context context, Partida partida, String administrador) {
         this.text = text;
+        this.context = context;
+        this.partida = partida;
+        this.administrador = administrador;
     }
 
     @Override
@@ -23,6 +37,14 @@ public class PieSocketListener extends WebSocketListener {
     @Override
     public void onMessage(WebSocket webSocket, String text) {
         System.out.println("Received : " + text);
+        if(text.equals("nuevoUsuario-" + partida.getP_id())){
+            Intent nextView = new Intent(this.context, WaitingRoomActivity.class);
+            nextView.putExtra("administrador", this.administrador);
+            nextView.putExtra("partida", this.partida);
+            this.context.startActivity(nextView);
+            ((Activity) this.context).finish();
+        }
+
     }
 
     @Override

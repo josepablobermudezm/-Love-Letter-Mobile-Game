@@ -70,15 +70,15 @@ public class WaitingRoomActivity extends AppCompatActivity {
         CargarUsuarios("cargarUsuarios");
 
 
+        //web socket
         OkHttpClient client = new OkHttpClient();
-
         Log.d("PieSocket","Connecting");
         String apiKey = "dwRO3yR7VvymQk1HfYHqJBK22coq0TnEW90aqcN4"; //Demo key, get yours at https://piesocket.com
         int channelId = 1;
         Request request = new Request.Builder()
                 .url("wss://us-nyc-1.websocket.me/v3/1?api_key=dwRO3yR7VvymQk1HfYHqJBK22coq0TnEW90aqcN4&notify_self")
                 .build();
-        PieSocketListener listener =  new PieSocketListener("nuevoUsuario");
+        PieSocketListener listener =  new PieSocketListener("nuevoUsuario-" + partida.getP_id(), this, partida, administrador);
         WebSocket ws = client.newWebSocket(request, listener);
     }
 
@@ -131,7 +131,7 @@ public class WaitingRoomActivity extends AppCompatActivity {
         LinearLayout userLinear = new LinearLayout(this);
         userLinear.setOrientation(LinearLayout.HORIZONTAL);
         userLinear.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-        userLinear.setBackgroundColor(Color.parseColor("#e8e8e8"));
+        userLinear.setBackgroundColor((Color.parseColor("#6D6969")));
         userLinear.setPadding(calcularPixeles(10), calcularPixeles(10), calcularPixeles(10), calcularPixeles(10));
 
         LinearLayout dataLinear = new LinearLayout(this);
@@ -157,7 +157,6 @@ public class WaitingRoomActivity extends AppCompatActivity {
         dataLinear.addView(txt_alias);
         dataLinear.addView(txt_nivel);
         dataLinear.addView(txt_fechaNacimiento);
-
 
         parentLayout2.addView(userLinear);
         userLinear.addView(dataLinear);
