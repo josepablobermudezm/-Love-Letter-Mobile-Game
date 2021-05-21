@@ -73,14 +73,7 @@ public class LoginActivity extends AppCompatActivity {
                                 Integer.parseInt(u_cantidadPartidasGanadas), Integer.parseInt(u_cantidadAmigos), Integer.parseInt(u_nivel),
                                 Integer.parseInt(u_experiencia), alias, password, rol, u_picture, u_fechaNacimiento);
                         Usuario.usuarioLogueado = usuarioLogueado;// usuario logueado global
-
-
-                        byte[] bytes = Base64.decode(usuarioLogueado.getU_picture(), Base64.DEFAULT);
-                        Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-
-
-                        ((ImageView)findViewById(R.id.iv_login)).setImageBitmap(bitmap);
-                        //LoginActivity.this.startActivity(nextActivity);
+                        LoginActivity.this.startActivity(nextActivity);
                     }else{
                         AlertDialog.Builder alerta = new AlertDialog.Builder(LoginActivity.this);
                         alerta.setMessage("Fallo en el login").setNegativeButton("Reintentar", null).create().show();
