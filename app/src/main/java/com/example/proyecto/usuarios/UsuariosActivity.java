@@ -1,9 +1,12 @@
 package com.example.proyecto.usuarios;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Base64;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -111,7 +114,9 @@ public class UsuariosActivity extends AppCompatActivity {
         userLinear.setPadding(calcularPixeles(10), calcularPixeles(10), calcularPixeles(10), calcularPixeles(10));
 
         ImageView imageView = new ImageView(this);
-        imageView.setImageResource(R.drawable.perfil);
+        byte[] bytes = Base64.decode(usuario.getU_picture(), Base64.DEFAULT);
+        Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+        imageView.setImageBitmap(bitmap);
         imageView.setLayoutParams(new LinearLayout.LayoutParams(calcularPixeles(90),
                 calcularPixeles(90)));
         userLinear.addView(imageView);

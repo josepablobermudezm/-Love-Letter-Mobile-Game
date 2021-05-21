@@ -172,7 +172,7 @@ public class RegisterActivity extends AppCompatActivity {
                     final float scale = this.getResources().getDisplayMetrics().density;
 
 
-                    Bitmap imagenFinal = Bitmap.createScaledBitmap(bitmap, (int) (258 * scale + 0.5f) ,(int) (196 * scale + 0.5f),false);
+                    Bitmap imagenFinal = Bitmap.createScaledBitmap(bitmap, (int) (90 * scale + 0.5f) ,(int) (90 * scale + 0.5f),false);
 
                     byte1 = getBytesFromBitmap(imagenFinal);
 
