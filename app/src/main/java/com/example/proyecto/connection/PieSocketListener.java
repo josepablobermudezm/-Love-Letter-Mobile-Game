@@ -9,10 +9,15 @@ import okhttp3.WebSocketListener;
 public class PieSocketListener extends WebSocketListener {
 
     private static final int NORMAL_CLOSURE_STATUS = 1000;
+    private String text;
+
+    public PieSocketListener(String text) {
+        this.text = text;
+    }
 
     @Override
     public void onOpen(WebSocket webSocket, Response response) {
-        webSocket.send("nuevoUsuario Jose");
+        webSocket.send(this.text);
     }
 
     @Override

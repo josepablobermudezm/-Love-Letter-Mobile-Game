@@ -16,8 +16,6 @@ public class RegistroRequest extends StringRequest {
             int u_cantidadPartidasJugadas, int u_cantidadPartidasGanadas, int u_cantidadAmigos, int u_nivel, int u_experiencia, Response.Listener<String> listener) {
         super(Request.Method.POST, ruta, listener, null);
         parametros = new HashMap<>();
-        System.out.println("mostrando el byte1 antes de enviarlo en el registro request");
-        System.out.println(u_picture);
         parametros.put("u_alias", u_alias + "");
         parametros.put("u_fechaNacimiento", fechaNacimiento + "");
         parametros.put("u_password", u_password + "");

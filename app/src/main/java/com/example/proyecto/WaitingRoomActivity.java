@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +21,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.proyecto.connection.PieSocketListener;
 import com.example.proyecto.login.LoginActivity;
 import com.example.proyecto.partida.CrearPartidaActivity;
 import com.example.proyecto.partida.Partida;
@@ -35,6 +37,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.WebSocket;
 
 public class WaitingRoomActivity extends AppCompatActivity {
 
@@ -62,6 +68,18 @@ public class WaitingRoomActivity extends AppCompatActivity {
         System.out.println(administrador);
         parentLayout3.removeView(administrador.equals("true") ? null : imageViewStart);
         CargarUsuarios("cargarUsuarios");
+
+
+        OkHttpClient client = new OkHttpClient();
+
+        Log.d("PieSocket","Connecting");
+        String apiKey = "dwRO3yR7VvymQk1HfYHqJBK22coq0TnEW90aqcN4"; //Demo key, get yours at https://piesocket.com
+        int channelId = 1;
+        Request request = new Request.Builder()
+                .url("wss://us-nyc-1.websocket.me/v3/1?api_key=dwRO3yR7VvymQk1HfYHqJBK22coq0TnEW90aqcN4&notify_self")
+                .build();
+        PieSocketListener listener =  new PieSocketListener("nuevoUsuario");
+        WebSocket ws = client.newWebSocket(request, listener);
     }
 
     public void CargarUsuarios(String valor){

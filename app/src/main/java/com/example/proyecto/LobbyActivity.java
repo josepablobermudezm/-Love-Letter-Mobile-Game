@@ -36,8 +36,6 @@ public class LobbyActivity extends AppCompatActivity {
     private String SERVER_PATH = "link://192.168.1.7:3000";
     private RecyclerView recyclerView;
     public Button PlayButton;
-    private MessageAdapter messageAdapter = new MessageAdapter();
-    ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,12 +99,10 @@ public class LobbyActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent nextActivity = new Intent(LobbyActivity.this, PartidaActivity.class);
                 LobbyActivity.this.startActivity(nextActivity);
-
             }
         });
 
         parentLayout.addView(PlayButton);
-
 
         parentLayout.addView(usuarioButton);
         parentLayout.addView(AcercaButton);
@@ -114,67 +110,9 @@ public class LobbyActivity extends AppCompatActivity {
             parentLayout.addView(logrosButton);
         }
         parentLayout.addView(CerrarSesionButton);
-        //initiateSocketConnection();
     }
-
 
     public void crearPartida() {
 
-    }
-
-    private void initiateSocketConnection() {
-        OkHttpClient cliente = new OkHttpClient();
-        Request request = new Request.Builder().url(SERVER_PATH).build();
-        webSocket = cliente.newWebSocket(request, new SocketListener());
-
-    }
-
-    private class SocketListener extends WebSocketListener {
-
-        @Override
-        public void onOpen(WebSocket webSocket, Response response) {
-            super.onOpen(webSocket, response);
-
-            runOnUiThread(() -> {
-                Toast.makeText(LobbyActivity.this,
-                        "Socket Connection Successful!",
-                        Toast.LENGTH_SHORT).show();
-
-                initializeView();
-            });
-
-        }
-
-        @Override
-        public void onMessage(WebSocket webSocket, String text) {
-            super.onMessage(webSocket, text);
-
-            runOnUiThread(() -> {
-                try {
-                    JSONObject jsonObject = new JSONObject(text);
-                    jsonObject.put("isSent", false);
-                    messageAdapter.addItem(jsonObject);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-            });
-
-        }
-    }
-
-    private void initializeView() {
-        PlayButton.setOnClickListener(v -> {
-            JSONObject jsonObject = new JSONObject();
-            try {
-                jsonObject.put("name", "nombre");
-                jsonObject.put("message", "Hola mundo");
-                webSocket.send(jsonObject.toString());
-                jsonObject.put("isSent", true);
-                messageAdapter.addItem(jsonObject);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        });
     }
 }
