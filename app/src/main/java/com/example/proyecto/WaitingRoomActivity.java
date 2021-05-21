@@ -65,9 +65,8 @@ public class WaitingRoomActivity extends AppCompatActivity {
         Intent i = this.getIntent();
         partida = (Partida) i.getSerializableExtra("partida");
         administrador = i.getStringExtra("administrador");
-        System.out.println(administrador);
         parentLayout3.removeView(administrador.equals("true") ? null : imageViewStart);
-        CargarUsuarios("cargarUsuarios");
+        //CargarUsuarios("cargarUsuarios");
 
         if(i.getStringExtra("listenerPieSocket").equals("true")){
             //web socket
@@ -78,7 +77,8 @@ public class WaitingRoomActivity extends AppCompatActivity {
             Request request = new Request.Builder()
                     .url("wss://us-nyc-1.websocket.me/v3/1?api_key=dwRO3yR7VvymQk1HfYHqJBK22coq0TnEW90aqcN4&notify_self")
                     .build();
-            PieSocketListener listener =  new PieSocketListener("nuevoUsuario-" + partida.getP_id(), this, partida, administrador);
+            PieSocketListener listener =  new PieSocketListener("nuevoUsuario-" + partida.getP_id(),
+                    this, partida, administrador, parentLayout2, Usuario.usuarioLogueado);
             WebSocket ws = client.newWebSocket(request, listener);
         }
     }
