@@ -215,6 +215,7 @@ public class PartidaActivity extends AppCompatActivity {
                                     Intent nextActivity = new Intent(PartidaActivity.this, WaitingRoomActivity.class);
                                     nextActivity.putExtra("administrador", partida.getP_fkUsuario() == Usuario.usuarioLogueado.getU_id() ? "true" : "false");
                                     nextActivity.putExtra("partida", partida);
+                                    nextActivity.putExtra("listenerPieSocket", "true");
                                     PartidaActivity.this.startActivity(nextActivity);
 
                                 } else {

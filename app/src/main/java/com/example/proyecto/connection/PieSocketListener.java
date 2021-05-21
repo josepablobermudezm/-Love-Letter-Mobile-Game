@@ -45,10 +45,10 @@ public class PieSocketListener extends WebSocketListener {
             Intent nextView = new Intent(this.context, WaitingRoomActivity.class);
             nextView.putExtra("administrador", this.administrador);
             nextView.putExtra("partida", this.partida);
+            nextView.putExtra("listenerPieSocket", "false");
             this.context.startActivity(nextView);
             ((Activity) this.context).finish();
         }
-
     }
 
     @Override

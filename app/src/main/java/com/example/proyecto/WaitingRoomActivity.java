@@ -69,17 +69,18 @@ public class WaitingRoomActivity extends AppCompatActivity {
         parentLayout3.removeView(administrador.equals("true") ? null : imageViewStart);
         CargarUsuarios("cargarUsuarios");
 
-
-        //web socket
-        OkHttpClient client = new OkHttpClient();
-        Log.d("PieSocket","Connecting");
-        String apiKey = "dwRO3yR7VvymQk1HfYHqJBK22coq0TnEW90aqcN4"; //Demo key, get yours at https://piesocket.com
-        int channelId = 1;
-        Request request = new Request.Builder()
-                .url("wss://us-nyc-1.websocket.me/v3/1?api_key=dwRO3yR7VvymQk1HfYHqJBK22coq0TnEW90aqcN4&notify_self")
-                .build();
-        PieSocketListener listener =  new PieSocketListener("nuevoUsuario-" + partida.getP_id(), this, partida, administrador);
-        WebSocket ws = client.newWebSocket(request, listener);
+        if(i.getStringExtra("listenerPieSocket").equals("true")){
+            //web socket
+            OkHttpClient client = new OkHttpClient();
+            Log.d("PieSocket","Connecting");
+            String apiKey = "dwRO3yR7VvymQk1HfYHqJBK22coq0TnEW90aqcN4"; //Demo key, get yours at https://piesocket.com
+            int channelId = 1;
+            Request request = new Request.Builder()
+                    .url("wss://us-nyc-1.websocket.me/v3/1?api_key=dwRO3yR7VvymQk1HfYHqJBK22coq0TnEW90aqcN4&notify_self")
+                    .build();
+            PieSocketListener listener =  new PieSocketListener("nuevoUsuario-" + partida.getP_id(), this, partida, administrador);
+            WebSocket ws = client.newWebSocket(request, listener);
+        }
     }
 
     public void CargarUsuarios(String valor){
@@ -144,16 +145,19 @@ public class WaitingRoomActivity extends AppCompatActivity {
         txt_alias.setLayoutParams(new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 50));
+        txt_alias.setTextColor(Color.WHITE);
         TextView txt_nivel = new TextView(this);
         txt_nivel.setText("Nivel: " + usuario.getU_nivel());
         txt_nivel.setLayoutParams(new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 50));
+        txt_nivel.setTextColor(Color.WHITE);
         TextView txt_fechaNacimiento = new TextView(this);
         txt_fechaNacimiento.setText("Fec.Nac:" + usuario.getU_fechaNacimiento());
         txt_fechaNacimiento.setLayoutParams(new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 50));
+        txt_fechaNacimiento.setTextColor(Color.WHITE);
         dataLinear.addView(txt_alias);
         dataLinear.addView(txt_nivel);
         dataLinear.addView(txt_fechaNacimiento);
