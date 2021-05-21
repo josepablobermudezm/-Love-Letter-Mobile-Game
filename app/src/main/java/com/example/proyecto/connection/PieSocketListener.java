@@ -29,6 +29,10 @@ public class PieSocketListener extends WebSocketListener {
         this.administrador = administrador;
     }
 
+    public PieSocketListener(String text) {
+        this.text = text;
+    }
+
     @Override
     public void onOpen(WebSocket webSocket, Response response) {
         webSocket.send(this.text);
