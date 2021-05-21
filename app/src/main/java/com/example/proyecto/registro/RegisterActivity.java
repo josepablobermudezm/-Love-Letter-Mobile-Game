@@ -9,6 +9,8 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.ParcelFileDescriptor;
+import android.provider.MediaStore;
 import android.util.Base64;
 import android.view.View;
 import android.widget.Button;
@@ -29,6 +31,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
+import java.io.FileDescriptor;
+import java.io.IOException;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -105,8 +109,6 @@ public class RegisterActivity extends AppCompatActivity {
                         // deal with the absence of JSON content here
                     }
                     JSONObject jsonRespuesta = new JSONObject(response);
-                    System.out.println("RESPUESTA RESPUESTA RESPUESTA REPSUESAT ");
-                    System.out.println(response);
                     boolean ok = jsonRespuesta.getBoolean("success");
                     if(ok){
                         Intent nextView = new Intent(RegisterActivity.this,
@@ -164,13 +166,31 @@ public class RegisterActivity extends AppCompatActivity {
                     // pone la imagen en la vista
                     ImageView imageView = (ImageView) findViewById(R.id.IVPreviewImage);
                     imageView.setImageURI(selectedImageUri);
-                    BitmapDrawable drawable = (BitmapDrawable) imageView.getDrawable();
-                    Bitmap bitmap = drawable.getBitmap();
-                    byte1 = getBytesFromBitmap(bitmap);
+
+                    Bitmap bitmap = ((BitmapDrawable)imageView.getDrawable()).getBitmap();
+
+                    final float scale = this.getResources().getDisplayMetrics().density;
+
+
+                    Bitmap imagenFinal = Bitmap.createScaledBitmap(bitmap, (int) (258 * scale + 0.5f) ,(int) (196 * scale + 0.5f),false);
+
+                    byte1 = getBytesFromBitmap(imagenFinal);
+
                     encodedImage = Base64.encodeToString(byte1, Base64.DEFAULT);
+
+
                 }
             }
         }
+    }
+
+    private Bitmap getBitmapFromUri ( Uri uri ) throws IOException {
+        ParcelFileDescriptor parcelFileDescriptor =
+                getContentResolver (). openFileDescriptor ( uri , "r" );
+        FileDescriptor fileDescriptor = parcelFileDescriptor . getFileDescriptor ();
+        Bitmap image = BitmapFactory . decodeFileDescriptor ( fileDescriptor );
+        parcelFileDescriptor . close ();
+        return image ;
     }
 
     public static byte[] getBytesFromBitmap(Bitmap bitmap) {
