@@ -114,9 +114,11 @@ public class UsuariosActivity extends AppCompatActivity {
         userLinear.setPadding(calcularPixeles(10), calcularPixeles(10), calcularPixeles(10), calcularPixeles(10));
 
         ImageView imageView = new ImageView(this);
+
         byte[] bytes = Base64.decode(usuario.getU_picture(), Base64.DEFAULT);
         Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
         imageView.setImageBitmap(bitmap);
+
         imageView.setLayoutParams(new LinearLayout.LayoutParams(calcularPixeles(90),
                 calcularPixeles(90)));
         userLinear.addView(imageView);
