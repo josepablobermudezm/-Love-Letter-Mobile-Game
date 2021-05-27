@@ -197,39 +197,47 @@ public class PartidaActivity extends AppCompatActivity {
             joinbutton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    // agregamos el usuario a la partida
-                    Response.Listener<String> respuesta = new Response.Listener<String>() {
-                        @RequiresApi(api = Build.VERSION_CODES.N)
-                        @Override
-                        public void onResponse(String response) {
-                            try {
-                                response = response.replaceFirst("<font>.*?</font>", "");
-                                int jsonStart = response.indexOf("{");
-                                int jsonEnd = response.lastIndexOf("}");
-                                if (jsonStart >= 0 && jsonEnd >= 0 && jsonEnd > jsonStart) {
-                                    response = response.substring(jsonStart, jsonEnd + 1);
-                                }
-                                JSONObject jsonRespuesta = new JSONObject(response);
-                                boolean ok = jsonRespuesta.getBoolean("success");
-                                if (ok) {
-                                    Intent nextActivity = new Intent(PartidaActivity.this, WaitingRoomActivity.class);
-                                    nextActivity.putExtra("administrador", partida.getP_fkUsuario() == Usuario.usuarioLogueado.getU_id() ? "true" : "false");
-                                    nextActivity.putExtra("partida", partida);
-                                    nextActivity.putExtra("listenerPieSocket", "true");
-                                    PartidaActivity.this.startActivity(nextActivity);
+                    if(partida.getP_tipo().equals("PR")){
+                        Intent intent = new Intent(getApplicationContext(), CodigoActivity.class);
+                        intent.putExtra("partida",partida);
+                        startActivity(intent);
+                        finish();
+                    }
+                    else{
+                        // agregamos el usuario a la partida
+                        Response.Listener<String> respuesta = new Response.Listener<String>() {
+                            @RequiresApi(api = Build.VERSION_CODES.N)
+                            @Override
+                            public void onResponse(String response) {
+                                try {
+                                    response = response.replaceFirst("<font>.*?</font>", "");
+                                    int jsonStart = response.indexOf("{");
+                                    int jsonEnd = response.lastIndexOf("}");
+                                    if (jsonStart >= 0 && jsonEnd >= 0 && jsonEnd > jsonStart) {
+                                        response = response.substring(jsonStart, jsonEnd + 1);
+                                    }
+                                    JSONObject jsonRespuesta = new JSONObject(response);
+                                    boolean ok = jsonRespuesta.getBoolean("success");
+                                    if (ok) {
+                                        Intent nextActivity = new Intent(PartidaActivity.this, WaitingRoomActivity.class);
+                                        nextActivity.putExtra("administrador", partida.getP_fkUsuario() == Usuario.usuarioLogueado.getU_id() ? "true" : "false");
+                                        nextActivity.putExtra("partida", partida);
+                                        nextActivity.putExtra("listenerPieSocket", "true");
+                                        PartidaActivity.this.startActivity(nextActivity);
 
-                                } else {
-                                    AlertDialog.Builder alerta = new AlertDialog.Builder(PartidaActivity.this);
-                                    alerta.setMessage("Error al unirse a la partida").setNegativeButton("Reintentar", null).create().show();
+                                    } else {
+                                        AlertDialog.Builder alerta = new AlertDialog.Builder(PartidaActivity.this);
+                                        alerta.setMessage("Error al unirse a la partida").setNegativeButton("Reintentar", null).create().show();
+                                    }
+                                } catch (JSONException e) {
+                                    e.getMessage();
                                 }
-                            } catch (JSONException e) {
-                                e.getMessage();
                             }
-                        }
-                    };
-                    PartidaRequest r = new PartidaRequest(Usuario.usuarioLogueado.getU_id(), partida.getP_id(), respuesta);
-                    RequestQueue cola = Volley.newRequestQueue(PartidaActivity.this);
-                    cola.add(r);
+                        };
+                        PartidaRequest r = new PartidaRequest(Usuario.usuarioLogueado.getU_id(), partida.getP_id(), respuesta);
+                        RequestQueue cola = Volley.newRequestQueue(PartidaActivity.this);
+                        cola.add(r);
+                    }
                 }
             });
         }
