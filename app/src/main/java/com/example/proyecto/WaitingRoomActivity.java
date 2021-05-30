@@ -1,9 +1,12 @@
 package com.example.proyecto;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -66,10 +69,9 @@ public class WaitingRoomActivity extends AppCompatActivity {
         partida = (Partida) i.getSerializableExtra("partida");
         administrador = i.getStringExtra("administrador");
         parentLayout3.removeView(administrador.equals("true") ? null : imageViewStart);
-        CargarUsuarios("cargarUsuarios");
+        //CargarUsuarios("cargarUsuarios");
 
         if(i.getStringExtra("listenerPieSocket").equals("true")){
-            System.out.println("AQUÍ ENTRA FIJO");
             //web socket
             OkHttpClient client = new OkHttpClient();
             Log.d("PieSocket","Connecting");
@@ -79,7 +81,7 @@ public class WaitingRoomActivity extends AppCompatActivity {
                     .url("wss://us-nyc-1.websocket.me/v3/1?api_key=dwRO3yR7VvymQk1HfYHqJBK22coq0TnEW90aqcN4&notify_self")
                     .build();
             PieSocketListener listener =  new PieSocketListener("nuevoUsuario-" + partida.getP_id(),
-                    this, partida, administrador);
+                    this, partida, administrador, parentLayout2, Usuario.usuarioLogueado);
             WebSocket ws = client.newWebSocket(request, listener);
         }
     }
@@ -108,8 +110,6 @@ public class WaitingRoomActivity extends AppCompatActivity {
                         agregarWaitingRooms(usuario);
                         //Usuarios.add(usuario);
                     }
-                    cantidadUsuarios = usuarios.length();
-                    System.out.println(cantidadUsuarios);
                     boolean ok = jsonRespuesta.getBoolean("success");
                     if (ok) {
                         //System.out.println(jsonRespuesta);
@@ -135,6 +135,16 @@ public class WaitingRoomActivity extends AppCompatActivity {
         userLinear.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
         userLinear.setBackgroundColor((Color.parseColor("#6D6969")));
         userLinear.setPadding(calcularPixeles(10), calcularPixeles(10), calcularPixeles(10), calcularPixeles(10));
+
+        ImageView imageView = new ImageView(this);
+
+        byte[] bytes = Base64.decode(usuario.getU_picture(), Base64.DEFAULT);
+        Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+        imageView.setImageBitmap(bitmap);
+
+        imageView.setLayoutParams(new LinearLayout.LayoutParams(calcularPixeles(90),
+                calcularPixeles(90)));
+        userLinear.addView(imageView);
 
         LinearLayout dataLinear = new LinearLayout(this);
         dataLinear.setOrientation(LinearLayout.VERTICAL);

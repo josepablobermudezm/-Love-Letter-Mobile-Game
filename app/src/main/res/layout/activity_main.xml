@@ -23,6 +23,7 @@
         android:layout_gravity="center"
         android:text="@string/InicioSession"
         android:textColor="@color/white"
+        android:layout_weight="0.03"
         android:textSize="25sp" />
 
     <EditText
@@ -31,6 +32,7 @@
         android:layout_height="70dp"
         android:hint="@string/correo"
         android:inputType="text"
+        android:layout_weight="0.01"
         android:textColor="@color/white"
         android:textColorHint="@color/white" />
 
@@ -40,6 +42,7 @@
         android:layout_height="70dp"
         android:hint="@string/contraseña"
         android:inputType="textPassword"
+        android:layout_weight="0.01"
         android:textColor="@color/white"
         android:textColorHint="@color/white" />
 

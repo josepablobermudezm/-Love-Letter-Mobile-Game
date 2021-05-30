@@ -1,14 +1,26 @@
 package com.example.proyecto.connection;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
+import android.os.Build;
 import android.util.Log;
+import android.widget.LinearLayout;
 
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AlertDialog;
+
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.Volley;
+import com.example.proyecto.HiloWaiting;
 import com.example.proyecto.WaitingRoomActivity;
 import com.example.proyecto.partida.Partida;
-import com.example.proyecto.registro.RegisterActivity;
-import com.example.proyecto.usuarios.UsuariosActivity;
+import com.example.proyecto.partida.PartidaRequest;
+import com.example.proyecto.usuarios.Usuario;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 import okhttp3.Response;
 import okhttp3.WebSocket;
@@ -21,12 +33,16 @@ public class PieSocketListener extends WebSocketListener {
     private Context context;
     private Partida partida;
     private String administrador;
+    private LinearLayout parentLayout2;
+    private Usuario usuario;
 
-    public PieSocketListener(String text, Context context, Partida partida, String administrador) {
+    public PieSocketListener(String text, Context context, Partida partida, String administrador, LinearLayout parentLayout2, Usuario usuario) {
         this.text = text;
-        this.context = context;
         this.partida = partida;
         this.administrador = administrador;
+        this.usuario = usuario;
+        this.parentLayout2 =  parentLayout2;
+        this.context = context;
     }
 
     public PieSocketListener(String text) {
@@ -42,12 +58,14 @@ public class PieSocketListener extends WebSocketListener {
     public void onMessage(WebSocket webSocket, String text) {
         System.out.println("Received : " + text);
         if(text.equals("nuevoUsuario-" + partida.getP_id())){
-            Intent nextView = new Intent(this.context, WaitingRoomActivity.class);
-            nextView.putExtra("administrador", this.administrador);
+            /*Intent nextView = new Intent(this.context, WaitingRoomActivity.class);
+            nextView.putExtra("administrador", this.adm inistrador);
             nextView.putExtra("partida", this.partida);
             nextView.putExtra("listenerPieSocket", "false");
             this.context.startActivity(nextView);
-            ((Activity) this.context).finish();
+            ((Activity) this.context).finish();*/
+            HiloWaiting hilo = new HiloWaiting(this.context,this.parentLayout2,this.usuario, this.partida);
+            hilo.execute();
         }
     }
 
@@ -65,5 +83,4 @@ public class PieSocketListener extends WebSocketListener {
     public void output(String text){
         Log.d("PieSocket",text);
     }
-
 }
