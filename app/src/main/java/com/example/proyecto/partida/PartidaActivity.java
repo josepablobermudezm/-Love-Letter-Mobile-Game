@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
@@ -198,10 +199,15 @@ public class PartidaActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     if(partida.getP_tipo().equals("PR")){
-                        Intent intent = new Intent(getApplicationContext(), CodigoActivity.class);
-                        intent.putExtra("partida",partida);
-                        startActivity(intent);
-                        finish();
+                        if(Usuario.usuarioLogueado.getU_nivel()>=partida.getP_nivelMinimo()){
+                            Intent intent = new Intent(getApplicationContext(), CodigoActivity.class);
+                            intent.putExtra("partida",partida);
+                            startActivity(intent);
+                            finish();
+                        }
+                        else{
+                            Toast.makeText(v.getContext(), "Tu nivel no es suficiente para esta partida", Toast.LENGTH_SHORT).show();
+                        }
                     }
                     else{
                         // agregamos el usuario a la partida
