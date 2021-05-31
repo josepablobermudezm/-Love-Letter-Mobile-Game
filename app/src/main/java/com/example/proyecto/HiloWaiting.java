@@ -62,7 +62,7 @@ public class HiloWaiting extends AsyncTask<String, Float, Integer> {
 
     @Override
     protected void onProgressUpdate(Float... variable) {
-        /*Response.Listener<String> respuesta = new Response.Listener<String>() {
+        Response.Listener<String> respuesta = new Response.Listener<String>() {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onResponse(String response) {
@@ -98,8 +98,7 @@ public class HiloWaiting extends AsyncTask<String, Float, Integer> {
         };
         PartidaRequest r = new PartidaRequest(Integer.valueOf(v.partida.getP_id()),respuesta, "UsuariosXPartida");
         RequestQueue cola = Volley.newRequestQueue(v.contexto);
-        cola.add(r);*/
-        agregarUsuario(v.usuario);
+        cola.add(r);
         cancel(true);
     }
     @Override
