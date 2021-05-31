@@ -60,7 +60,7 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
         <LinearLayout
-            android:id="@+id/parentLayout2"
+            android:id="@+id/linear"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
@@ -73,6 +73,11 @@
                 android:text="Jugadores esperando:"
                 android:textColor="@android:color/white"
                 android:textSize="20sp" />
+            <LinearLayout
+                android:id="@+id/parentLayout2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"/>
         </LinearLayout>
     </LinearLayout>
 

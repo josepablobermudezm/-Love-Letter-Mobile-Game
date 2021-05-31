@@ -58,12 +58,6 @@ public class PieSocketListener extends WebSocketListener {
     public void onMessage(WebSocket webSocket, String text) {
         System.out.println("Received : " + text);
         if(text.equals("nuevoUsuario-" + partida.getP_id())){
-            /*Intent nextView = new Intent(this.context, WaitingRoomActivity.class);
-            nextView.putExtra("administrador", this.adm inistrador);
-            nextView.putExtra("partida", this.partida);
-            nextView.putExtra("listenerPieSocket", "false");
-            this.context.startActivity(nextView);
-            ((Activity) this.context).finish();*/
             HiloWaiting hilo = new HiloWaiting(this.context,this.parentLayout2,this.usuario, this.partida);
             hilo.execute();
         }
