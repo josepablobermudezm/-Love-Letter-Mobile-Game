@@ -50,12 +50,13 @@ public class WaitingRoomActivity extends AppCompatActivity {
     private TextView mTextView;
     private LinearLayout parentLayout;
     private LinearLayout parentLayout2;
-    private ArrayList<Usuario> Usuarios = new ArrayList<>();
+    public static ArrayList<Usuario> usuarios = new ArrayList<>();
     private Partida partida;
     private String administrador;
     private ImageView imageViewStart;
     private ConstraintLayout parentLayout3;
     private int cantidadUsuarios = 0;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,22 +72,22 @@ public class WaitingRoomActivity extends AppCompatActivity {
         parentLayout3.removeView(administrador.equals("true") ? null : imageViewStart);
         //CargarUsuarios("cargarUsuarios");
 
-        if(i.getStringExtra("listenerPieSocket").equals("true")){
+        if (i.getStringExtra("listenerPieSocket").equals("true")) {
             //web socket
             OkHttpClient client = new OkHttpClient();
-            Log.d("PieSocket","Connecting");
+            Log.d("PieSocket", "Connecting");
             String apiKey = "dwRO3yR7VvymQk1HfYHqJBK22coq0TnEW90aqcN4"; //Demo key, get yours at https://piesocket.com
             int channelId = 1;
             Request request = new Request.Builder()
                     .url("wss://us-nyc-1.websocket.me/v3/1?api_key=dwRO3yR7VvymQk1HfYHqJBK22coq0TnEW90aqcN4&notify_self")
                     .build();
-            PieSocketListener listener =  new PieSocketListener("nuevoUsuario-" + partida.getP_id(),
+            PieSocketListener listener = new PieSocketListener("nuevoUsuario-" + partida.getP_id(),
                     this, partida, administrador, parentLayout2, Usuario.usuarioLogueado);
             WebSocket ws = client.newWebSocket(request, listener);
         }
     }
 
-    public void CargarUsuarios(String valor){
+    public void CargarUsuarios(String valor) {
         Response.Listener<String> respuesta = new Response.Listener<String>() {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
@@ -123,7 +124,7 @@ public class WaitingRoomActivity extends AppCompatActivity {
             }
         };
         PartidaRequest r = null;
-        r = new PartidaRequest(Integer.valueOf(partida.getP_id()),respuesta, "UsuariosXPartida");
+        r = new PartidaRequest(Integer.valueOf(partida.getP_id()), respuesta, "UsuariosXPartida");
         RequestQueue cola = Volley.newRequestQueue(WaitingRoomActivity.this);
         cola.add(r);
     }
@@ -182,7 +183,7 @@ public class WaitingRoomActivity extends AppCompatActivity {
         return (int) (dps * scale + 0.5f);
     }
 
-    private void setMargins (View view, int left, int top, int right, int bottom) {
+    private void setMargins(View view, int left, int top, int right, int bottom) {
         if (view.getLayoutParams() instanceof ViewGroup.MarginLayoutParams) {
             ViewGroup.MarginLayoutParams p = (ViewGroup.MarginLayoutParams) view.getLayoutParams();
             p.setMargins(left, top, right, bottom);
@@ -190,20 +191,19 @@ public class WaitingRoomActivity extends AppCompatActivity {
         }
     }
 
-    public void empezarPartida(View view){
+    public void empezarPartida(View view) {
         //Redirecciona a la otra vista
-        if(cantidadUsuarios >= partida.getP_cantidadJugadores()){
+        if (usuarios.size() >= partida.getP_cantidadJugadores()  ) {
             System.out.println("se está cumpliendo");
             Intent nextActivity = new Intent(WaitingRoomActivity.this, GameActivity.class);
             WaitingRoomActivity.this.startActivity(nextActivity);
-
-        }else{
+        } else {
             AlertDialog.Builder alerta = new AlertDialog.Builder(WaitingRoomActivity.this);
             alerta.setMessage("Cantidad de jugadores insuficiente").setNegativeButton("Reintentar", null).create().show();
         }
     }
 
-    public void volverLobby(View view){
+    public void volverLobby(View view) {
         Response.Listener<String> respuesta = new Response.Listener<String>() {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override

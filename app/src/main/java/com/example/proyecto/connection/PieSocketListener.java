@@ -43,6 +43,8 @@ public class PieSocketListener extends WebSocketListener {
         this.usuario = usuario;
         this.parentLayout2 =  parentLayout2;
         this.context = context;
+
+
     }
 
     public PieSocketListener(String text) {
@@ -51,7 +53,10 @@ public class PieSocketListener extends WebSocketListener {
 
     @Override
     public void onOpen(WebSocket webSocket, Response response) {
+
         webSocket.send(this.text);
+
+
     }
 
     @Override

@@ -1,3 +1,34 @@
 <resources>
-    <string name="hello_world">Hello Round World!</string>
+    <string name="app_name">WIN A DATE</string>
+    <string name="description">Imagen</string>
+    <string name="InicioSession">Inicio de Sesión</string>
+    <string name="login">Iniciar Sesión</string>
+    <string name="olvido">Registrarse</string>
+    <string name="correo">Usuario</string>
+    <string name="contraseña">Contraseña</string>
+    <string name="producto">Producto</string>
+    <string name="cantidad">Cantidad</string>
+    <string name="subtotal">Subtotal</string>
+    <string name="registro">Registro de usuario</string>
+    <string name="title_activity_register">RegisterActivity</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="title_activity_usuarios">UsuariosActivity</string>
+
+    <string name="hello_world">Hello Square World!</string>
+    <string name="title_activity_lobby">WIN A DATE</string>
+    <string name="title_activity_about_us">AboutUsActivity</string>
+    <string name="title_activity_logros">LogrosActivity</string>
+    <string name="title_activity_partida">PartidaActivity</string>
+    <string name="title_activity_crear_partida">CrearPartidaActivity</string>
+    <string name="logro_nivel">Alcanza el nivel 10</string>
+    <string name="logro_amigos">Juega con 5 amigos</string>
+    <string name="logro_victorias">15 victorias obtenidas</string>
+    <string name="logro_cantidad">20 partidas jugadas</string>
 </resources>

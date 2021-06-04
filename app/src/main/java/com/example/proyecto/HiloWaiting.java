@@ -83,7 +83,11 @@ public class HiloWaiting extends AsyncTask<String, Float, Integer> {
                                 Integer.parseInt(elemento.getString("u_nivel")), Integer.parseInt(elemento.getString("u_experiencia")),
                                 elemento.getString("u_alias"), elemento.getString("u_password"), elemento.getString("u_rol"),
                                 elemento.getString("u_picture"), elemento.getString("u_fechaNacimiento"));
+
                         agregarUsuario(usuario);
+
+                        WaitingRoomActivity.usuarios.add(usuario);
+
                     }
                     boolean ok = jsonRespuesta.getBoolean("success");
                     if (ok) {

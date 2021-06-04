@@ -201,8 +201,6 @@ public class RegisterActivity extends AppCompatActivity {
                     byte1 = getBytesFromBitmap(imagenFinal);
 
                     encodedImage = Base64.encodeToString(byte1, Base64.DEFAULT);
-
-
                 }
             }
         }
