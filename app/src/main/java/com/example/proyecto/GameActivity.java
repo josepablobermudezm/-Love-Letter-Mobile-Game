@@ -71,7 +71,7 @@ public class GameActivity extends AppCompatActivity {
     }
 
     public void volverLobby(View view){
-        Intent nextActivity = new Intent(GameActivity.this, WaitingRoomActivity.class);
+        Intent nextActivity = new Intent(GameActivity.this, PartidaActivity.class);
         GameActivity.this.startActivity(nextActivity);
         GameActivity.this.finish();
     }
