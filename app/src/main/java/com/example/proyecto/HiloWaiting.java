@@ -63,6 +63,7 @@ public class HiloWaiting extends AsyncTask<String, Float, Integer> {
     @Override
     protected void onProgressUpdate(Float... variable) {
         v.parentLayout2.removeAllViews();
+        WaitingRoomActivity.usuarios.clear();
         Response.Listener<String> respuesta = new Response.Listener<String>() {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override

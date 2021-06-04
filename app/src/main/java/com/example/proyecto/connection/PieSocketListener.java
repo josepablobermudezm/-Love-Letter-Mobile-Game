@@ -28,6 +28,8 @@ import okhttp3.Response;
 import okhttp3.WebSocket;
 import okhttp3.WebSocketListener;
 
+import static com.example.proyecto.WaitingRoomActivity.usuarios;
+
 public class PieSocketListener extends WebSocketListener {
 
     private static final int NORMAL_CLOSURE_STATUS = 1000;
@@ -68,6 +70,9 @@ public class PieSocketListener extends WebSocketListener {
             HiloWaiting hilo = new HiloWaiting(this.context,this.parentLayout2,this.usuario, this.partida);
             hilo.execute();
         }else if(text.equals("inicio partida")){
+
+
+            System.out.println("TAMANO" + usuarios.size());
             Intent intent = new Intent(this.context, GameActivity.class);
             context.startActivity(intent);
 
