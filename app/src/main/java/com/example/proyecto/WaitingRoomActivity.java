@@ -56,6 +56,8 @@ public class WaitingRoomActivity extends AppCompatActivity {
     private ImageView imageViewStart;
     private ConstraintLayout parentLayout3;
     private int cantidadUsuarios = 0;
+    private PieSocketListener listener;
+    private WebSocket ws;
 
 
     @Override
@@ -81,53 +83,13 @@ public class WaitingRoomActivity extends AppCompatActivity {
             Request request = new Request.Builder()
                     .url("wss://us-nyc-1.websocket.me/v3/1?api_key=dwRO3yR7VvymQk1HfYHqJBK22coq0TnEW90aqcN4&notify_self")
                     .build();
-            PieSocketListener listener = new PieSocketListener("nuevoUsuario-" + partida.getP_id(),
+            listener = new PieSocketListener("nuevoUsuario-" + partida.getP_id(),
                     this, partida, administrador, parentLayout2, Usuario.usuarioLogueado);
-            WebSocket ws = client.newWebSocket(request, listener);
+            ws = client.newWebSocket(request, listener);
         }
     }
 
-    public void CargarUsuarios(String valor) {
-        Response.Listener<String> respuesta = new Response.Listener<String>() {
-            @RequiresApi(api = Build.VERSION_CODES.N)
-            @Override
-            public void onResponse(String response) {
-                try {
-                    response = response.replaceFirst("<font>.*?</font>", "");
-                    int jsonStart = response.indexOf("{");
-                    int jsonEnd = response.lastIndexOf("}");
-                    if (jsonStart >= 0 && jsonEnd >= 0 && jsonEnd > jsonStart) {
-                        response = response.substring(jsonStart, jsonEnd + 1);
-                    }
-                    JSONObject jsonRespuesta = new JSONObject(response);
-                    JSONArray usuarios = jsonRespuesta.getJSONArray("Usuarios");
-                    for (int x = 0; x < usuarios.length(); x++) {
-                        JSONObject elemento = usuarios.getJSONObject(x);
-                        Usuario usuario = new Usuario(Integer.parseInt(elemento.getString("u_id")), Integer.parseInt(elemento.getString("u_cantidadPartidasJugadas")),
-                                Integer.parseInt(elemento.getString("u_cantidadPartidasGanadas")), Integer.parseInt(elemento.getString("u_cantidadAmigos")),
-                                Integer.parseInt(elemento.getString("u_nivel")), Integer.parseInt(elemento.getString("u_experiencia")),
-                                elemento.getString("u_alias"), elemento.getString("u_password"), elemento.getString("u_rol"),
-                                elemento.getString("u_picture"), elemento.getString("u_fechaNacimiento"));
-                        agregarWaitingRooms(usuario);
-                        //Usuarios.add(usuario);
-                    }
-                    boolean ok = jsonRespuesta.getBoolean("success");
-                    if (ok) {
-                        //System.out.println(jsonRespuesta);
-                    } else {
-                        AlertDialog.Builder alerta = new AlertDialog.Builder(WaitingRoomActivity.this);
-                        alerta.setMessage("Error obteniendo los usuarios").setNegativeButton("Reintentar", null).create().show();
-                    }
-                } catch (JSONException e) {
-                    e.getMessage();
-                }
-            }
-        };
-        PartidaRequest r = null;
-        r = new PartidaRequest(Integer.valueOf(partida.getP_id()), respuesta, "UsuariosXPartida");
-        RequestQueue cola = Volley.newRequestQueue(WaitingRoomActivity.this);
-        cola.add(r);
-    }
+
 
     public void agregarWaitingRooms(Usuario usuario) {
         // Agregando usuarios
@@ -194,9 +156,9 @@ public class WaitingRoomActivity extends AppCompatActivity {
     public void empezarPartida(View view) {
         //Redirecciona a la otra vista
         if (usuarios.size() >= partida.getP_cantidadJugadores()  ) {
-            System.out.println("se está cumpliendo");
-            Intent nextActivity = new Intent(WaitingRoomActivity.this, GameActivity.class);
-            WaitingRoomActivity.this.startActivity(nextActivity);
+            /*Intent nextActivity = new Intent(WaitingRoomActivity.this, GameActivity.class);
+            WaitingRoomActivity.this.startActivity(nextActivity);*/
+            listener.enviarMensaje(ws,"inicio partida");
         } else {
             AlertDialog.Builder alerta = new AlertDialog.Builder(WaitingRoomActivity.this);
             alerta.setMessage("Cantidad de jugadores insuficiente").setNegativeButton("Reintentar", null).create().show();

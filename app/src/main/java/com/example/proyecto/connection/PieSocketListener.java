@@ -1,6 +1,7 @@
 package com.example.proyecto.connection;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.util.Log;
 import android.widget.LinearLayout;
@@ -10,6 +11,7 @@ import androidx.appcompat.app.AlertDialog;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
+import com.example.proyecto.GameActivity;
 import com.example.proyecto.HiloWaiting;
 import com.example.proyecto.WaitingRoomActivity;
 import com.example.proyecto.partida.Partida;
@@ -65,6 +67,10 @@ public class PieSocketListener extends WebSocketListener {
         if(text.equals("nuevoUsuario-" + partida.getP_id())){
             HiloWaiting hilo = new HiloWaiting(this.context,this.parentLayout2,this.usuario, this.partida);
             hilo.execute();
+        }else if(text.equals("inicio partida")){
+            Intent intent = new Intent(this.context, GameActivity.class);
+            context.startActivity(intent);
+
         }
     }
 
@@ -79,6 +85,9 @@ public class PieSocketListener extends WebSocketListener {
         System.out.println("Error : " + t.getMessage());
     }
 
+    public void enviarMensaje(WebSocket webSocket, String text){
+        webSocket.send(text);
+    }
     public void output(String text){
         Log.d("PieSocket",text);
     }
