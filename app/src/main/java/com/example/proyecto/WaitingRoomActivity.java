@@ -159,6 +159,7 @@ public class WaitingRoomActivity extends AppCompatActivity {
             /*Intent nextActivity = new Intent(WaitingRoomActivity.this, GameActivity.class);
             WaitingRoomActivity.this.startActivity(nextActivity);*/
             listener.enviarMensaje(ws,"inicio partida");
+            usuarios.clear();
         } else {
             AlertDialog.Builder alerta = new AlertDialog.Builder(WaitingRoomActivity.this);
             alerta.setMessage("Cantidad de jugadores insuficiente").setNegativeButton("Reintentar", null).create().show();
