@@ -49,25 +49,7 @@ public class GameActivity extends AppCompatActivity {
         parentLayout2 = (LinearLayout) findViewById(R.id.parentLayout2);
         parentLayout3 = (ConstraintLayout) findViewById(R.id.parentLayout3);
         mTextView = (TextView) findViewById(R.id.text);
-        Button connect = (Button) findViewById(R.id.connect);
 
-        OkHttpClient client = new OkHttpClient();
-
-        connect.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d("PieSocket","Connecting");
-                String apiKey = "dwRO3yR7VvymQk1HfYHqJBK22coq0TnEW90aqcN4"; //Demo key, get yours at https://piesocket.com
-                int channelId = 1;
-
-                Request request = new Request.Builder()
-                        .url("wss://us-nyc-1.websocket.me/v3/1?api_key=dwRO3yR7VvymQk1HfYHqJBK22coq0TnEW90aqcN4&notify_self")
-                        .build();
-
-                PieSocketListener listener =  new PieSocketListener("nuevo Usuario GameActivity");
-                WebSocket ws = client.newWebSocket(request, listener);
-            }
-        });
     }
 
     public void volverLobby(View view){
