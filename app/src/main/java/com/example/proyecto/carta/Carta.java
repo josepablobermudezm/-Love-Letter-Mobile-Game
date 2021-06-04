@@ -1,15 +1,15 @@
 package com.example.proyecto.carta;
 
-public class carta {
+public class Carta {
     private String nombre;
     private int valor;
 
-    public carta(String nombre, int valor) {
+    public Carta(String nombre, int valor) {
         this.nombre = nombre;
         this.valor = valor;
     }
 
-    public carta() {
+    public Carta() {
     }
 
     public String getNombre() {
