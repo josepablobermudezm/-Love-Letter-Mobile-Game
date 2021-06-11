@@ -2,6 +2,7 @@ package com.example.proyecto.connection;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.util.Log;
 import android.widget.ImageView;
@@ -13,6 +14,7 @@ import androidx.appcompat.app.AlertDialog;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 import com.example.proyecto.GameActivity;
+import com.example.proyecto.HiloImagenes;
 import com.example.proyecto.HiloWaiting;
 import com.example.proyecto.WaitingRoomActivity;
 import com.example.proyecto.carta.Carta;
@@ -115,19 +117,9 @@ public class PieSocketListener extends WebSocketListener {
 
                         usuario.getMazo().add(cartaAux);
                         usuario.getMazo().add(cartaAux2);
-
-                        Thread hilo = new Thread(new Runnable() {
-                            @Override
-                            public void run() {
-                                int code = getContext().getResources().getIdentifier(carta1, "drawable", getContext().getPackageName());
-                                getImg1().setImageResource(code);
-                                code = getContext().getResources().getIdentifier(carta2, "drawable", getContext().getPackageName());
-                                getImg2().setImageResource(code);
-                            }
-                        });
-                        hilo.start();
+                        HiloImagenes hilo = new HiloImagenes(this.getContext(), this.getImg1(), this.getImg2(), carta1, carta2);
+                        hilo.execute();
                     }
-
                     break;
                 case "":
                     break;

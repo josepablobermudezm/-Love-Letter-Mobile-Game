@@ -150,8 +150,11 @@ public class GameActivity extends AppCompatActivity {
                                 cartas.remove(carta2);
 
                                 String value = "enviarCartas,"+carta.getNombre()+","+ carta.getValor() +","+carta2.getNombre()+","+ carta2.getValor()+","+u.getU_id();
-                                listener.setImg1((ImageView) findViewById(R.id.Carta1));
-                                listener.setImg2((ImageView) findViewById(R.id.Carta2));
+                                ImageView img1 = (ImageView) findViewById(R.id.Carta1);
+                                ImageView img2 = (ImageView) findViewById(R.id.Carta2);
+                                listener.setImg1(img1);
+                                listener.setImg2(img2);
+
                                 listener.setContext(getApplicationContext());
                                 listener.enviarMensaje(ws, value);
                             }
