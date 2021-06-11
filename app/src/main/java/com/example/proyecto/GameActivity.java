@@ -50,11 +50,16 @@ public class GameActivity extends AppCompatActivity {
         parentLayout3 = (ConstraintLayout) findViewById(R.id.parentLayout3);
         mTextView = (TextView) findViewById(R.id.text);
 
+
+
     }
 
     public void volverLobby(View view){
+
         Intent nextActivity = new Intent(GameActivity.this, PartidaActivity.class);
         GameActivity.this.startActivity(nextActivity);
         GameActivity.this.finish();
+
     }
+
 }
