@@ -50,26 +50,24 @@
                     android:id="@+id/Carta1"
                     android:layout_width="126dp"
                     android:layout_height="199dp"
-                    android:onClick="Carta1Click"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.189"
+                    app:layout_constraintHorizontal_bias="0.184"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.279"
+                    app:layout_constraintVertical_bias="0.863"
                     tools:srcCompat="@tools:sample/avatars" />
 
                 <ImageView
                     android:id="@+id/Carta2"
                     android:layout_width="126dp"
                     android:layout_height="199dp"
-                    android:onClick="Carta2Click"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.834"
+                    app:layout_constraintHorizontal_bias="0.819"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.277"
+                    app:layout_constraintVertical_bias="0.861"
                     tools:srcCompat="@tools:sample/avatars" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </LinearLayout>
