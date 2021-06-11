@@ -1,6 +1,7 @@
 package com.example.proyecto.carta;
 
 public class Carta {
+
     private String nombre;
     private int valor;
 
@@ -26,5 +27,13 @@ public class Carta {
 
     public void setValor(int valor) {
         this.valor = valor;
+    }
+
+    @Override
+    public String toString() {
+        return "Carta{" +
+                "nombre='" + nombre + '\'' +
+                ", valor=" + valor +
+                '}';
     }
 }

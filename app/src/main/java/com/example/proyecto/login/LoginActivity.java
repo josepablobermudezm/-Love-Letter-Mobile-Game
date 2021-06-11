@@ -18,20 +18,29 @@ import android.widget.ImageView;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
+import com.example.proyecto.GameActivity;
 import com.example.proyecto.LobbyActivity;
 import com.example.proyecto.R;
+import com.example.proyecto.carta.Carta;
+import com.example.proyecto.carta.CartaRequest;
 import com.example.proyecto.registro.RegisterActivity;
 import com.example.proyecto.usuarios.Usuario;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+
 public class LoginActivity extends AppCompatActivity {
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
     }
 
     public void iniciarSesion(View view){
