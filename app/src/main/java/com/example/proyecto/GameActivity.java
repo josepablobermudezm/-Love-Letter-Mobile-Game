@@ -140,7 +140,11 @@ public class GameActivity extends AppCompatActivity {
 
 
                         if (ok) {
-
+                            ImageView img1 = (ImageView) findViewById(R.id.Carta1);
+                            ImageView img2 = (ImageView) findViewById(R.id.Carta2);
+                            listener.setImg1(img1);
+                            listener.setImg2(img2);
+                            listener.setContext(getApplicationContext());
 
                             for(Usuario u : WaitingRoomActivity.usuarios){
                                 Carta carta = cartas.get(cartas.size()-1);
@@ -150,23 +154,9 @@ public class GameActivity extends AppCompatActivity {
                                 cartas.remove(carta2);
 
                                 String value = "enviarCartas,"+carta.getNombre()+","+ carta.getValor() +","+carta2.getNombre()+","+ carta2.getValor()+","+u.getU_id();
-                                ImageView img1 = (ImageView) findViewById(R.id.Carta1);
-                                ImageView img2 = (ImageView) findViewById(R.id.Carta2);
-                                listener.setImg1(img1);
-                                listener.setImg2(img2);
 
-                                listener.setContext(getApplicationContext());
                                 listener.enviarMensaje(ws, value);
                             }
-
-                            /*Carta carta = cartas.get((int) Math.random()*21 + 1);
-                            cartas.remove(carta);
-                            Carta carta2 = cartas.get((int) Math.random()*20 + 1);
-                            cartas.remove(carta2);
-                            int code = getResources().getIdentifier(carta.getNombre(), "drawable", getPackageName());
-                            ((ImageView)findViewById(R.id.Carta1)).setImageResource(code);
-                            code = getResources().getIdentifier(carta2.getNombre(), "drawable", getPackageName());
-                            ((ImageView)findViewById(R.id.Carta2)).setImageResource(code);*/
                         } else {
                             AlertDialog.Builder alerta = new AlertDialog.Builder(GameActivity.this);
                             alerta.setMessage("Fallo en la partida").setNegativeButton("Reintentar", null).create().show();
