@@ -19,7 +19,8 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/parentLayout3"
             android:layout_width="match_parent"
-            android:layout_height="50dp">
+            android:layout_height="50dp"
+            >
 
 
             <TextView
@@ -56,7 +57,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintVertical_bias="0.863"
-                    android:src="@drawable/rey" />
+                    />
 
                 <ImageView
                     android:id="@+id/Carta2"
@@ -68,7 +69,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintVertical_bias="0.861"
-                    android:src="@drawable/rey"/>
+                    />
 
                 <ImageView
                     android:id="@+id/mazo"

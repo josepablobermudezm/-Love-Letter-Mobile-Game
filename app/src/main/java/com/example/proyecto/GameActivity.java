@@ -34,7 +34,13 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -78,6 +84,7 @@ public class GameActivity extends AppCompatActivity {
         listener.setContext(getApplicationContext());
 
         if(administrador.equals("true")){
+            turno();
             Response.Listener<String> respuesta = new Response.Listener<String>() {
                 @RequiresApi(api = Build.VERSION_CODES.N)
                 @Override
@@ -170,6 +177,37 @@ public class GameActivity extends AppCompatActivity {
             RequestQueue cola = Volley.newRequestQueue(GameActivity.this);
             cola.add(r);
         }
+
+    }
+
+    public void turno(){
+        Calendar today = new GregorianCalendar();
+        today.setTime(new Date());
+
+        // Sacar las edades de los jugadores
+        for(Usuario u : WaitingRoomActivity.usuarios) {
+            String[] fecha = u.getU_fechaNacimiento().split("/", 3);
+            Calendar birthDay = new GregorianCalendar(Integer.parseInt(fecha[2]), Integer.parseInt(fecha[1]), Integer.parseInt(fecha[0]));
+            int yearsInBetween = today.get(Calendar.YEAR) - birthDay.get(Calendar.YEAR);
+            u.setEdad(yearsInBetween);
+        }
+
+        // Ordenar la lista de los jugadores en la partida
+        Collections.sort(WaitingRoomActivity.usuarios, new Comparator<Usuario>() {
+            @Override
+            public int compare(Usuario p1, Usuario p2) {
+                if( p1.getEdad() > p2.getEdad() ){
+                    return 1;
+                }
+                if( p1.getEdad() < p2.getEdad() ){
+                    return -1;
+                }
+                return 0;
+            }
+        });
+
+        // Se le da el turno al jugador más joven
+        WaitingRoomActivity.usuarios.get(0).setTurno(true);
 
     }
 

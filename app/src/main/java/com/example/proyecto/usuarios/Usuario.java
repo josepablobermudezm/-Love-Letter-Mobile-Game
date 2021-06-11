@@ -12,7 +12,8 @@ public class Usuario implements Serializable {
     public static ArrayList<Usuario> usuarios = new ArrayList();
     public static Usuario usuarioLogueado = new Usuario();
     private ArrayList <Carta> mazo = new ArrayList<>();
-
+    private boolean turno = false;
+    private int edad;
 
     public Usuario(int u_id, int u_cantidadPartidasJugadas, int u_cantidadPartidasGanadas, int u_cantidadAmigos, int u_nivel, int u_experiencia, String u_alias, String u_password, String u_rol, String u_picture, String u_fechaNacimiento) {
         this.u_id = u_id;
@@ -34,6 +35,14 @@ public class Usuario implements Serializable {
         public ChildClass() {}
     }
 
+    public int getEdad() {
+        return edad;
+    }
+
+    public void setEdad(int edad) {
+        this.edad = edad;
+    }
+
     public int getU_id() {
         return u_id;
     }
@@ -48,6 +57,14 @@ public class Usuario implements Serializable {
 
     public void setU_cantidadPartidasJugadas(int u_cantidadPartidasJugadas) {
         this.u_cantidadPartidasJugadas = u_cantidadPartidasJugadas;
+    }
+
+    public boolean isTurno() {
+        return turno;
+    }
+
+    public void setTurno(boolean turno) {
+        this.turno = turno;
     }
 
     public int getU_cantidadPartidasGanadas() {
