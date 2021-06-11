@@ -149,12 +149,11 @@ public class GameActivity extends AppCompatActivity {
                                 Carta carta2 = cartas.get(cartas.size()-1);
                                 cartas.remove(carta2);
 
-                                String value = "enviarCartas,"+carta.getNombre()+","+ carta.getValor() +","+carta2.getNombre()+","+ carta2.getValor()+","+usuario.getU_id();
-                                System.out.println(value);
-                                //listener.setImg1((ImageView) findViewById(R.id.Carta1));
-                                //listener.setImg2((ImageView) findViewById(R.id.Carta2));
-                                //listener.setContext(getApplicationContext());
-                                //listener.enviarMensaje(ws, value);
+                                String value = "enviarCartas,"+carta.getNombre()+","+ carta.getValor() +","+carta2.getNombre()+","+ carta2.getValor()+","+u.getU_id();
+                                listener.setImg1((ImageView) findViewById(R.id.Carta1));
+                                listener.setImg2((ImageView) findViewById(R.id.Carta2));
+                                listener.setContext(getApplicationContext());
+                                listener.enviarMensaje(ws, value);
                             }
 
                             /*Carta carta = cartas.get((int) Math.random()*21 + 1);
