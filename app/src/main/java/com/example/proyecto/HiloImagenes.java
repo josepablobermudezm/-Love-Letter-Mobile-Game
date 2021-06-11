@@ -4,9 +4,11 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.widget.ImageView;
 
-public class HiloImagenes extends AsyncTask<String, Float, Integer> {
+import java.io.Serializable;
+
+public class HiloImagenes extends AsyncTask<String, Float, Integer> implements Serializable {
     private View v;
-    private static class View {
+    private static class View implements Serializable {
         Context contexto;
         ImageView img1;
         ImageView img2;
