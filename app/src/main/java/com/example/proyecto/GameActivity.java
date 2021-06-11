@@ -129,6 +129,8 @@ public class GameActivity extends AppCompatActivity {
                         cartas.remove(carta2);
                         int code = getResources().getIdentifier(carta.getNombre(), "drawable", getPackageName());
                         ((ImageView)findViewById(R.id.Carta1)).setImageResource(code);
+                        code = getResources().getIdentifier(carta2.getNombre(), "drawable", getPackageName());
+                        ((ImageView)findViewById(R.id.Carta2)).setImageResource(code);
                     } else {
                         AlertDialog.Builder alerta = new AlertDialog.Builder(GameActivity.this);
                         alerta.setMessage("Fallo en la partida").setNegativeButton("Reintentar", null).create().show();
