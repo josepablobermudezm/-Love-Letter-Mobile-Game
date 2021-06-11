@@ -122,7 +122,13 @@ public class GameActivity extends AppCompatActivity {
                     boolean ok = jsonRespuesta.getBoolean("success");
 
                     if (ok) {
-                        System.out.println(jsonRespuesta);
+
+                        Carta carta = cartas.get((int) Math.random()*21 + 1);
+                        cartas.remove(carta);
+                        Carta carta2 = cartas.get((int) Math.random()*20 + 1);
+                        cartas.remove(carta2);
+                        int code = getResources().getIdentifier(carta.getNombre(), "drawable", getPackageName());
+                        ((ImageView)findViewById(R.id.Carta1)).setImageResource(code);
                     } else {
                         AlertDialog.Builder alerta = new AlertDialog.Builder(GameActivity.this);
                         alerta.setMessage("Fallo en la partida").setNegativeButton("Reintentar", null).create().show();
