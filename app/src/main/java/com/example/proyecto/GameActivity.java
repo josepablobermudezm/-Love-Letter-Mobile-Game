@@ -71,7 +71,11 @@ public class GameActivity extends AppCompatActivity {
         administrador = intent.getStringExtra("administrador");
         usuario = (Usuario) intent.getSerializableExtra("usuario");
 
-
+        ImageView img1 = (ImageView) findViewById(R.id.Carta1);
+        ImageView img2 = (ImageView) findViewById(R.id.Carta2);
+        listener.setImg1(img1);
+        listener.setImg2(img2);
+        listener.setContext(getApplicationContext());
         if(administrador.equals("true")){
             Response.Listener<String> respuesta = new Response.Listener<String>() {
                 @RequiresApi(api = Build.VERSION_CODES.N)
@@ -140,12 +144,6 @@ public class GameActivity extends AppCompatActivity {
 
 
                         if (ok) {
-                            ImageView img1 = (ImageView) findViewById(R.id.Carta1);
-                            ImageView img2 = (ImageView) findViewById(R.id.Carta2);
-                            listener.setImg1(img1);
-                            listener.setImg2(img2);
-                            listener.setContext(getApplicationContext());
-
                             for(Usuario u : WaitingRoomActivity.usuarios){
                                 Carta carta = cartas.get(cartas.size()-1);
                                 cartas.remove(carta);
