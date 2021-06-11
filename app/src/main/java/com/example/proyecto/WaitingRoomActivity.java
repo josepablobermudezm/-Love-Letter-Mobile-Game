@@ -56,7 +56,7 @@ public class WaitingRoomActivity extends AppCompatActivity {
     private ImageView imageViewStart;
     private ConstraintLayout parentLayout3;
     private int cantidadUsuarios = 0;
-    public static PieSocketListener listener;
+    public static PieSocketListener listener = null;
     public static WebSocket ws;
 
 
@@ -73,9 +73,8 @@ public class WaitingRoomActivity extends AppCompatActivity {
         administrador = i.getStringExtra("administrador");
 
         parentLayout3.removeView(administrador.equals("true") ? null : imageViewStart);
-        //CargarUsuarios("cargarUsuarios");
 
-        if (i.getStringExtra("listenerPieSocket").equals("true")) {
+        if (i.getStringExtra("listenerPieSocket").equals("true") && listener == null) {
             //web socket
             OkHttpClient client = new OkHttpClient();
             Log.d("PieSocket", "Connecting");

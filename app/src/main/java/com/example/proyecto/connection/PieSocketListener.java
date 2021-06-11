@@ -100,9 +100,6 @@ public class PieSocketListener extends WebSocketListener {
             context.startActivity(intent);
         }else {
             String[] arrSplit_2 = text.split(",", 6);
-             for(int i = 0; i<arrSplit_2.length; i++){
-                 System.out.println("Posición: " + i + " " +arrSplit_2[i]);
-             }
             switch (arrSplit_2[0]){
                 case "enviarCartas":
                     String carta1 = arrSplit_2[1];
@@ -123,9 +120,6 @@ public class PieSocketListener extends WebSocketListener {
                     break;
                 case "":
                     break;
-            }
-            if(text.replace("enviarCartas", "").equals(usuario.getU_id())){
-
             }
         }
     }
