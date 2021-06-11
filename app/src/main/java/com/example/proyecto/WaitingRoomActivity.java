@@ -50,7 +50,7 @@ public class WaitingRoomActivity extends AppCompatActivity {
     private TextView mTextView;
     private LinearLayout parentLayout;
     private LinearLayout parentLayout2;
-    public static ArrayList<Usuario> usuarios;
+    public static ArrayList<Usuario> usuarios = new ArrayList<>();
     private Partida partida;
     private String administrador;
     private ImageView imageViewStart;
@@ -71,7 +71,6 @@ public class WaitingRoomActivity extends AppCompatActivity {
         Intent i = this.getIntent();
         partida = (Partida) i.getSerializableExtra("partida");
         administrador = i.getStringExtra("administrador");
-        usuarios = WaitingRoomActivity.usuarios;
 
         parentLayout3.removeView(administrador.equals("true") ? null : imageViewStart);
         //CargarUsuarios("cargarUsuarios");

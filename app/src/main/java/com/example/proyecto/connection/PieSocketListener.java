@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.util.Log;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import androidx.annotation.RequiresApi;
@@ -40,6 +41,7 @@ public class PieSocketListener extends WebSocketListener {
     private String administrador;
     private LinearLayout parentLayout2;
     private Usuario usuario;
+    private ImageView img1,img2;
 
 
     public PieSocketListener(String text, Context context, Partida partida, String administrador, LinearLayout parentLayout2, Usuario usuario) {
@@ -49,6 +51,30 @@ public class PieSocketListener extends WebSocketListener {
         this.usuario = usuario;
         this.parentLayout2 = parentLayout2;
         this.context = context;
+    }
+
+    public Context getContext() {
+        return context;
+    }
+
+    public void setContext(Context context) {
+        this.context = context;
+    }
+
+    public ImageView getImg1() {
+        return img1;
+    }
+
+    public void setImg1(ImageView img1) {
+        this.img1 = img1;
+    }
+
+    public ImageView getImg2() {
+        return img2;
+    }
+
+    public void setImg2(ImageView img2) {
+        this.img2 = img2;
     }
 
     public PieSocketListener(String text) {
@@ -71,7 +97,7 @@ public class PieSocketListener extends WebSocketListener {
             intent.putExtra("usuario", usuario);
             context.startActivity(intent);
         }else {
-            String[] arrSplit_2 = text.split(",", 3);
+            String[] arrSplit_2 = text.split(",", 5);
             switch (arrSplit_2[0]){
                 case "enviarCartas":
                     String carta1 = arrSplit_2[1];
@@ -86,10 +112,17 @@ public class PieSocketListener extends WebSocketListener {
 
                         usuario.getMazo().add(cartaAux);
                         usuario.getMazo().add(cartaAux2);
-                        /*int code = getResources().getIdentifier(carta.getNombre(), "drawable", getPackageName());
-                        ((ImageView)findViewById(R.id.Carta1)).setImageResource(code);
-                        code = getResources().getIdentifier(carta2.getNombre(), "drawable", getPackageName());
-                        ((ImageView)findViewById(R.id.Carta2)).setImageResource(code)*/
+
+                        Thread hilo = new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                int code = getContext().getResources().getIdentifier(carta1, "drawable", getContext().getPackageName());
+                                getImg1().setImageResource(code);
+                                code = getContext().getResources().getIdentifier(carta2, "drawable", getContext().getPackageName());
+                                getImg2().setImageResource(code);
+                            }
+                        });
+                        hilo.start();
                     }
 
                     break;

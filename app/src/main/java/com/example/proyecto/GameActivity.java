@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -148,10 +149,12 @@ public class GameActivity extends AppCompatActivity {
                                 Carta carta2 = cartas.get(cartas.size()-1);
                                 cartas.remove(carta2);
 
-                                //acción,carta1,valor1,carta2,valor2,id
-                                String value = "enviarCartas,"+carta.getNombre()+","+ carta.getValor()+","+carta2.getNombre()+","+ carta2.getValor()+","+usuario.getU_id();
+                                String value = "enviarCartas,"+carta.getNombre()+","+ carta.getValor() +","+carta2.getNombre()+","+ carta2.getValor()+","+usuario.getU_id();
                                 System.out.println(value);
-                                listener.enviarMensaje(ws, value);
+                                //listener.setImg1((ImageView) findViewById(R.id.Carta1));
+                                //listener.setImg2((ImageView) findViewById(R.id.Carta2));
+                                //listener.setContext(getApplicationContext());
+                                //listener.enviarMensaje(ws, value);
                             }
 
                             /*Carta carta = cartas.get((int) Math.random()*21 + 1);
