@@ -136,6 +136,6 @@ public class WaitingRoomActivity extends AppCompatActivity {
         PartidaRequest r = new PartidaRequest(String.valueOf(Usuario.usuarioLogueado.getU_id()), String.valueOf(partida.getP_id()), respuesta);
         RequestQueue cola = Volley.newRequestQueue(WaitingRoomActivity.this);
         cola.add(r);
-        ws.cancel();
+        ws.close(1000,null);
     }
 }

@@ -76,6 +76,7 @@ public class GameActivity extends AppCompatActivity {
         listener.setImg1(img1);
         listener.setImg2(img2);
         listener.setContext(getApplicationContext());
+
         if(administrador.equals("true")){
             Response.Listener<String> respuesta = new Response.Listener<String>() {
                 @RequiresApi(api = Build.VERSION_CODES.N)
@@ -166,18 +167,9 @@ public class GameActivity extends AppCompatActivity {
             };
 
             CartaRequest r = new CartaRequest(respuesta);
-
             RequestQueue cola = Volley.newRequestQueue(GameActivity.this);
             cola.add(r);
         }
-
-    }
-
-    public void volverLobby(View view) {
-
-        Intent nextActivity = new Intent(GameActivity.this, PartidaActivity.class);
-        GameActivity.this.startActivity(nextActivity);
-        GameActivity.this.finish();
 
     }
 
