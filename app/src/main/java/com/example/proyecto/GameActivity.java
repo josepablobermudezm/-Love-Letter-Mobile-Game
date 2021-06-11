@@ -121,7 +121,7 @@ public class GameActivity extends AppCompatActivity {
                     boolean ok = jsonRespuesta.getBoolean("success");
 
                     if (ok) {
-                        
+
                         Carta carta = cartas.get((int) Math.random()*21 + 1);
                         cartas.remove(carta);
                         Carta carta2 = cartas.get((int) Math.random()*20 + 1);
