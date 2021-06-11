@@ -25,6 +25,12 @@ public class HiloImagenes extends AsyncTask<String, Float, Integer> {
     }
     @Override
     protected Integer doInBackground(String... variable_no_usada) {
+        publishProgress();
+        return 1;
+    }
+
+    @Override
+    protected void onProgressUpdate(Float... ejes) {
         int code = this.v.contexto.getResources().getIdentifier(this.v.carta1, "drawable",
                 this.v.contexto.getPackageName());
         this.v.img1.setImageResource(code);
@@ -32,12 +38,6 @@ public class HiloImagenes extends AsyncTask<String, Float, Integer> {
         code = this.v.contexto.getResources().getIdentifier(this.v.carta2, "drawable",
                 this.v.contexto.getPackageName());
         this.v.img2.setImageResource(code);
-        return 1;
-    }
-
-    @Override
-    protected void onProgressUpdate(Float... ejes) {
-
     }
     @Override
     protected void onPostExecute(Integer variable_no_usada) {

@@ -56,7 +56,7 @@ public class WaitingRoomActivity extends AppCompatActivity {
     private ImageView imageViewStart;
     private ConstraintLayout parentLayout3;
     private int cantidadUsuarios = 0;
-    public static PieSocketListener listener = null;
+    public static PieSocketListener listener;
     public static WebSocket ws;
 
 
@@ -74,7 +74,7 @@ public class WaitingRoomActivity extends AppCompatActivity {
 
         parentLayout3.removeView(administrador.equals("true") ? null : imageViewStart);
 
-        if (i.getStringExtra("listenerPieSocket").equals("true") && listener == null) {
+        if (i.getStringExtra("listenerPieSocket").equals("true")) {
             //web socket
             OkHttpClient client = new OkHttpClient();
             Log.d("PieSocket", "Connecting");
@@ -136,5 +136,6 @@ public class WaitingRoomActivity extends AppCompatActivity {
         PartidaRequest r = new PartidaRequest(String.valueOf(Usuario.usuarioLogueado.getU_id()), String.valueOf(partida.getP_id()), respuesta);
         RequestQueue cola = Volley.newRequestQueue(WaitingRoomActivity.this);
         cola.add(r);
+        ws.cancel();
     }
 }
