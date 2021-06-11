@@ -86,7 +86,10 @@ public class PieSocketListener extends WebSocketListener {
 
                         usuario.getMazo().add(cartaAux);
                         usuario.getMazo().add(cartaAux2);
-
+                        /*int code = getResources().getIdentifier(carta.getNombre(), "drawable", getPackageName());
+                        ((ImageView)findViewById(R.id.Carta1)).setImageResource(code);
+                        code = getResources().getIdentifier(carta2.getNombre(), "drawable", getPackageName());
+                        ((ImageView)findViewById(R.id.Carta2)).setImageResource(code)*/
                     }
 
                     break;
