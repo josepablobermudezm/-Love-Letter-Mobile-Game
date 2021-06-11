@@ -42,6 +42,7 @@ public class HiloWaiting extends AsyncTask<String, Float, Integer> {
         v.parentLayout2 = parentLayout2;
         v.usuario = usuario;
         v.partida = partida;
+
     }
     @Override
     protected void onPreExecute() {

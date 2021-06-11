@@ -14,6 +14,7 @@ import com.android.volley.toolbox.Volley;
 import com.example.proyecto.GameActivity;
 import com.example.proyecto.HiloWaiting;
 import com.example.proyecto.WaitingRoomActivity;
+import com.example.proyecto.carta.Carta;
 import com.example.proyecto.partida.Partida;
 import com.example.proyecto.partida.PartidaRequest;
 import com.example.proyecto.usuarios.Usuario;
@@ -40,15 +41,14 @@ public class PieSocketListener extends WebSocketListener {
     private LinearLayout parentLayout2;
     private Usuario usuario;
 
+
     public PieSocketListener(String text, Context context, Partida partida, String administrador, LinearLayout parentLayout2, Usuario usuario) {
         this.text = text;
         this.partida = partida;
         this.administrador = administrador;
         this.usuario = usuario;
-        this.parentLayout2 =  parentLayout2;
+        this.parentLayout2 = parentLayout2;
         this.context = context;
-
-
     }
 
     public PieSocketListener(String text) {
@@ -57,32 +57,51 @@ public class PieSocketListener extends WebSocketListener {
 
     @Override
     public void onOpen(WebSocket webSocket, Response response) {
-
         webSocket.send(this.text);
-
-
     }
 
     @Override
     public void onMessage(WebSocket webSocket, String text) {
-        System.out.println("Received : " + text);
-        if(text.equals("nuevoUsuario-" + partida.getP_id())){
-            HiloWaiting hilo = new HiloWaiting(this.context,this.parentLayout2,this.usuario, this.partida);
+        if (text.equals("nuevoUsuario-" + partida.getP_id())) {
+            HiloWaiting hilo = new HiloWaiting(this.context, this.parentLayout2, this.usuario, this.partida);
             hilo.execute();
-        }else if(text.equals("inicio partida")){
-
-
-            System.out.println("TAMANO" + usuarios.size());
+        } else if (text.equals("inicio partida")) {
             Intent intent = new Intent(this.context, GameActivity.class);
+            intent.putExtra("administrador", administrador);
+            intent.putExtra("usuario", usuario);
             context.startActivity(intent);
+        }else {
+            String[] arrSplit_2 = text.split(",", 3);
+            switch (arrSplit_2[0]){
+                case "enviarCartas":
+                    String carta1 = arrSplit_2[1];
+                    int valor = Integer.valueOf(arrSplit_2[2]);
+                    String carta2 = arrSplit_2[3];
+                    int valor2 = Integer.valueOf(arrSplit_2[4]);
+                    String id = arrSplit_2[5];
 
+                    if(id.equals(String.valueOf(usuario.getU_id()))){//Si somos
+                        Carta cartaAux = new Carta(carta1, valor);
+                        Carta cartaAux2 = new Carta(carta2, valor2);
+
+                        usuario.getMazo().add(cartaAux);
+                        usuario.getMazo().add(cartaAux2);
+
+                    }
+
+                    break;
+                case "":
+                    break;
+            }
+            if(text.replace("enviarCartas", "").equals(usuario.getU_id())){
+
+            }
         }
     }
 
     @Override
     public void onClosing(WebSocket webSocket, int code, String reason) {
         webSocket.close(NORMAL_CLOSURE_STATUS, null);
-        System.out.println("Closing : " + code + " / " + reason);
     }
 
     @Override
@@ -90,10 +109,11 @@ public class PieSocketListener extends WebSocketListener {
         System.out.println("Error : " + t.getMessage());
     }
 
-    public void enviarMensaje(WebSocket webSocket, String text){
+    public void enviarMensaje(WebSocket webSocket, String text) {
         webSocket.send(text);
     }
-    public void output(String text){
-        Log.d("PieSocket",text);
+
+    public void output(String text) {
+        Log.d("PieSocket", text);
     }
 }

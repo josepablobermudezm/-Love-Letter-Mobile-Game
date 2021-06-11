@@ -50,14 +50,14 @@ public class WaitingRoomActivity extends AppCompatActivity {
     private TextView mTextView;
     private LinearLayout parentLayout;
     private LinearLayout parentLayout2;
-    public static ArrayList<Usuario> usuarios = new ArrayList<>();
+    public static ArrayList<Usuario> usuarios;
     private Partida partida;
     private String administrador;
     private ImageView imageViewStart;
     private ConstraintLayout parentLayout3;
     private int cantidadUsuarios = 0;
-    private PieSocketListener listener;
-    private WebSocket ws;
+    public static PieSocketListener listener;
+    public static WebSocket ws;
 
 
     @Override
@@ -71,6 +71,8 @@ public class WaitingRoomActivity extends AppCompatActivity {
         Intent i = this.getIntent();
         partida = (Partida) i.getSerializableExtra("partida");
         administrador = i.getStringExtra("administrador");
+        usuarios = WaitingRoomActivity.usuarios;
+
         parentLayout3.removeView(administrador.equals("true") ? null : imageViewStart);
         //CargarUsuarios("cargarUsuarios");
 
@@ -83,6 +85,7 @@ public class WaitingRoomActivity extends AppCompatActivity {
             Request request = new Request.Builder()
                     .url("wss://us-nyc-1.websocket.me/v3/1?api_key=dwRO3yR7VvymQk1HfYHqJBK22coq0TnEW90aqcN4&notify_self")
                     .build();
+
             listener = new PieSocketListener("nuevoUsuario-" + partida.getP_id(),
                     this, partida, administrador, parentLayout2, Usuario.usuarioLogueado);
             ws = client.newWebSocket(request, listener);
@@ -90,76 +93,11 @@ public class WaitingRoomActivity extends AppCompatActivity {
     }
 
 
-
-    public void agregarWaitingRooms(Usuario usuario) {
-        // Agregando usuarios
-        LinearLayout userLinear = new LinearLayout(this);
-        userLinear.setOrientation(LinearLayout.HORIZONTAL);
-        userLinear.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-        userLinear.setBackgroundColor((Color.parseColor("#6D6969")));
-        userLinear.setPadding(calcularPixeles(10), calcularPixeles(10), calcularPixeles(10), calcularPixeles(10));
-
-        ImageView imageView = new ImageView(this);
-
-        byte[] bytes = Base64.decode(usuario.getU_picture(), Base64.DEFAULT);
-        Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-        imageView.setImageBitmap(bitmap);
-
-        imageView.setLayoutParams(new LinearLayout.LayoutParams(calcularPixeles(90),
-                calcularPixeles(90)));
-        userLinear.addView(imageView);
-
-        LinearLayout dataLinear = new LinearLayout(this);
-        dataLinear.setOrientation(LinearLayout.VERTICAL);
-        dataLinear.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.MATCH_PARENT));
-        dataLinear.setPadding(calcularPixeles(10), calcularPixeles(10), calcularPixeles(10), calcularPixeles(10));
-
-        TextView txt_alias = new TextView(this);
-        txt_alias.setText("Alias: " + usuario.getU_alias());
-        txt_alias.setLayoutParams(new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                50));
-        txt_alias.setTextColor(Color.WHITE);
-        TextView txt_nivel = new TextView(this);
-        txt_nivel.setText("Nivel: " + usuario.getU_nivel());
-        txt_nivel.setLayoutParams(new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                50));
-        txt_nivel.setTextColor(Color.WHITE);
-        TextView txt_fechaNacimiento = new TextView(this);
-        txt_fechaNacimiento.setText("Fec.Nac:" + usuario.getU_fechaNacimiento());
-        txt_fechaNacimiento.setLayoutParams(new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                50));
-        txt_fechaNacimiento.setTextColor(Color.WHITE);
-        dataLinear.addView(txt_alias);
-        dataLinear.addView(txt_nivel);
-        dataLinear.addView(txt_fechaNacimiento);
-
-        parentLayout2.addView(userLinear);
-        userLinear.addView(dataLinear);
-    }
-
-    public int calcularPixeles(int dps) {
-        final float scale = this.getResources().getDisplayMetrics().density;
-        return (int) (dps * scale + 0.5f);
-    }
-
-    private void setMargins(View view, int left, int top, int right, int bottom) {
-        if (view.getLayoutParams() instanceof ViewGroup.MarginLayoutParams) {
-            ViewGroup.MarginLayoutParams p = (ViewGroup.MarginLayoutParams) view.getLayoutParams();
-            p.setMargins(left, top, right, bottom);
-            view.requestLayout();
-        }
-    }
-
     public void empezarPartida(View view) {
         //Redirecciona a la otra vista
 
         if (usuarios.size() >= partida.getP_cantidadJugadores()  ) {
-            /*Intent nextActivity = new Intent(WaitingRoomActivity.this, GameActivity.class);
 
-            WaitingRoomActivity.this.startActivity(nextActivity);*/
             listener.enviarMensaje(ws,"inicio partida");
         } else {
             AlertDialog.Builder alerta = new AlertDialog.Builder(WaitingRoomActivity.this);

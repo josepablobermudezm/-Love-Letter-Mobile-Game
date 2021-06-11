@@ -46,6 +46,12 @@ public class GameActivity extends AppCompatActivity {
     private LinearLayout parentLayout2;
     private ConstraintLayout parentLayout3;
     private ArrayList <Carta> cartas = new ArrayList();
+    private ArrayList <Carta> mazo = new ArrayList();
+    private String administrador;
+    public PieSocketListener listener;
+    public WebSocket ws;
+    private Usuario usuario;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,95 +61,123 @@ public class GameActivity extends AppCompatActivity {
         parentLayout3 = (ConstraintLayout) findViewById(R.id.parentLayout3);
         mTextView = (TextView) findViewById(R.id.text);
 
+        this.ws = WaitingRoomActivity.ws;
+        this.listener = WaitingRoomActivity.listener;
 
-        Response.Listener<String> respuesta = new Response.Listener<String>() {
-            @RequiresApi(api = Build.VERSION_CODES.N)
-            @Override
-            public void onResponse(String response) {
-                try {
-                    response = response.replaceFirst("<font>.*?</font>", "");
-                    int jsonStart = response.indexOf("{");
-                    int jsonEnd = response.lastIndexOf("}");
-                    if (jsonStart >= 0 && jsonEnd >= 0 && jsonEnd > jsonStart) {
-                        response = response.substring(jsonStart, jsonEnd + 1);
-                    }
+        Intent intent = this.getIntent();
 
-                    JSONObject jsonRespuesta = new JSONObject(response);
-                    JSONArray cartasJson = jsonRespuesta.getJSONArray("cartas");
 
-                    for (int x = 0; x < cartasJson.length(); x++) {
-                        Carta carta = new Carta();
-                        switch ((String)cartasJson.get(x)){
-                            case "espia":
-                                carta.setNombre((String)cartasJson.get(x));
-                                carta.setValor(0);
-                                break;
-                            case "guardia":
-                                carta.setNombre((String)cartasJson.get(x));
-                                carta.setValor(1);
-                                break;
-                            case "sacerdote":
-                                carta.setNombre((String)cartasJson.get(x));
-                                carta.setValor(2);
-                                break;
-                            case "baron":
-                                carta.setNombre((String)cartasJson.get(x));
-                                carta.setValor(3);
-                                break;
-                            case "doncella":
-                                carta.setNombre((String)cartasJson.get(x));
-                                carta.setValor(4);
-                                break;
-                            case "principe":
-                                carta.setNombre((String)cartasJson.get(x));
-                                carta.setValor(5);
-                                break;
-                            case "canciller":
-                                carta.setNombre((String)cartasJson.get(x));
-                                carta.setValor(6);
-                                break;
-                            case "rey":
-                                carta.setNombre((String)cartasJson.get(x));
-                                carta.setValor(7);
-                                break;
-                            case "condesa":
-                                carta.setNombre((String)cartasJson.get(x));
-                                carta.setValor(8);
-                                break;
-                            case "princesa":
-                                carta.setNombre((String)cartasJson.get(x));
-                                carta.setValor(9);
-                                break;
+        administrador = intent.getStringExtra("administrador");
+        usuario = (Usuario) intent.getSerializableExtra("usuario");
+
+
+        if(administrador.equals("true")){
+            Response.Listener<String> respuesta = new Response.Listener<String>() {
+                @RequiresApi(api = Build.VERSION_CODES.N)
+                @Override
+                public void onResponse(String response) {
+                    try {
+                        response = response.replaceFirst("<font>.*?</font>", "");
+                        int jsonStart = response.indexOf("{");
+                        int jsonEnd = response.lastIndexOf("}");
+                        if (jsonStart >= 0 && jsonEnd >= 0 && jsonEnd > jsonStart) {
+                            response = response.substring(jsonStart, jsonEnd + 1);
                         }
-                        cartas.add(carta);
+
+                        JSONObject jsonRespuesta = new JSONObject(response);
+                        JSONArray cartasJson = jsonRespuesta.getJSONArray("cartas");
+
+                        for (int x = 0; x < cartasJson.length(); x++) {
+                            Carta carta = new Carta();
+                            switch ((String)cartasJson.get(x)){
+                                case "espia":
+                                    carta.setNombre((String)cartasJson.get(x));
+                                    carta.setValor(0);
+                                    break;
+                                case "guardia":
+                                    carta.setNombre((String)cartasJson.get(x));
+                                    carta.setValor(1);
+                                    break;
+                                case "sacerdote":
+                                    carta.setNombre((String)cartasJson.get(x));
+                                    carta.setValor(2);
+                                    break;
+                                case "baron":
+                                    carta.setNombre((String)cartasJson.get(x));
+                                    carta.setValor(3);
+                                    break;
+                                case "doncella":
+                                    carta.setNombre((String)cartasJson.get(x));
+                                    carta.setValor(4);
+                                    break;
+                                case "principe":
+                                    carta.setNombre((String)cartasJson.get(x));
+                                    carta.setValor(5);
+                                    break;
+                                case "canciller":
+                                    carta.setNombre((String)cartasJson.get(x));
+                                    carta.setValor(6);
+                                    break;
+                                case "rey":
+                                    carta.setNombre((String)cartasJson.get(x));
+                                    carta.setValor(7);
+                                    break;
+                                case "condesa":
+                                    carta.setNombre((String)cartasJson.get(x));
+                                    carta.setValor(8);
+                                    break;
+                                case "princesa":
+                                    carta.setNombre((String)cartasJson.get(x));
+                                    carta.setValor(9);
+                                    break;
+                            }
+
+                            cartas.add(carta);
+                        }
+
+                        boolean ok = jsonRespuesta.getBoolean("success");
+
+
+                        if (ok) {
+
+
+                            for(Usuario u : WaitingRoomActivity.usuarios){
+                                Carta carta = cartas.get(cartas.size()-1);
+                                cartas.remove(carta);
+
+                                Carta carta2 = cartas.get(cartas.size()-1);
+                                cartas.remove(carta2);
+
+                                //acción,carta1,valor1,carta2,valor2,id
+                                String value = "enviarCartas,"+carta.getNombre()+","+ carta.getValor()+","+carta2.getNombre()+","+ carta2.getValor()+","+usuario.getU_id();
+                                System.out.println(value);
+                                listener.enviarMensaje(ws, value);
+                            }
+
+                            /*Carta carta = cartas.get((int) Math.random()*21 + 1);
+                            cartas.remove(carta);
+                            Carta carta2 = cartas.get((int) Math.random()*20 + 1);
+                            cartas.remove(carta2);
+                            int code = getResources().getIdentifier(carta.getNombre(), "drawable", getPackageName());
+                            ((ImageView)findViewById(R.id.Carta1)).setImageResource(code);
+                            code = getResources().getIdentifier(carta2.getNombre(), "drawable", getPackageName());
+                            ((ImageView)findViewById(R.id.Carta2)).setImageResource(code);*/
+                        } else {
+                            AlertDialog.Builder alerta = new AlertDialog.Builder(GameActivity.this);
+                            alerta.setMessage("Fallo en la partida").setNegativeButton("Reintentar", null).create().show();
+                        }
+                    } catch (JSONException e) {
+                        e.getMessage();
                     }
-
-                    boolean ok = jsonRespuesta.getBoolean("success");
-
-                    if (ok) {
-
-                        Carta carta = cartas.get((int) Math.random()*21 + 1);
-                        cartas.remove(carta);
-                        Carta carta2 = cartas.get((int) Math.random()*20 + 1);
-                        cartas.remove(carta2);
-                        int code = getResources().getIdentifier(carta.getNombre(), "drawable", getPackageName());
-                        ((ImageView)findViewById(R.id.Carta1)).setImageResource(code);
-                        code = getResources().getIdentifier(carta2.getNombre(), "drawable", getPackageName());
-                        ((ImageView)findViewById(R.id.Carta2)).setImageResource(code);
-                    } else {
-                        AlertDialog.Builder alerta = new AlertDialog.Builder(GameActivity.this);
-                        alerta.setMessage("Fallo en la partida").setNegativeButton("Reintentar", null).create().show();
-                    }
-                } catch (JSONException e) {
-                    e.getMessage();
                 }
-            }
-        };
+            };
 
-        CartaRequest r = new CartaRequest(respuesta);
+            CartaRequest r = new CartaRequest(respuesta);
 
-        RequestQueue cola = Volley.newRequestQueue(GameActivity.this);
-        cola.add(r);
+            RequestQueue cola = Volley.newRequestQueue(GameActivity.this);
+            cola.add(r);
+        }
+
     }
 
     public void volverLobby(View view) {

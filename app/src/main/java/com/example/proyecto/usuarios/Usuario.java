@@ -1,5 +1,7 @@
 package com.example.proyecto.usuarios;
 
+import com.example.proyecto.carta.Carta;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -9,6 +11,8 @@ public class Usuario implements Serializable {
     private String u_fechaNacimiento;
     public static ArrayList<Usuario> usuarios = new ArrayList();
     public static Usuario usuarioLogueado = new Usuario();
+    private ArrayList <Carta> mazo = new ArrayList<>();
+
 
     public Usuario(int u_id, int u_cantidadPartidasJugadas, int u_cantidadPartidasGanadas, int u_cantidadAmigos, int u_nivel, int u_experiencia, String u_alias, String u_password, String u_rol, String u_picture, String u_fechaNacimiento) {
         this.u_id = u_id;
@@ -118,8 +122,12 @@ public class Usuario implements Serializable {
         this.u_fechaNacimiento = u_fechaNacimiento;
     }
 
-    public static ArrayList getUsuarios() {
-        return usuarios;
+    public ArrayList<Carta> getMazo() {
+        return mazo;
+    }
+
+    public void setMazo(ArrayList<Carta> mazo) {
+        this.mazo = mazo;
     }
 
     public static void setUsuarios(ArrayList usuarios) {
