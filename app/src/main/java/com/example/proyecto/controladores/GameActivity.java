@@ -39,7 +39,7 @@ public class GameActivity extends AppCompatActivity {
     private TextView mTextView;
     private LinearLayout parentLayout;
     private LinearLayout parentLayout2;
-    private ConstraintLayout parentLayout3;
+    private LinearLayout parentLayout3;
     private ArrayList <Carta> cartas = new ArrayList();
     private ArrayList <Carta> mazo = new ArrayList();
     private String administrador;
@@ -54,7 +54,7 @@ public class GameActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_game);
         parentLayout2 = (LinearLayout) findViewById(R.id.parentLayout2);
-        parentLayout3 = (ConstraintLayout) findViewById(R.id.parentLayout3);
+        parentLayout3 = findViewById(R.id.parentLayout3);
         mTextView = (TextView) findViewById(R.id.text);
 
         this.ws = WaitingRoomActivity.ws;
