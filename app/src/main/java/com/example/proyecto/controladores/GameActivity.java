@@ -51,7 +51,7 @@ public class GameActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        System.out.println("ENTRO DOS VECES");
+
         setContentView(R.layout.activity_game);
         parentLayout2 = (LinearLayout) findViewById(R.id.parentLayout2);
         parentLayout3 = (ConstraintLayout) findViewById(R.id.parentLayout3);
@@ -72,10 +72,17 @@ public class GameActivity extends AppCompatActivity {
         listener.setImg1(img1);
         listener.setImg2(img2);
 
+        TextView textView = findViewById(R.id.txv_turno);
+
+        listener.setTurno(textView);
+
+
+
         listener.setContext(getApplicationContext());
 
         if(administrador.equals("true")){
             turno();
+            listener.setUsuarios(WaitingRoomActivity.usuarios);
             Response.Listener<String> respuesta = new Response.Listener<String>() {
                 @RequiresApi(api = Build.VERSION_CODES.N)
                 @Override
@@ -135,9 +142,6 @@ public class GameActivity extends AppCompatActivity {
                                     carta.setValor(9);
                                     break;
                             }
-
-                            System.out.println("CARTA "+ carta.getNombre());
-
                             cartas.add(carta);
                         }
 
@@ -145,6 +149,7 @@ public class GameActivity extends AppCompatActivity {
 
 
                         if (ok) {
+
                             for(Usuario u : WaitingRoomActivity.usuarios){
                                 Carta carta = cartas.get(cartas.size()-1);
                                 cartas.remove(carta);
@@ -154,11 +159,13 @@ public class GameActivity extends AppCompatActivity {
 
                                 String value = "enviarCartas,"+carta.getNombre()+","+ carta.getValor() +","+carta2.getNombre()+","+ carta2.getValor()+","+u.getU_id();
 
-                                System.out.println("value "+ value);
-
-
                                 listener.enviarMensaje(ws, value);
                             }
+
+                            String turno = "turno," + listener.getUsuarios().get(0).getU_alias();
+                            listener.enviarMensaje(ws, turno);
+
+
                         } else {
                             AlertDialog.Builder alerta = new AlertDialog.Builder(GameActivity.this);
                             alerta.setMessage("Fallo en la partida").setNegativeButton("Reintentar", null).create().show();

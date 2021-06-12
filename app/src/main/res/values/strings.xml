@@ -34,4 +34,5 @@
     <string name="logro_amigos">Juega con 5 amigos</string>
     <string name="logro_victorias">15 victorias obtenidas</string>
     <string name="logro_cantidad">20 partidas jugadas</string>
+    <string name="turno">Turno de: </string>
 </resources>

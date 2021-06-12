@@ -5,11 +5,14 @@ import android.content.Intent;
 import android.util.Log;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.example.proyecto.controladores.GameActivity;
 import com.example.proyecto.modelos.Carta;
 import com.example.proyecto.modelos.Partida;
 import com.example.proyecto.modelos.Usuario;
+
+import java.util.ArrayList;
 
 import okhttp3.Response;
 import okhttp3.WebSocket;
@@ -25,7 +28,8 @@ public class PieSocketListener extends WebSocketListener {
     private LinearLayout parentLayout2;
     private Usuario usuario;
     private ImageView img1,img2;
-
+    private ArrayList<Usuario> usuarios;
+    private TextView turno;
 
 
     public PieSocketListener(String text, Context context, Partida partida, String administrador, LinearLayout parentLayout2, Usuario usuario) {
@@ -96,12 +100,14 @@ public class PieSocketListener extends WebSocketListener {
 
                         usuario.getMazo().add(cartaAux);
                         usuario.getMazo().add(cartaAux2);
-                        System.out.println("LISTENER "+getImg1() +  " " + getImg2());
                         HiloImagenes hilo = new HiloImagenes(this.getContext(), this.getImg1(), this.getImg2(), carta1, carta2);
                         hilo.execute();
+
                     }
+
                     break;
-                case "":
+                case "turno":
+                    System.out.println("TURNOOOOOO");
                     break;
             }
         }
@@ -119,6 +125,22 @@ public class PieSocketListener extends WebSocketListener {
 
     public void enviarMensaje(WebSocket webSocket, String text) {
         webSocket.send(text);
+    }
+
+    public ArrayList<Usuario> getUsuarios() {
+        return usuarios;
+    }
+
+    public void setUsuarios(ArrayList<Usuario> usuarios) {
+        this.usuarios = usuarios;
+    }
+
+    public TextView getTurno() {
+        return turno;
+    }
+
+    public void setTurno(TextView turno) {
+        this.turno = turno;
     }
 
     public void output(String text) {

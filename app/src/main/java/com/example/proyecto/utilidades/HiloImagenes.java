@@ -33,7 +33,6 @@ public class HiloImagenes extends AsyncTask<String, Float, Integer> implements S
 
     @Override
     protected void onProgressUpdate(Float... ejes) {
-        System.out.println("HILO "+ v.img1+ " " + v.img1);
         int code = this.v.contexto.getResources().getIdentifier(this.v.carta1, "drawable",
                 this.v.contexto.getPackageName());
         this.v.img1.setImageResource(code);
