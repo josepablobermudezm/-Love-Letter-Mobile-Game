@@ -33,6 +33,7 @@ public class HiloImagenes extends AsyncTask<String, Float, Integer> implements S
 
     @Override
     protected void onProgressUpdate(Float... ejes) {
+        System.out.println("HILO "+ v.carta1 + " " + v.carta2);
         int code = this.v.contexto.getResources().getIdentifier(this.v.carta1, "drawable",
                 this.v.contexto.getPackageName());
         this.v.img1.setImageResource(code);
@@ -40,6 +41,7 @@ public class HiloImagenes extends AsyncTask<String, Float, Integer> implements S
         code = this.v.contexto.getResources().getIdentifier(this.v.carta2, "drawable",
                 this.v.contexto.getPackageName());
         this.v.img2.setImageResource(code);
+
     }
     @Override
     protected void onPostExecute(Integer variable_no_usada) {

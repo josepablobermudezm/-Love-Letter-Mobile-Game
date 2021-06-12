@@ -51,6 +51,7 @@ public class GameActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        System.out.println("ENTRO DOS VECES");
         setContentView(R.layout.activity_game);
         parentLayout2 = (LinearLayout) findViewById(R.id.parentLayout2);
         parentLayout3 = (ConstraintLayout) findViewById(R.id.parentLayout3);
@@ -70,6 +71,7 @@ public class GameActivity extends AppCompatActivity {
 
         listener.setImg1(img1);
         listener.setImg2(img2);
+
         listener.setContext(getApplicationContext());
 
         if(administrador.equals("true")){
@@ -84,7 +86,7 @@ public class GameActivity extends AppCompatActivity {
                         int jsonEnd = response.lastIndexOf("}");
                         if (jsonStart >= 0 && jsonEnd >= 0 && jsonEnd > jsonStart) {
                             response = response.substring(jsonStart, jsonEnd + 1);
-                        }
+                        }GameActivity.this.notify();
 
                         JSONObject jsonRespuesta = new JSONObject(response);
                         JSONArray cartasJson = jsonRespuesta.getJSONArray("cartas");
@@ -134,6 +136,8 @@ public class GameActivity extends AppCompatActivity {
                                     break;
                             }
 
+                            System.out.println("CARTA "+ carta.getNombre());
+
                             cartas.add(carta);
                         }
 
@@ -149,6 +153,9 @@ public class GameActivity extends AppCompatActivity {
                                 cartas.remove(carta2);
 
                                 String value = "enviarCartas,"+carta.getNombre()+","+ carta.getValor() +","+carta2.getNombre()+","+ carta2.getValor()+","+u.getU_id();
+
+                                System.out.println("value "+ value);
+
 
                                 listener.enviarMensaje(ws, value);
                             }
