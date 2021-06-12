@@ -54,39 +54,38 @@
                 android:layout_height="match_parent">
 
                 <ImageView
-                    android:id="@+id/Carta1"
-                    android:layout_width="126dp"
-                    android:layout_height="199dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.184"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.863"
-                    />
-
-                <ImageView
-                    android:id="@+id/Carta2"
-                    android:layout_width="126dp"
-                    android:layout_height="199dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.819"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.861"
-                    />
-
-                <ImageView
                     android:id="@+id/mazo"
-                    android:layout_width="126dp"
-                    android:layout_height="199dp"
+                    android:layout_width="63dp"
+                    android:layout_height="99.5dp"
                     android:src="@drawable/escudo"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.495"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.449" />
+                    app:layout_constraintVertical_bias="0.569" />
+
+                <ImageView
+                    android:id="@+id/Carta1"
+                    android:layout_width="63dp"
+                    android:layout_height="99.5dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.3"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.864" />
+
+                <ImageView
+                    android:id="@+id/Carta2"
+                    android:layout_width="63dp"
+                    android:layout_height="99.5dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.686"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.862" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </LinearLayout>
     </LinearLayout>
