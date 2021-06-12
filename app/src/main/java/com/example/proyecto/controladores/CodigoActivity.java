@@ -1,4 +1,4 @@
-package com.example.proyecto.partida;
+package com.example.proyecto.controladores;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
@@ -16,8 +16,9 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
 import com.example.proyecto.R;
-import com.example.proyecto.WaitingRoomActivity;
-import com.example.proyecto.usuarios.Usuario;
+import com.example.proyecto.modelos.Usuario;
+import com.example.proyecto.modelos.Partida;
+import com.example.proyecto.servicios.PartidaRequest;
 
 import org.json.JSONException;
 import org.json.JSONObject;

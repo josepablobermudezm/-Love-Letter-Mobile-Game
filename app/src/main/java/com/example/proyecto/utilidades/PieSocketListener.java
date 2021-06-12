@@ -1,38 +1,19 @@
-package com.example.proyecto.connection;
+package com.example.proyecto.utilidades;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.AsyncTask;
-import android.os.Build;
 import android.util.Log;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AlertDialog;
-
-import com.android.volley.RequestQueue;
-import com.android.volley.toolbox.Volley;
-import com.example.proyecto.GameActivity;
-import com.example.proyecto.HiloImagenes;
-import com.example.proyecto.HiloWaiting;
-import com.example.proyecto.WaitingRoomActivity;
-import com.example.proyecto.carta.Carta;
-import com.example.proyecto.partida.Partida;
-import com.example.proyecto.partida.PartidaRequest;
-import com.example.proyecto.usuarios.Usuario;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
+import com.example.proyecto.controladores.GameActivity;
+import com.example.proyecto.modelos.Carta;
+import com.example.proyecto.modelos.Partida;
+import com.example.proyecto.modelos.Usuario;
 
 import okhttp3.Response;
 import okhttp3.WebSocket;
 import okhttp3.WebSocketListener;
-
-import static com.example.proyecto.WaitingRoomActivity.usuarios;
 
 public class PieSocketListener extends WebSocketListener {
 
@@ -44,6 +25,7 @@ public class PieSocketListener extends WebSocketListener {
     private LinearLayout parentLayout2;
     private Usuario usuario;
     private ImageView img1,img2;
+
 
 
     public PieSocketListener(String text, Context context, Partida partida, String administrador, LinearLayout parentLayout2, Usuario usuario) {
@@ -141,4 +123,6 @@ public class PieSocketListener extends WebSocketListener {
     public void output(String text) {
         Log.d("PieSocket", text);
     }
+
+
 }

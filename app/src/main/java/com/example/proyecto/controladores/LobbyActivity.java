@@ -1,4 +1,4 @@
-package com.example.proyecto;
+package com.example.proyecto.controladores;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,26 +6,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
-import org.json.JSONObject;
-import org.json.JSONException;
-
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
 import okhttp3.WebSocket;
-import okhttp3.WebSocketListener;
 
-import com.example.proyecto.login.LoginActivity;
-import com.example.proyecto.partida.PartidaActivity;
-import com.example.proyecto.usuarios.Usuario;
-import com.example.proyecto.usuarios.UsuariosActivity;
-
-import java.util.Random;
+import com.example.proyecto.R;
+import com.example.proyecto.modelos.Usuario;
 
 public class LobbyActivity extends AppCompatActivity {
 

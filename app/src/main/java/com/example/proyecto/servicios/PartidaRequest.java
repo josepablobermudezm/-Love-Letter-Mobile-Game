@@ -1,7 +1,8 @@
-package com.example.proyecto.partida;
+package com.example.proyecto.servicios;
 
 import com.android.volley.Response;
 import com.android.volley.toolbox.StringRequest;
+import com.example.proyecto.modelos.Partida;
 
 import java.util.HashMap;
 import java.util.Map;

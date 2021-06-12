@@ -1,4 +1,4 @@
-package com.example.proyecto;
+package com.example.proyecto.utilidades;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -17,16 +17,14 @@ import androidx.appcompat.app.AlertDialog;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
-import com.example.proyecto.connection.PieSocketListener;
-import com.example.proyecto.partida.Partida;
-import com.example.proyecto.partida.PartidaRequest;
-import com.example.proyecto.usuarios.Usuario;
+import com.example.proyecto.controladores.WaitingRoomActivity;
+import com.example.proyecto.modelos.Partida;
+import com.example.proyecto.servicios.PartidaRequest;
+import com.example.proyecto.modelos.Usuario;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.ArrayList;
 
 public class HiloWaiting extends AsyncTask<String, Float, Integer> {
     private View v;

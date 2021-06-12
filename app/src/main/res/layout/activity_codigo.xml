@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".partida.CodigoActivity"
+    tools:context=".controladores.CodigoActivity"
     android:background="@color/cardview_dark_background"
     android:orientation="vertical"
     android:padding="10dp">

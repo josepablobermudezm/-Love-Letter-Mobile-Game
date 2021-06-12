@@ -1,4 +1,4 @@
-package com.example.proyecto;
+package com.example.proyecto.controladores;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,8 +8,8 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.proyecto.usuarios.Usuario;
-import com.example.proyecto.usuarios.UsuariosActivity;
+import com.example.proyecto.R;
+import com.example.proyecto.modelos.Usuario;
 
 public class LogrosActivity extends AppCompatActivity {
 

@@ -1,4 +1,4 @@
-package com.example.proyecto.usuarios;
+package com.example.proyecto.controladores;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -22,10 +22,9 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
-import com.example.proyecto.LobbyActivity;
 import com.example.proyecto.R;
-import com.example.proyecto.login.LoginActivity;
-import com.example.proyecto.registro.RegisterActivity;
+import com.example.proyecto.modelos.Usuario;
+import com.example.proyecto.servicios.UsuariosRequest;
 
 import org.json.JSONArray;
 import org.json.JSONException;

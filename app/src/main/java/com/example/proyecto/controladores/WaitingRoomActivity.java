@@ -1,16 +1,10 @@
-package com.example.proyecto;
+package com.example.proyecto.controladores;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Base64;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -22,20 +16,13 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.proyecto.connection.PieSocketListener;
-import com.example.proyecto.login.LoginActivity;
-import com.example.proyecto.partida.CrearPartidaActivity;
-import com.example.proyecto.partida.Partida;
-import com.example.proyecto.partida.PartidaActivity;
-import com.example.proyecto.partida.PartidaRequest;
-import com.example.proyecto.registro.RegisterActivity;
-import com.example.proyecto.usuarios.Usuario;
-import com.example.proyecto.usuarios.UsuariosActivity;
-import com.example.proyecto.usuarios.UsuariosRequest;
+import com.example.proyecto.R;
+import com.example.proyecto.utilidades.PieSocketListener;
+import com.example.proyecto.modelos.Partida;
+import com.example.proyecto.servicios.PartidaRequest;
+import com.example.proyecto.modelos.Usuario;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 

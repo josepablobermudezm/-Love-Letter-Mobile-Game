@@ -1,6 +1,4 @@
-package com.example.proyecto.partida;
-
-import com.example.proyecto.usuarios.Usuario;
+package com.example.proyecto.modelos;
 
 import java.io.Serializable;
 import java.util.ArrayList;

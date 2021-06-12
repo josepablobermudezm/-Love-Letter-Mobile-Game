@@ -1,4 +1,4 @@
-package com.example.proyecto.registro;
+package com.example.proyecto.controladores;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,7 +10,6 @@ import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.ParcelFileDescriptor;
-import android.provider.MediaStore;
 import android.util.Base64;
 import android.view.View;
 import android.widget.Button;
@@ -23,10 +22,9 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
 import com.example.proyecto.R;
-import com.example.proyecto.usuarios.Usuario;
-import com.example.proyecto.usuarios.UsuariosActivity;
-import com.example.proyecto.usuarios.UsuariosRequest;
-import com.example.proyecto.login.LoginActivity;
+import com.example.proyecto.modelos.Usuario;
+import com.example.proyecto.servicios.RegistroRequest;
+import com.example.proyecto.servicios.UsuariosRequest;
 
 import org.json.JSONException;
 import org.json.JSONObject;

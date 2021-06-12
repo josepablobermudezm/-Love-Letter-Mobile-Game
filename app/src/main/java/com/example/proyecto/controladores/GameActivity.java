@@ -1,14 +1,8 @@
-package com.example.proyecto;
+package com.example.proyecto.controladores;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
-import android.provider.ContactsContract;
-import android.util.Log;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -21,20 +15,16 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
-import com.example.proyecto.carta.Carta;
-import com.example.proyecto.carta.CartaRequest;
-import com.example.proyecto.connection.PieSocketListener;
-import com.example.proyecto.login.LoginActivity;
-import com.example.proyecto.partida.Partida;
-import com.example.proyecto.partida.PartidaActivity;
-import com.example.proyecto.partida.PartidaRequest;
-import com.example.proyecto.usuarios.Usuario;
+import com.example.proyecto.R;
+import com.example.proyecto.modelos.Carta;
+import com.example.proyecto.servicios.CartaRequest;
+import com.example.proyecto.utilidades.PieSocketListener;
+import com.example.proyecto.modelos.Usuario;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -42,8 +32,6 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
 import okhttp3.WebSocket;
 
 public class GameActivity extends AppCompatActivity {
@@ -79,6 +67,7 @@ public class GameActivity extends AppCompatActivity {
 
         ImageView img1 = (ImageView) findViewById(R.id.Carta1);
         ImageView img2 = (ImageView) findViewById(R.id.Carta2);
+
         listener.setImg1(img1);
         listener.setImg2(img2);
         listener.setContext(getApplicationContext());

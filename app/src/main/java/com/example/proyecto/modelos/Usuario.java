@@ -1,6 +1,4 @@
-package com.example.proyecto.usuarios;
-
-import com.example.proyecto.carta.Carta;
+package com.example.proyecto.modelos;
 
 import java.io.Serializable;
 import java.util.ArrayList;

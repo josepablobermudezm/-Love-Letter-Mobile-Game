@@ -1,4 +1,4 @@
-package com.example.proyecto.carta;
+package com.example.proyecto.modelos;
 
 public class Carta {
 

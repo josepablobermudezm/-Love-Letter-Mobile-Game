@@ -1,4 +1,4 @@
-package com.example.proyecto.partida;
+package com.example.proyecto.controladores;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -7,10 +7,8 @@ import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,10 +19,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
-import com.example.proyecto.LobbyActivity;
 import com.example.proyecto.R;
-import com.example.proyecto.WaitingRoomActivity;
-import com.example.proyecto.usuarios.Usuario;
+import com.example.proyecto.modelos.Usuario;
+import com.example.proyecto.modelos.Partida;
+import com.example.proyecto.servicios.PartidaRequest;
 
 import org.json.JSONArray;
 import org.json.JSONException;

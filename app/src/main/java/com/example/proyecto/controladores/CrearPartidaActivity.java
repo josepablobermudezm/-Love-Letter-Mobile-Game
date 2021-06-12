@@ -1,4 +1,4 @@
-    package com.example.proyecto.partida;
+    package com.example.proyecto.controladores;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,19 +15,14 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
 import com.example.proyecto.R;
-import com.example.proyecto.login.LoginActivity;
-import com.example.proyecto.registro.RegisterActivity;
-import com.example.proyecto.registro.RegistroRequest;
-import com.example.proyecto.usuarios.Usuario;
-import com.example.proyecto.usuarios.UsuariosActivity;
-import com.example.proyecto.usuarios.UsuariosRequest;
+import com.example.proyecto.modelos.Usuario;
+import com.example.proyecto.modelos.Partida;
+import com.example.proyecto.servicios.PartidaRequest;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.Random;
-
-public class CrearPartidaActivity extends AppCompatActivity {
+    public class CrearPartidaActivity extends AppCompatActivity {
 
     private TextView mTextView;
     private Partida partida;
