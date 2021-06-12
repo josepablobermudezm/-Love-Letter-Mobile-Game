@@ -86,7 +86,7 @@ public class GameActivity extends AppCompatActivity {
                         int jsonEnd = response.lastIndexOf("}");
                         if (jsonStart >= 0 && jsonEnd >= 0 && jsonEnd > jsonStart) {
                             response = response.substring(jsonStart, jsonEnd + 1);
-                        }GameActivity.this.notify();
+                        }
 
                         JSONObject jsonRespuesta = new JSONObject(response);
                         JSONArray cartasJson = jsonRespuesta.getJSONArray("cartas");
