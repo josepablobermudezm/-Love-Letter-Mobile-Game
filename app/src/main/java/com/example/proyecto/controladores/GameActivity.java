@@ -213,15 +213,21 @@ public class GameActivity extends AppCompatActivity {
     }
 
     public void actionCarta1(View view){
-        arrow1.setVisibility(View.VISIBLE);
-        arrow2.setVisibility(View.INVISIBLE);
-        System.out.println(Usuario.usuarioLogueado.getMazo().get(0).getNombre());
+        if(Usuario.usuarioLogueado.getU_id() == WaitingRoomActivity.usuarios.get(jugadorActual).getU_id()){
+            arrow1.setVisibility(View.VISIBLE);
+            arrow2.setVisibility(View.INVISIBLE);
+        }else{
+            Toast.makeText(view.getContext(), "No es tu turno", Toast.LENGTH_SHORT).show();
+        }
     }
 
     public void actionCarta2(View view){
-        arrow2.setVisibility(View.VISIBLE);
-        arrow1.setVisibility(View.INVISIBLE);
-        System.out.println(Usuario.usuarioLogueado.getMazo().get(1).getNombre());
+        if(Usuario.usuarioLogueado.getU_id() == WaitingRoomActivity.usuarios.get(jugadorActual).getU_id()) {
+            arrow2.setVisibility(View.VISIBLE);
+            arrow1.setVisibility(View.INVISIBLE);
+        }else{
+            Toast.makeText(view.getContext(), "No es tu turno", Toast.LENGTH_SHORT).show();
+        }
     }
 
     public void cartasJugadas(View view) {
@@ -237,6 +243,7 @@ public class GameActivity extends AppCompatActivity {
             img1.setImageResource(0);
             arrow1.setVisibility(View.INVISIBLE);
             cartasContainer.addView(imageView);
+            listener.enviarMensaje(ws, "cambioTurno");
         }
         else if(arrow2.getVisibility() == View.VISIBLE){
             code = this.getResources().getIdentifier(Usuario.usuarioLogueado.getMazo().get(1).getNombre(), "drawable",
@@ -249,6 +256,7 @@ public class GameActivity extends AppCompatActivity {
             img2.setImageResource(0);
             arrow2.setVisibility(View.INVISIBLE);
             cartasContainer.addView(imageView);
+            listener.enviarMensaje(ws, "cambioTurno");
         }
     }
 

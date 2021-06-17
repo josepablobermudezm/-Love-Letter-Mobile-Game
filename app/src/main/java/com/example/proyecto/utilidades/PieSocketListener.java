@@ -111,6 +111,9 @@ public class PieSocketListener extends WebSocketListener {
                         hilo.execute();
                     }
                     break;
+                case "cambioTurno":
+                    GameActivity.jugadorActual++;
+                    break;
                 default:
                     throw new IllegalStateException("Unexpected value: " + arrSplit_2[0]);
             }
