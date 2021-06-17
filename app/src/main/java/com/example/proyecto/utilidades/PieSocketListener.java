@@ -116,8 +116,9 @@ public class PieSocketListener extends WebSocketListener {
                     }
                     break;
                 case "cambioTurno":
-                    if(WaitingRoomActivity.usuarios.size() == GameActivity.jugadorActual - 1){
+                    if(WaitingRoomActivity.usuarios.size()-1 == GameActivity.jugadorActual){
                         GameActivity.jugadorActual = 0;
+                        break;
                     }
                     GameActivity.jugadorActual++;
                     break;
