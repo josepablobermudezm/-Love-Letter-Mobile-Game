@@ -215,7 +215,6 @@ public class GameActivity extends AppCompatActivity {
             listener.enviarMensaje(ws, value);
             Toast.makeText(view.getContext(), "Es tu turno", Toast.LENGTH_SHORT).show();
             WaitingRoomActivity.usuarios.get(jugadorActual).setTurno(false);
-            jugadorActual++;
         }else{
             Toast.makeText(view.getContext(), "No es tu turno", Toast.LENGTH_SHORT).show();
         }
