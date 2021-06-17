@@ -3,6 +3,7 @@ package com.example.proyecto.controladores;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -40,14 +41,14 @@ public class GameActivity extends AppCompatActivity {
     private LinearLayout parentLayout;
     private LinearLayout parentLayout2;
     private LinearLayout parentLayout3;
-    private ArrayList<Carta> cartas = new ArrayList();
+    public ArrayList<Carta> cartas = new ArrayList();
     private ArrayList<Carta> mazo = new ArrayList();
     private String administrador;
     public PieSocketListener listener;
     public WebSocket ws;
     private Usuario usuario;
     private TextView txv_turno;
-
+    public static int jugadorActual = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -141,13 +142,11 @@ public class GameActivity extends AppCompatActivity {
 
                         boolean ok = jsonRespuesta.getBoolean("success");
 
-
                         if (ok) {
                             for (Usuario u : WaitingRoomActivity.usuarios) {
                                 Carta carta = cartas.get(cartas.size() - 1);
                                 cartas.remove(carta);
-                                String value = "enviarCartas," + carta.getNombre() + "," + carta.getValor() + "," + u.getU_id();
-                                listener.enviarMensaje(ws, value);
+                                listener.enviarMensaje(ws, "enviarCartas," + carta.getNombre() + "," + carta.getValor() + "," + u.getU_id());
                             }
 
                             String turno = "turno," + listener.getUsuarios().get(0).getU_alias();
@@ -167,7 +166,7 @@ public class GameActivity extends AppCompatActivity {
         }
 
         turno();
-        txv_turno.setText(WaitingRoomActivity.usuarios.get(0).getU_alias());
+        txv_turno.setText(" " + WaitingRoomActivity.usuarios.get(jugadorActual).getU_alias());
     }
 
     public void turno() {
@@ -198,5 +197,14 @@ public class GameActivity extends AppCompatActivity {
 
         // Se le da el turno al jugador más joven
         WaitingRoomActivity.usuarios.get(0).setTurno(true);
+    }
+
+    public void repartir(View view){
+        if(Usuario.usuarioLogueado.getU_id() == WaitingRoomActivity.usuarios.get(jugadorActual).getU_id()){
+            Carta carta = cartas.get(cartas.size() - 1);
+            cartas.remove(carta);
+            String value = "agregarCarta," + carta.getNombre() + "," + carta.getValor() + "," + WaitingRoomActivity.usuarios.get(jugadorActual).getU_id();
+            listener.enviarMensaje(ws, value);
+        }
     }
 }

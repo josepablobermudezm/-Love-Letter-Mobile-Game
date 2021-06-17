@@ -104,6 +104,21 @@ public class PieSocketListener extends WebSocketListener {
                 case "turno":
                     System.out.println("TURNOOOOOO");
                     break;
+                case "agregarCarta":
+                    String carta2 = arrSplit_2[1];
+                    int valor2 = Integer.parseInt(arrSplit_2[2]);
+                    String id2 = arrSplit_2[3];
+
+                    if(id2.equals(String.valueOf(usuario.getU_id()))){
+                        Carta cartaAux = new Carta(carta2, valor2);
+                        usuario.getMazo().add(cartaAux);
+                        HiloImagenes hilo = new HiloImagenes(this.getContext(), this.getImg1(), this.getImg2(), null, carta2);
+                        hilo.execute();
+                    }
+
+                    break;
+                default:
+                    throw new IllegalStateException("Unexpected value: " + arrSplit_2[0]);
             }
         }
     }
