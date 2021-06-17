@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
@@ -205,6 +206,9 @@ public class GameActivity extends AppCompatActivity {
             cartas.remove(carta);
             String value = "agregarCarta," + carta.getNombre() + "," + carta.getValor() + "," + WaitingRoomActivity.usuarios.get(jugadorActual).getU_id();
             listener.enviarMensaje(ws, value);
+            Toast.makeText(view.getContext(), "Es tu turno", Toast.LENGTH_SHORT).show();
+        }else{
+            Toast.makeText(view.getContext(), "No es tu turno", Toast.LENGTH_SHORT).show();
         }
     }
 }
