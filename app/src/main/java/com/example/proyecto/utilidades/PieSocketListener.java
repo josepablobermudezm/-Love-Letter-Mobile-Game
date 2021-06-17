@@ -111,7 +111,11 @@ public class PieSocketListener extends WebSocketListener {
                     usuario.getMazoCentral().remove(cartaAux);
                     if(id2.equals(String.valueOf(usuario.getU_id()))){
                         usuario.getMazo().add(cartaAux);
-                        HiloImagenes hilo = new HiloImagenes(this.getContext(), this.getImg1(), this.getImg2(), null, cartaAux.getNombre());
+                        System.out.println(this.getImg1());
+                        System.out.println(this.getImg2());
+                        HiloImagenes hilo = new HiloImagenes(this.getContext(), this.getImg1(), this.getImg2(),
+                                this.getImg1().getDrawable() == null ? null : cartaAux.getNombre(),
+                                    this.getImg2().getDrawable() == null ? null : cartaAux.getNombre());
                         hilo.execute();
                     }
                     break;
@@ -121,9 +125,6 @@ public class PieSocketListener extends WebSocketListener {
                         break;
                     }
                     GameActivity.jugadorActual++;
-                    break;
-                case "recibirMazo":
-
                     break;
                 default:
                     throw new IllegalStateException("Unexpected value: " + arrSplit_2[0]);
