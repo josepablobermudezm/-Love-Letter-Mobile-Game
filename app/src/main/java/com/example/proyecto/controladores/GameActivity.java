@@ -146,10 +146,15 @@ public class GameActivity extends AppCompatActivity {
                                 Carta carta = cartas.get(cartas.size() - 1);
                                 cartas.remove(carta);
                                 u.getMazo().add(carta);
-                                listener.enviarMensaje(ws, "enviarCartas," + carta.getNombre() + "," + carta.getValor() + "," + u.getU_id());
+                                listener.enviarMensaje(ws, "enviarCartas," + carta.getNombre() + "," + carta.getValor() + "," + u.getU_id()
+                                        + ",mazo");
                             }
-                            String turno = "turno," + listener.getUsuarios().get(0).getU_alias();
-                            listener.enviarMensaje(ws, turno);
+                            for (Usuario u : WaitingRoomActivity.usuarios) {
+                                for(Carta c : cartas){
+                                    listener.enviarMensaje(ws, "enviarCartas," + c.getNombre() + "," + c.getValor() + "," + u.getU_id()
+                                            + ",mazoCentral");
+                                }
+                            }
                         } else {
                             AlertDialog.Builder alerta = new AlertDialog.Builder(GameActivity.this);
                             alerta.setMessage("Fallo en la partida").setNegativeButton("Reintentar", null).create().show();
@@ -200,13 +205,8 @@ public class GameActivity extends AppCompatActivity {
 
     public void repartir(View view){
         if(Usuario.usuarioLogueado.getU_id() == WaitingRoomActivity.usuarios.get(jugadorActual).getU_id()){
-            Carta carta = cartas.get(cartas.size() - 1);
-            cartas.remove(carta);
-            WaitingRoomActivity.usuarios.get(jugadorActual).getMazo().add(carta);
-            String value = "agregarCarta," + carta.getNombre() + "," + carta.getValor() + "," + WaitingRoomActivity.usuarios.get(jugadorActual).getU_id();
-            listener.enviarMensaje(ws, value);
+            listener.enviarMensaje(ws, "agregarCarta," + Usuario.usuarioLogueado.getU_id());
             Toast.makeText(view.getContext(), "Es tu turno", Toast.LENGTH_SHORT).show();
-            WaitingRoomActivity.usuarios.get(jugadorActual).setTurno(false);
         }else{
             Toast.makeText(view.getContext(), "No es tu turno", Toast.LENGTH_SHORT).show();
         }

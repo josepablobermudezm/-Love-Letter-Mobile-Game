@@ -8,6 +8,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.proyecto.controladores.GameActivity;
+import com.example.proyecto.controladores.WaitingRoomActivity;
 import com.example.proyecto.modelos.Carta;
 import com.example.proyecto.modelos.Partida;
 import com.example.proyecto.modelos.Usuario;
@@ -84,7 +85,7 @@ public class PieSocketListener extends WebSocketListener {
             intent.putExtra("usuario", usuario);
             context.startActivity(intent);
         }else {
-            String[] arrSplit_2 = text.split(",", 4);
+            String[] arrSplit_2 = text.split(",", 5);
             switch (arrSplit_2[0]){
                 case "enviarCartas":
                     String carta1 = arrSplit_2[1];
@@ -92,27 +93,36 @@ public class PieSocketListener extends WebSocketListener {
                     String id = arrSplit_2[3];
                     if(id.equals(String.valueOf(usuario.getU_id()))){
                         Carta cartaAux = new Carta(carta1, valor);
-                        usuario.getMazo().add(cartaAux);
-                        HiloImagenes hilo = new HiloImagenes(this.getContext(), this.getImg1(), this.getImg2(), carta1, null);
-                        hilo.execute();
+                        if(arrSplit_2[4].equals("mazoCentral")){
+                            usuario.getMazoCentral().add(cartaAux);
+                        }else{
+                            usuario.getMazo().add(cartaAux);
+                            HiloImagenes hilo = new HiloImagenes(this.getContext(), this.getImg1(), this.getImg2(), carta1, null);
+                            hilo.execute();
+                        }
                     }
                     break;
                 case "turno":
                     System.out.println("TURNOOOOOO");
                     break;
                 case "agregarCarta":
-                    String carta2 = arrSplit_2[1];
-                    int valor2 = Integer.parseInt(arrSplit_2[2]);
-                    String id2 = arrSplit_2[3];
+                    String id2 = arrSplit_2[1];
                     if(id2.equals(String.valueOf(usuario.getU_id()))){
-                        Carta cartaAux = new Carta(carta2, valor2);
+                        Carta cartaAux = usuario.getMazoCentral().get(usuario.getMazoCentral().size()-1);
                         usuario.getMazo().add(cartaAux);
-                        HiloImagenes hilo = new HiloImagenes(this.getContext(), this.getImg1(), this.getImg2(), null, carta2);
+                        HiloImagenes hilo = new HiloImagenes(this.getContext(), this.getImg1(), this.getImg2(), null, cartaAux.getNombre());
+                        usuario.getMazoCentral().remove(cartaAux);
                         hilo.execute();
                     }
                     break;
                 case "cambioTurno":
+                    if(WaitingRoomActivity.usuarios.size() == GameActivity.jugadorActual - 1){
+                        GameActivity.jugadorActual = 0;
+                    }
                     GameActivity.jugadorActual++;
+                    break;
+                case "recibirMazo":
+
                     break;
                 default:
                     throw new IllegalStateException("Unexpected value: " + arrSplit_2[0]);
