@@ -53,6 +53,8 @@ public class GameActivity extends AppCompatActivity {
     private ImageView arrow1;
     private ImageView arrow2;
     public LinearLayout cartasContainer;
+    public ImageView img1;
+    public ImageView img2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,8 +70,8 @@ public class GameActivity extends AppCompatActivity {
         Intent intent = this.getIntent();
         administrador = intent.getStringExtra("administrador");
         usuario = (Usuario) intent.getSerializableExtra("usuario");
-        ImageView img1 = (ImageView) findViewById(R.id.Carta1);
-        ImageView img2 = (ImageView) findViewById(R.id.Carta2);
+        img1 = (ImageView) findViewById(R.id.Carta1);
+        img2 = (ImageView) findViewById(R.id.Carta2);
         arrow1 = (ImageView) findViewById(R.id.arrow1);
         arrow2 = (ImageView) findViewById(R.id.arrow2);
         listener.setImg1(img1);
@@ -223,7 +225,6 @@ public class GameActivity extends AppCompatActivity {
     }
 
     public void cartasJugadas(View view) {
-        System.out.println("entrando a cartas jugadas");
         int code;
         if(arrow1.getVisibility() == View.VISIBLE){
             code = this.getResources().getIdentifier(Usuario.usuarioLogueado.getMazo().get(0).getNombre(), "drawable",
@@ -231,8 +232,10 @@ public class GameActivity extends AppCompatActivity {
             ImageView imageView = new ImageView(this);
             imageView.setLayoutParams(new LinearLayout.LayoutParams(calcularPixeles(63),
                     calcularPixeles(100)));
-
+            Usuario.usuarioLogueado.getMazo().remove(Usuario.usuarioLogueado.getMazo().get(0));
             imageView.setImageResource(code);
+            img1.setImageResource(0);
+            arrow1.setVisibility(View.INVISIBLE);
             cartasContainer.addView(imageView);
         }
         else if(arrow2.getVisibility() == View.VISIBLE){
@@ -242,6 +245,9 @@ public class GameActivity extends AppCompatActivity {
             imageView.setImageResource(code);
             imageView.setLayoutParams(new LinearLayout.LayoutParams(calcularPixeles(63),
                     calcularPixeles(100)));
+            Usuario.usuarioLogueado.getMazo().remove(Usuario.usuarioLogueado.getMazo().get(1));
+            img2.setImageResource(0);
+            arrow2.setVisibility(View.INVISIBLE);
             cartasContainer.addView(imageView);
         }
     }
