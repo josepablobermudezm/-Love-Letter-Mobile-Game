@@ -70,6 +70,7 @@
                     android:id="@+id/Carta1"
                     android:layout_width="63dp"
                     android:layout_height="99.5dp"
+                    android:onClick="actionCarta1"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.3"
@@ -81,12 +82,39 @@
                     android:id="@+id/Carta2"
                     android:layout_width="63dp"
                     android:layout_height="99.5dp"
+                    android:onClick="actionCarta2"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.686"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintVertical_bias="0.862" />
+
+                <ImageView
+                    android:id="@+id/arrow1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="invisible"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.32"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/Carta1"
+                    app:layout_constraintVertical_bias="0.071"
+                    app:srcCompat="@drawable/arrow" />
+
+                <ImageView
+                    android:id="@+id/arrow2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="invisible"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.663"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/Carta2"
+                    app:layout_constraintVertical_bias="0.087"
+                    app:srcCompat="@drawable/arrow" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </LinearLayout>
     </LinearLayout>

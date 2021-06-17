@@ -50,6 +50,8 @@ public class GameActivity extends AppCompatActivity {
     private Usuario usuario;
     private TextView txv_turno;
     public static int jugadorActual = 0;
+    private ImageView arrow1;
+    private ImageView arrow2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +72,10 @@ public class GameActivity extends AppCompatActivity {
 
         ImageView img1 = (ImageView) findViewById(R.id.Carta1);
         ImageView img2 = (ImageView) findViewById(R.id.Carta2);
+
+        arrow1 = (ImageView) findViewById(R.id.arrow1);
+        arrow2 = (ImageView) findViewById(R.id.arrow2);
+
         listener.setImg1(img1);
         listener.setImg2(img2);
 
@@ -204,11 +210,26 @@ public class GameActivity extends AppCompatActivity {
         if(Usuario.usuarioLogueado.getU_id() == WaitingRoomActivity.usuarios.get(jugadorActual).getU_id()){
             Carta carta = cartas.get(cartas.size() - 1);
             cartas.remove(carta);
+            WaitingRoomActivity.usuarios.get(jugadorActual).getMazo().add(carta);
             String value = "agregarCarta," + carta.getNombre() + "," + carta.getValor() + "," + WaitingRoomActivity.usuarios.get(jugadorActual).getU_id();
             listener.enviarMensaje(ws, value);
             Toast.makeText(view.getContext(), "Es tu turno", Toast.LENGTH_SHORT).show();
+            WaitingRoomActivity.usuarios.get(jugadorActual).setTurno(false);
+            jugadorActual++;
         }else{
             Toast.makeText(view.getContext(), "No es tu turno", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    public void actionCarta1(View view){
+        arrow1.setVisibility(View.VISIBLE);
+        arrow2.setVisibility(View.INVISIBLE);
+        System.out.println(WaitingRoomActivity.usuarios.get(jugadorActual).getMazo().get(0).getNombre());
+    }
+
+    public void actionCarta2(View view){
+        arrow2.setVisibility(View.VISIBLE);
+        arrow1.setVisibility(View.INVISIBLE);
+        System.out.println(WaitingRoomActivity.usuarios.get(jugadorActual).getMazo().get(1).getNombre());
     }
 }
