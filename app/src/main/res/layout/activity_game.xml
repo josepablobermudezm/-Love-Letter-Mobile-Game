@@ -57,14 +57,14 @@
                     android:id="@+id/mazo"
                     android:layout_width="63dp"
                     android:layout_height="99.5dp"
+                    android:onClick="repartir"
                     android:src="@drawable/escudo"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.495"
+                    app:layout_constraintHorizontal_bias="0.501"
                     app:layout_constraintStart_toStartOf="parent"
-                    android:onClick="repartir"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.569" />
+                    app:layout_constraintVertical_bias="0.21" />
 
                 <ImageView
                     android:id="@+id/Carta1"
@@ -89,6 +89,26 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintVertical_bias="0.862" />
+
+                <HorizontalScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:layout_marginTop="44dp"
+                    android:onClick="cartasJugadas"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/mazo"
+                    app:layout_constraintVertical_bias="0.052">
+
+                    <LinearLayout
+                        android:id="@+id/cartasContainer"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal"></LinearLayout>
+
+                </HorizontalScrollView>
 
                 <ImageView
                     android:id="@+id/arrow1"

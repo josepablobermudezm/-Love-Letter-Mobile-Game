@@ -52,6 +52,7 @@ public class GameActivity extends AppCompatActivity {
     public static int jugadorActual = 0;
     private ImageView arrow1;
     private ImageView arrow2;
+    public LinearLayout cartasContainer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +62,7 @@ public class GameActivity extends AppCompatActivity {
         parentLayout3 = findViewById(R.id.parentLayout3);
         mTextView = (TextView) findViewById(R.id.text);
         txv_turno = (TextView) findViewById(R.id.txv_turno);
+        cartasContainer = (LinearLayout) findViewById(R.id.cartasContainer);
 
         this.ws = WaitingRoomActivity.ws;
         this.listener = WaitingRoomActivity.listener;
@@ -233,5 +235,34 @@ public class GameActivity extends AppCompatActivity {
         arrow2.setVisibility(View.VISIBLE);
         arrow1.setVisibility(View.INVISIBLE);
         System.out.println(WaitingRoomActivity.usuarios.get(jugadorActual).getMazo().get(1).getNombre());
+    }
+
+    public void cartasJugadas(View view)
+    {
+        int code;
+        if(arrow1.getVisibility() == View.VISIBLE){
+            code = this.getResources().getIdentifier(WaitingRoomActivity.usuarios.get(jugadorActual).getMazo().get(0).getNombre(), "drawable",
+                    this.getPackageName());
+            ImageView imageView = new ImageView(this);
+            imageView.setLayoutParams(new LinearLayout.LayoutParams(calcularPixeles(63),
+                    calcularPixeles(100)));
+
+            imageView.setImageResource(code);
+            cartasContainer.addView(imageView);
+        }
+        else if(arrow2.getVisibility() == View.VISIBLE){
+            code = this.getResources().getIdentifier(WaitingRoomActivity.usuarios.get(jugadorActual).getMazo().get(1).getNombre(), "drawable",
+                    this.getPackageName());
+            ImageView imageView = new ImageView(this);
+            imageView.setImageResource(code);
+            imageView.setLayoutParams(new LinearLayout.LayoutParams(calcularPixeles(63),
+                    calcularPixeles(100)));
+            cartasContainer.addView(imageView);
+        }
+    }
+
+    public int calcularPixeles(int dps) {
+        final float scale = this.getResources().getDisplayMetrics().density;
+        return (int) (dps * scale + 0.5f);
     }
 }
