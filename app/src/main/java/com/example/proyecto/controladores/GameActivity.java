@@ -205,7 +205,8 @@ public class GameActivity extends AppCompatActivity {
     }
 
     public void repartir(View view){
-        if(Usuario.usuarioLogueado.getU_id() == WaitingRoomActivity.usuarios.get(jugadorActual).getU_id()){
+        if(Usuario.usuarioLogueado.getU_id() == WaitingRoomActivity.usuarios.get(jugadorActual).getU_id()
+        && Usuario.usuarioLogueado.getMazo().size() == 1){
             listener.enviarMensaje(ws, "agregarCarta," + Usuario.usuarioLogueado.getU_id());
             Toast.makeText(view.getContext(), "Es tu turno", Toast.LENGTH_SHORT).show();
         }else{
