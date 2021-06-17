@@ -38,7 +38,7 @@ public class HiloImagenes extends AsyncTask<String, Float, Integer> implements S
                 this.v.contexto.getPackageName());
         this.v.img1.setImageResource(code);
 
-        if(this.v.img2 != null){
+        if(this.v.carta2 != null){
             code = this.v.contexto.getResources().getIdentifier(this.v.carta2, "drawable",
                     this.v.contexto.getPackageName());
             this.v.img2.setImageResource(code);
