@@ -214,8 +214,6 @@ public class GameActivity extends AppCompatActivity {
             Carta carta = cartas.get(cartas.size() - 1);
             cartas.remove(carta);
             WaitingRoomActivity.usuarios.get(jugadorActual).getMazo().add(carta);
-            System.out.println("-----------------------------------------");
-            System.out.println(WaitingRoomActivity.usuarios.get(jugadorActual).getMazo());
             String value = "agregarCarta," + carta.getNombre() + "," + carta.getValor() + "," + WaitingRoomActivity.usuarios.get(jugadorActual).getU_id();
             listener.enviarMensaje(ws, value);
             Toast.makeText(view.getContext(), "Es tu turno", Toast.LENGTH_SHORT).show();
@@ -228,20 +226,20 @@ public class GameActivity extends AppCompatActivity {
     public void actionCarta1(View view){
         arrow1.setVisibility(View.VISIBLE);
         arrow2.setVisibility(View.INVISIBLE);
-        System.out.println(WaitingRoomActivity.usuarios.get(jugadorActual).getMazo().get(0).getNombre());
+        System.out.println(Usuario.usuarioLogueado.getMazo().get(0).getNombre());
     }
 
     public void actionCarta2(View view){
         arrow2.setVisibility(View.VISIBLE);
         arrow1.setVisibility(View.INVISIBLE);
-        System.out.println(WaitingRoomActivity.usuarios.get(jugadorActual).getMazo().get(1).getNombre());
+        System.out.println(Usuario.usuarioLogueado.getMazo().get(1).getNombre());
     }
 
-    public void cartasJugadas(View view)
-    {
+    public void cartasJugadas(View view) {
+        System.out.println("entrando a cartas jugadas");
         int code;
         if(arrow1.getVisibility() == View.VISIBLE){
-            code = this.getResources().getIdentifier(WaitingRoomActivity.usuarios.get(jugadorActual).getMazo().get(0).getNombre(), "drawable",
+            code = this.getResources().getIdentifier(Usuario.usuarioLogueado.getMazo().get(0).getNombre(), "drawable",
                     this.getPackageName());
             ImageView imageView = new ImageView(this);
             imageView.setLayoutParams(new LinearLayout.LayoutParams(calcularPixeles(63),
@@ -251,7 +249,7 @@ public class GameActivity extends AppCompatActivity {
             cartasContainer.addView(imageView);
         }
         else if(arrow2.getVisibility() == View.VISIBLE){
-            code = this.getResources().getIdentifier(WaitingRoomActivity.usuarios.get(jugadorActual).getMazo().get(1).getNombre(), "drawable",
+            code = this.getResources().getIdentifier(Usuario.usuarioLogueado.getMazo().get(1).getNombre(), "drawable",
                     this.getPackageName());
             ImageView imageView = new ImageView(this);
             imageView.setImageResource(code);
