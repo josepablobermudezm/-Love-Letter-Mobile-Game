@@ -72,6 +72,7 @@ public class GameActivity extends AppCompatActivity {
         usuario = (Usuario) intent.getSerializableExtra("usuario");
         img1 = (ImageView) findViewById(R.id.Carta1);
         img2 = (ImageView) findViewById(R.id.Carta2);
+        img2.setImageDrawable(null);
         arrow1 = (ImageView) findViewById(R.id.arrow1);
         arrow2 = (ImageView) findViewById(R.id.arrow2);
         listener.setImg1(img1);
