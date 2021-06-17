@@ -114,8 +114,8 @@ public class PieSocketListener extends WebSocketListener {
                         System.out.println(this.getImg1());
                         System.out.println(this.getImg2());
                         HiloImagenes hilo = new HiloImagenes(this.getContext(), this.getImg1(), this.getImg2(),
-                                this.getImg1() == null ? null : cartaAux.getNombre(),
-                                    this.getImg2() == null ? null : cartaAux.getNombre());
+                                this.getImg1().getDrawable() != null ? null : cartaAux.getNombre(),
+                                    this.getImg2().getDrawable() != null ? null : cartaAux.getNombre());
                         hilo.execute();
                     }
                     break;

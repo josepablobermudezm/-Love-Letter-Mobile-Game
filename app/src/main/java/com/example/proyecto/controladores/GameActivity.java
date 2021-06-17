@@ -240,7 +240,7 @@ public class GameActivity extends AppCompatActivity {
                     calcularPixeles(100)));
             Usuario.usuarioLogueado.getMazo().remove(Usuario.usuarioLogueado.getMazo().get(0));
             imageView.setImageResource(code);
-            listener.setImg1(null);
+            img1.setImageDrawable(null);
             arrow1.setVisibility(View.INVISIBLE);
             cartasContainer.addView(imageView);
             listener.enviarMensaje(ws, "cambioTurno");
@@ -253,7 +253,7 @@ public class GameActivity extends AppCompatActivity {
             imageView.setLayoutParams(new LinearLayout.LayoutParams(calcularPixeles(63),
                     calcularPixeles(100)));
             Usuario.usuarioLogueado.getMazo().remove(Usuario.usuarioLogueado.getMazo().get(1));
-            listener.setImg2(null);
+            img2.setImageDrawable(null);
             arrow2.setVisibility(View.INVISIBLE);
             cartasContainer.addView(imageView);
             listener.enviarMensaje(ws, "cambioTurno");
