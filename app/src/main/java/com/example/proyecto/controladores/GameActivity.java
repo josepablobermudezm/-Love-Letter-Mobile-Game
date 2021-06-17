@@ -153,6 +153,7 @@ public class GameActivity extends AppCompatActivity {
                             for (Usuario u : WaitingRoomActivity.usuarios) {
                                 Carta carta = cartas.get(cartas.size() - 1);
                                 cartas.remove(carta);
+                                u.getMazo().add(carta);
                                 listener.enviarMensaje(ws, "enviarCartas," + carta.getNombre() + "," + carta.getValor() + "," + u.getU_id());
                             }
 
@@ -211,6 +212,8 @@ public class GameActivity extends AppCompatActivity {
             Carta carta = cartas.get(cartas.size() - 1);
             cartas.remove(carta);
             WaitingRoomActivity.usuarios.get(jugadorActual).getMazo().add(carta);
+            System.out.println("-----------------------------------------");
+            System.out.println(WaitingRoomActivity.usuarios.get(jugadorActual).getMazo());
             String value = "agregarCarta," + carta.getNombre() + "," + carta.getValor() + "," + WaitingRoomActivity.usuarios.get(jugadorActual).getU_id();
             listener.enviarMensaje(ws, value);
             Toast.makeText(view.getContext(), "Es tu turno", Toast.LENGTH_SHORT).show();

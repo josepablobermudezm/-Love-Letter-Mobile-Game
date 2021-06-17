@@ -112,6 +112,8 @@ public class PieSocketListener extends WebSocketListener {
                     if(id2.equals(String.valueOf(usuario.getU_id()))){
                         Carta cartaAux = new Carta(carta2, valor2);
                         usuario.getMazo().add(cartaAux);
+                        System.out.println("------------------------------");
+                        System.out.println(usuario.getMazo());
                         HiloImagenes hilo = new HiloImagenes(this.getContext(), this.getImg1(), this.getImg2(), null, carta2);
                         hilo.execute();
                     }
