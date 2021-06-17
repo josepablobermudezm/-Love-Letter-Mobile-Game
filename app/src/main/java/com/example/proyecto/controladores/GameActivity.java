@@ -63,28 +63,20 @@ public class GameActivity extends AppCompatActivity {
         mTextView = (TextView) findViewById(R.id.text);
         txv_turno = (TextView) findViewById(R.id.txv_turno);
         cartasContainer = (LinearLayout) findViewById(R.id.cartasContainer);
-
         this.ws = WaitingRoomActivity.ws;
         this.listener = WaitingRoomActivity.listener;
-
         Intent intent = this.getIntent();
-
         administrador = intent.getStringExtra("administrador");
         usuario = (Usuario) intent.getSerializableExtra("usuario");
-
         ImageView img1 = (ImageView) findViewById(R.id.Carta1);
         ImageView img2 = (ImageView) findViewById(R.id.Carta2);
-
         arrow1 = (ImageView) findViewById(R.id.arrow1);
         arrow2 = (ImageView) findViewById(R.id.arrow2);
-
         listener.setImg1(img1);
         listener.setImg2(img2);
-
         TextView textView = findViewById(R.id.txv_turno);
         listener.setTurno(textView);
         listener.setContext(getApplicationContext());
-
         if (administrador.equals("true")) {
             listener.setUsuarios(WaitingRoomActivity.usuarios);
             Response.Listener<String> respuesta = new Response.Listener<String>() {
@@ -98,10 +90,8 @@ public class GameActivity extends AppCompatActivity {
                         if (jsonStart >= 0 && jsonEnd >= 0 && jsonEnd > jsonStart) {
                             response = response.substring(jsonStart, jsonEnd + 1);
                         }
-
                         JSONObject jsonRespuesta = new JSONObject(response);
                         JSONArray cartasJson = jsonRespuesta.getJSONArray("cartas");
-
                         for (int x = 0; x < cartasJson.length(); x++) {
                             Carta carta = new Carta();
                             switch ((String) cartasJson.get(x)) {
@@ -148,9 +138,7 @@ public class GameActivity extends AppCompatActivity {
                             }
                             cartas.add(carta);
                         }
-
                         boolean ok = jsonRespuesta.getBoolean("success");
-
                         if (ok) {
                             for (Usuario u : WaitingRoomActivity.usuarios) {
                                 Carta carta = cartas.get(cartas.size() - 1);
@@ -158,7 +146,6 @@ public class GameActivity extends AppCompatActivity {
                                 u.getMazo().add(carta);
                                 listener.enviarMensaje(ws, "enviarCartas," + carta.getNombre() + "," + carta.getValor() + "," + u.getU_id());
                             }
-
                             String turno = "turno," + listener.getUsuarios().get(0).getU_alias();
                             listener.enviarMensaje(ws, turno);
                         } else {

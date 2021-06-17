@@ -58,9 +58,7 @@ public class WaitingRoomActivity extends AppCompatActivity {
         Intent i = this.getIntent();
         partida = (Partida) i.getSerializableExtra("partida");
         administrador = i.getStringExtra("administrador");
-
         parentLayout3.removeView(administrador.equals("true") ? null : imageViewStart);
-
         if (i.getStringExtra("listenerPieSocket").equals("true")) {
             //web socket
             OkHttpClient client = new OkHttpClient();
@@ -80,9 +78,7 @@ public class WaitingRoomActivity extends AppCompatActivity {
 
     public void empezarPartida(View view) {
         //Redirecciona a la otra vista
-
         if (usuarios.size() >= partida.getP_cantidadJugadores()  ) {
-
             listener.enviarMensaje(ws,"inicio partida");
         } else {
             AlertDialog.Builder alerta = new AlertDialog.Builder(WaitingRoomActivity.this);
@@ -105,7 +101,6 @@ public class WaitingRoomActivity extends AppCompatActivity {
 
                     JSONObject jsonRespuesta = new JSONObject(response);
                     boolean ok = jsonRespuesta.getBoolean("success");
-
                     if (ok) {
                         Intent nextActivity = new Intent(WaitingRoomActivity.this, PartidaActivity.class);
                         WaitingRoomActivity.this.startActivity(nextActivity);
@@ -119,7 +114,6 @@ public class WaitingRoomActivity extends AppCompatActivity {
                 }
             }
         };
-
         PartidaRequest r = new PartidaRequest(String.valueOf(Usuario.usuarioLogueado.getU_id()), String.valueOf(partida.getP_id()), respuesta);
         RequestQueue cola = Volley.newRequestQueue(WaitingRoomActivity.this);
         cola.add(r);

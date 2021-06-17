@@ -31,7 +31,6 @@ public class PieSocketListener extends WebSocketListener {
     private ArrayList<Usuario> usuarios;
     private TextView turno;
 
-
     public PieSocketListener(String text, Context context, Partida partida, String administrador, LinearLayout parentLayout2, Usuario usuario) {
         this.text = text;
         this.partida = partida;
@@ -91,14 +90,12 @@ public class PieSocketListener extends WebSocketListener {
                     String carta1 = arrSplit_2[1];
                     int valor = Integer.valueOf(arrSplit_2[2]);
                     String id = arrSplit_2[3];
-
                     if(id.equals(String.valueOf(usuario.getU_id()))){
                         Carta cartaAux = new Carta(carta1, valor);
                         usuario.getMazo().add(cartaAux);
                         HiloImagenes hilo = new HiloImagenes(this.getContext(), this.getImg1(), this.getImg2(), carta1, null);
                         hilo.execute();
                     }
-
                     break;
                 case "turno":
                     System.out.println("TURNOOOOOO");
