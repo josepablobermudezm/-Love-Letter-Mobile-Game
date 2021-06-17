@@ -90,7 +90,7 @@ public class PieSocketListener extends WebSocketListener {
                 case "enviarCartas":
                     String carta1 = arrSplit_2[1];
                     int valor = Integer.valueOf(arrSplit_2[2]);
-                    String id = arrSplit_2[5];
+                    String id = arrSplit_2[3];
 
                     if(id.equals(String.valueOf(usuario.getU_id()))){
                         Carta cartaAux = new Carta(carta1, valor);
