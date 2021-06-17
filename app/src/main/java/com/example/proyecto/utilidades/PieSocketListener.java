@@ -107,11 +107,11 @@ public class PieSocketListener extends WebSocketListener {
                     break;
                 case "agregarCarta":
                     String id2 = arrSplit_2[1];
+                    Carta cartaAux = usuario.getMazoCentral().get(usuario.getMazoCentral().size()-1);
+                    usuario.getMazoCentral().remove(cartaAux);
                     if(id2.equals(String.valueOf(usuario.getU_id()))){
-                        Carta cartaAux = usuario.getMazoCentral().get(usuario.getMazoCentral().size()-1);
                         usuario.getMazo().add(cartaAux);
                         HiloImagenes hilo = new HiloImagenes(this.getContext(), this.getImg1(), this.getImg2(), null, cartaAux.getNombre());
-                        usuario.getMazoCentral().remove(cartaAux);
                         hilo.execute();
                     }
                     break;
