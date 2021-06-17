@@ -40,12 +40,13 @@ public class GameActivity extends AppCompatActivity {
     private LinearLayout parentLayout;
     private LinearLayout parentLayout2;
     private LinearLayout parentLayout3;
-    private ArrayList <Carta> cartas = new ArrayList();
-    private ArrayList <Carta> mazo = new ArrayList();
+    private ArrayList<Carta> cartas = new ArrayList();
+    private ArrayList<Carta> mazo = new ArrayList();
     private String administrador;
     public PieSocketListener listener;
     public WebSocket ws;
     private Usuario usuario;
+    private TextView txv_turno;
 
 
     @Override
@@ -55,6 +56,7 @@ public class GameActivity extends AppCompatActivity {
         parentLayout2 = (LinearLayout) findViewById(R.id.parentLayout2);
         parentLayout3 = findViewById(R.id.parentLayout3);
         mTextView = (TextView) findViewById(R.id.text);
+        txv_turno = (TextView) findViewById(R.id.txv_turno);
 
         this.ws = WaitingRoomActivity.ws;
         this.listener = WaitingRoomActivity.listener;
@@ -73,8 +75,7 @@ public class GameActivity extends AppCompatActivity {
         listener.setTurno(textView);
         listener.setContext(getApplicationContext());
 
-        if(administrador.equals("true")){
-            turno();
+        if (administrador.equals("true")) {
             listener.setUsuarios(WaitingRoomActivity.usuarios);
             Response.Listener<String> respuesta = new Response.Listener<String>() {
                 @RequiresApi(api = Build.VERSION_CODES.N)
@@ -93,45 +94,45 @@ public class GameActivity extends AppCompatActivity {
 
                         for (int x = 0; x < cartasJson.length(); x++) {
                             Carta carta = new Carta();
-                            switch ((String)cartasJson.get(x)){
+                            switch ((String) cartasJson.get(x)) {
                                 case "espia":
-                                    carta.setNombre((String)cartasJson.get(x));
+                                    carta.setNombre((String) cartasJson.get(x));
                                     carta.setValor(0);
                                     break;
                                 case "guardia":
-                                    carta.setNombre((String)cartasJson.get(x));
+                                    carta.setNombre((String) cartasJson.get(x));
                                     carta.setValor(1);
                                     break;
                                 case "sacerdote":
-                                    carta.setNombre((String)cartasJson.get(x));
+                                    carta.setNombre((String) cartasJson.get(x));
                                     carta.setValor(2);
                                     break;
                                 case "baron":
-                                    carta.setNombre((String)cartasJson.get(x));
+                                    carta.setNombre((String) cartasJson.get(x));
                                     carta.setValor(3);
                                     break;
                                 case "doncella":
-                                    carta.setNombre((String)cartasJson.get(x));
+                                    carta.setNombre((String) cartasJson.get(x));
                                     carta.setValor(4);
                                     break;
                                 case "principe":
-                                    carta.setNombre((String)cartasJson.get(x));
+                                    carta.setNombre((String) cartasJson.get(x));
                                     carta.setValor(5);
                                     break;
                                 case "canciller":
-                                    carta.setNombre((String)cartasJson.get(x));
+                                    carta.setNombre((String) cartasJson.get(x));
                                     carta.setValor(6);
                                     break;
                                 case "rey":
-                                    carta.setNombre((String)cartasJson.get(x));
+                                    carta.setNombre((String) cartasJson.get(x));
                                     carta.setValor(7);
                                     break;
                                 case "condesa":
-                                    carta.setNombre((String)cartasJson.get(x));
+                                    carta.setNombre((String) cartasJson.get(x));
                                     carta.setValor(8);
                                     break;
                                 case "princesa":
-                                    carta.setNombre((String)cartasJson.get(x));
+                                    carta.setNombre((String) cartasJson.get(x));
                                     carta.setValor(9);
                                     break;
                             }
@@ -142,10 +143,10 @@ public class GameActivity extends AppCompatActivity {
 
 
                         if (ok) {
-                            for(Usuario u : WaitingRoomActivity.usuarios){
-                                Carta carta = cartas.get(cartas.size()-1);
+                            for (Usuario u : WaitingRoomActivity.usuarios) {
+                                Carta carta = cartas.get(cartas.size() - 1);
                                 cartas.remove(carta);
-                                String value = "enviarCartas,"+carta.getNombre()+","+ carta.getValor() +","+u.getU_id();
+                                String value = "enviarCartas," + carta.getNombre() + "," + carta.getValor() + "," + u.getU_id();
                                 listener.enviarMensaje(ws, value);
                             }
 
@@ -165,14 +166,16 @@ public class GameActivity extends AppCompatActivity {
             cola.add(r);
         }
 
+        turno();
+        txv_turno.setText(WaitingRoomActivity.usuarios.get(0).getU_alias());
     }
 
-    public void turno(){
+    public void turno() {
         Calendar today = new GregorianCalendar();
         today.setTime(new Date());
 
         // Sacar las edades de los jugadores
-        for(Usuario u : WaitingRoomActivity.usuarios) {
+        for (Usuario u : WaitingRoomActivity.usuarios) {
             String[] fecha = u.getU_fechaNacimiento().split("/", 3);
             Calendar birthDay = new GregorianCalendar(Integer.parseInt(fecha[2]), Integer.parseInt(fecha[1]), Integer.parseInt(fecha[0]));
             int yearsInBetween = today.get(Calendar.YEAR) - birthDay.get(Calendar.YEAR);
@@ -183,10 +186,10 @@ public class GameActivity extends AppCompatActivity {
         Collections.sort(WaitingRoomActivity.usuarios, new Comparator<Usuario>() {
             @Override
             public int compare(Usuario p1, Usuario p2) {
-                if( p1.getEdad() > p2.getEdad() ){
+                if (p1.getEdad() > p2.getEdad()) {
                     return 1;
                 }
-                if( p1.getEdad() < p2.getEdad() ){
+                if (p1.getEdad() < p2.getEdad()) {
                     return -1;
                 }
                 return 0;
