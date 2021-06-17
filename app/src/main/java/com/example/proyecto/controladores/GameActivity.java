@@ -51,7 +51,6 @@ public class GameActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_game);
         parentLayout2 = (LinearLayout) findViewById(R.id.parentLayout2);
         parentLayout3 = findViewById(R.id.parentLayout3);
@@ -62,22 +61,16 @@ public class GameActivity extends AppCompatActivity {
 
         Intent intent = this.getIntent();
 
-
         administrador = intent.getStringExtra("administrador");
         usuario = (Usuario) intent.getSerializableExtra("usuario");
 
         ImageView img1 = (ImageView) findViewById(R.id.Carta1);
         ImageView img2 = (ImageView) findViewById(R.id.Carta2);
-
         listener.setImg1(img1);
         listener.setImg2(img2);
 
         TextView textView = findViewById(R.id.txv_turno);
-
         listener.setTurno(textView);
-
-
-
         listener.setContext(getApplicationContext());
 
         if(administrador.equals("true")){
@@ -149,23 +142,15 @@ public class GameActivity extends AppCompatActivity {
 
 
                         if (ok) {
-
                             for(Usuario u : WaitingRoomActivity.usuarios){
                                 Carta carta = cartas.get(cartas.size()-1);
                                 cartas.remove(carta);
-
-                                Carta carta2 = cartas.get(cartas.size()-1);
-                                cartas.remove(carta2);
-
-                                String value = "enviarCartas,"+carta.getNombre()+","+ carta.getValor() +","+carta2.getNombre()+","+ carta2.getValor()+","+u.getU_id();
-
+                                String value = "enviarCartas,"+carta.getNombre()+","+ carta.getValor() +","+u.getU_id();
                                 listener.enviarMensaje(ws, value);
                             }
 
                             String turno = "turno," + listener.getUsuarios().get(0).getU_alias();
                             listener.enviarMensaje(ws, turno);
-
-
                         } else {
                             AlertDialog.Builder alerta = new AlertDialog.Builder(GameActivity.this);
                             alerta.setMessage("Fallo en la partida").setNegativeButton("Reintentar", null).create().show();
@@ -175,7 +160,6 @@ public class GameActivity extends AppCompatActivity {
                     }
                 }
             };
-
             CartaRequest r = new CartaRequest(respuesta);
             RequestQueue cola = Volley.newRequestQueue(GameActivity.this);
             cola.add(r);
@@ -211,7 +195,5 @@ public class GameActivity extends AppCompatActivity {
 
         // Se le da el turno al jugador más joven
         WaitingRoomActivity.usuarios.get(0).setTurno(true);
-
     }
-
 }

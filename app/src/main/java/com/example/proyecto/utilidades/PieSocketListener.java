@@ -85,24 +85,19 @@ public class PieSocketListener extends WebSocketListener {
             intent.putExtra("usuario", usuario);
             context.startActivity(intent);
         }else {
-            String[] arrSplit_2 = text.split(",", 6);
+            String[] arrSplit_2 = text.split(",", 4);
             switch (arrSplit_2[0]){
                 case "enviarCartas":
                     String carta1 = arrSplit_2[1];
                     int valor = Integer.valueOf(arrSplit_2[2]);
-                    String carta2 = arrSplit_2[3];
-                    int valor2 = Integer.valueOf(arrSplit_2[4]);
                     String id = arrSplit_2[5];
 
                     if(id.equals(String.valueOf(usuario.getU_id()))){
                         Carta cartaAux = new Carta(carta1, valor);
-                        Carta cartaAux2 = new Carta(carta2, valor2);
 
                         usuario.getMazo().add(cartaAux);
-                        usuario.getMazo().add(cartaAux2);
-                        HiloImagenes hilo = new HiloImagenes(this.getContext(), this.getImg1(), this.getImg2(), carta1, carta2);
+                        HiloImagenes hilo = new HiloImagenes(this.getContext(), this.getImg1(), this.getImg2(), carta1, null);
                         hilo.execute();
-
                     }
 
                     break;
