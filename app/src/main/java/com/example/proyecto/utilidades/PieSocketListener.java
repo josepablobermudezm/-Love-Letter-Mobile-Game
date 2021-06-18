@@ -100,6 +100,7 @@ public class PieSocketListener extends WebSocketListener {
                             usuario.getMazoCentral().add(cartaAux);
                         }else{
                             usuario.getMazo().add(cartaAux);
+                            usuario.getMazo().add(null);
                             HiloImagenes hilo = new HiloImagenes(this.getContext(), this.getImg1(), this.getImg2(), carta1, null);
                             hilo.execute();
                         }
