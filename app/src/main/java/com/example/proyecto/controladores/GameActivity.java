@@ -218,20 +218,21 @@ public class GameActivity extends AppCompatActivity {
     }
 
     public void actionCarta1(View view){
-        if(Usuario.usuarioLogueado.getU_id() == WaitingRoomActivity.usuarios.get(jugadorActual).getU_id()){
-            arrow1.setVisibility(View.VISIBLE);
-            arrow2.setVisibility(View.INVISIBLE);
-        }else{
-            Toast.makeText(view.getContext(), "No es tu turno", Toast.LENGTH_SHORT).show();
-        }
+        actionCartaGenerico(1);
     }
 
     public void actionCarta2(View view){
+        actionCartaGenerico(2);
+    }
+
+    public void actionCartaGenerico(int valor){
         if(Usuario.usuarioLogueado.getU_id() == WaitingRoomActivity.usuarios.get(jugadorActual).getU_id()) {
-            arrow2.setVisibility(View.VISIBLE);
-            arrow1.setVisibility(View.INVISIBLE);
+            if(img2.getDrawable() != null && img1.getDrawable() != null) {
+                arrow2.setVisibility(valor == 2 ? View.VISIBLE : View.INVISIBLE);
+                arrow1.setVisibility(valor == 2 ? View.INVISIBLE : View.VISIBLE);
+            }
         }else{
-            Toast.makeText(view.getContext(), "No es tu turno", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "No es tu turno", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -245,8 +246,6 @@ public class GameActivity extends AppCompatActivity {
     }
 
     public void sacarCarta(ImageView img, int valor, ImageView arrow){
-        System.out.println("----------------------------");
-        System.out.println(Usuario.usuarioLogueado.getMazo());
         int code = this.getResources().getIdentifier(Usuario.usuarioLogueado.getMazo().get(valor).getNombre(), "drawable", this.getPackageName());
         ImageView imageView = new ImageView(this);
         imageView.setImageResource(code);
