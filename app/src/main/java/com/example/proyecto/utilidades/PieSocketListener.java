@@ -126,7 +126,7 @@ public class PieSocketListener extends WebSocketListener {
                         GameActivity.jugadorActual = 0;
                         break;
                     }
-                    txv_turno.setText(WaitingRoomActivity.usuarios.get(GameActivity.jugadorActual).getU_alias());
+                    // txv_turno.setText(WaitingRoomActivity.usuarios.get(GameActivity.jugadorActual).getU_alias());
                     GameActivity.jugadorActual++;
                     break;
                 default:
