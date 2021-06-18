@@ -205,10 +205,13 @@ public class GameActivity extends AppCompatActivity {
     }
 
     public void repartir(View view){
-        if(Usuario.usuarioLogueado.getU_id() == WaitingRoomActivity.usuarios.get(jugadorActual).getU_id()
-        && Usuario.usuarioLogueado.getMazo().size() == 1){
-            listener.enviarMensaje(ws, "agregarCarta," + Usuario.usuarioLogueado.getU_id());
-            Toast.makeText(view.getContext(), "Es tu turno", Toast.LENGTH_SHORT).show();
+        if(Usuario.usuarioLogueado.getU_id() == WaitingRoomActivity.usuarios.get(jugadorActual).getU_id()){
+            if(Usuario.usuarioLogueado.getMazo().size() == 1){
+                listener.enviarMensaje(ws, "agregarCarta," + Usuario.usuarioLogueado.getU_id());
+                Toast.makeText(view.getContext(), "Es tu turno", Toast.LENGTH_SHORT).show();
+            }else{
+                Toast.makeText(view.getContext(), "No puedes pedir más cartas", Toast.LENGTH_SHORT).show();
+            }
         }else{
             Toast.makeText(view.getContext(), "No es tu turno", Toast.LENGTH_SHORT).show();
         }
