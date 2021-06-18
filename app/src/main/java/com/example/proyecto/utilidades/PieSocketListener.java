@@ -125,27 +125,31 @@ public class PieSocketListener extends WebSocketListener {
                 case "cambioTurno":
                     if(WaitingRoomActivity.usuarios.size()-1 == GameActivity.jugadorActual){
                         GameActivity.jugadorActual = 0;
+                        cambioTurnoText();
                         break;
                     }
-                    new AsyncTask<String, Float, Integer>(){
-                        @Override
-                        protected Integer doInBackground(String... strings) {
-                            publishProgress();
-                            return null;
-                        }
-
-                        @Override
-                        protected void onProgressUpdate(Float... variable) {
-                            txv_turno.setText(WaitingRoomActivity.usuarios.get(GameActivity.jugadorActual).getU_alias());
-                        }
-                    }.execute();
-
+                    cambioTurnoText();
                     GameActivity.jugadorActual++;
                     break;
                 default:
                     throw new IllegalStateException("Unexpected value: " + arrSplit_2[0]);
             }
         }
+    }
+
+    public void cambioTurnoText(){
+        new AsyncTask<String, Float, Integer>(){
+            @Override
+            protected Integer doInBackground(String... strings) {
+                publishProgress();
+                return null;
+            }
+
+            @Override
+            protected void onProgressUpdate(Float... variable) {
+                txv_turno.setText(WaitingRoomActivity.usuarios.get(GameActivity.jugadorActual).getU_alias());
+            }
+        }.execute();
     }
 
     @Override
