@@ -48,7 +48,7 @@ public class GameActivity extends AppCompatActivity {
     public PieSocketListener listener;
     public WebSocket ws;
     private Usuario usuario;
-    private TextView txv_turno;
+    public static TextView txv_turno;
     public static int jugadorActual = 0;
     private ImageView arrow1;
     private ImageView arrow2;

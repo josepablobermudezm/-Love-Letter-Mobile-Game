@@ -19,6 +19,8 @@ import okhttp3.Response;
 import okhttp3.WebSocket;
 import okhttp3.WebSocketListener;
 
+import static com.example.proyecto.controladores.GameActivity.txv_turno;
+
 public class PieSocketListener extends WebSocketListener {
 
     private static final int NORMAL_CLOSURE_STATUS = 1000;
@@ -124,6 +126,7 @@ public class PieSocketListener extends WebSocketListener {
                         GameActivity.jugadorActual = 0;
                         break;
                     }
+                    txv_turno.setText(WaitingRoomActivity.usuarios.get(GameActivity.jugadorActual).getU_alias());
                     GameActivity.jugadorActual++;
                     break;
                 default:
