@@ -2,6 +2,7 @@ package com.example.proyecto.utilidades;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -126,7 +127,19 @@ public class PieSocketListener extends WebSocketListener {
                         GameActivity.jugadorActual = 0;
                         break;
                     }
-                    // txv_turno.setText(WaitingRoomActivity.usuarios.get(GameActivity.jugadorActual).getU_alias());
+                    new AsyncTask<String, Float, Integer>(){
+                        @Override
+                        protected Integer doInBackground(String... strings) {
+                            publishProgress();
+                            return null;
+                        }
+
+                        @Override
+                        protected void onProgressUpdate(Float... variable) {
+                            txv_turno.setText(WaitingRoomActivity.usuarios.get(GameActivity.jugadorActual).getU_alias());
+                        }
+                    }.execute();
+
                     GameActivity.jugadorActual++;
                     break;
                 default:
