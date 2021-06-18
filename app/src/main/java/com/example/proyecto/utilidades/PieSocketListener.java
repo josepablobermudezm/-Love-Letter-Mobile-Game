@@ -113,9 +113,7 @@ public class PieSocketListener extends WebSocketListener {
                     Carta cartaAux = usuario.getMazoCentral().get(usuario.getMazoCentral().size()-1);
                     usuario.getMazoCentral().remove(cartaAux);
                     if(id2.equals(String.valueOf(usuario.getU_id()))){
-                        usuario.getMazo().add(cartaAux);
-                        System.out.println(this.getImg1());
-                        System.out.println(this.getImg2());
+                        usuario.getMazo().set((this.getImg1().getDrawable() != null ? 0 : 1), cartaAux);
                         HiloImagenes hilo = new HiloImagenes(this.getContext(), this.getImg1(), this.getImg2(),
                                 this.getImg1().getDrawable() != null ? null : cartaAux.getNombre(),
                                     this.getImg2().getDrawable() != null ? null : cartaAux.getNombre());

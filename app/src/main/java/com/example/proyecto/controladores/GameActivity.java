@@ -236,33 +236,24 @@ public class GameActivity extends AppCompatActivity {
     }
 
     public void cartasJugadas(View view) {
-        int code;
         if(arrow1.getVisibility() == View.VISIBLE){
-            code = this.getResources().getIdentifier(Usuario.usuarioLogueado.getMazo().get(0).getNombre(), "drawable",
-                    this.getPackageName());
-            ImageView imageView = new ImageView(this);
-            imageView.setLayoutParams(new LinearLayout.LayoutParams(calcularPixeles(63),
-                    calcularPixeles(100)));
-            Usuario.usuarioLogueado.getMazo().remove(Usuario.usuarioLogueado.getMazo().get(0));
-            imageView.setImageResource(code);
-            img1.setImageDrawable(null);
-            arrow1.setVisibility(View.INVISIBLE);
-            cartasContainer.addView(imageView);
-            listener.enviarMensaje(ws, "cambioTurno");
+            sacarCarta(img1, 0);
         }
         else if(arrow2.getVisibility() == View.VISIBLE){
-            code = this.getResources().getIdentifier(Usuario.usuarioLogueado.getMazo().get(1).getNombre(), "drawable",
-                    this.getPackageName());
-            ImageView imageView = new ImageView(this);
-            imageView.setImageResource(code);
-            imageView.setLayoutParams(new LinearLayout.LayoutParams(calcularPixeles(63),
-                    calcularPixeles(100)));
-            Usuario.usuarioLogueado.getMazo().remove(Usuario.usuarioLogueado.getMazo().get(1));
-            img2.setImageDrawable(null);
-            arrow2.setVisibility(View.INVISIBLE);
-            cartasContainer.addView(imageView);
-            listener.enviarMensaje(ws, "cambioTurno");
+            sacarCarta(img2, 1);
         }
+    }
+
+    public void sacarCarta(ImageView img, int valor){
+        int code = this.getResources().getIdentifier(Usuario.usuarioLogueado.getMazo().get(valor).getNombre(), "drawable", this.getPackageName());
+        ImageView imageView = new ImageView(this);
+        imageView.setImageResource(code);
+        imageView.setLayoutParams(new LinearLayout.LayoutParams(calcularPixeles(63), calcularPixeles(100)));
+        Usuario.usuarioLogueado.getMazo().set(valor, null);
+        img.setImageDrawable(null);
+        arrow2.setVisibility(View.INVISIBLE);
+        cartasContainer.addView(imageView);
+        listener.enviarMensaje(ws, "cambioTurno");
     }
 
     public int calcularPixeles(int dps) {
