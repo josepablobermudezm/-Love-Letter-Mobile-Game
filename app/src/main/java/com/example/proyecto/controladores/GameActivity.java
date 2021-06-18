@@ -237,21 +237,23 @@ public class GameActivity extends AppCompatActivity {
 
     public void cartasJugadas(View view) {
         if(arrow1.getVisibility() == View.VISIBLE){
-            sacarCarta(img1, 0);
+            sacarCarta(img1, 0, arrow1);
         }
         else if(arrow2.getVisibility() == View.VISIBLE){
-            sacarCarta(img2, 1);
+            sacarCarta(img2, 1, arrow2);
         }
     }
 
-    public void sacarCarta(ImageView img, int valor){
+    public void sacarCarta(ImageView img, int valor, ImageView arrow){
+        System.out.println("----------------------------");
+        System.out.println(Usuario.usuarioLogueado.getMazo());
         int code = this.getResources().getIdentifier(Usuario.usuarioLogueado.getMazo().get(valor).getNombre(), "drawable", this.getPackageName());
         ImageView imageView = new ImageView(this);
         imageView.setImageResource(code);
         imageView.setLayoutParams(new LinearLayout.LayoutParams(calcularPixeles(63), calcularPixeles(100)));
         Usuario.usuarioLogueado.getMazo().set(valor, null);
         img.setImageDrawable(null);
-        arrow2.setVisibility(View.INVISIBLE);
+        arrow.setVisibility(View.INVISIBLE);
         cartasContainer.addView(imageView);
         listener.enviarMensaje(ws, "cambioTurno");
     }
