@@ -2,6 +2,7 @@ package com.example.proyecto.controladores;
 
 import android.content.Intent;
 import android.hardware.SensorManager;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -65,12 +66,16 @@ public class GameActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_game);
+        mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
+        rotacion = new Rotacion(this, mSensorManager);
+        hilo = new HiloSegundoPlano(getApplicationContext());
+        hilo.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         //Inicializa las funciones del juego
         iniciar();
 
-        mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
-        rotacion = new Rotacion(this, mSensorManager);
+
 
     }
 
@@ -185,9 +190,6 @@ public class GameActivity extends AppCompatActivity {
                                 }
                             }
 
-                            hilo = new HiloSegundoPlano(getApplicationContext());
-                            hilo.execute();
-
                         } else {
                             AlertDialog.Builder alerta = new AlertDialog.Builder(GameActivity.this);
                             alerta.setMessage("Fallo en la partida").setNegativeButton("Reintentar", null).create().show();
@@ -197,6 +199,7 @@ public class GameActivity extends AppCompatActivity {
                     }
                 }
             };
+
             CartaRequest r = new CartaRequest(respuesta);
             RequestQueue cola = Volley.newRequestQueue(GameActivity.this);
             cola.add(r);
