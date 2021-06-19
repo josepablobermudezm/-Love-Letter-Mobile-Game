@@ -69,11 +69,11 @@ public class GameActivity extends AppCompatActivity {
         //Inicializa las funciones del juego
         iniciar();
 
-        /*mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
+        mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         rotacion = new Rotacion(this, mSensorManager);
 
         hilo = new HiloSegundoPlano(getApplicationContext());
-        hilo.execute();*/
+        hilo.execute();
 
     }
 
