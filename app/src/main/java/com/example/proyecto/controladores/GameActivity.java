@@ -72,9 +72,6 @@ public class GameActivity extends AppCompatActivity {
         mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         rotacion = new Rotacion(this, mSensorManager);
 
-        hilo = new HiloSegundoPlano(getApplicationContext());
-        hilo.execute();
-
     }
 
     @Override
@@ -187,6 +184,10 @@ public class GameActivity extends AppCompatActivity {
                                             + ",mazoCentral");
                                 }
                             }
+
+                            hilo = new HiloSegundoPlano(getApplicationContext());
+                            hilo.execute();
+
                         } else {
                             AlertDialog.Builder alerta = new AlertDialog.Builder(GameActivity.this);
                             alerta.setMessage("Fallo en la partida").setNegativeButton("Reintentar", null).create().show();
