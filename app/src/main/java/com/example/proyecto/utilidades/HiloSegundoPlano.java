@@ -57,7 +57,6 @@ public class HiloSegundoPlano extends AsyncTask<String, Float, Integer> {
         //numero entero redondeado
         int aX = (Math.abs(ejeX)); // Valor absoluto
         int aY = (Math.abs(ejeY)); // Valor absoluto
-        System.out.println(aX+ " "+ aY);
     }
 
     @Override
