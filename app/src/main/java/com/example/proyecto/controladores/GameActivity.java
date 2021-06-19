@@ -1,6 +1,7 @@
 package com.example.proyecto.controladores;
 
 import android.content.Intent;
+import android.hardware.SensorManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -20,8 +21,10 @@ import com.android.volley.toolbox.Volley;
 import com.example.proyecto.R;
 import com.example.proyecto.modelos.Carta;
 import com.example.proyecto.servicios.CartaRequest;
+import com.example.proyecto.utilidades.HiloSegundoPlano;
 import com.example.proyecto.utilidades.PieSocketListener;
 import com.example.proyecto.modelos.Usuario;
+import com.example.proyecto.utilidades.Rotacion;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -55,10 +58,25 @@ public class GameActivity extends AppCompatActivity {
     public LinearLayout cartasContainer;
     public ImageView img1;
     public ImageView img2;
+    private SensorManager mSensorManager;
+    private Rotacion rotacion;
+    private HiloSegundoPlano hilo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //Inicializa las funciones del juego
+        iniciar();
+
+        mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
+        rotacion = new Rotacion(this, mSensorManager);
+
+        hilo = new HiloSegundoPlano(getApplicationContext());
+        hilo.execute();
+
+    }
+
+    private void iniciar() {
         setContentView(R.layout.activity_game);
         parentLayout2 = (LinearLayout) findViewById(R.id.parentLayout2);
         parentLayout3 = findViewById(R.id.parentLayout3);
@@ -151,7 +169,7 @@ public class GameActivity extends AppCompatActivity {
                                         + ",mazo");
                             }
                             for (Usuario u : WaitingRoomActivity.usuarios) {
-                                for(Carta c : cartas){
+                                for (Carta c : cartas) {
                                     listener.enviarMensaje(ws, "enviarCartas," + c.getNombre() + "," + c.getValor() + "," + u.getU_id()
                                             + ",mazoCentral");
                                 }
@@ -172,6 +190,7 @@ public class GameActivity extends AppCompatActivity {
 
         turno();
         txv_turno.setText(" " + WaitingRoomActivity.usuarios.get(jugadorActual).getU_alias());
+
     }
 
     public void turno() {
@@ -204,48 +223,47 @@ public class GameActivity extends AppCompatActivity {
         WaitingRoomActivity.usuarios.get(0).setTurno(true);
     }
 
-    public void repartir(View view){
-        if(Usuario.usuarioLogueado.getU_id() == WaitingRoomActivity.usuarios.get(jugadorActual).getU_id()){
-            if(img2.getDrawable() == null || img1.getDrawable() == null){
+    public void repartir(View view) {
+        if (Usuario.usuarioLogueado.getU_id() == WaitingRoomActivity.usuarios.get(jugadorActual).getU_id()) {
+            if (img2.getDrawable() == null || img1.getDrawable() == null) {
                 listener.enviarMensaje(ws, "agregarCarta," + Usuario.usuarioLogueado.getU_id());
                 Toast.makeText(view.getContext(), "Es tu turno", Toast.LENGTH_SHORT).show();
-            }else{
+            } else {
                 Toast.makeText(view.getContext(), "No puedes pedir más cartas", Toast.LENGTH_SHORT).show();
             }
-        }else{
+        } else {
             Toast.makeText(view.getContext(), "No es tu turno", Toast.LENGTH_SHORT).show();
         }
     }
 
-    public void actionCarta1(View view){
+    public void actionCarta1(View view) {
         actionCartaGenerico(1);
     }
 
-    public void actionCarta2(View view){
+    public void actionCarta2(View view) {
         actionCartaGenerico(2);
     }
 
-    public void actionCartaGenerico(int valor){
-        if(Usuario.usuarioLogueado.getU_id() == WaitingRoomActivity.usuarios.get(jugadorActual).getU_id()) {
-            if(img2.getDrawable() != null && img1.getDrawable() != null) {
+    public void actionCartaGenerico(int valor) {
+        if (Usuario.usuarioLogueado.getU_id() == WaitingRoomActivity.usuarios.get(jugadorActual).getU_id()) {
+            if (img2.getDrawable() != null && img1.getDrawable() != null) {
                 arrow2.setVisibility(valor == 2 ? View.VISIBLE : View.INVISIBLE);
                 arrow1.setVisibility(valor == 2 ? View.INVISIBLE : View.VISIBLE);
             }
-        }else{
+        } else {
             Toast.makeText(getApplicationContext(), "No es tu turno", Toast.LENGTH_SHORT).show();
         }
     }
 
     public void cartasJugadas(View view) {
-        if(arrow1.getVisibility() == View.VISIBLE){
+        if (arrow1.getVisibility() == View.VISIBLE) {
             sacarCarta(img1, 0, arrow1);
-        }
-        else if(arrow2.getVisibility() == View.VISIBLE){
+        } else if (arrow2.getVisibility() == View.VISIBLE) {
             sacarCarta(img2, 1, arrow2);
         }
     }
 
-    public void sacarCarta(ImageView img, int valor, ImageView arrow){
+    public void sacarCarta(ImageView img, int valor, ImageView arrow) {
         int code = this.getResources().getIdentifier(Usuario.usuarioLogueado.getMazo().get(valor).getNombre(), "drawable", this.getPackageName());
         ImageView imageView = new ImageView(this);
         imageView.setImageResource(code);
