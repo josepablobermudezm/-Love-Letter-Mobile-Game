@@ -34,13 +34,13 @@ public class HiloSegundoPlano extends AsyncTask<String, Float, Integer> {
     @Override
     protected Integer doInBackground(String... strings) {
 
-        float eje;
+        float ejeX, ejeY;
         while (!isCancelled()) {
             try {
-
                 Thread.sleep((long) (Math.random() * 100));
-                eje = Datos.getInstance().getZ();
-                publishProgress(eje);
+                ejeX = Datos.getInstance().getX();
+                ejeY = Datos.getInstance().getY();
+                publishProgress(ejeX,ejeY);
             } catch (InterruptedException e) {
                 cancel(true);
                 e.printStackTrace();
@@ -52,9 +52,12 @@ public class HiloSegundoPlano extends AsyncTask<String, Float, Integer> {
     @Override
     protected void onProgressUpdate(Float... ejes) {
         super.onProgressUpdate(ejes);
-        int num = Math.round((ejes[0])); //numero entero redondeado
-        int r = (Math.abs(num)); // Valor absoluto
-
+        int ejeX = Math.round((ejes[0]));
+        int ejeY = Math.round((ejes[1]));
+        //numero entero redondeado
+        int aX = (Math.abs(ejeX)); // Valor absoluto
+        int aY = (Math.abs(ejeY)); // Valor absoluto
+        System.out.println(aX+ " "+ aY);
     }
 
     @Override
