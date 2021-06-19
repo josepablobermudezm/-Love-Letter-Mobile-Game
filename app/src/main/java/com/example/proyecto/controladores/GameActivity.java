@@ -71,7 +71,14 @@ public class GameActivity extends AppCompatActivity {
         mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         rotacion = new Rotacion(this, mSensorManager);
         hilo = new HiloSegundoPlano(getApplicationContext());
-        hilo.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+
+        if( Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB ) {
+            hilo.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        } else {
+            hilo.execute();
+        }
+
+
         //Inicializa las funciones del juego
         iniciar();
 
