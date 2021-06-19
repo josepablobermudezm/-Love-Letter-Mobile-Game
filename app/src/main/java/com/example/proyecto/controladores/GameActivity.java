@@ -65,6 +65,7 @@ public class GameActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_game);
         //Inicializa las funciones del juego
         iniciar();
 
@@ -76,8 +77,20 @@ public class GameActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        rotacion.start();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        rotacion.stop();
+    }
+
     private void iniciar() {
-        setContentView(R.layout.activity_game);
+
         parentLayout2 = (LinearLayout) findViewById(R.id.parentLayout2);
         parentLayout3 = findViewById(R.id.parentLayout3);
         mTextView = (TextView) findViewById(R.id.text);
