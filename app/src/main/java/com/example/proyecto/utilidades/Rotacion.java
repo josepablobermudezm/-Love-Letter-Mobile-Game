@@ -55,13 +55,11 @@ public class Rotacion implements SensorEventListener {
                 orientation[i] = (float) (Math.toDegrees(orientation[i]));
             }
 
-            System.out.println("indice 1 "+ orientation[0]);
-            System.out.println("indice 2 "+ orientation[1]);
-            System.out.println("indice 3 "+ orientation[2]);
+            System.out.println("EJE Y "+ orientation[0]);
+            System.out.println("EJE X "+ orientation[1]);
 
-
-            Datos.getInstance().setX(orientation[0]);
-            Datos.getInstance().setY(orientation[1]);
+            Datos.getInstance().setX(orientation[1]);
+            Datos.getInstance().setY(orientation[0]);
             Datos.getInstance().setZ(orientation[2]);
 
         }
