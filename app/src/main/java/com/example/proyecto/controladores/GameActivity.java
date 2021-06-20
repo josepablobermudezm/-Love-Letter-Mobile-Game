@@ -119,6 +119,7 @@ public class GameActivity extends AppCompatActivity {
         arrow3 = (ImageView) findViewById(R.id.arrow3);
         listener.setImg1(img1);
         listener.setImg2(img2);
+        listener.setImg3(img3);
         TextView textView = findViewById(R.id.txv_turno);
         listener.setTurno(textView);
         listener.setContext(getApplicationContext());
