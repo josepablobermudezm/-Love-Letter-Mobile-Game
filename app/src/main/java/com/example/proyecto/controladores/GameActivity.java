@@ -267,6 +267,7 @@ public class GameActivity extends AppCompatActivity {
     public void actionCartaGenerico(int valor) {
         if (Usuario.usuarioLogueado.getU_id() == WaitingRoomActivity.usuarios.get(jugadorActual).getU_id()) {
             if (img2.getDrawable() != null && img1.getDrawable() != null) {
+
                 arrow2.setVisibility(valor == 2 ? View.VISIBLE : View.INVISIBLE);
                 arrow1.setVisibility(valor == 2 ? View.INVISIBLE : View.VISIBLE);
             }
@@ -284,20 +285,29 @@ public class GameActivity extends AppCompatActivity {
     }
 
     public void sacarCarta(ImageView img, int valor, ImageView arrow) {
-        int code = this.getResources().getIdentifier(Usuario.usuarioLogueado.getMazo().get(valor).getNombre(), "drawable", this.getPackageName());
-        ImageView imageView = new ImageView(this);
-        imageView.setImageResource(code);
-        imageView.setLayoutParams(new LinearLayout.LayoutParams(calcularPixeles(63), calcularPixeles(100)));
-        img.setImageDrawable(null);
-        arrow.setVisibility(View.INVISIBLE);
-        cartasContainer.addView(imageView);
-        if(Usuario.usuarioLogueado.getMazo().get(valor).getNombre().equals("princesa")){
-            Toast.makeText(getApplicationContext(), "Has perdido por haber jugado la princesa", Toast.LENGTH_SHORT).show();
-            listener.enviarMensaje(ws, "princesaJugada," + Usuario.usuarioLogueado.getU_id());
+        boolean puedeVotar = true;
+        if((Usuario.usuarioLogueado.getMazo().get(0).getNombre().equals("condesa") || Usuario.usuarioLogueado.getMazo().get(1).getNombre().equals("condesa")) &&
+                (Usuario.usuarioLogueado.getMazo().get(0).getNombre().equals("principe") || Usuario.usuarioLogueado.getMazo().get(1).getNombre().equals("principe")) ||
+                (Usuario.usuarioLogueado.getMazo().get(0).getNombre().equals("rey") || Usuario.usuarioLogueado.getMazo().get(1).getNombre().equals("rey"))
+        ){
+            puedeVotar = Usuario.usuarioLogueado.getMazo().get(valor).getNombre().equals("condesa") ? true : false;
         }
-        Usuario.usuarioLogueado.getMazo().set(valor, null);
+        if(puedeVotar){
+            int code = this.getResources().getIdentifier(Usuario.usuarioLogueado.getMazo().get(valor).getNombre(), "drawable", this.getPackageName());
+            ImageView imageView = new ImageView(this);
+            imageView.setImageResource(code);
+            imageView.setLayoutParams(new LinearLayout.LayoutParams(calcularPixeles(63), calcularPixeles(100)));
+            img.setImageDrawable(null);
+            arrow.setVisibility(View.INVISIBLE);
+            cartasContainer.addView(imageView);
+            if(Usuario.usuarioLogueado.getMazo().get(valor).getNombre().equals("princesa")){
+                Toast.makeText(getApplicationContext(), "Has perdido por haber jugado la princesa", Toast.LENGTH_SHORT).show();
+                listener.enviarMensaje(ws, "princesaJugada," + Usuario.usuarioLogueado.getU_id());
+            }
+            Usuario.usuarioLogueado.getMazo().set(valor, null);
 
-        listener.enviarMensaje(ws, "cambioTurno");
+            listener.enviarMensaje(ws, "cambioTurno");
+        }
     }
 
     public int calcularPixeles(int dps) {
