@@ -81,7 +81,7 @@ public class GameActivity extends AppCompatActivity {
         //Inicializa las funciones del juego
         iniciar();
     }
-
+/*
     @Override
     protected void onResume() {
         super.onResume();
@@ -92,7 +92,7 @@ public class GameActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         rotacion.stop();
-    }
+    }*/
 
     private void iniciar() {
 
