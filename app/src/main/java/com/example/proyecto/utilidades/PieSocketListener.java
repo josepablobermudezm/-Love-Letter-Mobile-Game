@@ -18,7 +18,9 @@ import com.example.proyecto.modelos.Carta;
 import com.example.proyecto.modelos.Partida;
 import com.example.proyecto.modelos.Usuario;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 import okhttp3.Response;
 import okhttp3.WebSocket;
@@ -143,10 +145,11 @@ public class PieSocketListener extends WebSocketListener {
                     break;
                 case "princesaJugada":
                     System.out.println("Entrando al caso de la princesa" + arrSplit_2[1]);
-                    Usuario usuario = (Usuario) WaitingRoomActivity.usuarios.stream().filter(x -> x.getU_id() == Integer.valueOf(arrSplit_2[1]));
-                    System.out.println(usuario.toString());
-                    Toast.makeText(this.context,  usuario.getU_alias() + " ha perdido la ronda por haber jugado la princesa", Toast.LENGTH_SHORT).show();
-                    WaitingRoomActivity.usuarios.remove(usuario);
+                    ArrayList<Usuario> array = new ArrayList<>();
+                    array = (ArrayList<Usuario>) WaitingRoomActivity.usuarios.stream().filter(x -> x.getU_id() == Integer.valueOf(arrSplit_2[1])).collect(Collectors.toList());
+                    System.out.println(array.get(0).toString());
+                    Toast.makeText(this.context,  array.get(0).getU_alias() + " ha perdido la ronda por haber jugado la princesa", Toast.LENGTH_SHORT).show();
+                    WaitingRoomActivity.usuarios.remove(array.get(0));
                     break;
                 default:
                     throw new IllegalStateException("Unexpected value: " + arrSplit_2[0]);
