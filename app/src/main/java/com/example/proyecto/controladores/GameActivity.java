@@ -69,9 +69,9 @@ public class GameActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_game);
         mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
-        rotacion = new Rotacion(this, mSensorManager);
+/*        rotacion = new Rotacion(this, mSensorManager);
         hilo = new HiloSegundoPlano(getApplicationContext());
-/*
+
         if( Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB ) {
             hilo.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         } else {
