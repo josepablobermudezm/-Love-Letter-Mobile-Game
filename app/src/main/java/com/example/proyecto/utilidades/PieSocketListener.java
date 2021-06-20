@@ -95,6 +95,8 @@ public class PieSocketListener extends WebSocketListener {
             context.startActivity(intent);
         }else {
             String[] arrSplit_2 = text.split(",", 5);
+            System.out.println("primer case *---------------------------*-*-*-*-*-*-**");
+            System.out.println(arrSplit_2[0]);
             switch (arrSplit_2[0]){
                 case "enviarCartas":
                     String carta1 = arrSplit_2[1];
@@ -140,7 +142,9 @@ public class PieSocketListener extends WebSocketListener {
                     GameActivity.jugadorActual++;
                     break;
                 case "princesaJugada":
+                    System.out.println("Entrando al caso de la princesa" + arrSplit_2[1]);
                     Usuario usuario = (Usuario) WaitingRoomActivity.usuarios.stream().filter(x -> x.getU_id() == Integer.valueOf(arrSplit_2[1]));
+                    System.out.println(usuario.toString());
                     Toast.makeText(this.context,  usuario.getU_alias() + " ha perdido la ronda por haber jugado la princesa", Toast.LENGTH_SHORT).show();
                     WaitingRoomActivity.usuarios.remove(usuario);
                     break;
