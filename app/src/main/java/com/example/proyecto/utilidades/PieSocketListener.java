@@ -118,14 +118,12 @@ public class PieSocketListener extends WebSocketListener {
                             usuario.getMazo().add(cartaAux);
                             usuario.getMazo().add(null);
                             usuario.getMazo().add(null);
-                            System.out.println(usuario.getMazo());
                             HiloImagenes hilo = new HiloImagenes(this.getContext(), this.getImg1(), this.getImg2(), this.getImg3(), carta1, null, null);
                             hilo.execute();
                         }
                     }
                     break;
                 case "agregarCarta":
-                    System.out.println("bro estoy llegando a aquí");
                     String id2 = arrSplit_2[1];
                     Carta cartaAux = usuario.getMazoCentral().get(usuario.getMazoCentral().size() - 1);
                     usuario.getMazoCentral().remove(cartaAux);
@@ -136,13 +134,9 @@ public class PieSocketListener extends WebSocketListener {
                     }
                     if (id2.equals(String.valueOf(usuario.getU_id()))) {
                         usuario.getMazo().set((this.getImg1().getDrawable() != null ? 1 : 0), cartaAux);
-                        System.out.println(usuario.getMazo().size());
-                        System.out.println("-------------------------------");
                         if (cartaAux2 != null) {
-                            System.out.println("entrando a donde no debería de entrar");
                             usuario.getMazo().set(2, cartaAux2);
                         }
-                        System.out.println("pasó por aquí ");
                         HiloImagenes hilo = new HiloImagenes(this.getContext(), this.getImg1(), this.getImg2(), this.getImg3(),
                                 this.getImg1().getDrawable() != null ? null : cartaAux.getNombre(),
                                 this.getImg2().getDrawable() != null ? null : cartaAux.getNombre(),
@@ -160,14 +154,36 @@ public class PieSocketListener extends WebSocketListener {
                     GameActivity.jugadorActual++;
                     break;
                 case "princesaJugada":
-                    System.out.println("Entrando al caso de la princesa" + arrSplit_2[1]);
                     ArrayList<Usuario> array = new ArrayList<>();
                     array = (ArrayList<Usuario>) WaitingRoomActivity.usuarios.stream().filter(x -> x.getU_id() == Integer.valueOf(arrSplit_2[1])).collect(Collectors.toList());
-                    System.out.println(array.get(0).toString());
                     princesaJugada(this.context, array);
                     WaitingRoomActivity.usuarios.remove(array.get(0));
                     break;
-
+                case "cancillerJugada":
+                    String id3 = arrSplit_2[1];
+                    if(arrSplit_2[2].equals("1")){
+                        usuario.getMazoCentral().add(usuario.getMazo().get(1));
+                        usuario.getMazoCentral().add(usuario.getMazo().get(2));
+                    } else if(arrSplit_2[2].equals("2")){
+                        usuario.getMazoCentral().add(usuario.getMazo().get(0));
+                        usuario.getMazoCentral().add(usuario.getMazo().get(2));
+                    } else if(arrSplit_2[2].equals("3")){
+                        usuario.getMazoCentral().add(usuario.getMazo().get(0));
+                        usuario.getMazoCentral().add(usuario.getMazo().get(1));
+                    }
+                    if (id3.equals(String.valueOf(usuario.getU_id()))) {
+                        if(arrSplit_2[2].equals("1")){
+                            usuario.getMazo().set(1, null);
+                            usuario.getMazo().set(2, null);
+                        } else if(arrSplit_2[2].equals("2")){
+                            usuario.getMazo().set(0, null);
+                            usuario.getMazo().set(2, null);
+                        } else if(arrSplit_2[2].equals("3")){
+                            usuario.getMazo().set(0, null);
+                            usuario.getMazo().set(1, null);
+                        }
+                    }
+                    break;
                 default:
                     throw new IllegalStateException("Unexpected value: " + arrSplit_2[0]);
             }

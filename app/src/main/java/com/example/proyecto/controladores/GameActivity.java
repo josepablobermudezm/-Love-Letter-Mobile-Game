@@ -274,9 +274,28 @@ public class GameActivity extends AppCompatActivity {
         actionCartaGenerico(2);
     }
 
+    public void actionCarta3(View view) {
+        actionCartaGenerico(3);
+    }
+
     public void actionCartaGenerico(int valor) {
         if (Usuario.usuarioLogueado.getU_id() == WaitingRoomActivity.usuarios.get(jugadorActual).getU_id()) {
-            if (img2.getDrawable() != null && img1.getDrawable() != null) {
+            if(cancillerMode){
+                int code = this.getResources().getIdentifier(Usuario.usuarioLogueado.getMazo().get(valor).getNombre(), "drawable", this.getPackageName());
+                if(valor == 0){
+                    img2.setImageDrawable(null);
+                    img3.setImageDrawable(null);
+                } else if(valor == 1){
+                    img1.setImageDrawable(null);
+                    img3.setImageDrawable(null);
+                } else if(valor == 3){
+                    img1.setImageDrawable(null);
+                    img2.setImageDrawable(null);
+                    img1.setImageResource(code);
+                }
+                listener.enviarMensaje(ws, "cancillerJugada," + Usuario.usuarioLogueado.getU_id() + "," + valor);
+            }
+            else if (img2.getDrawable() != null && img1.getDrawable() != null) {
                 arrow2.setVisibility(valor == 2 ? View.VISIBLE : View.INVISIBLE);
                 arrow1.setVisibility(valor == 2 ? View.INVISIBLE : View.VISIBLE);
             }
