@@ -3,10 +3,14 @@ package com.example.proyecto.utilidades;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.util.Log;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.annotation.RequiresApi;
 
 import com.example.proyecto.controladores.GameActivity;
 import com.example.proyecto.controladores.WaitingRoomActivity;
@@ -21,6 +25,7 @@ import okhttp3.WebSocket;
 import okhttp3.WebSocketListener;
 
 import static com.example.proyecto.controladores.GameActivity.txv_turno;
+import static com.example.proyecto.controladores.WaitingRoomActivity.*;
 
 public class PieSocketListener extends WebSocketListener {
 
@@ -77,6 +82,7 @@ public class PieSocketListener extends WebSocketListener {
         webSocket.send(this.text);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public void onMessage(WebSocket webSocket, String text) {
         if (text.equals("nuevoUsuario-" + partida.getP_id())) {
@@ -132,6 +138,11 @@ public class PieSocketListener extends WebSocketListener {
                     }
                     cambioTurnoText();
                     GameActivity.jugadorActual++;
+                    break;
+                case "princesaJugada":
+                    Usuario usuario = (Usuario) WaitingRoomActivity.usuarios.stream().filter(x -> x.getU_id() == Integer.valueOf(arrSplit_2[1]));
+                    Toast.makeText(this.context,  usuario.getU_alias() + " ha perdido la ronda por haber jugado la princesa", Toast.LENGTH_SHORT).show();
+                    WaitingRoomActivity.usuarios.remove(usuario);
                     break;
                 default:
                     throw new IllegalStateException("Unexpected value: " + arrSplit_2[0]);
