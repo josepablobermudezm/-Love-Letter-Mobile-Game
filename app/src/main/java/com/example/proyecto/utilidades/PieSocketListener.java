@@ -38,7 +38,7 @@ public class PieSocketListener extends WebSocketListener {
     private String administrador;
     private LinearLayout parentLayout2;
     private Usuario usuario;
-    private ImageView img1,img2, img3;
+    private ImageView img1, img2, img3;
     private ArrayList<Usuario> usuarios;
     private TextView turno;
 
@@ -103,47 +103,48 @@ public class PieSocketListener extends WebSocketListener {
             intent.putExtra("administrador", administrador);
             intent.putExtra("usuario", usuario);
             context.startActivity(intent);
-        }else {
+        } else {
             String[] arrSplit_2 = text.split(",", 5);
-            switch (arrSplit_2[0]){
+            switch (arrSplit_2[0]) {
                 case "enviarCartas":
                     String carta1 = arrSplit_2[1];
                     int valor = Integer.valueOf(arrSplit_2[2]);
                     String id = arrSplit_2[3];
-                    if(id.equals(String.valueOf(usuario.getU_id()))){
+                    if (id.equals(String.valueOf(usuario.getU_id()))) {
                         Carta cartaAux = new Carta(carta1, valor);
-                        if(arrSplit_2[4].equals("mazoCentral")){
+                        if (arrSplit_2[4].equals("mazoCentral")) {
                             usuario.getMazoCentral().add(cartaAux);
-                        }else{
+                        } else {
                             usuario.getMazo().add(cartaAux);
                             usuario.getMazo().add(null);
-                            HiloImagenes hilo = new HiloImagenes(this.getContext(), this.getImg1(), this.getImg2(), null, carta1, null,null);
+                            usuario.getMazo().add(null);
+                            HiloImagenes hilo = new HiloImagenes(this.getContext(), this.getImg1(), this.getImg2(), null, carta1, null, null);
                             hilo.execute();
                         }
                     }
                     break;
-                case "turno":
-                    System.out.println("TURNOOOOOO");
-                    break;
                 case "agregarCarta":
                     String id2 = arrSplit_2[1];
-                    Carta cartaAux = usuario.getMazoCentral().get(usuario.getMazoCentral().size()-1);
+                    Carta cartaAux = usuario.getMazoCentral().get(usuario.getMazoCentral().size() - 1);
                     usuario.getMazoCentral().remove(cartaAux);
                     Carta cartaAux2 = null;
-                    if(arrSplit_2[2].equals("cancillerMode")){
-                        cartaAux2 = usuario.getMazoCentral().get(usuario.getMazoCentral().size()-1);
+                    if (arrSplit_2[2].equals("cancillerMode")) {
+                        cartaAux2 = usuario.getMazoCentral().get(usuario.getMazoCentral().size() - 1);
                         usuario.getMazoCentral().remove(cartaAux2);
                     }
-                    if(id2.equals(String.valueOf(usuario.getU_id()))){
+                    if (id2.equals(String.valueOf(usuario.getU_id()))) {
                         usuario.getMazo().set((this.getImg1().getDrawable() != null ? 1 : 0), cartaAux);
+                        if (cartaAux2 != null) {
+                            usuario.getMazo().set(2, cartaAux2);
+                        }
                         HiloImagenes hilo = new HiloImagenes(this.getContext(), this.getImg1(), this.getImg2(), cartaAux2 != null ? this.getImg3() : null,
                                 this.getImg1().getDrawable() != null ? null : cartaAux.getNombre(),
-                                    this.getImg2().getDrawable() != null ? null : cartaAux.getNombre(), cartaAux2 != null ? cartaAux2.getNombre() : null);
+                                this.getImg2().getDrawable() != null ? null : cartaAux.getNombre(), cartaAux2 != null ? cartaAux2.getNombre() : null);
                         hilo.execute();
                     }
                     break;
                 case "cambioTurno":
-                    if(WaitingRoomActivity.usuarios.size()-1 == GameActivity.jugadorActual){
+                    if (WaitingRoomActivity.usuarios.size() - 1 == GameActivity.jugadorActual) {
                         GameActivity.jugadorActual = 0;
                         cambioTurnoText();
                         break;
@@ -165,8 +166,8 @@ public class PieSocketListener extends WebSocketListener {
         }
     }
 
-    public void princesaJugada(Context context, ArrayList<Usuario> array){
-        new AsyncTask<String, Float, Integer>(){
+    public void princesaJugada(Context context, ArrayList<Usuario> array) {
+        new AsyncTask<String, Float, Integer>() {
             @Override
             protected Integer doInBackground(String... strings) {
                 publishProgress();
@@ -175,13 +176,13 @@ public class PieSocketListener extends WebSocketListener {
 
             @Override
             protected void onProgressUpdate(Float... variable) {
-                Toast.makeText(context,  array.get(0).getU_alias() + " ha perdido la ronda por haber jugado la princesa", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, array.get(0).getU_alias() + " ha perdido la ronda por haber jugado la princesa", Toast.LENGTH_SHORT).show();
             }
         }.execute();
     }
 
-    public void cambioTurnoText(){
-        new AsyncTask<String, Float, Integer>(){
+    public void cambioTurnoText() {
+        new AsyncTask<String, Float, Integer>() {
             @Override
             protected Integer doInBackground(String... strings) {
                 publishProgress();
