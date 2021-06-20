@@ -307,6 +307,8 @@ public class GameActivity extends AppCompatActivity {
             Usuario.usuarioLogueado.getMazo().set(valor, null);
 
             listener.enviarMensaje(ws, "cambioTurno");
+        }else{
+            Toast.makeText(getApplicationContext(), "Debes de botar la condesa", Toast.LENGTH_SHORT).show();
         }
     }
 
