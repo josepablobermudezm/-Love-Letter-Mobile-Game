@@ -167,6 +167,7 @@ public class PieSocketListener extends WebSocketListener {
                     princesaJugada(this.context, array);
                     WaitingRoomActivity.usuarios.remove(array.get(0));
                     break;
+
                 default:
                     throw new IllegalStateException("Unexpected value: " + arrSplit_2[0]);
             }

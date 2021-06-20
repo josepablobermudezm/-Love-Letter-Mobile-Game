@@ -313,7 +313,6 @@ public class GameActivity extends AppCompatActivity {
                 listener.enviarMensaje(ws, "princesaJugada," + Usuario.usuarioLogueado.getU_id());
             }else if(Usuario.usuarioLogueado.getMazo().get(valor).getNombre().equals("canciller")){
                 Toast.makeText(getApplicationContext(), "Pide cartas del mazo", Toast.LENGTH_SHORT).show();
-                listener.enviarMensaje(ws, "cancillerJugado," + Usuario.usuarioLogueado.getU_id());
                 cancillerMode = true;
             }
             Usuario.usuarioLogueado.getMazo().set(valor, null);
