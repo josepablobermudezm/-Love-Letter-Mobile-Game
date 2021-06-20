@@ -10,17 +10,18 @@ public class HiloImagenes extends AsyncTask<String, Float, Integer> implements S
     private View v;
     private static class View implements Serializable {
         Context contexto;
-        ImageView img1;
-        ImageView img2;
-        String carta1, carta2;
+        ImageView img1, img2, img3;
+        String carta1, carta2, carta3;
     }
-    public HiloImagenes(Context contexto, ImageView img1, ImageView img2, String carta1, String carta2) {
+    public HiloImagenes(Context contexto, ImageView img1, ImageView img2, ImageView img3, String carta1, String carta2, String carta3) {
         v = new View();
         v.contexto = contexto;
         v.img1 = img1;
         v.img2 = img2;
+        v.img3 = img3;
         v.carta1 = carta1;
         v.carta2 = carta2;
+        v.carta3 = carta3;
     }
 
     @Override
@@ -44,6 +45,11 @@ public class HiloImagenes extends AsyncTask<String, Float, Integer> implements S
             code = this.v.contexto.getResources().getIdentifier(this.v.carta2, "drawable",
                     this.v.contexto.getPackageName());
             this.v.img2.setImageResource(code);
+        }
+        if(this.v.carta3 != null) {
+            code = this.v.contexto.getResources().getIdentifier(this.v.carta3, "drawable",
+                    this.v.contexto.getPackageName());
+            this.v.img3.setImageResource(code);
         }
     }
     @Override

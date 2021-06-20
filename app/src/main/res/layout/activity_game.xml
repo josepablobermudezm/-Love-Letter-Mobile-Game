@@ -54,6 +54,31 @@
                 android:layout_height="match_parent">
 
                 <ImageView
+                    android:id="@+id/Carta3"
+                    android:layout_width="63dp"
+                    android:layout_height="99.5dp"
+                    android:onClick="actionCarta3"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.534"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.862" />
+
+                <ImageView
+                    android:id="@+id/arrow3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="invisible"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.532"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/Carta2"
+                    app:layout_constraintVertical_bias="0.125"
+                    app:srcCompat="@drawable/arrow" />
+
+                <ImageView
                     android:id="@+id/mazo"
                     android:layout_width="63dp"
                     android:layout_height="99.5dp"
@@ -73,10 +98,23 @@
                     android:onClick="actionCarta1"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.3"
+                    app:layout_constraintHorizontal_bias="0.167"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.864" />
+                    app:layout_constraintVertical_bias="0.869" />
+
+                <ImageView
+                    android:id="@+id/arrow1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="invisible"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.201"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/Carta1"
+                    app:layout_constraintVertical_bias="0.094"
+                    app:srcCompat="@drawable/arrow" />
 
                 <ImageView
                     android:id="@+id/Carta2"
@@ -85,10 +123,23 @@
                     android:onClick="actionCarta2"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.686"
+                    app:layout_constraintHorizontal_bias="0.866"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.862" />
+                    app:layout_constraintVertical_bias="0.864" />
+
+                <ImageView
+                    android:id="@+id/arrow2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="invisible"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.828"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/Carta2"
+                    app:layout_constraintVertical_bias="0.125"
+                    app:srcCompat="@drawable/arrow" />
 
                 <LinearLayout
                     android:id="@+id/cartasContainer"
@@ -104,31 +155,6 @@
                     app:layout_constraintTop_toBottomOf="@+id/mazo"
                     app:layout_constraintVertical_bias="0.215" />
 
-                <ImageView
-                    android:id="@+id/arrow1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:visibility="invisible"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.32"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/Carta1"
-                    app:layout_constraintVertical_bias="0.071"
-                    app:srcCompat="@drawable/arrow" />
-
-                <ImageView
-                    android:id="@+id/arrow2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:visibility="invisible"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.663"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/Carta2"
-                    app:layout_constraintVertical_bias="0.087"
-                    app:srcCompat="@drawable/arrow" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </LinearLayout>
     </LinearLayout>

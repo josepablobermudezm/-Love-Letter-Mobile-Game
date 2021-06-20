@@ -56,12 +56,15 @@ public class GameActivity extends AppCompatActivity {
     public static int jugadorActual = 0;
     private ImageView arrow1;
     private ImageView arrow2;
+    private ImageView arrow3;
     public LinearLayout cartasContainer;
     public ImageView img1;
     public ImageView img2;
+    public ImageView img3;
     private SensorManager mSensorManager;
     private Rotacion rotacion;
     private HiloSegundoPlano hilo;
+    public static boolean cancillerMode = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,9 +111,12 @@ public class GameActivity extends AppCompatActivity {
         usuario = (Usuario) intent.getSerializableExtra("usuario");
         img1 = (ImageView) findViewById(R.id.Carta1);
         img2 = (ImageView) findViewById(R.id.Carta2);
+        img3 = (ImageView) findViewById(R.id.Carta3);
         img2.setImageDrawable(null);
+        img3.setImageDrawable(null);
         arrow1 = (ImageView) findViewById(R.id.arrow1);
         arrow2 = (ImageView) findViewById(R.id.arrow2);
+        arrow3 = (ImageView) findViewById(R.id.arrow3);
         listener.setImg1(img1);
         listener.setImg2(img2);
         TextView textView = findViewById(R.id.txv_turno);
@@ -210,7 +216,6 @@ public class GameActivity extends AppCompatActivity {
 
         turno();
         txv_turno.setText(" " + WaitingRoomActivity.usuarios.get(jugadorActual).getU_alias());
-
     }
 
     public void turno() {
@@ -246,7 +251,7 @@ public class GameActivity extends AppCompatActivity {
     public void repartir(View view) {
         if (Usuario.usuarioLogueado.getU_id() == WaitingRoomActivity.usuarios.get(jugadorActual).getU_id()) {
             if (img2.getDrawable() == null || img1.getDrawable() == null) {
-                listener.enviarMensaje(ws, "agregarCarta," + Usuario.usuarioLogueado.getU_id());
+                listener.enviarMensaje(ws, "agregarCarta," + Usuario.usuarioLogueado.getU_id() + (cancillerMode ? ",cancillerMode" : ""));
                 Toast.makeText(view.getContext(), "Es tu turno", Toast.LENGTH_SHORT).show();
             } else {
                 Toast.makeText(view.getContext(), "No puedes pedir más cartas", Toast.LENGTH_SHORT).show();
@@ -267,7 +272,6 @@ public class GameActivity extends AppCompatActivity {
     public void actionCartaGenerico(int valor) {
         if (Usuario.usuarioLogueado.getU_id() == WaitingRoomActivity.usuarios.get(jugadorActual).getU_id()) {
             if (img2.getDrawable() != null && img1.getDrawable() != null) {
-
                 arrow2.setVisibility(valor == 2 ? View.VISIBLE : View.INVISIBLE);
                 arrow1.setVisibility(valor == 2 ? View.INVISIBLE : View.VISIBLE);
             }
@@ -303,10 +307,16 @@ public class GameActivity extends AppCompatActivity {
             if(Usuario.usuarioLogueado.getMazo().get(valor).getNombre().equals("princesa")){
                 Toast.makeText(getApplicationContext(), "Has perdido por haber jugado la princesa", Toast.LENGTH_SHORT).show();
                 listener.enviarMensaje(ws, "princesaJugada," + Usuario.usuarioLogueado.getU_id());
+            }else if(Usuario.usuarioLogueado.getMazo().get(valor).getNombre().equals("canciller")){
+                Toast.makeText(getApplicationContext(), "Pide cartas del mazo", Toast.LENGTH_SHORT).show();
+                listener.enviarMensaje(ws, "cancillerJugado," + Usuario.usuarioLogueado.getU_id());
+                cancillerMode = true;
             }
             Usuario.usuarioLogueado.getMazo().set(valor, null);
 
-            listener.enviarMensaje(ws, "cambioTurno");
+            if(!cancillerMode){
+                listener.enviarMensaje(ws, "cambioTurno");
+            }
         }else{
             Toast.makeText(getApplicationContext(), "Debes de botar la condesa", Toast.LENGTH_SHORT).show();
         }

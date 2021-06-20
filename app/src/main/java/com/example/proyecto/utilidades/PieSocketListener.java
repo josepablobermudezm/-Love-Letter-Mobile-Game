@@ -38,7 +38,7 @@ public class PieSocketListener extends WebSocketListener {
     private String administrador;
     private LinearLayout parentLayout2;
     private Usuario usuario;
-    private ImageView img1,img2;
+    private ImageView img1,img2, img3;
     private ArrayList<Usuario> usuarios;
     private TextView turno;
 
@@ -49,6 +49,14 @@ public class PieSocketListener extends WebSocketListener {
         this.usuario = usuario;
         this.parentLayout2 = parentLayout2;
         this.context = context;
+    }
+
+    public ImageView getImg3() {
+        return img3;
+    }
+
+    public void setImg3(ImageView img3) {
+        this.img3 = img3;
     }
 
     public Context getContext() {
@@ -97,8 +105,6 @@ public class PieSocketListener extends WebSocketListener {
             context.startActivity(intent);
         }else {
             String[] arrSplit_2 = text.split(",", 5);
-            System.out.println("primer case *---------------------------*-*-*-*-*-*-**");
-            System.out.println(arrSplit_2[0]);
             switch (arrSplit_2[0]){
                 case "enviarCartas":
                     String carta1 = arrSplit_2[1];
@@ -111,7 +117,7 @@ public class PieSocketListener extends WebSocketListener {
                         }else{
                             usuario.getMazo().add(cartaAux);
                             usuario.getMazo().add(null);
-                            HiloImagenes hilo = new HiloImagenes(this.getContext(), this.getImg1(), this.getImg2(), carta1, null);
+                            HiloImagenes hilo = new HiloImagenes(this.getContext(), this.getImg1(), this.getImg2(), null, carta1, null,null);
                             hilo.execute();
                         }
                     }
@@ -123,14 +129,16 @@ public class PieSocketListener extends WebSocketListener {
                     String id2 = arrSplit_2[1];
                     Carta cartaAux = usuario.getMazoCentral().get(usuario.getMazoCentral().size()-1);
                     usuario.getMazoCentral().remove(cartaAux);
+                    Carta cartaAux2 = null;
+                    if(arrSplit_2[2].equals("cancillerMode")){
+                        cartaAux2 = usuario.getMazoCentral().get(usuario.getMazoCentral().size()-1);
+                        usuario.getMazoCentral().remove(cartaAux2);
+                    }
                     if(id2.equals(String.valueOf(usuario.getU_id()))){
                         usuario.getMazo().set((this.getImg1().getDrawable() != null ? 1 : 0), cartaAux);
-                        System.out.println("----------------------------");
-                        System.out.println(usuario.getMazo().size());
-                        System.out.println(usuario.getMazo());
-                        HiloImagenes hilo = new HiloImagenes(this.getContext(), this.getImg1(), this.getImg2(),
+                        HiloImagenes hilo = new HiloImagenes(this.getContext(), this.getImg1(), this.getImg2(), cartaAux2 != null ? this.getImg3() : null,
                                 this.getImg1().getDrawable() != null ? null : cartaAux.getNombre(),
-                                    this.getImg2().getDrawable() != null ? null : cartaAux.getNombre());
+                                    this.getImg2().getDrawable() != null ? null : cartaAux.getNombre(), cartaAux2 != null ? cartaAux2.getNombre() : null);
                         hilo.execute();
                     }
                     break;
