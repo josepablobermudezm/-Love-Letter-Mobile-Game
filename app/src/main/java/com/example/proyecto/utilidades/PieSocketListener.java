@@ -118,7 +118,7 @@ public class PieSocketListener extends WebSocketListener {
                             usuario.getMazo().add(cartaAux);
                             usuario.getMazo().add(null);
                             usuario.getMazo().add(null);
-                            HiloImagenes hilo = new HiloImagenes(this.getContext(), this.getImg1(), this.getImg2(), null, carta1, null, null);
+                            HiloImagenes hilo = new HiloImagenes(this.getContext(), this.getImg1(), this.getImg2(), this.getImg3(), carta1, null, null);
                             hilo.execute();
                         }
                     }
@@ -137,9 +137,10 @@ public class PieSocketListener extends WebSocketListener {
                         if (cartaAux2 != null) {
                             usuario.getMazo().set(2, cartaAux2);
                         }
-                        HiloImagenes hilo = new HiloImagenes(this.getContext(), this.getImg1(), this.getImg2(), cartaAux2 != null ? this.getImg3() : null,
+                        HiloImagenes hilo = new HiloImagenes(this.getContext(), this.getImg1(), this.getImg2(), this.getImg3(),
                                 this.getImg1().getDrawable() != null ? null : cartaAux.getNombre(),
-                                this.getImg2().getDrawable() != null ? null : cartaAux.getNombre(), cartaAux2 != null ? cartaAux2.getNombre() : null);
+                                this.getImg2().getDrawable() != null ? null : cartaAux.getNombre(),
+                                cartaAux2 != null ? null : cartaAux2.getNombre());
                         hilo.execute();
                     }
                     break;
