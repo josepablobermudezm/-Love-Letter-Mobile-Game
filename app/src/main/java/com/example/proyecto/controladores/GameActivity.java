@@ -288,15 +288,14 @@ public class GameActivity extends AppCompatActivity {
         ImageView imageView = new ImageView(this);
         imageView.setImageResource(code);
         imageView.setLayoutParams(new LinearLayout.LayoutParams(calcularPixeles(63), calcularPixeles(100)));
-        Usuario.usuarioLogueado.getMazo().set(valor, null);
         img.setImageDrawable(null);
         arrow.setVisibility(View.INVISIBLE);
         cartasContainer.addView(imageView);
-
         if(Usuario.usuarioLogueado.getMazo().get(valor).getNombre().equals("princesa")){
             Toast.makeText(getApplicationContext(), "Has perdido por haber jugado la princesa", Toast.LENGTH_SHORT).show();
             listener.enviarMensaje(ws, "princesaJugada," + Usuario.usuarioLogueado.getU_id());
         }
+        Usuario.usuarioLogueado.getMazo().set(valor, null);
 
         listener.enviarMensaje(ws, "cambioTurno");
     }
