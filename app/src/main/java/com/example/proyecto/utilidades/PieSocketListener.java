@@ -118,25 +118,31 @@ public class PieSocketListener extends WebSocketListener {
                             usuario.getMazo().add(cartaAux);
                             usuario.getMazo().add(null);
                             usuario.getMazo().add(null);
+                            System.out.println(usuario.getMazo());
                             HiloImagenes hilo = new HiloImagenes(this.getContext(), this.getImg1(), this.getImg2(), this.getImg3(), carta1, null, null);
                             hilo.execute();
                         }
                     }
                     break;
                 case "agregarCarta":
+                    System.out.println("bro estoy llegando a aquí");
                     String id2 = arrSplit_2[1];
                     Carta cartaAux = usuario.getMazoCentral().get(usuario.getMazoCentral().size() - 1);
                     usuario.getMazoCentral().remove(cartaAux);
-                    Carta cartaAux2 = null;
-                    if (arrSplit_2[2].equals("cancillerMode")) {
+                    Carta cartaAux2 = new Carta();
+                    if ( arrSplit_2.length == 3 ? arrSplit_2[2].equals("cancillerMode") : false) {
                         cartaAux2 = usuario.getMazoCentral().get(usuario.getMazoCentral().size() - 1);
                         usuario.getMazoCentral().remove(cartaAux2);
                     }
                     if (id2.equals(String.valueOf(usuario.getU_id()))) {
                         usuario.getMazo().set((this.getImg1().getDrawable() != null ? 1 : 0), cartaAux);
+                        System.out.println(usuario.getMazo().size());
+                        System.out.println("-------------------------------");
                         if (cartaAux2 != null) {
+                            System.out.println("entrando a donde no debería de entrar");
                             usuario.getMazo().set(2, cartaAux2);
                         }
+                        System.out.println("pasó por aquí ");
                         HiloImagenes hilo = new HiloImagenes(this.getContext(), this.getImg1(), this.getImg2(), this.getImg3(),
                                 this.getImg1().getDrawable() != null ? null : cartaAux.getNombre(),
                                 this.getImg2().getDrawable() != null ? null : cartaAux.getNombre(),

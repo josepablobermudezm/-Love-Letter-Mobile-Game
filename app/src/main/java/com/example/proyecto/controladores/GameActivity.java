@@ -251,7 +251,11 @@ public class GameActivity extends AppCompatActivity {
     public void repartir(View view) {
         if (Usuario.usuarioLogueado.getU_id() == WaitingRoomActivity.usuarios.get(jugadorActual).getU_id()) {
             if (img2.getDrawable() == null || img1.getDrawable() == null) {
-                listener.enviarMensaje(ws, "agregarCarta," + Usuario.usuarioLogueado.getU_id() + (cancillerMode ? ",cancillerMode" : ""));
+                if(cancillerMode){
+                    listener.enviarMensaje(ws, "agregarCarta," + Usuario.usuarioLogueado.getU_id() + ",cancillerMode");
+                }else{
+                    listener.enviarMensaje(ws, "agregarCarta," + Usuario.usuarioLogueado.getU_id());
+                }
                 Toast.makeText(view.getContext(), "Es tu turno", Toast.LENGTH_SHORT).show();
             } else {
                 Toast.makeText(view.getContext(), "No puedes pedir más cartas", Toast.LENGTH_SHORT).show();
