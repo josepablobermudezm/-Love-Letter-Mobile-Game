@@ -148,13 +148,28 @@ public class PieSocketListener extends WebSocketListener {
                     ArrayList<Usuario> array = new ArrayList<>();
                     array = (ArrayList<Usuario>) WaitingRoomActivity.usuarios.stream().filter(x -> x.getU_id() == Integer.valueOf(arrSplit_2[1])).collect(Collectors.toList());
                     System.out.println(array.get(0).toString());
-                    Toast.makeText(this.context,  array.get(0).getU_alias() + " ha perdido la ronda por haber jugado la princesa", Toast.LENGTH_SHORT).show();
+                    princesaJugada(this.context, array);
                     WaitingRoomActivity.usuarios.remove(array.get(0));
                     break;
                 default:
                     throw new IllegalStateException("Unexpected value: " + arrSplit_2[0]);
             }
         }
+    }
+
+    public void princesaJugada(Context context, ArrayList<Usuario> array){
+        new AsyncTask<String, Float, Integer>(){
+            @Override
+            protected Integer doInBackground(String... strings) {
+                publishProgress();
+                return null;
+            }
+
+            @Override
+            protected void onProgressUpdate(Float... variable) {
+                Toast.makeText(context,  array.get(0).getU_alias() + " ha perdido la ronda por haber jugado la princesa", Toast.LENGTH_SHORT).show();
+            }
+        }.execute();
     }
 
     public void cambioTurnoText(){
