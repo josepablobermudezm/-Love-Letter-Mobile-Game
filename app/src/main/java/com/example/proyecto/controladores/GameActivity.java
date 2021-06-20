@@ -287,8 +287,8 @@ public class GameActivity extends AppCompatActivity {
     public void sacarCarta(ImageView img, int valor, ImageView arrow) {
         boolean puedeVotar = true;
         if((Usuario.usuarioLogueado.getMazo().get(0).getNombre().equals("condesa") || Usuario.usuarioLogueado.getMazo().get(1).getNombre().equals("condesa")) &&
-                (Usuario.usuarioLogueado.getMazo().get(0).getNombre().equals("principe") || Usuario.usuarioLogueado.getMazo().get(1).getNombre().equals("principe")) ||
-                (Usuario.usuarioLogueado.getMazo().get(0).getNombre().equals("rey") || Usuario.usuarioLogueado.getMazo().get(1).getNombre().equals("rey"))
+                ((Usuario.usuarioLogueado.getMazo().get(0).getNombre().equals("principe") || Usuario.usuarioLogueado.getMazo().get(1).getNombre().equals("principe")) ||
+                (Usuario.usuarioLogueado.getMazo().get(0).getNombre().equals("rey") || Usuario.usuarioLogueado.getMazo().get(1).getNombre().equals("rey")))
         ){
             puedeVotar = Usuario.usuarioLogueado.getMazo().get(valor).getNombre().equals("condesa") ? true : false;
         }
