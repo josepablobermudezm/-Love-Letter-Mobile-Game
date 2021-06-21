@@ -129,16 +129,13 @@ public class PieSocketListener extends WebSocketListener {
                     Carta cartaAux = usuario.getMazoCentral().get(usuario.getMazoCentral().size() - 1);
                     usuario.getMazoCentral().remove(cartaAux);
                     cartaAux2 = new Carta();
-                    System.out.println(arrSplit_2.length + " tamañoooooooooooooooooooooooooooooooo");
                     if ( arrSplit_2.length == 3 ? arrSplit_2[2].equals("cancillerMode") : false) {
-                        System.out.println("entrando a la condición del cnciller");
                         cartaAux2 = usuario.getMazoCentral().get(usuario.getMazoCentral().size() - 1);
                         usuario.getMazoCentral().remove(cartaAux2);
                     }
                     if (id2.equals(String.valueOf(usuario.getU_id()))) {
                         usuario.getMazo().set((this.getImg1().getDrawable() != null ? 1 : 0), cartaAux);
                         if (cartaAux2 != null) {
-                            System.out.println("no está entrnaado a aquí");
                             usuario.getMazo().set(2, cartaAux2);
                         }
                         HiloImagenes hilo = new HiloImagenes(this.getContext(), this.getImg1(), this.getImg2(), this.getImg3(),
@@ -177,10 +174,12 @@ public class PieSocketListener extends WebSocketListener {
                     }
                     if (id3.equals(String.valueOf(usuario.getU_id()))) {
                         if(arrSplit_2[2].equals("1")){
+                            usuario.getMazo().set(0, usuario.getMazo().get(0));
                             usuario.getMazo().set(1, null);
                             usuario.getMazo().set(2, null);
                         } else if(arrSplit_2[2].equals("2")){
-                            usuario.getMazo().set(0, null);
+                            usuario.getMazo().set(0, usuario.getMazo().get(1));
+                            usuario.getMazo().set(1, null);
                             usuario.getMazo().set(2, null);
                         } else if(arrSplit_2[2].equals("3")){
                             usuario.getMazo().set(0, usuario.getMazo().get(2));
@@ -188,7 +187,6 @@ public class PieSocketListener extends WebSocketListener {
                             usuario.getMazo().set(2, null);
                         }
                     }
-                    cartaAux2 = new Carta();
                     break;
                 default:
                     throw new IllegalStateException("Unexpected value: " + arrSplit_2[0]);
