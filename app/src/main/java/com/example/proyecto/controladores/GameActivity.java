@@ -253,8 +253,10 @@ public class GameActivity extends AppCompatActivity {
         if (Usuario.usuarioLogueado.getU_id() == WaitingRoomActivity.usuarios.get(jugadorActual).getU_id()) {
             if (img2.getDrawable() == null || img1.getDrawable() == null) {
                 if(cancillerMode){
+                    System.out.println("carta con canciller");
                     listener.enviarMensaje(ws, "agregarCarta," + Usuario.usuarioLogueado.getU_id() + ",cancillerMode");
                 }else{
+                    System.out.println("carta sin canciller");
                     listener.enviarMensaje(ws, "agregarCarta," + Usuario.usuarioLogueado.getU_id());
                 }
                 Toast.makeText(view.getContext(), "Es tu turno", Toast.LENGTH_SHORT).show();
@@ -283,19 +285,24 @@ public class GameActivity extends AppCompatActivity {
             if(cancillerMode){
                 int code = this.getResources().getIdentifier(Usuario.usuarioLogueado.getMazo().get(valor-1).getNombre(), "drawable", this.getPackageName());
                 if(valor == 1){
-                    img3.setImageDrawable(null);
+                    img1.setImageDrawable(null);
                     img2.setImageDrawable(null);
+                    img3.setImageDrawable(null);
+                    img1.setImageResource(code);
                 } else if(valor == 2){
                     img1.setImageDrawable(null);
-                    img3.setImageDrawable(null);
                     img2.setImageDrawable(null);
+                    img3.setImageDrawable(null);
                     img1.setImageResource(code);
                 } else if(valor == 3){
                     img1.setImageDrawable(null);
-                    img3.setImageDrawable(null);
                     img2.setImageDrawable(null);
+                    img3.setImageDrawable(null);
                     img1.setImageResource(code);
                 }
+                listener.setImg1(img1);
+                listener.setImg2(img2);
+                listener.setImg3(img3);
                 listener.enviarMensaje(ws, "cancillerJugada," + Usuario.usuarioLogueado.getU_id() + "," + valor);
                 listener.enviarMensaje(ws, "cambioTurno");
                 cancillerMode = false;
