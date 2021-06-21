@@ -152,7 +152,9 @@ public class PieSocketListener extends WebSocketListener {
                                 cartaAux2 != null ? cartaAux2.getNombre() : null);
                         hilo.execute();
                     }
-                    WaitingRoomActivity.usuarios.set(Integer.valueOf(id2), usuario);
+                    ArrayList<Usuario> array3 = new ArrayList<>();
+                    array3 = (ArrayList<Usuario>) WaitingRoomActivity.usuarios.stream().filter(x -> x.getU_id() == Integer.valueOf(id2)).collect(Collectors.toList());
+                    WaitingRoomActivity.usuarios.set(WaitingRoomActivity.usuarios.indexOf(array3.get(0)), usuario);
                     break;
                 case "cambioTurno":
                     if (WaitingRoomActivity.usuarios.size() - 1 == GameActivity.jugadorActual) {
