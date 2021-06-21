@@ -128,9 +128,9 @@ public class PieSocketListener extends WebSocketListener {
                     String id2 = arrSplit_2[1];
                     Carta cartaAux = new Carta();
                     if(usuario.getMazoCentral().size() > 0){
-                        cartaAux = usuario.getMazoCentral().get(usuario.getMazoCentral().size() - 1);
-                        usuario.getMazoCentral().remove(cartaAux);
-                    }
+
+                    }cartaAux = usuario.getMazoCentral().get(usuario.getMazoCentral().size() - 1);
+                    usuario.getMazoCentral().remove(cartaAux);
                     cartaAux2 = new Carta();
                     if (arrSplit_2.length == 3 && (arrSplit_2[2].equals("cancillerMode") && usuario.getMazoCentral().size() > 1)) {
                         cartaAux2 = usuario.getMazoCentral().get(usuario.getMazoCentral().size() - 1);
@@ -147,8 +147,8 @@ public class PieSocketListener extends WebSocketListener {
                                 this.getImg1(),
                                 this.getImg2(),
                                 this.getImg3(),
-                                ((this.getImg1().getDrawable() != null) && (usuario.getMazoCentral().size() > 1)) ? null : cartaAux.getNombre(),
-                                ((this.getImg2().getDrawable() != null) && (usuario.getMazoCentral().size() > 1)) ? null : cartaAux.getNombre(),
+                                (this.getImg1().getDrawable() != null) ? null : cartaAux.getNombre(),
+                                (this.getImg2().getDrawable() != null) ? null : cartaAux.getNombre(),
                                 ((cartaAux2 != null) && (usuario.getMazoCentral().size() > 1)) ? cartaAux2.getNombre() : null);
                         hilo.execute();
                     }
