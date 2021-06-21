@@ -290,21 +290,21 @@ public class GameActivity extends AppCompatActivity {
                     img2.setImageDrawable(null);
                     img3.setImageDrawable(null);
                     img1.setImageResource(code);
-                    carta1 = Usuario.usuarioLogueado.getMazo().get(1).getNombre();
+                    carta1 = Usuario.usuarioLogueado.getMazo().get(2) != null ? Usuario.usuarioLogueado.getMazo().get(1).getNombre() : "none";
                     carta2 = Usuario.usuarioLogueado.getMazo().get(2) != null ? Usuario.usuarioLogueado.getMazo().get(2).getNombre() : "none";
                 } else if(valor == 2){
                     img1.setImageDrawable(null);
                     img2.setImageDrawable(null);
                     img3.setImageDrawable(null);
                     img1.setImageResource(code);
-                    carta1 = Usuario.usuarioLogueado.getMazo().get(0).getNombre();
+                    carta1 = Usuario.usuarioLogueado.getMazo().get(0) != null ? Usuario.usuarioLogueado.getMazo().get(0).getNombre() : "none";
                     carta2 = Usuario.usuarioLogueado.getMazo().get(2) != null ? Usuario.usuarioLogueado.getMazo().get(2).getNombre() : "none";
                 } else if(valor == 3){
                     img1.setImageDrawable(null);
                     img2.setImageDrawable(null);
                     img3.setImageDrawable(null);
                     img1.setImageResource(code);
-                    carta1 = Usuario.usuarioLogueado.getMazo().get(0).getNombre();
+                    carta1 = Usuario.usuarioLogueado.getMazo().get(1) != null ? Usuario.usuarioLogueado.getMazo().get(0).getNombre() : "none";
                     carta2 = Usuario.usuarioLogueado.getMazo().get(1) != null ? Usuario.usuarioLogueado.getMazo().get(2).getNombre() : "none";
                 }
                 listener.setImg1(img1);
