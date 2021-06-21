@@ -126,24 +126,17 @@ public class PieSocketListener extends WebSocketListener {
                     break;
                 case "agregarCarta":
                     String id2 = arrSplit_2[1];
-                    System.out.println("id : " + id2);
-                    System.out.println(usuario.getMazoCentral());
                     Carta cartaAux = usuario.getMazoCentral().get(usuario.getMazoCentral().size() - 1);
-                    System.out.println(cartaAux);
                     usuario.getMazoCentral().remove(cartaAux);
                     cartaAux2 = new Carta();
                     if ( arrSplit_2.length == 3 ? arrSplit_2[2].equals("cancillerMode") : false) {
-                        System.out.println("entrando a método de canciller");
                         cartaAux2 = usuario.getMazoCentral().get(usuario.getMazoCentral().size() - 1);
                         System.out.println(cartaAux2);
                         usuario.getMazoCentral().remove(cartaAux2);
                     }
                     if (id2.equals(String.valueOf(usuario.getU_id()))) {
-                        System.out.println("entrando a metodo de ID");
                         usuario.getMazo().set((this.getImg1().getDrawable() != null ? 1 : 0), cartaAux);
-                        System.out.println(cartaAux2);
                         if (arrSplit_2.length == 3 ? arrSplit_2[2].equals("cancillerMode") : false) {
-                            System.out.println("meotodo de si hay cartaAux");
                             usuario.getMazo().set(2, cartaAux2);
                         }
 
@@ -176,46 +169,30 @@ public class PieSocketListener extends WebSocketListener {
                     Carta carta1MazoObject = creacionObjectoCarta(carta1Mazo);
                     Carta carta2MazoObject = creacionObjectoCarta(carta2Mazo);
                     if(arrSplit_2[2].equals("1")){
-                        System.out.println("seteando primero");
-                        System.out.println(carta1MazoObject);
-                        System.out.println(carta2MazoObject);
                         usuario.getMazoCentral().add(carta1MazoObject);
                         usuario.getMazoCentral().add(carta2MazoObject);
                     } else if(arrSplit_2[2].equals("2")){
-                        System.out.println("seteando segundo");
-                        System.out.println(carta1MazoObject);
-                        System.out.println(carta2MazoObject);
                         usuario.getMazoCentral().add(carta1MazoObject);
                         usuario.getMazoCentral().add(carta2MazoObject);
                     } else if(arrSplit_2[2].equals("3")){
-                        System.out.println("seteando tercero");
-                        System.out.println(carta1MazoObject);
-                        System.out.println(carta2MazoObject);
                         usuario.getMazoCentral().add(carta1MazoObject);
                         usuario.getMazoCentral().add(carta2MazoObject);
                     }
-                    System.out.println(usuario.getMazo().size() + " tamañoooooooo");
-                    System.out.println(arrSplit_2[2] + " posición de vector");
-                    System.out.println(usuario.getMazoCentral());
                     if (id3.equals(String.valueOf(usuario.getU_id()))) {
                         if(arrSplit_2[2].equals("1")){
-                            System.out.println("seteando primero");
                             usuario.getMazo().set(0, usuario.getMazo().get(0));
                             usuario.getMazo().set(1, null);
                             usuario.getMazo().set(2, null);
                         } else if(arrSplit_2[2].equals("2")){
-                            System.out.println("seteando segundo");
                             usuario.getMazo().set(0, usuario.getMazo().get(1));
                             usuario.getMazo().set(1, null);
                             usuario.getMazo().set(2, null);
                         } else if(arrSplit_2[2].equals("3")){
-                            System.out.println("seteando tercero");
                             usuario.getMazo().set(0, usuario.getMazo().get(2));
                             usuario.getMazo().set(1, null);
                             usuario.getMazo().set(2, null);
                         }
                     }
-                    System.out.println(usuario.getMazo().size() + " tamañoooooooo");
                     break;
                 default:
                     throw new IllegalStateException("Unexpected value: " + arrSplit_2[0]);
