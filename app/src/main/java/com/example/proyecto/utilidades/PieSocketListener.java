@@ -171,14 +171,20 @@ public class PieSocketListener extends WebSocketListener {
                     String id3 = arrSplit_2[1];
                     if(arrSplit_2[2].equals("1")){
                         System.out.println("seteando primero");
+                        System.out.println(usuario.getMazo().get(1));
+                        System.out.println(usuario.getMazo().get(2));
                         usuario.getMazoCentral().add(usuario.getMazo().get(1));
                         usuario.getMazoCentral().add(usuario.getMazo().get(2));
                     } else if(arrSplit_2[2].equals("2")){
                         System.out.println("seteando segundo");
+                        System.out.println(usuario.getMazo().get(0));
+                        System.out.println(usuario.getMazo().get(2));
                         usuario.getMazoCentral().add(usuario.getMazo().get(0));
                         usuario.getMazoCentral().add(usuario.getMazo().get(2));
                     } else if(arrSplit_2[2].equals("3")){
                         System.out.println("seteando tercero");
+                        System.out.println(usuario.getMazo().get(1));
+                        System.out.println(usuario.getMazo().get(0));
                         usuario.getMazoCentral().add(usuario.getMazo().get(0));
                         usuario.getMazoCentral().add(usuario.getMazo().get(1));
                     }
