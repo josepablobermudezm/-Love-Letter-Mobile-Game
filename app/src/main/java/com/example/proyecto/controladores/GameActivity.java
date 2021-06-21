@@ -296,6 +296,7 @@ public class GameActivity extends AppCompatActivity {
                 }
                 listener.enviarMensaje(ws, "cancillerJugada," + Usuario.usuarioLogueado.getU_id() + "," + valor);
                 listener.enviarMensaje(ws, "cambioTurno");
+                cancillerMode = false;
             }
             else if (img2.getDrawable() != null && img1.getDrawable() != null) {
                 arrow2.setVisibility(valor == 2 ? View.VISIBLE : View.INVISIBLE);
