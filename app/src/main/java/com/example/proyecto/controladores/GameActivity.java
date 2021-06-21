@@ -281,7 +281,7 @@ public class GameActivity extends AppCompatActivity {
     public void actionCartaGenerico(int valor) {
         if (Usuario.usuarioLogueado.getU_id() == WaitingRoomActivity.usuarios.get(jugadorActual).getU_id()) {
             if(cancillerMode){
-                int code = this.getResources().getIdentifier(Usuario.usuarioLogueado.getMazo().get(valor).getNombre(), "drawable", this.getPackageName());
+                int code = this.getResources().getIdentifier(Usuario.usuarioLogueado.getMazo().get(valor-1).getNombre(), "drawable", this.getPackageName());
                 if(valor == 0){
                     img2.setImageDrawable(null);
                     img3.setImageDrawable(null);
