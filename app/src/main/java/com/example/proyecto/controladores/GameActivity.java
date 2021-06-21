@@ -290,7 +290,7 @@ public class GameActivity extends AppCompatActivity {
                     img3.setImageDrawable(null);
                 } else if(valor == 3){
                     img1.setImageDrawable(null);
-                    img2.setImageDrawable(null);
+                    img3.setImageDrawable(null);
                     img1.setImageResource(code);
                 }
                 listener.enviarMensaje(ws, "cancillerJugada," + Usuario.usuarioLogueado.getU_id() + "," + valor);
