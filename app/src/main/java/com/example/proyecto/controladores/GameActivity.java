@@ -282,10 +282,10 @@ public class GameActivity extends AppCompatActivity {
         if (Usuario.usuarioLogueado.getU_id() == WaitingRoomActivity.usuarios.get(jugadorActual).getU_id()) {
             if(cancillerMode){
                 int code = this.getResources().getIdentifier(Usuario.usuarioLogueado.getMazo().get(valor-1).getNombre(), "drawable", this.getPackageName());
-                if(valor == 0){
+                if(valor == 1){
                     img2.setImageDrawable(null);
                     img3.setImageDrawable(null);
-                } else if(valor == 1){
+                } else if(valor == 2){
                     img1.setImageDrawable(null);
                     img3.setImageDrawable(null);
                 } else if(valor == 3){
