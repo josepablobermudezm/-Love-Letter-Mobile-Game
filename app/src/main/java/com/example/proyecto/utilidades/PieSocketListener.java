@@ -146,15 +146,13 @@ public class PieSocketListener extends WebSocketListener {
                             System.out.println("meotodo de si hay cartaAux");
                             usuario.getMazo().set(2, cartaAux2);
                         }
+
                         HiloImagenes hilo = new HiloImagenes(this.getContext(), this.getImg1(), this.getImg2(), this.getImg3(),
                                 this.getImg1().getDrawable() != null ? null : cartaAux.getNombre(),
                                 this.getImg2().getDrawable() != null ? null : cartaAux.getNombre(),
                                 cartaAux2 != null ? cartaAux2.getNombre() : null);
                         hilo.execute();
                     }
-                    ArrayList<Usuario> array3 = new ArrayList<>();
-                    array3 = (ArrayList<Usuario>) WaitingRoomActivity.usuarios.stream().filter(x -> x.getU_id() == Integer.valueOf(id2)).collect(Collectors.toList());
-                    WaitingRoomActivity.usuarios.set(WaitingRoomActivity.usuarios.indexOf(array3.get(0)), usuario);
                     break;
                 case "cambioTurno":
                     if (WaitingRoomActivity.usuarios.size() - 1 == GameActivity.jugadorActual) {
@@ -173,26 +171,28 @@ public class PieSocketListener extends WebSocketListener {
                     break;
                 case "cancillerJugada":
                     String id3 = arrSplit_2[1];
-                    ArrayList<Usuario> array2 = new ArrayList<>();
-                    array2 = (ArrayList<Usuario>) WaitingRoomActivity.usuarios.stream().filter(x -> x.getU_id() == Integer.valueOf(id3)).collect(Collectors.toList());
+                    String carta1Mazo = arrSplit_2[3];
+                    String carta2Mazo = arrSplit_2[4];
+                    Carta carta1MazoObject = creacionObjectoCarta(carta1Mazo);
+                    Carta carta2MazoObject = creacionObjectoCarta(carta2Mazo);
                     if(arrSplit_2[2].equals("1")){
                         System.out.println("seteando primero");
-                        System.out.println(array2.get(0).getMazo().get(1));
-                        System.out.println(array2.get(0).getMazo().get(2));
-                        usuario.getMazoCentral().add(array2.get(0).getMazo().get(1));
-                        usuario.getMazoCentral().add(array2.get(0).getMazo().get(2));
+                        System.out.println(carta1MazoObject);
+                        System.out.println(carta2MazoObject);
+                        usuario.getMazoCentral().add(carta1MazoObject);
+                        usuario.getMazoCentral().add(carta2MazoObject);
                     } else if(arrSplit_2[2].equals("2")){
                         System.out.println("seteando segundo");
-                        System.out.println(array2.get(0).getMazo().get(0));
-                        System.out.println(array2.get(0).getMazo().get(2));
-                        usuario.getMazoCentral().add(array2.get(0).getMazo().get(0));
-                        usuario.getMazoCentral().add(array2.get(0).getMazo().get(2));
+                        System.out.println(carta1MazoObject);
+                        System.out.println(carta2MazoObject);
+                        usuario.getMazoCentral().add(carta1MazoObject);
+                        usuario.getMazoCentral().add(carta2MazoObject);
                     } else if(arrSplit_2[2].equals("3")){
                         System.out.println("seteando tercero");
-                        System.out.println(array2.get(0).getMazo().get(1));
-                        System.out.println(array2.get(0).getMazo().get(0));
-                        usuario.getMazoCentral().add(array2.get(0).getMazo().get(0));
-                        usuario.getMazoCentral().add(array2.get(0).getMazo().get(1));
+                        System.out.println(carta1MazoObject);
+                        System.out.println(carta2MazoObject);
+                        usuario.getMazoCentral().add(carta1MazoObject);
+                        usuario.getMazoCentral().add(carta2MazoObject);
                     }
                     System.out.println(usuario.getMazo().size() + " tamañoooooooo");
                     System.out.println(arrSplit_2[2] + " posición de vector");
@@ -221,6 +221,53 @@ public class PieSocketListener extends WebSocketListener {
                     throw new IllegalStateException("Unexpected value: " + arrSplit_2[0]);
             }
         }
+    }
+
+    public Carta creacionObjectoCarta(String carta){
+        Carta cartaretorno = new Carta();
+        switch (carta) {
+            case "espia":
+                cartaretorno.setNombre(carta);
+                cartaretorno.setValor(0);
+                break;
+            case "guardia":
+                cartaretorno.setNombre(carta);
+                cartaretorno.setValor(1);
+                break;
+            case "sacerdote":
+                cartaretorno.setNombre(carta);
+                cartaretorno.setValor(2);
+                break;
+            case "baron":
+                cartaretorno.setNombre(carta);
+                cartaretorno.setValor(3);
+                break;
+            case "doncella":
+                cartaretorno.setNombre(carta);
+                cartaretorno.setValor(4);
+                break;
+            case "principe":
+                cartaretorno.setNombre(carta);
+                cartaretorno.setValor(5);
+                break;
+            case "canciller":
+                cartaretorno.setNombre(carta);
+                cartaretorno.setValor(6);
+                break;
+            case "rey":
+                cartaretorno.setNombre(carta);
+                cartaretorno.setValor(7);
+                break;
+            case "condesa":
+                cartaretorno.setNombre(carta);
+                cartaretorno.setValor(8);
+                break;
+            case "princesa":
+                cartaretorno.setNombre(carta);
+                cartaretorno.setValor(9);
+                break;
+        }
+        return cartaretorno;
     }
 
     public void princesaJugada(Context context, ArrayList<Usuario> array) {

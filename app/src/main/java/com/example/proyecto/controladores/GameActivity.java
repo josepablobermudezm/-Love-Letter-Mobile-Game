@@ -282,6 +282,7 @@ public class GameActivity extends AppCompatActivity {
 
     public void actionCartaGenerico(int valor) {
         if (Usuario.usuarioLogueado.getU_id() == WaitingRoomActivity.usuarios.get(jugadorActual).getU_id()) {
+            String carta1 = "", carta2 = "";
             if(cancillerMode){
                 int code = this.getResources().getIdentifier(Usuario.usuarioLogueado.getMazo().get(valor-1).getNombre(), "drawable", this.getPackageName());
                 if(valor == 1){
@@ -289,21 +290,27 @@ public class GameActivity extends AppCompatActivity {
                     img2.setImageDrawable(null);
                     img3.setImageDrawable(null);
                     img1.setImageResource(code);
+                    carta1 = Usuario.usuarioLogueado.getMazo().get(1).getNombre();
+                    carta2 = Usuario.usuarioLogueado.getMazo().get(2).getNombre();
                 } else if(valor == 2){
                     img1.setImageDrawable(null);
                     img2.setImageDrawable(null);
                     img3.setImageDrawable(null);
                     img1.setImageResource(code);
+                    carta1 = Usuario.usuarioLogueado.getMazo().get(0).getNombre();
+                    carta2 = Usuario.usuarioLogueado.getMazo().get(2).getNombre();
                 } else if(valor == 3){
                     img1.setImageDrawable(null);
                     img2.setImageDrawable(null);
                     img3.setImageDrawable(null);
                     img1.setImageResource(code);
+                    carta1 = Usuario.usuarioLogueado.getMazo().get(0).getNombre();
+                    carta2 = Usuario.usuarioLogueado.getMazo().get(1).getNombre();
                 }
                 listener.setImg1(img1);
                 listener.setImg2(img2);
                 listener.setImg3(img3);
-                listener.enviarMensaje(ws, "cancillerJugada," + Usuario.usuarioLogueado.getU_id() + "," + valor);
+                listener.enviarMensaje(ws, "cancillerJugada," + Usuario.usuarioLogueado.getU_id() + "," + valor + "," + carta1 + "," + carta2);
                 listener.enviarMensaje(ws, "cambioTurno");
                 cancillerMode = false;
             }
@@ -348,7 +355,6 @@ public class GameActivity extends AppCompatActivity {
                 cancillerMode = true;
             }
             Usuario.usuarioLogueado.getMazo().set(valor, null);
-
             if(!cancillerMode){
                 listener.enviarMensaje(ws, "cambioTurno");
             }
