@@ -152,6 +152,7 @@ public class PieSocketListener extends WebSocketListener {
                                 cartaAux2 != null ? cartaAux2.getNombre() : null);
                         hilo.execute();
                     }
+                    WaitingRoomActivity.usuarios.set(Integer.valueOf(id2), usuario);
                     break;
                 case "cambioTurno":
                     if (WaitingRoomActivity.usuarios.size() - 1 == GameActivity.jugadorActual) {
@@ -170,24 +171,26 @@ public class PieSocketListener extends WebSocketListener {
                     break;
                 case "cancillerJugada":
                     String id3 = arrSplit_2[1];
+                    ArrayList<Usuario> array2 = new ArrayList<>();
+                    array2 = (ArrayList<Usuario>) WaitingRoomActivity.usuarios.stream().filter(x -> x.getU_id() == Integer.valueOf(id3)).collect(Collectors.toList());
                     if(arrSplit_2[2].equals("1")){
                         System.out.println("seteando primero");
-                        System.out.println(usuario.getMazo().get(1));
-                        System.out.println(usuario.getMazo().get(2));
-                        usuario.getMazoCentral().add(usuario.getMazo().get(1));
-                        usuario.getMazoCentral().add(usuario.getMazo().get(2));
+                        System.out.println(array2.get(0).getMazo().get(1));
+                        System.out.println(array2.get(0).getMazo().get(2));
+                        usuario.getMazoCentral().add(array2.get(0).getMazo().get(1));
+                        usuario.getMazoCentral().add(array2.get(0).getMazo().get(2));
                     } else if(arrSplit_2[2].equals("2")){
                         System.out.println("seteando segundo");
-                        System.out.println(usuario.getMazo().get(0));
-                        System.out.println(usuario.getMazo().get(2));
-                        usuario.getMazoCentral().add(usuario.getMazo().get(0));
-                        usuario.getMazoCentral().add(usuario.getMazo().get(2));
+                        System.out.println(array2.get(0).getMazo().get(0));
+                        System.out.println(array2.get(0).getMazo().get(2));
+                        usuario.getMazoCentral().add(array2.get(0).getMazo().get(0));
+                        usuario.getMazoCentral().add(array2.get(0).getMazo().get(2));
                     } else if(arrSplit_2[2].equals("3")){
                         System.out.println("seteando tercero");
-                        System.out.println(usuario.getMazo().get(1));
-                        System.out.println(usuario.getMazo().get(0));
-                        usuario.getMazoCentral().add(usuario.getMazo().get(0));
-                        usuario.getMazoCentral().add(usuario.getMazo().get(1));
+                        System.out.println(array2.get(0).getMazo().get(1));
+                        System.out.println(array2.get(0).getMazo().get(0));
+                        usuario.getMazoCentral().add(array2.get(0).getMazo().get(0));
+                        usuario.getMazoCentral().add(array2.get(0).getMazo().get(1));
                     }
                     System.out.println(usuario.getMazo().size() + " tamañoooooooo");
                     System.out.println(arrSplit_2[2] + " posición de vector");
