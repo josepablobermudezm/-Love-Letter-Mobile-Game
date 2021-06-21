@@ -140,7 +140,8 @@ public class PieSocketListener extends WebSocketListener {
                     if (id2.equals(String.valueOf(usuario.getU_id()))) {
                         System.out.println("entrando a metodo de ID");
                         usuario.getMazo().set((this.getImg1().getDrawable() != null ? 1 : 0), cartaAux);
-                        if (cartaAux2 != null) {
+                        System.out.println(cartaAux2);
+                        if (arrSplit_2.length == 3 ? arrSplit_2[2].equals("cancillerMode") : false) {
                             System.out.println("meotodo de si hay cartaAux");
                             usuario.getMazo().set(2, cartaAux2);
                         }
