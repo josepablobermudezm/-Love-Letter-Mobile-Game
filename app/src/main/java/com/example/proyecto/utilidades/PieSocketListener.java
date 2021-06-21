@@ -95,6 +95,7 @@ public class PieSocketListener extends WebSocketListener {
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public void onMessage(WebSocket webSocket, String text) {
+        Carta cartaAux2;
         if (text.equals("nuevoUsuario-" + partida.getP_id())) {
             HiloWaiting hilo = new HiloWaiting(this.context, this.parentLayout2, this.usuario, this.partida);
             hilo.execute();
@@ -127,7 +128,7 @@ public class PieSocketListener extends WebSocketListener {
                     String id2 = arrSplit_2[1];
                     Carta cartaAux = usuario.getMazoCentral().get(usuario.getMazoCentral().size() - 1);
                     usuario.getMazoCentral().remove(cartaAux);
-                    Carta cartaAux2 = new Carta();
+                    cartaAux2 = new Carta();
                     System.out.println(arrSplit_2.length + " tamañoooooooooooooooooooooooooooooooo");
                     if ( arrSplit_2.length == 3 ? arrSplit_2[2].equals("cancillerMode") : false) {
                         System.out.println("entrando a la condición del cnciller");
@@ -187,6 +188,7 @@ public class PieSocketListener extends WebSocketListener {
                             usuario.getMazo().set(2, null);
                         }
                     }
+                    cartaAux2 = new Carta();
                     break;
                 default:
                     throw new IllegalStateException("Unexpected value: " + arrSplit_2[0]);
