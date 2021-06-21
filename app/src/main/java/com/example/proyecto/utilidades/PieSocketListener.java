@@ -127,6 +127,7 @@ public class PieSocketListener extends WebSocketListener {
                 case "agregarCarta":
                     String id2 = arrSplit_2[1];
                     System.out.println("id : " + id2);
+                    System.out.println(usuario.getMazoCentral());
                     Carta cartaAux = usuario.getMazoCentral().get(usuario.getMazoCentral().size() - 1);
                     System.out.println(cartaAux);
                     usuario.getMazoCentral().remove(cartaAux);
@@ -190,6 +191,7 @@ public class PieSocketListener extends WebSocketListener {
                     }
                     System.out.println(usuario.getMazo().size() + " tamañoooooooo");
                     System.out.println(arrSplit_2[2] + " posición de vector");
+                    System.out.println(usuario.getMazoCentral());
                     if (id3.equals(String.valueOf(usuario.getU_id()))) {
                         if(arrSplit_2[2].equals("1")){
                             System.out.println("seteando primero");
