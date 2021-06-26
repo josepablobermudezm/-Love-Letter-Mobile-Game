@@ -134,7 +134,6 @@ public class PieSocketListener extends WebSocketListener {
                     cartaAux2 = new Carta();
                     if (arrSplit_2.length == 3 && (arrSplit_2[2].equals("cancillerMode") && usuario.getMazoCentral().size() > 1)) {
                         cartaAux2 = usuario.getMazoCentral().get(usuario.getMazoCentral().size() - 1);
-                        System.out.println(cartaAux2);
                         usuario.getMazoCentral().remove(cartaAux2);
                     }
                     if (id2.equals(String.valueOf(usuario.getU_id()))) {
@@ -207,19 +206,20 @@ public class PieSocketListener extends WebSocketListener {
                     Usuario usuario2 = (Usuario) WaitingRoomActivity.usuarios.stream().filter(x -> x.getU_id() == Integer.valueOf(idPropio)).findAny().get();
 
                     // Se obtienen las cartas
-                    cartaJugador = usuario1.getMazo().get(0);
-                    cartaPropia = usuario2.getMazo().get(0);
+                    cartaJugador = usuario1.getMazo().get(0) != null ? usuario1.getMazo().get(0) : usuario1.getMazo().get(1);
+                    cartaPropia = usuario2.getMazo().get(0) != null ? usuario2.getMazo().get(0) : usuario2.getMazo().get(1);
 
                     //Se intercambian las cartas
                     usuario1.getMazo().set(0, cartaPropia);
                     usuario2.getMazo().set(0,cartaJugador);
-
+                    usuario1.getMazo().set(1, null);
+                    usuario2.getMazo().set(1, null);
                     if(usuario.getU_id() == Integer.valueOf(idJugador) || usuario.getU_id() == Integer.valueOf(idPropio)){
                         if(usuario1.getU_id() == usuario.getU_id()){
-                            usuario.getMazo().set(0, usuario1.getMazo().get(0));
+                            usuario.getMazo().set(0, usuario1.getMazo().get(0) != null ? usuario1.getMazo().get(0) : usuario1.getMazo().get(1));
                         }
                         else{ // cuando es el otro
-                            usuario.getMazo().set(0, usuario2.getMazo().get(0));
+                            usuario.getMazo().set(0, usuario2.getMazo().get(0) != null ? usuario2.getMazo().get(0) : usuario2.getMazo().get(1));
                         }
                         System.out.println("Usuario1: " + usuario.getMazo());
                         System.out.println("Usuario2: " + usuario2.getMazo());
