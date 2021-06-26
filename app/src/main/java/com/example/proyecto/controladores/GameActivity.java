@@ -402,6 +402,7 @@ public class GameActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         System.out.println("Imprimiendo el nombre: " + u.getU_alias());
+                        ScrollHorizontal.setVisibility(View.INVISIBLE);
                     }
                 });
                 parentJugadores.addView(button);
