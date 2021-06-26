@@ -6,6 +6,8 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -46,6 +48,7 @@ public class GameActivity extends AppCompatActivity {
     private LinearLayout parentLayout;
     private LinearLayout parentLayout2;
     private LinearLayout parentLayout3;
+    public LinearLayout parentJugadores;
     public ArrayList<Carta> cartas = new ArrayList();
     private ArrayList<Carta> mazo = new ArrayList();
     private String administrador;
@@ -98,7 +101,7 @@ public class GameActivity extends AppCompatActivity {
     }*/
 
     private void iniciar() {
-
+        parentJugadores =  (LinearLayout) findViewById(R.id.parentJugadores);
         parentLayout2 = (LinearLayout) findViewById(R.id.parentLayout2);
         parentLayout3 = findViewById(R.id.parentLayout3);
         mTextView = (TextView) findViewById(R.id.text);
@@ -353,6 +356,16 @@ public class GameActivity extends AppCompatActivity {
             }else if(Usuario.usuarioLogueado.getMazo().get(valor).getNombre().equals("canciller")){
                 Toast.makeText(getApplicationContext(), "Pide cartas del mazo", Toast.LENGTH_SHORT).show();
                 cancillerMode = true;
+            } else if(Usuario.usuarioLogueado.getMazo().get(valor).getNombre().equals("rey")){
+                for(Usuario u : WaitingRoomActivity.usuarios){
+                    if(u.getU_id() != Usuario.usuarioLogueado.getU_id()){
+                        Button button = new Button(this);
+                        button.setText(u.getU_alias());
+                        button.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+                        setMargins(button, 10, 5, 0, 5);
+                        parentJugadores.addView(button);
+                    }
+                }
             }
             Usuario.usuarioLogueado.getMazo().set(valor, null);
             if(!cancillerMode){
@@ -366,5 +379,13 @@ public class GameActivity extends AppCompatActivity {
     public int calcularPixeles(int dps) {
         final float scale = this.getResources().getDisplayMetrics().density;
         return (int) (dps * scale + 0.5f);
+    }
+
+    private void setMargins (View view, int left, int top, int right, int bottom) {
+        if (view.getLayoutParams() instanceof ViewGroup.MarginLayoutParams) {
+            ViewGroup.MarginLayoutParams p = (ViewGroup.MarginLayoutParams) view.getLayoutParams();
+            p.setMargins(left, top, right, bottom);
+            view.requestLayout();
+        }
     }
 }
