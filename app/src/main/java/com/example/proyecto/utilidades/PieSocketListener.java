@@ -183,12 +183,23 @@ public class PieSocketListener extends WebSocketListener {
                     String carta2Mazo = arrSplit_2[4];
                     Carta carta1MazoObject = creacionObjectoCarta(carta1Mazo);
                     Carta carta2MazoObject = creacionObjectoCarta(carta2Mazo);
+
+                    Usuario usuarioAux = (Usuario) WaitingRoomActivity.usuarios.stream().filter(x -> x.getU_id() == Integer.parseInt(id3)).findAny().get();
                     if (arrSplit_2[2].equals("1")) {
                         agregarCartaMazoCentral(carta1MazoObject, carta2MazoObject);
+                        usuarioAux.getMazo().set(0, usuarioAux.getMazo().get(0));
+                        usuarioAux.getMazo().set(1, null);
+                        usuarioAux.getMazo().set(2, null);
                     } else if (arrSplit_2[2].equals("2")) {
                         agregarCartaMazoCentral(carta1MazoObject, carta2MazoObject);
+                        usuarioAux.getMazo().set(0, usuarioAux.getMazo().get(1));
+                        usuarioAux.getMazo().set(1, null);
+                        usuarioAux.getMazo().set(2, null);
                     } else if (arrSplit_2[2].equals("3")) {
                         agregarCartaMazoCentral(carta1MazoObject, carta2MazoObject);
+                        usuarioAux.getMazo().set(0, usuarioAux.getMazo().get(2));
+                        usuarioAux.getMazo().set(1, null);
+                        usuarioAux.getMazo().set(2, null);
                     }
                     if (id3.equals(String.valueOf(usuario.getU_id()))) {
                         if (arrSplit_2[2].equals("1")) {
