@@ -365,7 +365,7 @@ public class GameActivity extends AppCompatActivity {
             if(Usuario.usuarioLogueado.getMazo().get(valor).getNombre().equals("princesa")){
                 Toast.makeText(getApplicationContext(), "Has perdido por haber jugado la princesa", Toast.LENGTH_SHORT).show();
                 listener.enviarMensaje(ws, "princesaJugada," + Usuario.usuarioLogueado.getU_id());
-            }else if(Usuario.usuarioLogueado.getMazo().get(valor).getNombre().equals("canciller")){
+            } else if(Usuario.usuarioLogueado.getMazo().get(valor).getNombre().equals("canciller")){
                 Toast.makeText(getApplicationContext(), "Pide cartas del mazo", Toast.LENGTH_SHORT).show();
                 cancillerMode = true;
             } else if(Usuario.usuarioLogueado.getMazo().get(valor).getNombre().equals("rey")){
@@ -376,6 +376,7 @@ public class GameActivity extends AppCompatActivity {
             if(!cancillerMode && !reyMode){
                 listener.enviarMensaje(ws, "cambioTurno");
             }
+            listener.enviarMensaje(ws,"SacarCarta," + Usuario.usuarioLogueado.getU_id() + "," + valor);
         }else{
             Toast.makeText(getApplicationContext(), "Debes de botar la condesa", Toast.LENGTH_SHORT).show();
         }

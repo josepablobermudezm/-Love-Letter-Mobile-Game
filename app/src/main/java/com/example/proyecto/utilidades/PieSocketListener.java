@@ -248,6 +248,12 @@ public class PieSocketListener extends WebSocketListener {
                     System.out.println("Usuario1: " + usuario1.getMazo());
                     System.out.println("Usuario2: " + usuario2.getMazo());
                     break;
+                case "SacarCarta":
+                    String ID = arrSplit_2[1];
+                    String index = arrSplit_2[2];
+                    Usuario Usu = (Usuario) WaitingRoomActivity.usuarios.stream().filter(x -> x.getU_id() == Integer.valueOf(ID)).findAny().get();
+                    Usu.getMazo().set(Integer.parseInt(index), null);
+                    break;
                 default:
                     throw new IllegalStateException("Unexpected value: " + arrSplit_2[0]);
             }
