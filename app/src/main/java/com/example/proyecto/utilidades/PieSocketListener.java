@@ -205,6 +205,8 @@ public class PieSocketListener extends WebSocketListener {
                     Usuario usuario1 = (Usuario) WaitingRoomActivity.usuarios.stream().filter(x -> x.getU_id() == Integer.valueOf(idJugador)).findAny().get();
                     Usuario usuario2 = (Usuario) WaitingRoomActivity.usuarios.stream().filter(x -> x.getU_id() == Integer.valueOf(idPropio)).findAny().get();
 
+                    System.out.println("MAZO 1: " + usuario1.getMazo());
+                    System.out.println("MAZO 2: " + usuario2.getMazo());
                     // Se obtienen las cartas
                     cartaJugador = usuario1.getMazo().get(0) != null ? usuario1.getMazo().get(0) : usuario1.getMazo().get(1);
                     cartaPropia = usuario2.getMazo().get(0) != null ? usuario2.getMazo().get(0) : usuario2.getMazo().get(1);
