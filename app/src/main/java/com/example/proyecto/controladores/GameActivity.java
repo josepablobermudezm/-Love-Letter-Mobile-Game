@@ -201,7 +201,7 @@ public class GameActivity extends AppCompatActivity {
                             for (Usuario u : WaitingRoomActivity.usuarios) {
                                 Carta carta = cartas.get(cartas.size() - 1);
                                 cartas.remove(carta);
-                                u.getMazo().add(carta);
+                                //u.getMazo().add(carta);
                                 listener.enviarMensaje(ws, "enviarCartas," + carta.getNombre() + "," + carta.getValor() + "," + u.getU_id()
                                         + ",mazo");
                             }
