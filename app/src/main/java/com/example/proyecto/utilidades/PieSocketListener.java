@@ -106,11 +106,9 @@ public class PieSocketListener extends WebSocketListener {
             context.startActivity(intent);
         } else {
             String[] arrSplit_2 = text.split(",", 5);
-            System.out.println("SWITCH: " + arrSplit_2[0]);
             switch (arrSplit_2[0]) {
                 case "enviarCartas":
                     String carta1 = arrSplit_2[1];
-                    System.out.println("CARTA1: " + carta1);
                     int valor = Integer.valueOf(arrSplit_2[2]);
                     String id = arrSplit_2[3];
                     if (id.equals(String.valueOf(usuario.getU_id()))) {

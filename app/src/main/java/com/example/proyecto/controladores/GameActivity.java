@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -48,6 +49,7 @@ public class GameActivity extends AppCompatActivity {
     private LinearLayout parentLayout;
     private LinearLayout parentLayout2;
     private LinearLayout parentLayout3;
+    public HorizontalScrollView ScrollHorizontal;
     public LinearLayout parentJugadores;
     public ArrayList<Carta> cartas = new ArrayList();
     private ArrayList<Carta> mazo = new ArrayList();
@@ -86,6 +88,7 @@ public class GameActivity extends AppCompatActivity {
 
         //Inicializa las funciones del juego
         iniciar();
+        ListaJugadoresButton();
     }
 /*
     @Override
@@ -101,6 +104,7 @@ public class GameActivity extends AppCompatActivity {
     }*/
 
     private void iniciar() {
+        ScrollHorizontal = (HorizontalScrollView) findViewById(R.id.ScrollHorizontal);
         parentJugadores =  (LinearLayout) findViewById(R.id.parentJugadores);
         parentLayout2 = (LinearLayout) findViewById(R.id.parentLayout2);
         parentLayout3 = findViewById(R.id.parentLayout3);
@@ -363,15 +367,7 @@ public class GameActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "Pide cartas del mazo", Toast.LENGTH_SHORT).show();
                 cancillerMode = true;
             } else if(Usuario.usuarioLogueado.getMazo().get(valor).getNombre().equals("rey")){
-                for(Usuario u : WaitingRoomActivity.usuarios){
-                    if(u.getU_id() != Usuario.usuarioLogueado.getU_id()){
-                        Button button = new Button(this);
-                        button.setText(u.getU_alias());
-                        button.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-                        setMargins(button, 10, 5, 0, 5);
-                        parentJugadores.addView(button);
-                    }
-                }
+                ScrollHorizontal.setVisibility(View.VISIBLE);
             }
             Usuario.usuarioLogueado.getMazo().set(valor, null);
             if(!cancillerMode){
@@ -392,6 +388,24 @@ public class GameActivity extends AppCompatActivity {
             ViewGroup.MarginLayoutParams p = (ViewGroup.MarginLayoutParams) view.getLayoutParams();
             p.setMargins(left, top, right, bottom);
             view.requestLayout();
+        }
+    }
+
+    private void ListaJugadoresButton(){
+        for(Usuario u : WaitingRoomActivity.usuarios){
+            if(u.getU_id() != Usuario.usuarioLogueado.getU_id()){
+                Button button = new Button(this);
+                button.setText(u.getU_alias());
+                button.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+                setMargins(button, 10, 5, 0, 5);
+                button.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        System.out.println("Imprimiendo el nombre: " + u.getU_alias());
+                    }
+                });
+                parentJugadores.addView(button);
+            }
         }
     }
 }
