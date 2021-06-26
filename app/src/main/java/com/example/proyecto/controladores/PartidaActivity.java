@@ -169,12 +169,13 @@ public class PartidaActivity extends AppCompatActivity {
                                 }
                                 JSONObject jsonRespuesta = new JSONObject(response);
                                 boolean ok = jsonRespuesta.getBoolean("success");
+                                System.out.println("RESPUESTA: " + jsonRespuesta);
                                 if (ok) {
                                     parentLayout2.removeAllViews();// limpiamos la vista
                                     cargarPartidas();
                                 } else {
                                     AlertDialog.Builder alerta = new AlertDialog.Builder(PartidaActivity.this);
-                                    alerta.setMessage("Fallo al eliminar el usuario").setNegativeButton("Reintentar", null).create().show();
+                                    alerta.setMessage("Fallo al eliminar la partida").setNegativeButton("Reintentar", null).create().show();
                                 }
                             } catch (JSONException e) {
                                 e.getMessage();
