@@ -123,10 +123,12 @@ public class PieSocketListener extends WebSocketListener {
                             hilo.execute();
                         }
                     }
-                    Usuario usuarioAux = (Usuario) WaitingRoomActivity.usuarios.stream().filter(x -> x.getU_id() == Integer.parseInt(id)).findAny().get();
-                    usuarioAux.getMazo().add(cartaAux);
-                    usuarioAux.getMazo().add(null);
-                    usuarioAux.getMazo().add(null);
+                    if (!arrSplit_2[4].equals("mazoCentral")) {
+                        Usuario usuarioAux = (Usuario) WaitingRoomActivity.usuarios.stream().filter(x -> x.getU_id() == Integer.parseInt(id)).findAny().get();
+                        usuarioAux.getMazo().add(cartaAux);
+                        usuarioAux.getMazo().add(null);
+                        usuarioAux.getMazo().add(null);
+                    }
                     break;
                 case "agregarCarta":
                     String id2 = arrSplit_2[1];
