@@ -70,6 +70,8 @@ public class GameActivity extends AppCompatActivity {
     private Rotacion rotacion;
     private HiloSegundoPlano hilo;
     public static boolean cancillerMode = false;
+    public static boolean reyMode = false;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -368,6 +370,7 @@ public class GameActivity extends AppCompatActivity {
                 cancillerMode = true;
             } else if(Usuario.usuarioLogueado.getMazo().get(valor).getNombre().equals("rey")){
                 ScrollHorizontal.setVisibility(View.VISIBLE);
+                reyMode = true;
             }
             Usuario.usuarioLogueado.getMazo().set(valor, null);
             if(!cancillerMode){
@@ -401,7 +404,9 @@ public class GameActivity extends AppCompatActivity {
                 button.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        System.out.println("Imprimiendo el nombre: " + u.getU_alias());
+                        if(reyMode){
+                            listener.enviarMensaje(ws,"reyJugado," + u.getU_id() + "," + Usuario.usuarioLogueado.getU_id());
+                        }
                         ScrollHorizontal.setVisibility(View.INVISIBLE);
                     }
                 });

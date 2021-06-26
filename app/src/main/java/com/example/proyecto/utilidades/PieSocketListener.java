@@ -197,6 +197,34 @@ public class PieSocketListener extends WebSocketListener {
                         }
                     }
                     break;
+                case "reyJugado":
+                    String idJugador = arrSplit_2[1];
+                    String idPropio = arrSplit_2[2];
+                    Carta cartaJugador, cartaPropia;
+
+                    //Filtramos los dos usuarios que van a intercambiar cartas
+                    Usuario usuario1 = (Usuario) WaitingRoomActivity.usuarios.stream().filter(x -> x.getU_id() == Integer.valueOf(idJugador)).findAny().get();
+                    Usuario usuario2 = (Usuario) WaitingRoomActivity.usuarios.stream().filter(x -> x.getU_id() == Integer.valueOf(idPropio)).findAny().get();
+
+                    // Se obtienen las cartas
+                    cartaJugador = usuario1.getMazo().get(0);
+                    cartaPropia = usuario2.getMazo().get(0);
+
+                    //Se intercambian las cartas
+                    usuario1.getMazo().set(0, cartaPropia);
+                    usuario2.getMazo().set(0,cartaJugador);
+
+                    if(usuario.getU_id() == Integer.valueOf(idJugador) || usuario.getU_id() == Integer.valueOf(idPropio)){
+                        if(usuario1.getU_id() == usuario.getU_id()){
+                            usuario.getMazo().set(0, usuario1.getMazo().get(0));
+                        }
+                        else{ // cuando es el otro
+                            usuario.getMazo().set(0, usuario2.getMazo().get(0));
+                        }
+                        System.out.println("Usuario1: " + usuario.getMazo());
+                        System.out.println("Usuario2: " + usuario2.getMazo());
+                    }
+                    break;
                 default:
                     throw new IllegalStateException("Unexpected value: " + arrSplit_2[0]);
             }
