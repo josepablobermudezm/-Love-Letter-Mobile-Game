@@ -241,11 +241,11 @@ public class PieSocketListener extends WebSocketListener {
                     }
 
                     //Se intercambian las cartas
-                    usuario1.getMazo().set(0, cartaPropia);
-                    usuario2.getMazo().set(0,cartaJugador);
+                    usuario1.getMazo().set(0, cartaPropia); // usuario1 es al que se le cambian las cartas
+                    usuario2.getMazo().set(0,cartaJugador); // usuario2 soy yo
                     usuario1.getMazo().set(1, null);
                     usuario2.getMazo().set(1, null);
-                    System.out.println("Usuario1: " + usuario.getMazo());
+                    System.out.println("Usuario1: " + usuario1.getMazo());
                     System.out.println("Usuario2: " + usuario2.getMazo());
                     break;
                 default:
