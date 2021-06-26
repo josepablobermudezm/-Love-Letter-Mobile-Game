@@ -169,7 +169,6 @@ public class PartidaActivity extends AppCompatActivity {
                                 }
                                 JSONObject jsonRespuesta = new JSONObject(response);
                                 boolean ok = jsonRespuesta.getBoolean("success");
-                                System.out.println("RESPUESTA: " + jsonRespuesta);
                                 if (ok) {
                                     parentLayout2.removeAllViews();// limpiamos la vista
                                     cargarPartidas();

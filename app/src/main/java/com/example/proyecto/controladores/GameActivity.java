@@ -127,6 +127,7 @@ public class GameActivity extends AppCompatActivity {
         listener.setTurno(textView);
         listener.setContext(getApplicationContext());
         if (administrador.equals("true")) {
+            System.out.println("ESTAMOS EN EL IF");
             listener.setUsuarios(WaitingRoomActivity.usuarios);
             Response.Listener<String> respuesta = new Response.Listener<String>() {
                 @RequiresApi(api = Build.VERSION_CODES.N)
@@ -188,7 +189,9 @@ public class GameActivity extends AppCompatActivity {
                             cartas.add(carta);
                         }
                         boolean ok = jsonRespuesta.getBoolean("success");
+                        System.out.println("RESPUESTA EN INICIAR: " + jsonRespuesta);
                         if (ok) {
+                            // aquí le damos una carta inicial a cada jugador
                             for (Usuario u : WaitingRoomActivity.usuarios) {
                                 Carta carta = cartas.get(cartas.size() - 1);
                                 cartas.remove(carta);
@@ -196,6 +199,8 @@ public class GameActivity extends AppCompatActivity {
                                 listener.enviarMensaje(ws, "enviarCartas," + carta.getNombre() + "," + carta.getValor() + "," + u.getU_id()
                                         + ",mazo");
                             }
+
+                            // aquí enviamos el mazo a todos los jugadores
                             for (Usuario u : WaitingRoomActivity.usuarios) {
                                 for (Carta c : cartas) {
                                     listener.enviarMensaje(ws, "enviarCartas," + c.getNombre() + "," + c.getValor() + "," + u.getU_id()
@@ -208,10 +213,11 @@ public class GameActivity extends AppCompatActivity {
                             alerta.setMessage("Fallo en la partida").setNegativeButton("Reintentar", null).create().show();
                         }
                     } catch (JSONException e) {
-                        e.getMessage();
+                        System.out.println(e.getMessage());
                     }
                 }
             };
+
 
             CartaRequest r = new CartaRequest(respuesta);
             RequestQueue cola = Volley.newRequestQueue(GameActivity.this);
