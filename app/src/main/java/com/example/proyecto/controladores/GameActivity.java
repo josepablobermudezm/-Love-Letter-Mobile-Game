@@ -373,7 +373,7 @@ public class GameActivity extends AppCompatActivity {
                 reyMode = true;
             }
             Usuario.usuarioLogueado.getMazo().set(valor, null);
-            if(!cancillerMode){
+            if(!cancillerMode && !reyMode){
                 listener.enviarMensaje(ws, "cambioTurno");
             }
         }else{
@@ -406,7 +406,9 @@ public class GameActivity extends AppCompatActivity {
                     public void onClick(View v) {
                         if(reyMode){
                             listener.enviarMensaje(ws,"reyJugado," + u.getU_id() + "," + Usuario.usuarioLogueado.getU_id());
+                            reyMode = false;
                         }
+                        listener.enviarMensaje(ws, "cambioTurno");
                         ScrollHorizontal.setVisibility(View.INVISIBLE);
                     }
                 });
