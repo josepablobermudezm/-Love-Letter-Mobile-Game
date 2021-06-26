@@ -185,18 +185,16 @@ public class PieSocketListener extends WebSocketListener {
                     Carta carta2MazoObject = creacionObjectoCarta(carta2Mazo);
 
                     Usuario usuarioAux = (Usuario) WaitingRoomActivity.usuarios.stream().filter(x -> x.getU_id() == Integer.parseInt(id3)).findAny().get();
+                    agregarCartaMazoCentral(carta1MazoObject, carta2MazoObject);
                     if (arrSplit_2[2].equals("1")) {
-                        agregarCartaMazoCentral(carta1MazoObject, carta2MazoObject);
                         usuarioAux.getMazo().set(0, usuarioAux.getMazo().get(0));
                         usuarioAux.getMazo().set(1, null);
                         usuarioAux.getMazo().set(2, null);
                     } else if (arrSplit_2[2].equals("2")) {
-                        agregarCartaMazoCentral(carta1MazoObject, carta2MazoObject);
                         usuarioAux.getMazo().set(0, usuarioAux.getMazo().get(1));
                         usuarioAux.getMazo().set(1, null);
                         usuarioAux.getMazo().set(2, null);
                     } else if (arrSplit_2[2].equals("3")) {
-                        agregarCartaMazoCentral(carta1MazoObject, carta2MazoObject);
                         usuarioAux.getMazo().set(0, usuarioAux.getMazo().get(2));
                         usuarioAux.getMazo().set(1, null);
                         usuarioAux.getMazo().set(2, null);
@@ -229,19 +227,17 @@ public class PieSocketListener extends WebSocketListener {
                     System.out.println("MAZO 1: " + usuario1.getMazo());
                     System.out.println("MAZO 2: " + usuario2.getMazo());
                     // Se obtienen las cartas
-                    cartaJugador = usuario1.getMazo().get(0) != null ? usuario1.getMazo().get(0) : usuario1.getMazo().get(1);
-                    cartaPropia = usuario2.getMazo().get(0) != null ? usuario2.getMazo().get(0) : usuario2.getMazo().get(1);
+                    cartaJugador = usuario1.getMazo().get(0) != null && !usuario1.getMazo().get(0).getNombre().equals("rey") ? usuario1.getMazo().get(0) : usuario1.getMazo().get(1);
+                    cartaPropia = usuario2.getMazo().get(0) != null && !usuario2.getMazo().get(0).getNombre().equals("rey") ? usuario2.getMazo().get(0) : usuario2.getMazo().get(1);
 
                     if(usuario.getU_id() == Integer.valueOf(idJugador) || usuario.getU_id() == Integer.valueOf(idPropio)){
                         if(usuario1.getU_id() == usuario.getU_id()){
-                            usuario.getMazo().set(0, usuario1.getMazo().get(0) != null ? usuario1.getMazo().get(0) : usuario1.getMazo().get(1));
+                            usuario.getMazo().set(0, usuario1.getMazo().get(0) != null && !usuario1.getMazo().get(0).getNombre().equals("rey") ? usuario1.getMazo().get(0) : usuario1.getMazo().get(1));
                         }
                         else{ // cuando es el otro
-                            usuario.getMazo().set(0, usuario2.getMazo().get(0) != null ? usuario2.getMazo().get(0) : usuario2.getMazo().get(1));
+                            usuario.getMazo().set(0, usuario2.getMazo().get(0) != null && !usuario2.getMazo().get(0).getNombre().equals("rey")  ? usuario2.getMazo().get(0) : usuario2.getMazo().get(1));
                         }
                         usuario.getMazo().set(1, null);
-                        System.out.println("Usuario1: " + usuario.getMazo());
-                        System.out.println("Usuario2: " + usuario2.getMazo());
                     }
 
                     //Se intercambian las cartas
@@ -249,6 +245,8 @@ public class PieSocketListener extends WebSocketListener {
                     usuario2.getMazo().set(0,cartaJugador);
                     usuario1.getMazo().set(1, null);
                     usuario2.getMazo().set(1, null);
+                    System.out.println("Usuario1: " + usuario.getMazo());
+                    System.out.println("Usuario2: " + usuario2.getMazo());
                     break;
                 default:
                     throw new IllegalStateException("Unexpected value: " + arrSplit_2[0]);
