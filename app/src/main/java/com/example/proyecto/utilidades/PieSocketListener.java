@@ -162,21 +162,33 @@ public class PieSocketListener extends WebSocketListener {
                     break;
                 case "cambioTurno":
                     GameActivity.jugadorActual++;
-
+                    System.out.println("Inicio " + GameActivity.jugadorActual);
                     if(WaitingRoomActivity.usuarios.get(GameActivity.jugadorActual).isEliminado()){
                         GameActivity.jugadorActual++;
+                        System.out.println("Valor condicion 1 " + GameActivity.jugadorActual);
                         if(WaitingRoomActivity.usuarios.size() == GameActivity.jugadorActual){
+                            System.out.println("Condicion 2 " + GameActivity.jugadorActual);
                             GameActivity.jugadorActual = 0;
+                            System.out.println("Condicion 3 " + GameActivity.jugadorActual);
                         }
                     }
 
+                    Boolean noEntra = false;
                     if (WaitingRoomActivity.usuarios.size() - 1 == GameActivity.jugadorActual) {
                         cambioTurnoText();
                         GameActivity.jugadorActual = -1;
-                        return;
+                        System.out.println("Condicion 4 " + GameActivity.jugadorActual);
+                        noEntra = true;
+                        break;
+
                     }
-                    System.out.println("PLOKKKKASKAKSAK");
-                    cambioTurnoText();
+
+                    System.out.println("Cierre " + GameActivity.jugadorActual);
+
+                    if(!noEntra){
+                        cambioTurnoText();
+                    }
+
                     break;
                 case "princesaJugada":
                     aplicarPrincesa(arrSplit_2[1]);
