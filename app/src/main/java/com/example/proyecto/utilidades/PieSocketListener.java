@@ -266,13 +266,13 @@ public class PieSocketListener extends WebSocketListener {
                         usuario.getMazo().set((usuario.getMazo().get(0) != null) ? 0 : 1, null);
                         usuario.getMazo().set(0, cartaJug2);
                         quitarCartaPrincipe(cartaJug);
-                        if(cartaJug.getNombre().equals("princesa")){
-                            ArrayList<Usuario> array2 = new ArrayList<>();
-                            array2 = (ArrayList<Usuario>) WaitingRoomActivity.usuarios.stream().filter(x -> x.getU_id() == Integer.valueOf(arrSplit_2[1])).collect(Collectors.toList());
-                            GameActivity.jugadorActual = GameActivity.jugadorActual != 0 ? GameActivity.jugadorActual - 1 : GameActivity.jugadorActual;
-                            princesaJugada(this.context, array2);
-                            WaitingRoomActivity.usuarios.remove(array2.get(0));
-                        }
+                    }
+                    if(cartaJug.getNombre().equals("princesa")){
+                        ArrayList<Usuario> array2 = new ArrayList<>();
+                        array2 = (ArrayList<Usuario>) WaitingRoomActivity.usuarios.stream().filter(x -> x.getU_id() == Integer.valueOf(arrSplit_2[1])).collect(Collectors.toList());
+                        GameActivity.jugadorActual = GameActivity.jugadorActual != 0 ? GameActivity.jugadorActual - 1 : GameActivity.jugadorActual;
+                        princesaJugada(this.context, array2);
+                        WaitingRoomActivity.usuarios.remove(array2.get(0));
                     }
                     break;
                 default:
