@@ -71,6 +71,7 @@ public class GameActivity extends AppCompatActivity {
     private HiloSegundoPlano hilo;
     public static boolean cancillerMode = false;
     public static boolean reyMode = false;
+    public static boolean principeMode = false;
 
 
     @Override
@@ -266,10 +267,8 @@ public class GameActivity extends AppCompatActivity {
         if (Usuario.usuarioLogueado.getU_id() == WaitingRoomActivity.usuarios.get(jugadorActual).getU_id()) {
             if (img2.getDrawable() == null || img1.getDrawable() == null) {
                 if(cancillerMode){
-                    System.out.println("carta con canciller");
                     listener.enviarMensaje(ws, "agregarCarta," + Usuario.usuarioLogueado.getU_id() + ",cancillerMode");
                 }else{
-                    System.out.println("carta sin canciller");
                     listener.enviarMensaje(ws, "agregarCarta," + Usuario.usuarioLogueado.getU_id());
                 }
                 Toast.makeText(view.getContext(), "Es tu turno", Toast.LENGTH_SHORT).show();
@@ -369,9 +368,16 @@ public class GameActivity extends AppCompatActivity {
             } else if(Usuario.usuarioLogueado.getMazo().get(valor).getNombre().equals("rey")){
                 ScrollHorizontal.setVisibility(View.VISIBLE);
                 reyMode = true;
+                parentJugadores.removeAllViews();
+                ListaJugadoresButton();
+            } else if (Usuario.usuarioLogueado.getMazo().get(valor).getNombre().equals("principe")){
+                ScrollHorizontal.setVisibility(View.VISIBLE);
+                principeMode = true;
+                parentJugadores.removeAllViews();
+                ListaJugadoresButton();
             }
             Usuario.usuarioLogueado.getMazo().set(valor, null);
-            if(!cancillerMode && !reyMode){
+            if(!cancillerMode && !reyMode && !principeMode){
                 listener.enviarMensaje(ws, "cambioTurno");
             }
             listener.enviarMensaje(ws,"SacarCarta," + Usuario.usuarioLogueado.getU_id() + "," + valor);
@@ -395,7 +401,7 @@ public class GameActivity extends AppCompatActivity {
 
     private void ListaJugadoresButton(){
         for(Usuario u : WaitingRoomActivity.usuarios){
-            if(u.getU_id() != Usuario.usuarioLogueado.getU_id()){
+            if(u.getU_id() != Usuario.usuarioLogueado.getU_id() || principeMode){
                 Button button = new Button(this);
                 button.setText(u.getU_alias());
                 button.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
@@ -406,8 +412,11 @@ public class GameActivity extends AppCompatActivity {
                         if(reyMode){
                             listener.enviarMensaje(ws,"reyJugado," + u.getU_id() + "," + Usuario.usuarioLogueado.getU_id());
                             reyMode = false;
+                            listener.enviarMensaje(ws, "cambioTurno");
+                        } else if(principeMode){
+                            listener.enviarMensaje(ws,"principeJugado," + u.getU_id());
+                            reyMode = false;
                         }
-                        listener.enviarMensaje(ws, "cambioTurno");
                         ScrollHorizontal.setVisibility(View.INVISIBLE);
                     }
                 });

@@ -250,6 +250,9 @@ public class PieSocketListener extends WebSocketListener {
                     Usuario Usu = (Usuario) WaitingRoomActivity.usuarios.stream().filter(x -> x.getU_id() == Integer.valueOf(ID)).findAny().get();
                     Usu.getMazo().set(Integer.parseInt(index), null);
                     break;
+                case "principeJugado":
+
+                    break;
                 default:
                     throw new IllegalStateException("Unexpected value: " + arrSplit_2[0]);
             }
@@ -352,7 +355,6 @@ public class PieSocketListener extends WebSocketListener {
 
             @Override
             protected void onProgressUpdate(Float... variable) {
-                System.out.println("Nombre de carta usuario: " + usuario.getMazo().get(0).getNombre());
                 getImg2().setImageDrawable(null);
                 int code = context.getResources().getIdentifier(usuario.getMazo().get(0).getNombre(), "drawable",
                           context.getPackageName());
