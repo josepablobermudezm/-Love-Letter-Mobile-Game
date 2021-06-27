@@ -140,14 +140,14 @@ public class PieSocketListener extends WebSocketListener {
                     System.out.println("CARTA SACADA: " + carta);
                     usuario.getMazoCentral().remove(carta);
                     cartaAux2 = new Carta();
-                    usuarioAux2.getMazo().set((this.getImg1().getDrawable() != null ? 0 : 1), carta);
+                    usuarioAux2.getMazo().set((usuarioAux2.getMazo().get(0) != null ? 1 : 0), carta);
                     if (arrSplit_2.length == 3 && (arrSplit_2[2].equals("cancillerMode") && usuario.getMazoCentral().size() > 1)) {
                         cartaAux2 = usuario.getMazoCentral().get(usuario.getMazoCentral().size() - 1);
                         usuario.getMazoCentral().remove(cartaAux2);
                         usuarioAux2.getMazo().set(2, cartaAux2);
                     }
                     if (id2.equals(String.valueOf(usuario.getU_id()))) {
-                        usuario.getMazo().set((this.getImg1().getDrawable() != null ? 0 : 1), carta);
+                        usuario.getMazo().set((usuario.getMazo().get(0) != null ? 1 : 0), carta);
                         if (arrSplit_2.length == 3 && (arrSplit_2[2].equals("cancillerMode") && usuario.getMazoCentral().size() > 1)) {
                             usuario.getMazo().set(2, cartaAux2);
                         }
