@@ -137,6 +137,7 @@ public class PieSocketListener extends WebSocketListener {
                     Usuario usuarioAux2 = (Usuario) WaitingRoomActivity.usuarios.stream().filter(x -> x.getU_id() == Integer.parseInt(id2)).findAny().get();
                     System.out.println("Cuando se agarra del mazo " + usuarioAux2.getU_alias() + " " + usuarioAux2.getMazo());
                     carta = usuario.getMazoCentral().get(usuario.getMazoCentral().size() - 1);
+                    System.out.println("CARTA SACADA: " + carta);
                     usuario.getMazoCentral().remove(carta);
                     cartaAux2 = new Carta();
                     usuarioAux2.getMazo().set((this.getImg1().getDrawable() != null ? 1 : 0), carta);
