@@ -128,15 +128,17 @@ public class PieSocketListener extends WebSocketListener {
                         usuarioAux.getMazo().add(cartaAux);
                         usuarioAux.getMazo().add(null);
                         usuarioAux.getMazo().add(null);
+                        System.out.println("Cartas al inicio " + usuarioAux.getU_alias() + " " + usuarioAux.getMazo());
                     }
                     break;
                 case "agregarCarta":
                     String id2 = arrSplit_2[1];
                     Carta carta = new Carta();
+                    Usuario usuarioAux2 = (Usuario) WaitingRoomActivity.usuarios.stream().filter(x -> x.getU_id() == Integer.parseInt(id2)).findAny().get();
+                    System.out.println("Cuando se agarra del mazo " + usuarioAux2.getU_alias() + " " + usuarioAux2.getMazo());
                     carta = usuario.getMazoCentral().get(usuario.getMazoCentral().size() - 1);
                     usuario.getMazoCentral().remove(carta);
                     cartaAux2 = new Carta();
-                    Usuario usuarioAux2 = (Usuario) WaitingRoomActivity.usuarios.stream().filter(x -> x.getU_id() == Integer.parseInt(id2)).findAny().get();
                     usuarioAux2.getMazo().set((this.getImg1().getDrawable() != null ? 1 : 0), carta);
                     if (arrSplit_2.length == 3 && (arrSplit_2[2].equals("cancillerMode") && usuario.getMazoCentral().size() > 1)) {
                         cartaAux2 = usuario.getMazoCentral().get(usuario.getMazoCentral().size() - 1);
@@ -148,7 +150,6 @@ public class PieSocketListener extends WebSocketListener {
                         if (arrSplit_2.length == 3 && (arrSplit_2[2].equals("cancillerMode") && usuario.getMazoCentral().size() > 1)) {
                             usuario.getMazo().set(2, cartaAux2);
                         }
-
                         HiloImagenes hilo = new HiloImagenes(this.getContext(),
                                 this.getImg1(),
                                 this.getImg2(),
@@ -158,6 +159,7 @@ public class PieSocketListener extends WebSocketListener {
                                 ((cartaAux2 != null) && (usuario.getMazoCentral().size() > 1)) ? cartaAux2.getNombre() : null);
                         hilo.execute();
                     }
+                    System.out.println("Cuando se agarra del mazo después de lógica " + usuarioAux2.getU_alias() + " " + usuarioAux2.getMazo());
                     break;
                 case "cambioTurno":
                     if (WaitingRoomActivity.usuarios.size() - 1 == GameActivity.jugadorActual) {
@@ -182,7 +184,7 @@ public class PieSocketListener extends WebSocketListener {
                     Carta carta2MazoObject = creacionObjectoCarta(carta2Mazo);
 
                     Usuario usuarioAux = (Usuario) WaitingRoomActivity.usuarios.stream().filter(x -> x.getU_id() == Integer.parseInt(id3)).findAny().get();
-                    System.out.println("MAZO ANTES: " + usuarioAux.getMazo());
+                    System.out.println("MAZO ANTES EN CANCILLER: " + usuarioAux.getMazo());
                     agregarCartaMazoCentral(carta1MazoObject, carta2MazoObject);
                     if (arrSplit_2[2].equals("1")) {
                         usuarioAux.getMazo().set(0, usuarioAux.getMazo().get(0));
@@ -212,7 +214,7 @@ public class PieSocketListener extends WebSocketListener {
                             usuario.getMazo().set(2, null);
                         }
                     }
-                    System.out.println("MAZO DESPUÉS: " + usuarioAux.getMazo());
+                    System.out.println("MAZO DESPUÉS EN CANCILLER: " + usuarioAux.getMazo());
                     break;
                 case "reyJugado":
                     String idJugador = arrSplit_2[1];
