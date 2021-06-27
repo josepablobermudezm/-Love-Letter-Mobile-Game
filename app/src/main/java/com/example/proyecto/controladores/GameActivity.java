@@ -133,7 +133,6 @@ public class GameActivity extends AppCompatActivity {
         listener.setTurno(textView);
         listener.setContext(getApplicationContext());
         if (administrador.equals("true")) {
-            System.out.println("ESTAMOS EN EL IF");
             listener.setUsuarios(WaitingRoomActivity.usuarios);
             Response.Listener<String> respuesta = new Response.Listener<String>() {
                 @RequiresApi(api = Build.VERSION_CODES.N)
@@ -195,7 +194,6 @@ public class GameActivity extends AppCompatActivity {
                             cartas.add(carta);
                         }
                         boolean ok = jsonRespuesta.getBoolean("success");
-                        System.out.println("RESPUESTA EN INICIAR: " + jsonRespuesta);
                         if (ok) {
                             // aquí le damos una carta inicial a cada jugador
                             for (Usuario u : WaitingRoomActivity.usuarios) {

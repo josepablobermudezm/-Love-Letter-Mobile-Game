@@ -230,6 +230,7 @@ public class PieSocketListener extends WebSocketListener {
                     cartaJugador = usuario1.getMazo().get(0) != null && !usuario1.getMazo().get(0).getNombre().equals("rey") ? usuario1.getMazo().get(0) : usuario1.getMazo().get(1);
                     cartaPropia = usuario2.getMazo().get(0) != null && !usuario2.getMazo().get(0).getNombre().equals("rey") ? usuario2.getMazo().get(0) : usuario2.getMazo().get(1);
 
+                    // En el caso de los dos jugadores entonces entra
                     if(usuario.getU_id() == Integer.valueOf(idJugador) || usuario.getU_id() == Integer.valueOf(idPropio)){
                         if(usuario1.getU_id() == usuario.getU_id()){
                             usuario.getMazo().set(0, usuario1.getMazo().get(0) != null && !usuario1.getMazo().get(0).getNombre().equals("rey") ? usuario1.getMazo().get(0) : usuario1.getMazo().get(1));
