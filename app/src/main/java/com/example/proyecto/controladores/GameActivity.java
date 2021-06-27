@@ -412,11 +412,11 @@ public class GameActivity extends AppCompatActivity {
                         if(reyMode){
                             listener.enviarMensaje(ws,"reyJugado," + u.getU_id() + "," + Usuario.usuarioLogueado.getU_id());
                             reyMode = false;
-                            listener.enviarMensaje(ws, "cambioTurno");
                         } else if(principeMode){
                             listener.enviarMensaje(ws,"principeJugado," + u.getU_id());
                             reyMode = false;
                         }
+                        listener.enviarMensaje(ws, "cambioTurno");
                         ScrollHorizontal.setVisibility(View.INVISIBLE);
                     }
                 });

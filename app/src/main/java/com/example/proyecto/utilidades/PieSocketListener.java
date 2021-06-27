@@ -27,6 +27,7 @@ import okhttp3.Response;
 import okhttp3.WebSocket;
 import okhttp3.WebSocketListener;
 
+import static android.widget.Toast.*;
 import static com.example.proyecto.controladores.GameActivity.txv_turno;
 import static com.example.proyecto.controladores.WaitingRoomActivity.*;
 
@@ -255,10 +256,14 @@ public class PieSocketListener extends WebSocketListener {
                     String idJug = arrSplit_2[1];
                     Carta cartaJug = new Carta();
                     Usuario usuarioSelect = (Usuario) WaitingRoomActivity.usuarios.stream().filter(x -> x.getU_id() == Integer.valueOf(idJug)).findAny().get();
-                    cartaJug = usuarioSelect.getMazo().get(0) != null ? usuarioSelect.getMazo().get(0) : usuarioSelect.getMazo().get(1);
+                    cartaJug = (usuarioSelect.getMazo().get(0) != null) ? usuarioSelect.getMazo().get(0) : usuarioSelect.getMazo().get(1);
                     usuarioSelect.getMazo().set(usuarioSelect.getMazo().get(0) != null ? 0 : 1, null);
+                    Carta cartaJug2 = usuario.getMazoCentral().get(usuario.getMazoCentral().size()-1);
+                    usuarioSelect.getMazo().set(0, cartaJug2);
                     System.out.println(usuarioSelect.getMazo());
                     if(Integer.valueOf(idJug) == usuario.getU_id()){
+                        usuario.getMazo().set((usuario.getMazo().get(0) != null) ? 0 : 1, null);
+                        usuario.getMazo().set(0, cartaJug2);
                         quitarCartaPrincipe(cartaJug);
                     }
                     break;
@@ -282,9 +287,12 @@ public class PieSocketListener extends WebSocketListener {
                 ImageView imageView = new ImageView(context);
                 imageView.setImageResource(code);
                 imageView.setLayoutParams(new LinearLayout.LayoutParams(calcularPixeles(63), calcularPixeles(100)));
-                img1.setImageDrawable(null);
                 img2.setImageDrawable(null);
                 GameActivity.cartasContainer.addView(imageView);
+
+                int code2 = context.getResources().getIdentifier(usuario.getMazo().get(0).getNombre(), "drawable", context.getPackageName());
+                img1.setImageResource(code2);
+                makeText(context, "Han aplicado un principe sobre ti, por lo tanto has botado tu carta y recogido otra", LENGTH_SHORT).show();
             }
         }.execute();
     }
@@ -355,7 +363,7 @@ public class PieSocketListener extends WebSocketListener {
 
             @Override
             protected void onProgressUpdate(Float... variable) {
-                Toast.makeText(context, array.get(0).getU_alias() + " ha perdido la ronda por haber jugado la princesa", Toast.LENGTH_SHORT).show();
+                makeText(context, array.get(0).getU_alias() + " ha perdido la ronda por haber jugado la princesa", LENGTH_SHORT).show();
             }
         }.execute();
     }
