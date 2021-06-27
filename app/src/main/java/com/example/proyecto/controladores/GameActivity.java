@@ -414,7 +414,7 @@ public class GameActivity extends AppCompatActivity {
                             reyMode = false;
                         } else if(principeMode){
                             listener.enviarMensaje(ws,"principeJugado," + u.getU_id());
-                            reyMode = false;
+                            principeMode = false;
                         }
                         listener.enviarMensaje(ws, "cambioTurno");
                         ScrollHorizontal.setVisibility(View.INVISIBLE);
