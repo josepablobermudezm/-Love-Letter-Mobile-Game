@@ -89,6 +89,7 @@ public class GameActivity extends AppCompatActivity {
             hilo.execute();
         }*/
 
+
         //Inicializa las funciones del juego
         iniciar();
         ListaJugadoresButton();

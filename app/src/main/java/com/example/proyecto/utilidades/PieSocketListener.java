@@ -260,6 +260,10 @@ public class PieSocketListener extends WebSocketListener {
                     cartaJug = (usuarioSelect.getMazo().get(0) != null) ? usuarioSelect.getMazo().get(0) : usuarioSelect.getMazo().get(1);
                     usuarioSelect.getMazo().set(usuarioSelect.getMazo().get(0) != null ? 0 : 1, null);
                     Carta cartaJug2 = usuario.getMazoCentral().get(usuario.getMazoCentral().size()-1);
+
+                    //Sacamos la carta del mazo central
+                    usuario.getMazoCentral().remove(cartaJug2);
+
                     usuarioSelect.getMazo().set(0, cartaJug2);
                     System.out.println(usuarioSelect.getMazo());
                     if(Integer.valueOf(idJug) == usuario.getU_id()){
