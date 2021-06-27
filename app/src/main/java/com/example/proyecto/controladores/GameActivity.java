@@ -361,8 +361,8 @@ public class GameActivity extends AppCompatActivity {
             arrow.setVisibility(View.INVISIBLE);
             cartasContainer.addView(imageView);
             if(Usuario.usuarioLogueado.getMazo().get(valor).getNombre().equals("princesa")){
-                Toast.makeText(getApplicationContext(), "Has perdido por haber jugado la princesa", Toast.LENGTH_SHORT).show();
                 listener.enviarMensaje(ws, "princesaJugada," + Usuario.usuarioLogueado.getU_id());
+                Toast.makeText(getApplicationContext(), "Has perdido por haber jugado la princesa", Toast.LENGTH_SHORT).show();
             } else if(Usuario.usuarioLogueado.getMazo().get(valor).getNombre().equals("canciller")){
                 Toast.makeText(getApplicationContext(), "Pide cartas del mazo", Toast.LENGTH_SHORT).show();
                 cancillerMode = true;

@@ -12,6 +12,7 @@ public class Usuario implements Serializable {
     private ArrayList <Carta> mazo = new ArrayList<>();
     private ArrayList <Carta> mazoCentral = new ArrayList<>();
     private boolean turno = false;
+    private boolean eliminado = false;
     private int edad;
 
     public Usuario(int u_id, int u_cantidadPartidasJugadas, int u_cantidadPartidasGanadas, int u_cantidadAmigos, int u_nivel, int u_experiencia, String u_alias, String u_password, String u_rol, String u_picture, String u_fechaNacimiento) {
@@ -156,6 +157,14 @@ public class Usuario implements Serializable {
 
     public static void setUsuarios(ArrayList usuarios) {
         Usuario.usuarios = usuarios;
+    }
+
+    public boolean isEliminado() {
+        return eliminado;
+    }
+
+    public void setEliminado(boolean eliminado) {
+        this.eliminado = eliminado;
     }
 
     @Override
