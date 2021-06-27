@@ -270,7 +270,7 @@ public class PieSocketListener extends WebSocketListener {
                             array2 = (ArrayList<Usuario>) WaitingRoomActivity.usuarios.stream().filter(x -> x.getU_id() == Integer.valueOf(arrSplit_2[1])).collect(Collectors.toList());
                             princesaJugada(this.context, array2);
                             WaitingRoomActivity.usuarios.remove(array2.get(0));
-                            GameActivity.jugadorActual = GameActivity.jugadorActual - 1;
+                            GameActivity.jugadorActual = GameActivity.jugadorActual != 0 ? GameActivity.jugadorActual - 1 : GameActivity.jugadorActual;
                         }
                     }
                     break;
