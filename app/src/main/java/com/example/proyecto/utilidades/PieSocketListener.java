@@ -228,10 +228,10 @@ public class PieSocketListener extends WebSocketListener {
                     // En el caso de los dos jugadores entonces entra
                     if(usuario.getU_id() == Integer.valueOf(idJugador) || usuario.getU_id() == Integer.valueOf(idPropio)){
                         if(usuario1.getU_id() == usuario.getU_id()){
-                            usuario.getMazo().set(0, usuario1.getMazo().get(0) != null ? usuario1.getMazo().get(0) : usuario1.getMazo().get(1));
+                            usuario.getMazo().set(0, usuario2.getMazo().get(0) != null ? usuario2.getMazo().get(0) : usuario2.getMazo().get(1));
                         }
                         else{ // cuando es el otro
-                            usuario.getMazo().set(0, usuario2.getMazo().get(0) != null ? usuario2.getMazo().get(0) : usuario2.getMazo().get(1));
+                            usuario.getMazo().set(0, usuario1.getMazo().get(0) != null ? usuario1.getMazo().get(0) : usuario1.getMazo().get(1));
                         }
                         usuario.getMazo().set(1, null);
                         IntercambioCartas();
