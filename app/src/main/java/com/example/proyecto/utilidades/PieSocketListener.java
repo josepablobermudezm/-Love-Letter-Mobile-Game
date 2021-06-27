@@ -161,20 +161,25 @@ public class PieSocketListener extends WebSocketListener {
                     }
                     break;
                 case "cambioTurno":
-                    if (WaitingRoomActivity.usuarios.size() - 1 == GameActivity.jugadorActual) {
-                        GameActivity.jugadorActual = 0;
-                        cambioTurnoText();
-                        break;
-                    }
-                    cambioTurnoText();
                     GameActivity.jugadorActual++;
+
+                    if(WaitingRoomActivity.usuarios.get(GameActivity.jugadorActual).isEliminado()){
+                        GameActivity.jugadorActual++;
+                        if(WaitingRoomActivity.usuarios.size() == GameActivity.jugadorActual){
+                            GameActivity.jugadorActual = 0;
+                        }
+                    }
+
+                    if (WaitingRoomActivity.usuarios.size() - 1 == GameActivity.jugadorActual) {
+                        cambioTurnoText();
+                        GameActivity.jugadorActual = -1;
+                        return;
+                    }
+                    System.out.println("PLOKKKKASKAKSAK");
+                    cambioTurnoText();
                     break;
                 case "princesaJugada":
-                    ArrayList<Usuario> array = new ArrayList<>();
-                    array = (ArrayList<Usuario>) WaitingRoomActivity.usuarios.stream().filter(x -> x.getU_id() == Integer.valueOf(arrSplit_2[1])).collect(Collectors.toList());
-                    GameActivity.jugadorActual = GameActivity.jugadorActual != 0 ? GameActivity.jugadorActual - 1 : GameActivity.jugadorActual;
-                    princesaJugada(this.context, array);
-                    WaitingRoomActivity.usuarios.remove(array.get(0));
+                    aplicarPrincesa(arrSplit_2[1]);
                     break;
                 case "cancillerJugada":
                     String id3 = arrSplit_2[1];
@@ -218,7 +223,7 @@ public class PieSocketListener extends WebSocketListener {
                     String idJugador = arrSplit_2[1];
                     String idPropio = arrSplit_2[2];
                     Carta cartaJugador = new Carta();
-                    Carta cartaPropia =  new Carta();
+                    Carta cartaPropia = new Carta();
 
                     //Filtramos los dos usuarios que van a intercambiar cartas
                     Usuario usuario1 = (Usuario) WaitingRoomActivity.usuarios.stream().filter(x -> x.getU_id() == Integer.valueOf(idJugador)).findAny().get();
@@ -229,11 +234,10 @@ public class PieSocketListener extends WebSocketListener {
                     cartaPropia = usuario2.getMazo().get(0) != null ? usuario2.getMazo().get(0) : usuario2.getMazo().get(1);
 
                     // En el caso de los dos jugadores entonces entra
-                    if(usuario.getU_id() == Integer.valueOf(idJugador) || usuario.getU_id() == Integer.valueOf(idPropio)){
-                        if(usuario1.getU_id() == usuario.getU_id()){
+                    if (usuario.getU_id() == Integer.valueOf(idJugador) || usuario.getU_id() == Integer.valueOf(idPropio)) {
+                        if (usuario1.getU_id() == usuario.getU_id()) {
                             usuario.getMazo().set(0, usuario2.getMazo().get(0) != null ? usuario2.getMazo().get(0) : usuario2.getMazo().get(1));
-                        }
-                        else{ // cuando es el otro
+                        } else { // cuando es el otro
                             usuario.getMazo().set(0, usuario1.getMazo().get(0) != null ? usuario1.getMazo().get(0) : usuario1.getMazo().get(1));
                         }
                         usuario.getMazo().set(1, null);
@@ -242,7 +246,7 @@ public class PieSocketListener extends WebSocketListener {
 
                     //Se intercambian las cartas
                     usuario1.getMazo().set(0, cartaPropia); // usuario1 es al que se le cambian las cartas
-                    usuario2.getMazo().set(0,cartaJugador); // usuario2 soy yo
+                    usuario2.getMazo().set(0, cartaJugador); // usuario2 soy yo
                     usuario1.getMazo().set(1, null);
                     usuario2.getMazo().set(1, null);
 
@@ -259,24 +263,20 @@ public class PieSocketListener extends WebSocketListener {
                     Usuario usuarioSelect = (Usuario) WaitingRoomActivity.usuarios.stream().filter(x -> x.getU_id() == Integer.valueOf(idJug)).findAny().get();
                     cartaJug = (usuarioSelect.getMazo().get(0) != null) ? usuarioSelect.getMazo().get(0) : usuarioSelect.getMazo().get(1);
                     usuarioSelect.getMazo().set(usuarioSelect.getMazo().get(0) != null ? 0 : 1, null);
-                    Carta cartaJug2 = usuario.getMazoCentral().get(usuario.getMazoCentral().size()-1);
+                    Carta cartaJug2 = usuario.getMazoCentral().get(usuario.getMazoCentral().size() - 1);
 
                     //Sacamos la carta del mazo central
                     usuario.getMazoCentral().remove(cartaJug2);
 
                     usuarioSelect.getMazo().set(0, cartaJug2);
                     System.out.println(usuarioSelect.getMazo());
-                    if(Integer.valueOf(idJug) == usuario.getU_id()){
+                    if (Integer.valueOf(idJug) == usuario.getU_id()) {
                         usuario.getMazo().set((usuario.getMazo().get(0) != null) ? 0 : 1, null);
                         usuario.getMazo().set(0, cartaJug2);
                         quitarCartaPrincipe(cartaJug);
                     }
-                    if(cartaJug.getNombre().equals("princesa")){
-                        ArrayList<Usuario> array2 = new ArrayList<>();
-                        array2 = (ArrayList<Usuario>) WaitingRoomActivity.usuarios.stream().filter(x -> x.getU_id() == Integer.valueOf(arrSplit_2[1])).collect(Collectors.toList());
-                        GameActivity.jugadorActual = GameActivity.jugadorActual != 0 ? GameActivity.jugadorActual - 1 : GameActivity.jugadorActual;
-                        princesaJugada(this.context, array2);
-                        WaitingRoomActivity.usuarios.remove(array2.get(0));
+                    if (cartaJug.getNombre().equals("princesa")) {
+                        aplicarPrincesa(idJug);
                     }
                     break;
                 default:
@@ -285,7 +285,17 @@ public class PieSocketListener extends WebSocketListener {
         }
     }
 
-    public void quitarCartaPrincipe(Carta carta){
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    private void aplicarPrincesa(String idJug) {
+        Usuario user = (Usuario) WaitingRoomActivity.usuarios.stream().filter(x -> x.getU_id() == Integer.parseInt(idJug)).findAny().get();
+
+        user.setEliminado(true);
+
+        princesaJugada(this.context, user);
+
+    }
+
+    public void quitarCartaPrincipe(Carta carta) {
         new AsyncTask<String, Float, Integer>() {
             @Override
             protected Integer doInBackground(String... strings) {
@@ -309,11 +319,11 @@ public class PieSocketListener extends WebSocketListener {
         }.execute();
     }
 
-    public void agregarCartaMazoCentral(Carta carta1MazoObject, Carta carta2MazoObject){
-        if(usuario.getMazoCentral().size() > 0){
+    public void agregarCartaMazoCentral(Carta carta1MazoObject, Carta carta2MazoObject) {
+        if (usuario.getMazoCentral().size() > 0) {
             usuario.getMazoCentral().add(carta1MazoObject);
         }
-        if(usuario.getMazoCentral().size() > 1){
+        if (usuario.getMazoCentral().size() > 1) {
             usuario.getMazoCentral().add(carta2MazoObject);
         }
     }
@@ -365,7 +375,7 @@ public class PieSocketListener extends WebSocketListener {
         return cartaretorno;
     }
 
-    public void princesaJugada(Context context, ArrayList<Usuario> array) {
+    public void princesaJugada(Context context, Usuario usuario) {
         new AsyncTask<String, Float, Integer>() {
             @Override
             protected Integer doInBackground(String... strings) {
@@ -375,7 +385,7 @@ public class PieSocketListener extends WebSocketListener {
 
             @Override
             protected void onProgressUpdate(Float... variable) {
-                makeText(context, array.get(0).getU_alias() + " ha perdido la ronda por haber jugado la princesa", LENGTH_SHORT).show();
+                makeText(context, usuario.getU_alias() + " ha perdido la ronda por haber jugado la princesa", LENGTH_SHORT).show();
             }
         }.execute();
     }
@@ -395,7 +405,7 @@ public class PieSocketListener extends WebSocketListener {
         }.execute();
     }
 
-    public void IntercambioCartas(){
+    public void IntercambioCartas() {
         new AsyncTask<String, Float, Integer>() {
             @Override
             protected Integer doInBackground(String... strings) {
@@ -407,7 +417,7 @@ public class PieSocketListener extends WebSocketListener {
             protected void onProgressUpdate(Float... variable) {
                 getImg2().setImageDrawable(null);
                 int code = context.getResources().getIdentifier(usuario.getMazo().get(0).getNombre(), "drawable",
-                          context.getPackageName());
+                        context.getPackageName());
                 getImg1().setImageResource(code);
             }
         }.execute();
