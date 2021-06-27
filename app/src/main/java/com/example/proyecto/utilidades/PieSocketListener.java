@@ -257,7 +257,7 @@ public class PieSocketListener extends WebSocketListener {
                     Usuario usuarioSelect = (Usuario) WaitingRoomActivity.usuarios.stream().filter(x -> x.getU_id() == Integer.valueOf(idJug)).findAny().get();
                     cartaJug = usuarioSelect.getMazo().get(0) != null ? usuarioSelect.getMazo().get(0) : usuarioSelect.getMazo().get(1);
                     usuarioSelect.getMazo().set(usuarioSelect.getMazo().get(0) != null ? 0 : 1, null);
-
+                    System.out.println(usuarioSelect.getMazo());
                     if(Integer.valueOf(idJug) == usuario.getU_id()){
                         quitarCartaPrincipe(cartaJug);
                     }
