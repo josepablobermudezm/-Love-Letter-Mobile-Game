@@ -184,6 +184,8 @@ public class PieSocketListener extends WebSocketListener {
                     if(GameActivity.jugadorActual != -1 ){
                         System.out.println("ENTRANDO ACA "+ GameActivity.jugadorActual);
                         cambioTurnoText();
+                    }else{
+                        System.out.println("ENTRANDO AQUI");
                     }
 
                     break;
