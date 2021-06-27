@@ -173,19 +173,15 @@ public class PieSocketListener extends WebSocketListener {
                         }
                     }
 
-                    Boolean noEntra = false;
                     if (WaitingRoomActivity.usuarios.size() - 1 == GameActivity.jugadorActual) {
                         cambioTurnoText();
                         GameActivity.jugadorActual = -1;
                         System.out.println("Condicion 4 " + GameActivity.jugadorActual);
-                        noEntra = true;
-                        break;
-
                     }
 
                     System.out.println("Cierre " + GameActivity.jugadorActual);
 
-                    if(!noEntra){
+                    if(GameActivity.jugadorActual != -1 ){
                         cambioTurnoText();
                     }
 
