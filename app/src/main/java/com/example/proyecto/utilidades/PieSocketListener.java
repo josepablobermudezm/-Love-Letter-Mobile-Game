@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -251,12 +252,41 @@ public class PieSocketListener extends WebSocketListener {
                     Usu.getMazo().set(Integer.parseInt(index), null);
                     break;
                 case "principeJugado":
+                    String idJug = arrSplit_2[1];
+                    Carta cartaJug = new Carta();
+                    Usuario usuarioSelect = (Usuario) WaitingRoomActivity.usuarios.stream().filter(x -> x.getU_id() == Integer.valueOf(idJug)).findAny().get();
+                    cartaJug = usuarioSelect.getMazo().get(0) != null ? usuarioSelect.getMazo().get(0) : usuarioSelect.getMazo().get(1);
+                    usuarioSelect.getMazo().set(usuarioSelect.getMazo().get(0) != null ? 0 : 1, null);
 
+                    if(Integer.valueOf(idJug) == usuario.getU_id()){
+                        quitarCartaPrincipe(cartaJug);
+                    }
                     break;
                 default:
                     throw new IllegalStateException("Unexpected value: " + arrSplit_2[0]);
             }
         }
+    }
+
+    public void quitarCartaPrincipe(Carta carta){
+        new AsyncTask<String, Float, Integer>() {
+            @Override
+            protected Integer doInBackground(String... strings) {
+                publishProgress();
+                return null;
+            }
+
+            @Override
+            protected void onProgressUpdate(Float... variable) {
+                int code = context.getResources().getIdentifier(carta.getNombre(), "drawable", context.getPackageName());
+                ImageView imageView = new ImageView(context);
+                imageView.setImageResource(code);
+                imageView.setLayoutParams(new LinearLayout.LayoutParams(calcularPixeles(63), calcularPixeles(100)));
+                img1.setImageDrawable(null);
+                img2.setImageDrawable(null);
+                GameActivity.cartasContainer.addView(imageView);
+            }
+        }.execute();
     }
 
     public void agregarCartaMazoCentral(Carta carta1MazoObject, Carta carta2MazoObject){
@@ -397,5 +427,8 @@ public class PieSocketListener extends WebSocketListener {
         Log.d("PieSocket", text);
     }
 
-
+    public int calcularPixeles(int dps) {
+        final float scale = context.getResources().getDisplayMetrics().density;
+        return (int) (dps * scale + 0.5f);
+    }
 }

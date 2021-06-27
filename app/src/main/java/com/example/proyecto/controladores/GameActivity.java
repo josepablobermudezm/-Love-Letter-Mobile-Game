@@ -62,7 +62,7 @@ public class GameActivity extends AppCompatActivity {
     private ImageView arrow1;
     private ImageView arrow2;
     private ImageView arrow3;
-    public LinearLayout cartasContainer;
+    public static LinearLayout cartasContainer;
     public ImageView img1;
     public ImageView img2;
     public ImageView img3;
