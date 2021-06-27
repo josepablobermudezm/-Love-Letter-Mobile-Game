@@ -411,7 +411,12 @@ public class PieSocketListener extends WebSocketListener {
 
             @Override
             protected void onProgressUpdate(Float... variable) {
-                txv_turno.setText(WaitingRoomActivity.usuarios.get(GameActivity.jugadorActual).getU_alias());
+                if(GameActivity.jugadorActual>=0){
+                    txv_turno.setText(WaitingRoomActivity.usuarios.get(GameActivity.jugadorActual).getU_alias());
+                }else{
+                    System.out.println("ENTRANDO HILO TURNO");
+                }
+
             }
         }.execute();
     }
