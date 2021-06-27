@@ -133,9 +133,6 @@ public class PieSocketListener extends WebSocketListener {
                 case "agregarCarta":
                     String id2 = arrSplit_2[1];
                     Carta carta = new Carta();
-                    /*if(usuario.getMazoCentral().size() > 0){
-
-                    }*/
                     carta = usuario.getMazoCentral().get(usuario.getMazoCentral().size() - 1);
                     usuario.getMazoCentral().remove(carta);
                     cartaAux2 = new Carta();
@@ -218,7 +215,8 @@ public class PieSocketListener extends WebSocketListener {
                 case "reyJugado":
                     String idJugador = arrSplit_2[1];
                     String idPropio = arrSplit_2[2];
-                    Carta cartaJugador, cartaPropia;
+                    Carta cartaJugador = new Carta();
+                    Carta cartaPropia =  new Carta();
 
                     //Filtramos los dos usuarios que van a intercambiar cartas
                     Usuario usuario1 = (Usuario) WaitingRoomActivity.usuarios.stream().filter(x -> x.getU_id() == Integer.valueOf(idJugador)).findAny().get();
@@ -227,16 +225,16 @@ public class PieSocketListener extends WebSocketListener {
                     System.out.println("MAZO 1: " + usuario1.getMazo());
                     System.out.println("MAZO 2: " + usuario2.getMazo());
                     // Se obtienen las cartas
-                    cartaJugador = usuario1.getMazo().get(0) != null && !usuario1.getMazo().get(0).getNombre().equals("rey") ? usuario1.getMazo().get(0) : usuario1.getMazo().get(1);
-                    cartaPropia = usuario2.getMazo().get(0) != null && !usuario2.getMazo().get(0).getNombre().equals("rey") ? usuario2.getMazo().get(0) : usuario2.getMazo().get(1);
+                    cartaJugador = usuario1.getMazo().get(0) != null ? usuario1.getMazo().get(0) : usuario1.getMazo().get(1);
+                    cartaPropia = usuario2.getMazo().get(0) != null ? usuario2.getMazo().get(0) : usuario2.getMazo().get(1);
 
                     // En el caso de los dos jugadores entonces entra
                     if(usuario.getU_id() == Integer.valueOf(idJugador) || usuario.getU_id() == Integer.valueOf(idPropio)){
                         if(usuario1.getU_id() == usuario.getU_id()){
-                            usuario.getMazo().set(0, usuario1.getMazo().get(0) != null && !usuario1.getMazo().get(0).getNombre().equals("rey") ? usuario1.getMazo().get(0) : usuario1.getMazo().get(1));
+                            usuario.getMazo().set(0, usuario1.getMazo().get(0) != null ? usuario1.getMazo().get(0) : usuario1.getMazo().get(1));
                         }
                         else{ // cuando es el otro
-                            usuario.getMazo().set(0, usuario2.getMazo().get(0) != null && !usuario2.getMazo().get(0).getNombre().equals("rey")  ? usuario2.getMazo().get(0) : usuario2.getMazo().get(1));
+                            usuario.getMazo().set(0, usuario2.getMazo().get(0) != null ? usuario2.getMazo().get(0) : usuario2.getMazo().get(1));
                         }
                         usuario.getMazo().set(1, null);
                     }
@@ -254,7 +252,9 @@ public class PieSocketListener extends WebSocketListener {
                     String index = arrSplit_2[2];
                     Usuario Usu = (Usuario) WaitingRoomActivity.usuarios.stream().filter(x -> x.getU_id() == Integer.valueOf(ID)).findAny().get();
                     Usu.getMazo().set(Integer.parseInt(index), null);
-                    System.out.println("Cartas de Jugador" + Usu.getMazo());
+                    for(Usuario u : WaitingRoomActivity.usuarios){
+                        System.out.println(" "+ u.getU_alias() + ": " + u.getMazo());
+                    }
                     break;
                 default:
                     throw new IllegalStateException("Unexpected value: " + arrSplit_2[0]);
