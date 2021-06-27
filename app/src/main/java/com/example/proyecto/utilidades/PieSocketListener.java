@@ -128,16 +128,13 @@ public class PieSocketListener extends WebSocketListener {
                         usuarioAux.getMazo().add(cartaAux);
                         usuarioAux.getMazo().add(null);
                         usuarioAux.getMazo().add(null);
-                        System.out.println("Cartas al inicio " + usuarioAux.getU_alias() + " " + usuarioAux.getMazo());
                     }
                     break;
                 case "agregarCarta":
                     String id2 = arrSplit_2[1];
                     Carta carta = new Carta();
                     Usuario usuarioAux2 = (Usuario) WaitingRoomActivity.usuarios.stream().filter(x -> x.getU_id() == Integer.parseInt(id2)).findAny().get();
-                    System.out.println("Cuando se agarra del mazo " + usuarioAux2.getU_alias() + " " + usuarioAux2.getMazo());
                     carta = usuario.getMazoCentral().get(usuario.getMazoCentral().size() - 1);
-                    System.out.println("CARTA SACADA: " + carta);
                     usuario.getMazoCentral().remove(carta);
                     cartaAux2 = new Carta();
                     usuarioAux2.getMazo().set((usuarioAux2.getMazo().get(0) != null ? 1 : 0), carta);
@@ -160,7 +157,6 @@ public class PieSocketListener extends WebSocketListener {
                                 ((cartaAux2 != null) && (usuario.getMazoCentral().size() > 1)) ? cartaAux2.getNombre() : null);
                         hilo.execute();
                     }
-                    System.out.println("Cuando se agarra del mazo después de lógica " + usuarioAux2.getU_alias() + " " + usuarioAux2.getMazo());
                     break;
                 case "cambioTurno":
                     if (WaitingRoomActivity.usuarios.size() - 1 == GameActivity.jugadorActual) {
@@ -185,7 +181,6 @@ public class PieSocketListener extends WebSocketListener {
                     Carta carta2MazoObject = creacionObjectoCarta(carta2Mazo);
 
                     Usuario usuarioAux = (Usuario) WaitingRoomActivity.usuarios.stream().filter(x -> x.getU_id() == Integer.parseInt(id3)).findAny().get();
-                    System.out.println("MAZO ANTES EN CANCILLER: " + usuarioAux.getMazo());
                     agregarCartaMazoCentral(carta1MazoObject, carta2MazoObject);
                     if (arrSplit_2[2].equals("1")) {
                         usuarioAux.getMazo().set(0, usuarioAux.getMazo().get(0));
@@ -215,7 +210,6 @@ public class PieSocketListener extends WebSocketListener {
                             usuario.getMazo().set(2, null);
                         }
                     }
-                    System.out.println("MAZO DESPUÉS EN CANCILLER: " + usuarioAux.getMazo());
                     break;
                 case "reyJugado":
                     String idJugador = arrSplit_2[1];
@@ -227,8 +221,6 @@ public class PieSocketListener extends WebSocketListener {
                     Usuario usuario1 = (Usuario) WaitingRoomActivity.usuarios.stream().filter(x -> x.getU_id() == Integer.valueOf(idJugador)).findAny().get();
                     Usuario usuario2 = (Usuario) WaitingRoomActivity.usuarios.stream().filter(x -> x.getU_id() == Integer.valueOf(idPropio)).findAny().get();
 
-                    System.out.println("MAZO 1: " + usuario1.getMazo());
-                    System.out.println("MAZO 2: " + usuario2.getMazo());
                     // Se obtienen las cartas
                     cartaJugador = usuario1.getMazo().get(0) != null ? usuario1.getMazo().get(0) : usuario1.getMazo().get(1);
                     cartaPropia = usuario2.getMazo().get(0) != null ? usuario2.getMazo().get(0) : usuario2.getMazo().get(1);
@@ -242,6 +234,7 @@ public class PieSocketListener extends WebSocketListener {
                             usuario.getMazo().set(0, usuario2.getMazo().get(0) != null ? usuario2.getMazo().get(0) : usuario2.getMazo().get(1));
                         }
                         usuario.getMazo().set(1, null);
+                        IntercambioCartas();
                     }
 
                     //Se intercambian las cartas
@@ -249,17 +242,13 @@ public class PieSocketListener extends WebSocketListener {
                     usuario2.getMazo().set(0,cartaJugador); // usuario2 soy yo
                     usuario1.getMazo().set(1, null);
                     usuario2.getMazo().set(1, null);
-                    System.out.println("Usuario1: " + usuario1.getMazo());
-                    System.out.println("Usuario2: " + usuario2.getMazo());
+
                     break;
                 case "SacarCarta":
                     String ID = arrSplit_2[1];
                     String index = arrSplit_2[2];
                     Usuario Usu = (Usuario) WaitingRoomActivity.usuarios.stream().filter(x -> x.getU_id() == Integer.valueOf(ID)).findAny().get();
                     Usu.getMazo().set(Integer.parseInt(index), null);
-                    for(Usuario u : WaitingRoomActivity.usuarios){
-                        System.out.println(" "+ u.getU_alias() + ": " + u.getMazo());
-                    }
                     break;
                 default:
                     throw new IllegalStateException("Unexpected value: " + arrSplit_2[0]);
@@ -349,6 +338,24 @@ public class PieSocketListener extends WebSocketListener {
             @Override
             protected void onProgressUpdate(Float... variable) {
                 txv_turno.setText(WaitingRoomActivity.usuarios.get(GameActivity.jugadorActual).getU_alias());
+            }
+        }.execute();
+    }
+
+    public void IntercambioCartas(){
+        new AsyncTask<String, Float, Integer>() {
+            @Override
+            protected Integer doInBackground(String... strings) {
+                publishProgress();
+                return null;
+            }
+
+            @Override
+            protected void onProgressUpdate(Float... variable) {
+                getImg2().setImageDrawable(null);
+                int code = context.getResources().getIdentifier(usuario.getMazo().get(0).getNombre(), "drawable",
+                          context.getPackageName());
+                getImg1().setImageResource(code);
             }
         }.execute();
     }
