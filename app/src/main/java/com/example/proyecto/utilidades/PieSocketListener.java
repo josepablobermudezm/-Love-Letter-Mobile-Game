@@ -168,18 +168,27 @@ public class PieSocketListener extends WebSocketListener {
                 case "cambioTurno":
                     System.out.println(usuario.getMazoOpcional() + " mazo opcional");
                     GameActivity.jugadorActual++;
+                    System.out.println(GameActivity.jugadorActual);
                     if (WaitingRoomActivity.usuarios.get(GameActivity.jugadorActual).isEliminado()) {
+                        System.out.println("entrando a condición #1");
                         GameActivity.jugadorActual++;
+                        System.out.println(GameActivity.jugadorActual);
                         if (WaitingRoomActivity.usuarios.size() == GameActivity.jugadorActual) {
+                            System.out.println("entrando a condición #2");
                             GameActivity.jugadorActual = 0;
+                            System.out.println(GameActivity.jugadorActual);
                         }
                     }
                     System.out.println(WaitingRoomActivity.usuarios.size() + " == " + GameActivity.jugadorActual);
                     if (WaitingRoomActivity.usuarios.size() - 1 <= GameActivity.jugadorActual) {
+                        System.out.println("entrando a condición #3");
                         cambioTurnoText();
+                        System.out.println(GameActivity.jugadorActual);
                     }
                     if (GameActivity.jugadorActual != -1) {
+                        System.out.println("entrando a condición #4");
                         cambioTurnoText();
+                        System.out.println(GameActivity.jugadorActual);
                     }
                     break;
                 case "princesaJugada":
@@ -434,9 +443,12 @@ public class PieSocketListener extends WebSocketListener {
 
             @Override
             protected void onProgressUpdate(Float... variable) {
+                System.out.println("entrando a hilo de cambio de turno");
                 if (GameActivity.jugadorActual >= 0) {
+                    System.out.println("entrando a condición");
                     txv_turno.setText(WaitingRoomActivity.usuarios.get(GameActivity.jugadorActual).getU_alias());
                     if (WaitingRoomActivity.usuarios.size() - 1 <= GameActivity.jugadorActual) {
+                        System.out.println("entrando a condición #5");
                         GameActivity.jugadorActual = -1;
                     }
                 }
