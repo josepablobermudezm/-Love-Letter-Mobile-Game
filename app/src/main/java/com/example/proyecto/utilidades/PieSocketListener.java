@@ -161,7 +161,7 @@ public class PieSocketListener extends WebSocketListener {
                     }
                     break;
                 case "cambioTurno":
-                    GameActivity.jugadorActual++;
+                    GameActivity.jugadorActual = WaitingRoomActivity.usuarios.size() == GameActivity.jugadorActual ? GameActivity.jugadorActual : GameActivity.jugadorActual++ ;
                     System.out.println("Inicio " + GameActivity.jugadorActual);
                     if(WaitingRoomActivity.usuarios.get(GameActivity.jugadorActual).isEliminado()){
                         GameActivity.jugadorActual++;
@@ -172,7 +172,7 @@ public class PieSocketListener extends WebSocketListener {
                             System.out.println("Condicion 3 " + GameActivity.jugadorActual);
                         }
                     }
-
+                    System.out.println(WaitingRoomActivity.usuarios.size() + " == " + GameActivity.jugadorActual);
                     if (WaitingRoomActivity.usuarios.size() == GameActivity.jugadorActual) {
                         cambioTurnoText();
                         GameActivity.jugadorActual = -1;
@@ -187,7 +187,6 @@ public class PieSocketListener extends WebSocketListener {
                     }else{
                         System.out.println("ENTRANDO AQUI");
                     }
-
                     break;
                 case "princesaJugada":
                     aplicarPrincesa(arrSplit_2[1]);
@@ -299,11 +298,8 @@ public class PieSocketListener extends WebSocketListener {
     @RequiresApi(api = Build.VERSION_CODES.N)
     private void aplicarPrincesa(String idJug) {
         Usuario user = (Usuario) WaitingRoomActivity.usuarios.stream().filter(x -> x.getU_id() == Integer.parseInt(idJug)).findAny().get();
-
         user.setEliminado(true);
-
         princesaJugada(this.context, user);
-
     }
 
     public void quitarCartaPrincipe(Carta carta) {
