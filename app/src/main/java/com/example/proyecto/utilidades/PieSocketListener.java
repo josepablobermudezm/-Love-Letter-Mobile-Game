@@ -451,7 +451,7 @@ public class PieSocketListener extends WebSocketListener {
                 System.out.println("entrando a hilo de cambio de turno");
                 if (GameActivity.jugadorActual >= 0) {
                     System.out.println("entrando a condición");
-                    txv_turno.setText(WaitingRoomActivity.usuarios.get(GameActivity.jugadorActual).getU_alias());
+                    txv_turno.setText(WaitingRoomActivity.usuarios.get(GameActivity.jugadorActual == -1 ? 0 : GameActivity.jugadorActual).getU_alias());
                     if (WaitingRoomActivity.usuarios.size() - 1 <= GameActivity.jugadorActual) {
                         System.out.println("entrando a condición #5");
                         GameActivity.jugadorActual = -1;
