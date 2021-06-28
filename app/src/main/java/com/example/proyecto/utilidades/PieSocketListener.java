@@ -174,8 +174,8 @@ public class PieSocketListener extends WebSocketListener {
                     }
                     System.out.println(WaitingRoomActivity.usuarios.size() + " == " + GameActivity.jugadorActual);
                     if (WaitingRoomActivity.usuarios.size()-1 <= GameActivity.jugadorActual) {
+                        System.out.println("antes de Condicion 4 " + GameActivity.jugadorActual);
                         cambioTurnoText();
-                        GameActivity.jugadorActual = -1;
                         System.out.println("Condicion 4 " + GameActivity.jugadorActual);
                     }
 
@@ -409,6 +409,9 @@ public class PieSocketListener extends WebSocketListener {
             protected void onProgressUpdate(Float... variable) {
                 if(GameActivity.jugadorActual>=0){
                     txv_turno.setText(WaitingRoomActivity.usuarios.get(GameActivity.jugadorActual).getU_alias());
+                    if (WaitingRoomActivity.usuarios.size()-1 <= GameActivity.jugadorActual) {
+                        GameActivity.jugadorActual = -1;
+                    }
                 }else{
                     System.out.println("ENTRANDO HILO TURNO");
                 }
