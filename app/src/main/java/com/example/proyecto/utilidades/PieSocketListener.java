@@ -173,7 +173,7 @@ public class PieSocketListener extends WebSocketListener {
                         }
                     }
                     System.out.println(WaitingRoomActivity.usuarios.size() + " == " + GameActivity.jugadorActual);
-                    if (WaitingRoomActivity.usuarios.size() == GameActivity.jugadorActual) {
+                    if (WaitingRoomActivity.usuarios.size()-1 == GameActivity.jugadorActual) {
                         cambioTurnoText();
                         GameActivity.jugadorActual = -1;
                         System.out.println("Condicion 4 " + GameActivity.jugadorActual);
