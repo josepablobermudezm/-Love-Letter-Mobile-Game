@@ -11,6 +11,7 @@ public class Usuario implements Serializable {
     public static Usuario usuarioLogueado = new Usuario();
     private ArrayList <Carta> mazo = new ArrayList<>();
     private ArrayList <Carta> mazoCentral = new ArrayList<>();
+    private ArrayList <Carta> mazoOpcional = new ArrayList<>();
     private boolean turno = false;
     private boolean eliminado = false;
     private int edad;
@@ -33,6 +34,14 @@ public class Usuario implements Serializable {
     public static class ChildClass implements Serializable {
 
         public ChildClass() {}
+    }
+
+    public ArrayList<Carta> getMazoOpcional() {
+        return mazoOpcional;
+    }
+
+    public void setMazoOpcional(ArrayList<Carta> mazoOpcional) {
+        this.mazoOpcional = mazoOpcional;
     }
 
     public ArrayList<Carta> getMazoCentral() {

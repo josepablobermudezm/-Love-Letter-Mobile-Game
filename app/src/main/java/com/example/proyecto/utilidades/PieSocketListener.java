@@ -117,7 +117,10 @@ public class PieSocketListener extends WebSocketListener {
                     if (id.equals(String.valueOf(usuario.getU_id()))) {
                         if (arrSplit_2[4].equals("mazoCentral")) {
                             usuario.getMazoCentral().add(cartaAux);
-                        } else {
+                        } else if(arrSplit_2[4].equals("mazoOpcional")){
+                            usuario.getMazoOpcional().add(cartaAux);
+                        }
+                        else {
                             usuario.getMazo().add(cartaAux);
                             usuario.getMazo().add(null);
                             usuario.getMazo().add(null);
@@ -125,11 +128,13 @@ public class PieSocketListener extends WebSocketListener {
                             hilo.execute();
                         }
                     }
-                    if (!arrSplit_2[4].equals("mazoCentral")) {
-                        Usuario usuarioAux = (Usuario) WaitingRoomActivity.usuarios.stream().filter(x -> x.getU_id() == Integer.parseInt(id)).findAny().get();
+                    Usuario usuarioAux = (Usuario) WaitingRoomActivity.usuarios.stream().filter(x -> x.getU_id() == Integer.parseInt(id)).findAny().get();
+                    if (arrSplit_2[4].equals("mazo")) {
                         usuarioAux.getMazo().add(cartaAux);
                         usuarioAux.getMazo().add(null);
                         usuarioAux.getMazo().add(null);
+                    } else if(arrSplit_2[4].equals("mazoOpcional")){
+                        usuarioAux.getMazoOpcional().add(cartaAux);
                     }
                     break;
                 case "agregarCarta":
@@ -161,6 +166,7 @@ public class PieSocketListener extends WebSocketListener {
                     }
                     break;
                 case "cambioTurno":
+                    System.out.println(usuario.getMazoOpcional() + " mazo opcional");
                     GameActivity.jugadorActual++;
                     if (WaitingRoomActivity.usuarios.get(GameActivity.jugadorActual).isEliminado()) {
                         GameActivity.jugadorActual++;
@@ -186,20 +192,20 @@ public class PieSocketListener extends WebSocketListener {
                     Carta carta1MazoObject = creacionObjectoCarta(carta1Mazo);
                     Carta carta2MazoObject = creacionObjectoCarta(carta2Mazo);
 
-                    Usuario usuarioAux = (Usuario) WaitingRoomActivity.usuarios.stream().filter(x -> x.getU_id() == Integer.parseInt(id3)).findAny().get();
+                    Usuario usuarioAux3 = (Usuario) WaitingRoomActivity.usuarios.stream().filter(x -> x.getU_id() == Integer.parseInt(id3)).findAny().get();
                     agregarCartaMazoCentral(carta1MazoObject, carta2MazoObject);
                     if (arrSplit_2[2].equals("1")) {
-                        usuarioAux.getMazo().set(0, usuarioAux.getMazo().get(0));
-                        usuarioAux.getMazo().set(1, null);
-                        usuarioAux.getMazo().set(2, null);
+                        usuarioAux3.getMazo().set(0, usuarioAux3.getMazo().get(0));
+                        usuarioAux3.getMazo().set(1, null);
+                        usuarioAux3.getMazo().set(2, null);
                     } else if (arrSplit_2[2].equals("2")) {
-                        usuarioAux.getMazo().set(0, usuarioAux.getMazo().get(1));
-                        usuarioAux.getMazo().set(1, null);
-                        usuarioAux.getMazo().set(2, null);
+                        usuarioAux3.getMazo().set(0, usuarioAux3.getMazo().get(1));
+                        usuarioAux3.getMazo().set(1, null);
+                        usuarioAux3.getMazo().set(2, null);
                     } else if (arrSplit_2[2].equals("3")) {
-                        usuarioAux.getMazo().set(0, usuarioAux.getMazo().get(2));
-                        usuarioAux.getMazo().set(1, null);
-                        usuarioAux.getMazo().set(2, null);
+                        usuarioAux3.getMazo().set(0, usuarioAux3.getMazo().get(2));
+                        usuarioAux3.getMazo().set(1, null);
+                        usuarioAux3.getMazo().set(2, null);
                     }
                     if (id3.equals(String.valueOf(usuario.getU_id()))) {
                         if (arrSplit_2[2].equals("1")) {
@@ -273,7 +279,6 @@ public class PieSocketListener extends WebSocketListener {
                     }
                     if (cartaJug.getNombre().equals("princesa")) {
                         aplicarPrincesa(idJug, "principe");
-                        quitarCartaPrincipe2();
                     }
                     break;
                 default:

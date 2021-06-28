@@ -201,7 +201,6 @@ public class GameActivity extends AppCompatActivity {
                             for (Usuario u : WaitingRoomActivity.usuarios) {
                                 Carta carta = cartas.get(cartas.size() - 1);
                                 cartas.remove(carta);
-                                //u.getMazo().add(carta);
                                 listener.enviarMensaje(ws, "enviarCartas," + carta.getNombre() + "," + carta.getValor() + "," + u.getU_id()
                                         + ",mazo");
                             }
@@ -213,6 +212,17 @@ public class GameActivity extends AppCompatActivity {
                                             + ",mazoCentral");
                                 }
                             }
+                            int cantidadCartasOpcionales = WaitingRoomActivity.usuarios.size() == 2 ? 3 : 1;
+
+                            //enviamos cartas de mazo opcional
+                            for(int i = 0; i < cantidadCartasOpcionales; i++){
+                                Carta carta = cartas.remove(cartas.size()-1);
+                                for (Usuario u : WaitingRoomActivity.usuarios) {
+                                    listener.enviarMensaje(ws, "enviarCartas," + carta.getNombre() + "," + carta.getValor() + "," + u.getU_id()
+                                            + ",mazoOpcional");
+                                }
+                            }
+
 
                         } else {
                             AlertDialog.Builder alerta = new AlertDialog.Builder(GameActivity.this);
@@ -402,7 +412,7 @@ public class GameActivity extends AppCompatActivity {
 
     private void ListaJugadoresButton(){
         for(Usuario u : WaitingRoomActivity.usuarios){
-            if(u.getU_id() != Usuario.usuarioLogueado.getU_id() || principeMode){
+            if((u.getU_id() != Usuario.usuarioLogueado.getU_id() || principeMode) && !u.isEliminado()){
                 Button button = new Button(this);
                 button.setText(u.getU_alias());
                 button.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
