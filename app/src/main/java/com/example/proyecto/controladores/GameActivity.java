@@ -265,7 +265,7 @@ public class GameActivity extends AppCompatActivity {
     }
 
     public void repartir(View view) {
-        if (Usuario.usuarioLogueado.getU_id() == WaitingRoomActivity.usuarios.get(jugadorActual).getU_id()) {
+        if (Usuario.usuarioLogueado.getU_id() == WaitingRoomActivity.usuarios.get(jugadorActual == -1 ? WaitingRoomActivity.usuarios.size()-1 : jugadorActual).getU_id()) {
             if (img2.getDrawable() == null || img1.getDrawable() == null) {
                 if(cancillerMode){
                     listener.enviarMensaje(ws, "agregarCarta," + Usuario.usuarioLogueado.getU_id() + ",cancillerMode");
@@ -294,7 +294,7 @@ public class GameActivity extends AppCompatActivity {
     }
 
     public void actionCartaGenerico(int valor) {
-        if (Usuario.usuarioLogueado.getU_id() == WaitingRoomActivity.usuarios.get(jugadorActual).getU_id()) {
+        if (Usuario.usuarioLogueado.getU_id() == WaitingRoomActivity.usuarios.get(jugadorActual == -1 ? WaitingRoomActivity.usuarios.size()-1 : jugadorActual).getU_id()) {
             String carta1 = "", carta2 = "";
             if(cancillerMode){
                 int code = this.getResources().getIdentifier(Usuario.usuarioLogueado.getMazo().get(valor-1).getNombre(), "drawable", this.getPackageName());
