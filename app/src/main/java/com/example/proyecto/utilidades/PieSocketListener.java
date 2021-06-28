@@ -161,7 +161,7 @@ public class PieSocketListener extends WebSocketListener {
                     }
                     break;
                 case "cambioTurno":
-                    GameActivity.jugadorActual = WaitingRoomActivity.usuarios.size()-1 == GameActivity.jugadorActual ? GameActivity.jugadorActual : GameActivity.jugadorActual+1;
+                    GameActivity.jugadorActual++;
                     System.out.println("Inicio " + GameActivity.jugadorActual);
                     if(WaitingRoomActivity.usuarios.get(GameActivity.jugadorActual).isEliminado()){
                         GameActivity.jugadorActual++;
@@ -173,7 +173,7 @@ public class PieSocketListener extends WebSocketListener {
                         }
                     }
                     System.out.println(WaitingRoomActivity.usuarios.size() + " == " + GameActivity.jugadorActual);
-                    if (WaitingRoomActivity.usuarios.size()-1 == GameActivity.jugadorActual) {
+                    if (WaitingRoomActivity.usuarios.size()-1 <= GameActivity.jugadorActual) {
                         cambioTurnoText();
                         GameActivity.jugadorActual = -1;
                         System.out.println("Condicion 4 " + GameActivity.jugadorActual);
