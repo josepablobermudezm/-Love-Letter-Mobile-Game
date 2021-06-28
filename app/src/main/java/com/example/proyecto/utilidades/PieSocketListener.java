@@ -162,34 +162,22 @@ public class PieSocketListener extends WebSocketListener {
                     break;
                 case "cambioTurno":
                     GameActivity.jugadorActual++;
-                    System.out.println("Inicio " + GameActivity.jugadorActual);
-                    if(WaitingRoomActivity.usuarios.get(GameActivity.jugadorActual).isEliminado()){
+                    if (WaitingRoomActivity.usuarios.get(GameActivity.jugadorActual).isEliminado()) {
                         GameActivity.jugadorActual++;
-                        System.out.println("Valor condicion 1 " + GameActivity.jugadorActual);
-                        if(WaitingRoomActivity.usuarios.size() == GameActivity.jugadorActual){
-                            System.out.println("Condicion 2 " + GameActivity.jugadorActual);
+                        if (WaitingRoomActivity.usuarios.size() == GameActivity.jugadorActual) {
                             GameActivity.jugadorActual = 0;
-                            System.out.println("Condicion 3 " + GameActivity.jugadorActual);
                         }
                     }
                     System.out.println(WaitingRoomActivity.usuarios.size() + " == " + GameActivity.jugadorActual);
-                    if (WaitingRoomActivity.usuarios.size()-1 <= GameActivity.jugadorActual) {
-                        System.out.println("antes de Condicion 4 " + GameActivity.jugadorActual);
+                    if (WaitingRoomActivity.usuarios.size() - 1 <= GameActivity.jugadorActual) {
                         cambioTurnoText();
-                        System.out.println("Condicion 4 " + GameActivity.jugadorActual);
                     }
-
-                    System.out.println("Cierre " + GameActivity.jugadorActual);
-
-                    if(GameActivity.jugadorActual != -1 ){
-                        System.out.println("ENTRANDO ACA "+ GameActivity.jugadorActual);
+                    if (GameActivity.jugadorActual != -1) {
                         cambioTurnoText();
-                    }else{
-                        System.out.println("ENTRANDO AQUI");
                     }
                     break;
                 case "princesaJugada":
-                    aplicarPrincesa(arrSplit_2[1]);
+                    aplicarPrincesa(arrSplit_2[1], "");
                     break;
                 case "cancillerJugada":
                     String id3 = arrSplit_2[1];
@@ -273,20 +261,19 @@ public class PieSocketListener extends WebSocketListener {
                     Usuario usuarioSelect = (Usuario) WaitingRoomActivity.usuarios.stream().filter(x -> x.getU_id() == Integer.valueOf(idJug)).findAny().get();
                     cartaJug = (usuarioSelect.getMazo().get(0) != null) ? usuarioSelect.getMazo().get(0) : usuarioSelect.getMazo().get(1);
                     usuarioSelect.getMazo().set(usuarioSelect.getMazo().get(0) != null ? 0 : 1, null);
-                    Carta cartaJug2 = usuario.getMazoCentral().get(usuario.getMazoCentral().size() - 1);
-
-                    //Sacamos la carta del mazo central
-                    usuario.getMazoCentral().remove(cartaJug2);
-
-                    usuarioSelect.getMazo().set(0, cartaJug2);
-                    System.out.println(usuarioSelect.getMazo());
-                    if (Integer.valueOf(idJug) == usuario.getU_id()) {
-                        usuario.getMazo().set((usuario.getMazo().get(0) != null) ? 0 : 1, null);
-                        usuario.getMazo().set(0, cartaJug2);
-                        quitarCartaPrincipe(cartaJug);
+                    if (!cartaJug.getNombre().equals("princesa")) {
+                        Carta cartaJug2 = usuario.getMazoCentral().get(usuario.getMazoCentral().size() - 1);
+                        usuario.getMazoCentral().remove(cartaJug2);
+                        usuarioSelect.getMazo().set(0, cartaJug2);
+                        if (Integer.valueOf(idJug) == usuario.getU_id()) {
+                            usuario.getMazo().set((usuario.getMazo().get(0) != null) ? 0 : 1, null);
+                            usuario.getMazo().set(0, cartaJug2);
+                            quitarCartaPrincipe(cartaJug);
+                        }
                     }
                     if (cartaJug.getNombre().equals("princesa")) {
-                        aplicarPrincesa(idJug);
+                        aplicarPrincesa(idJug, "principe");
+                        quitarCartaPrincipe2();
                     }
                     break;
                 default:
@@ -296,10 +283,29 @@ public class PieSocketListener extends WebSocketListener {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
-    private void aplicarPrincesa(String idJug) {
+    private void aplicarPrincesa(String idJug, String tipo) {
         Usuario user = (Usuario) WaitingRoomActivity.usuarios.stream().filter(x -> x.getU_id() == Integer.parseInt(idJug)).findAny().get();
         user.setEliminado(true);
-        princesaJugada(this.context, user);
+        if(tipo.equals("principe")){
+            quitarCartaPrincipe2();
+        }else{
+            princesaJugada(this.context, user);
+        }
+    }
+
+    public void quitarCartaPrincipe2() {
+        new AsyncTask<String, Float, Integer>() {
+            @Override
+            protected Integer doInBackground(String... strings) {
+                publishProgress();
+                return null;
+            }
+
+            @Override
+            protected void onProgressUpdate(Float... variable) {
+                makeText(context, "Han aplicado un principe sobre ti y tenías la princesa entonces has perdido el juego", LENGTH_SHORT).show();
+            }
+        }.execute();
     }
 
     public void quitarCartaPrincipe(Carta carta) {
@@ -407,13 +413,11 @@ public class PieSocketListener extends WebSocketListener {
 
             @Override
             protected void onProgressUpdate(Float... variable) {
-                if(GameActivity.jugadorActual>=0){
+                if (GameActivity.jugadorActual >= 0) {
                     txv_turno.setText(WaitingRoomActivity.usuarios.get(GameActivity.jugadorActual).getU_alias());
-                    if (WaitingRoomActivity.usuarios.size()-1 <= GameActivity.jugadorActual) {
+                    if (WaitingRoomActivity.usuarios.size() - 1 <= GameActivity.jugadorActual) {
                         GameActivity.jugadorActual = -1;
                     }
-                }else{
-                    System.out.println("ENTRANDO HILO TURNO");
                 }
 
             }
