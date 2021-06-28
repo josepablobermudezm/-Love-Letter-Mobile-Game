@@ -166,7 +166,8 @@ public class PieSocketListener extends WebSocketListener {
                     }
                     break;
                 case "cambioTurno":
-                    System.out.println(usuario.getMazoOpcional() + " mazo opcional");
+                    System.out.println(usuario.getMazoOpcional().size() + " mazo opcional");
+                    System.out.println(usuario.getMazoCentral().size() + " mazo central");
                     GameActivity.jugadorActual++;
                     System.out.println(GameActivity.jugadorActual);
                     if (WaitingRoomActivity.usuarios.get(GameActivity.jugadorActual).isEliminado()) {
