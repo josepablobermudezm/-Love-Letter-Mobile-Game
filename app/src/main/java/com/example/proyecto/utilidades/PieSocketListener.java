@@ -287,13 +287,13 @@ public class PieSocketListener extends WebSocketListener {
         Usuario user = (Usuario) WaitingRoomActivity.usuarios.stream().filter(x -> x.getU_id() == Integer.parseInt(idJug)).findAny().get();
         user.setEliminado(true);
         if(tipo.equals("principe")){
-            quitarCartaPrincipe2();
+            quitarCartaPrincipe2(user.getU_alias());
         }else{
             princesaJugada(this.context, user);
         }
     }
 
-    public void quitarCartaPrincipe2() {
+    public void quitarCartaPrincipe2(String nombre) {
         new AsyncTask<String, Float, Integer>() {
             @Override
             protected Integer doInBackground(String... strings) {
@@ -303,7 +303,7 @@ public class PieSocketListener extends WebSocketListener {
 
             @Override
             protected void onProgressUpdate(Float... variable) {
-                makeText(context, "Han aplicado un principe sobre ti y tenías la princesa entonces has perdido el juego", LENGTH_SHORT).show();
+                makeText(context, "Han aplicado un principe sobre " + nombre + " y ha perdido el juego por jugar la princesa", LENGTH_SHORT).show();
             }
         }.execute();
     }
