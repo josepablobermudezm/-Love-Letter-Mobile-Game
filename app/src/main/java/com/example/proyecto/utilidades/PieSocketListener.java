@@ -145,7 +145,7 @@ public class PieSocketListener extends WebSocketListener {
                     usuario.getMazoCentral().remove(carta);
                     cartaAux2 = new Carta();
                     usuarioAux2.getMazo().set((usuarioAux2.getMazo().get(0) != null ? 1 : 0), carta);
-                    if((arrSplit_2[2].equals("cancillerMode") && usuario.getMazoCentral().size() == 0)){
+                    if(arrSplit_2.length == 3 && (arrSplit_2[2].equals("cancillerMode") && usuario.getMazoCentral().size() == 0)){
                         enviarMensaje(ws,"cambioTurno");
                         GameActivity.cancillerMode = false;
                     }
