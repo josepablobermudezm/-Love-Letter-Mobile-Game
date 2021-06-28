@@ -268,14 +268,26 @@ public class PieSocketListener extends WebSocketListener {
                     cartaJug = (usuarioSelect.getMazo().get(0) != null) ? usuarioSelect.getMazo().get(0) : usuarioSelect.getMazo().get(1);
                     usuarioSelect.getMazo().set(usuarioSelect.getMazo().get(0) != null ? 0 : 1, null);
                     if (!cartaJug.getNombre().equals("princesa")) {
-                        Carta cartaJug2 = usuario.getMazoCentral().get(usuario.getMazoCentral().size() - 1);
-                        usuario.getMazoCentral().remove(cartaJug2);
-                        usuarioSelect.getMazo().set(0, cartaJug2);
-                        if (Integer.valueOf(idJug) == usuario.getU_id()) {
-                            usuario.getMazo().set((usuario.getMazo().get(0) != null) ? 0 : 1, null);
-                            usuario.getMazo().set(0, cartaJug2);
-                            quitarCartaPrincipe(cartaJug);
+                        if(usuario.getMazoCentral().size() != 0){
+                            Carta cartaJug2 = usuario.getMazoCentral().get(usuario.getMazoCentral().size() - 1);
+                            usuario.getMazoCentral().remove(cartaJug2);
+                            usuarioSelect.getMazo().set(0, cartaJug2);
+                            if (Integer.valueOf(idJug) == usuario.getU_id()) {
+                                usuario.getMazo().set((usuario.getMazo().get(0) != null) ? 0 : 1, null);
+                                usuario.getMazo().set(0, cartaJug2);
+                                quitarCartaPrincipe(cartaJug, "mazoCentral");
+                            }
+                        }else{
+                            Carta cartaJug2 = usuario.getMazoOpcional().get(usuario.getMazoOpcional().size() - 1);
+                            usuario.getMazoOpcional().remove(cartaJug2);
+                            usuarioSelect.getMazo().set(0, cartaJug2);
+                            if (Integer.valueOf(idJug) == usuario.getU_id()) {
+                                usuario.getMazo().set((usuario.getMazo().get(0) != null) ? 0 : 1, null);
+                                usuario.getMazo().set(0, cartaJug2);
+                                quitarCartaPrincipe(cartaJug, "mazoOpcional");
+                            }
                         }
+
                     }
                     if (cartaJug.getNombre().equals("princesa")) {
                         aplicarPrincesa(idJug, "principe");
@@ -308,12 +320,12 @@ public class PieSocketListener extends WebSocketListener {
 
             @Override
             protected void onProgressUpdate(Float... variable) {
-                makeText(context, "Han aplicado un principe sobre " + nombre + " y ha perdido el juego por jugar la princesa", LENGTH_SHORT).show();
+                makeText(context, "Han aplicado un principe sobre " + nombre + " y ha perdido el juego por jugar la princesa", LENGTH_LONG).show();
             }
         }.execute();
     }
 
-    public void quitarCartaPrincipe(Carta carta) {
+    public void quitarCartaPrincipe(Carta carta, String mazo) {
         new AsyncTask<String, Float, Integer>() {
             @Override
             protected Integer doInBackground(String... strings) {
@@ -332,7 +344,11 @@ public class PieSocketListener extends WebSocketListener {
 
                 int code2 = context.getResources().getIdentifier(usuario.getMazo().get(0).getNombre(), "drawable", context.getPackageName());
                 img1.setImageResource(code2);
-                makeText(context, "Han aplicado un principe sobre ti, por lo tanto has botado tu carta y recogido otra", LENGTH_SHORT).show();
+                if(mazo.equals("mazoOpcional")){
+                    makeText(context, "Han aplicado un principe sobre ti usando el mazo opcional, por lo tanto has botado tu carta y recogido otra", LENGTH_LONG).show();
+                }else{
+                    makeText(context, "Han aplicado un principe sobre ti, por lo tanto has botado tu carta y recogido otra", LENGTH_LONG).show();
+                }
             }
         }.execute();
     }
@@ -403,7 +419,7 @@ public class PieSocketListener extends WebSocketListener {
 
             @Override
             protected void onProgressUpdate(Float... variable) {
-                makeText(context, usuario.getU_alias() + " ha perdido la ronda por haber jugado la princesa", LENGTH_SHORT).show();
+                makeText(context, usuario.getU_alias() + " ha perdido la ronda por haber jugado la princesa", LENGTH_LONG).show();
             }
         }.execute();
     }

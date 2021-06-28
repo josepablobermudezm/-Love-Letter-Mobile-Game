@@ -197,6 +197,17 @@ public class GameActivity extends AppCompatActivity {
                         }
                         boolean ok = jsonRespuesta.getBoolean("success");
                         if (ok) {
+                            int cantidadCartasOpcionales = WaitingRoomActivity.usuarios.size() == 2 ? 3 : 1;
+
+                            //enviamos cartas de mazo opcional
+                            for(int i = 0; i < cantidadCartasOpcionales; i++){
+                                Carta carta = cartas.remove(cartas.size()-1);
+                                for (Usuario u : WaitingRoomActivity.usuarios) {
+                                    listener.enviarMensaje(ws, "enviarCartas," + carta.getNombre() + "," + carta.getValor() + "," + u.getU_id()
+                                            + ",mazoOpcional");
+                                }
+                            }
+
                             // aquí le damos una carta inicial a cada jugador
                             for (Usuario u : WaitingRoomActivity.usuarios) {
                                 Carta carta = cartas.get(cartas.size() - 1);
@@ -212,16 +223,8 @@ public class GameActivity extends AppCompatActivity {
                                             + ",mazoCentral");
                                 }
                             }
-                            int cantidadCartasOpcionales = WaitingRoomActivity.usuarios.size() == 2 ? 3 : 1;
 
-                            //enviamos cartas de mazo opcional
-                            for(int i = 0; i < cantidadCartasOpcionales; i++){
-                                Carta carta = cartas.remove(cartas.size()-1);
-                                for (Usuario u : WaitingRoomActivity.usuarios) {
-                                    listener.enviarMensaje(ws, "enviarCartas," + carta.getNombre() + "," + carta.getValor() + "," + u.getU_id()
-                                            + ",mazoOpcional");
-                                }
-                            }
+
 
 
                         } else {
