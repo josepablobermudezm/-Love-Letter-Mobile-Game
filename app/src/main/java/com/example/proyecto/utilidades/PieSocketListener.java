@@ -141,7 +141,10 @@ public class PieSocketListener extends WebSocketListener {
 
                     //validando la carta del espia
                     WaitingRoomActivity.usuarios.forEach(x-> System.out.println(x.isEspia() + " " + x.getU_alias()));
+                    System.out.println(WaitingRoomActivity.usuarios.stream().filter(x -> x.isEspia() && !x.isEliminado()).count() + " cantidad de usuarios espías no eliminados");
+                    System.out.println(usuario.getMazoCentral().size() + " cantidad de cartas en el mazo");
                     System.out.println("estoy afuera");
+
                     if(((usuario.getMazoCentral().size() == 0) || (WaitingRoomActivity.usuarios.stream().filter(x -> !x.isEliminado()).count() == 1))
                             && (WaitingRoomActivity.usuarios.stream().filter(x -> x.isEspia() && !x.isEliminado()).count() == 1)){
                         System.out.println("estoy adentro");
