@@ -72,6 +72,7 @@ public class GameActivity extends AppCompatActivity {
     public static boolean cancillerMode = false;
     public static boolean reyMode = false;
     public static boolean principeMode = false;
+    public static boolean baronMode = false;
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
@@ -388,6 +389,11 @@ public class GameActivity extends AppCompatActivity {
                 ListaJugadoresButton();
             } else if(Usuario.usuarioLogueado.getMazo().get(valor).getNombre().equals("doncella")){
                 listener.enviarMensaje(ws, "doncellaJugada," + Usuario.usuarioLogueado.getU_id());
+            } else if(Usuario.usuarioLogueado.getMazo().get(valor).getNombre().equals("baron")){
+                ScrollHorizontal.setVisibility(View.VISIBLE);
+                baronMode = true;
+                parentJugadores.removeAllViews();
+                ListaJugadoresButton();
             }
             Usuario.usuarioLogueado.getMazo().set(valor, null);
             if(!cancillerMode && !reyMode && !principeMode){
@@ -432,6 +438,9 @@ public class GameActivity extends AppCompatActivity {
                             } else if(principeMode){
                                 listener.enviarMensaje(ws,"principeJugado," + u.getU_id());
                                 principeMode = false;
+                            } else if(baronMode){
+                                listener.enviarMensaje(ws,"baronJugado," + u.getU_id()+ "," + Usuario.usuarioLogueado.getU_id());
+                                baronMode = false;
                             }
                             listener.enviarMensaje(ws, "cambioTurno");
                             ScrollHorizontal.setVisibility(View.INVISIBLE);
