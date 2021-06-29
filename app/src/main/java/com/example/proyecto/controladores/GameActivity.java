@@ -432,7 +432,7 @@ public class GameActivity extends AppCompatActivity {
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     private void ListaJugadoresButton() {
-        if (WaitingRoomActivity.usuarios.stream().filter(x -> !x.isDoncella() || !x.isEliminado()).count() < 2 && !principeMode) {
+        if (WaitingRoomActivity.usuarios.stream().filter(x -> x.isDoncella() || x.isEliminado()).count() == WaitingRoomActivity.usuarios.size()-1 && !principeMode) {
             listener.enviarMensaje(ws, "cambioTurno");
         } else {
             for (Usuario u : WaitingRoomActivity.usuarios) {
