@@ -432,6 +432,7 @@ public class GameActivity extends AppCompatActivity {
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     private void ListaJugadoresButton() {
+        System.out.println(WaitingRoomActivity.usuarios.stream().filter(x -> x.isDoncella() || x.isEliminado()).count() + " ==" + (WaitingRoomActivity.usuarios.size()-1) + "" + " && " + !principeMode);
         if (WaitingRoomActivity.usuarios.stream().filter(x -> x.isDoncella() || x.isEliminado()).count() == WaitingRoomActivity.usuarios.size()-1 && !principeMode) {
             listener.enviarMensaje(ws, "cambioTurno");
             sacerdoteMode = false;
@@ -439,6 +440,7 @@ public class GameActivity extends AppCompatActivity {
             principeMode = false;
             cancillerMode = false;
             baronMode = false;
+            System.out.println("entrando a cambio de turno de carta sin efecto");
         } else {
             for (Usuario u : WaitingRoomActivity.usuarios) {
                 if ((u.getU_id() != Usuario.usuarioLogueado.getU_id() || principeMode) && !u.isEliminado() && !u.isDoncella()) {
