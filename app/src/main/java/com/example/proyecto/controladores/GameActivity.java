@@ -92,7 +92,6 @@ public class GameActivity extends AppCompatActivity {
 
         //Inicializa las funciones del juego
         iniciar();
-        ListaJugadoresButton();
     }
 /*
     @Override
