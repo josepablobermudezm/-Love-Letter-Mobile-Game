@@ -170,9 +170,15 @@ public class PieSocketListener extends WebSocketListener {
                     }
                     break;
                 case "cambioTurno":
-                    WaitingRoomActivity.usuarios.forEach(x -> {
-                        System.out.println(x.getU_alias() + " " + x.isDoncella());
-                    });
+                    //validando la carta del espia
+                    WaitingRoomActivity.usuarios.forEach(x-> System.out.println(x.isEspia() + " " + x.getU_alias()));
+                    if((WaitingRoomActivity.usuarios.stream().filter(x -> x.isEspia()).count() == 1)
+                            && ((usuario.getMazoCentral().size() == 0) || (WaitingRoomActivity.usuarios.stream().filter(x -> !x.isEliminado()).count() == 1))
+                            && !WaitingRoomActivity.usuarios.stream().filter(x -> x.isEspia()).findAny().get().isEliminado()){
+                        WaitingRoomActivity.usuarios.stream().filter(x->x.isEspia()).findAny().get().setFicha(WaitingRoomActivity.usuarios.stream().filter(x->x.isEspia()).findAny().get().getFicha()+1);
+                        System.out.println(WaitingRoomActivity.usuarios.stream().filter(x->x.isEspia()).findAny().get().getFicha() + "espía cantidad");
+                    }
+
                     GameActivity.jugadorActual++;
                     if (GameActivity.jugadorActual <= WaitingRoomActivity.usuarios.size() - 1 &&
                             WaitingRoomActivity.usuarios.get(GameActivity.jugadorActual).isEliminado()) {
@@ -337,9 +343,12 @@ public class PieSocketListener extends WebSocketListener {
                     if(usuario.getU_id() == usuarioSacerdote.getU_id()){
                         sacerdoteJugado(nombreCarta, valorCarta, nombreJugador);
                     }
-
                     break;
-
+                case "espiaJugado":
+                    String idJugadorEspia = arrSplit_2[1];
+                    Usuario usuarioespia = (Usuario) WaitingRoomActivity.usuarios.stream().filter(x -> x.getU_id() == Integer.valueOf(idJugadorEspia)).findAny().get();
+                    usuarioespia.setEspia(true);
+                    break;
                 default:
                     throw new IllegalStateException("Unexpected value: " + arrSplit_2[0]);
             }

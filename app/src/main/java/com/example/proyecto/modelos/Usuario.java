@@ -16,6 +16,8 @@ public class Usuario implements Serializable {
     private boolean eliminado = false;
     private int edad;
     private boolean doncella = false;
+    private boolean espia = false;
+    private int ficha = 0;
 
     public Usuario(int u_id, int u_cantidadPartidasJugadas, int u_cantidadPartidasGanadas, int u_cantidadAmigos, int u_nivel, int u_experiencia, String u_alias, String u_password, String u_rol, String u_picture, String u_fechaNacimiento) {
         this.u_id = u_id;
@@ -35,6 +37,22 @@ public class Usuario implements Serializable {
     public static class ChildClass implements Serializable {
 
         public ChildClass() {}
+    }
+
+    public int getFicha() {
+        return ficha;
+    }
+
+    public void setFicha(int ficha) {
+        this.ficha = ficha;
+    }
+
+    public boolean isEspia() {
+        return espia;
+    }
+
+    public void setEspia(boolean espia) {
+        this.espia = espia;
     }
 
     public boolean isDoncella() {

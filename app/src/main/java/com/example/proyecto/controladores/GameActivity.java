@@ -402,8 +402,9 @@ public class GameActivity extends AppCompatActivity {
                 ScrollHorizontal.setVisibility(View.VISIBLE);
                 parentJugadores.removeAllViews();
                 ListaJugadoresButton();
+            } else if (Usuario.usuarioLogueado.getMazo().get(valor).getNombre().equals("espia")) {
+                listener.enviarMensaje(ws, "espiaJugado," + Usuario.usuarioLogueado.getU_id());
             }
-
 
             Usuario.usuarioLogueado.getMazo().set(valor, null);
 
