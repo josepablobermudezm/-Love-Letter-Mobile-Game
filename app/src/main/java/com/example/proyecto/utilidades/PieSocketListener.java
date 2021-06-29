@@ -117,10 +117,9 @@ public class PieSocketListener extends WebSocketListener {
                     if (id.equals(String.valueOf(usuario.getU_id()))) {
                         if (arrSplit_2[4].equals("mazoCentral")) {
                             usuario.getMazoCentral().add(cartaAux);
-                        } else if(arrSplit_2[4].equals("mazoOpcional")){
+                        } else if (arrSplit_2[4].equals("mazoOpcional")) {
                             usuario.getMazoOpcional().add(cartaAux);
-                        }
-                        else {
+                        } else {
                             usuario.getMazo().add(cartaAux);
                             usuario.getMazo().add(null);
                             usuario.getMazo().add(null);
@@ -133,7 +132,7 @@ public class PieSocketListener extends WebSocketListener {
                         usuarioAux.getMazo().add(cartaAux);
                         usuarioAux.getMazo().add(null);
                         usuarioAux.getMazo().add(null);
-                    } else if(arrSplit_2[4].equals("mazoOpcional")){
+                    } else if (arrSplit_2[4].equals("mazoOpcional")) {
                         usuarioAux.getMazoOpcional().add(cartaAux);
                     }
                     break;
@@ -145,8 +144,8 @@ public class PieSocketListener extends WebSocketListener {
                     usuario.getMazoCentral().remove(carta);
                     cartaAux2 = new Carta();
                     usuarioAux2.getMazo().set((usuarioAux2.getMazo().get(0) != null ? 1 : 0), carta);
-                    if(arrSplit_2.length == 3 && (arrSplit_2[2].equals("cancillerMode") && usuario.getMazoCentral().size() == 0)){
-                        enviarMensaje(ws,"cambioTurno");
+                    if (arrSplit_2.length == 3 && (arrSplit_2[2].equals("cancillerMode") && usuario.getMazoCentral().size() == 0)) {
+                        enviarMensaje(ws, "cambioTurno");
                         GameActivity.cancillerMode = false;
                     }
                     if (arrSplit_2.length == 3 && (arrSplit_2[2].equals("cancillerMode") && usuario.getMazoCentral().size() > 1)) {
@@ -170,11 +169,12 @@ public class PieSocketListener extends WebSocketListener {
                     }
                     break;
                 case "cambioTurno":
-                    WaitingRoomActivity.usuarios.forEach(x->{
+                    WaitingRoomActivity.usuarios.forEach(x -> {
                         System.out.println(x.getU_alias() + " " + x.isDoncella());
                     });
                     GameActivity.jugadorActual++;
-                    if (WaitingRoomActivity.usuarios.get(GameActivity.jugadorActual).isEliminado()) {
+                    if (GameActivity.jugadorActual <= WaitingRoomActivity.usuarios.size() - 1 &&
+                            WaitingRoomActivity.usuarios.get(GameActivity.jugadorActual).isEliminado()) {
                         GameActivity.jugadorActual++;
                         if (WaitingRoomActivity.usuarios.size() == GameActivity.jugadorActual) {
                             GameActivity.jugadorActual = 0;
@@ -273,7 +273,7 @@ public class PieSocketListener extends WebSocketListener {
                     cartaJug = (usuarioSelect.getMazo().get(0) != null) ? usuarioSelect.getMazo().get(0) : usuarioSelect.getMazo().get(1);
                     usuarioSelect.getMazo().set(usuarioSelect.getMazo().get(0) != null ? 0 : 1, null);
                     if (!cartaJug.getNombre().equals("princesa")) {
-                        if(usuario.getMazoCentral().size() != 0){
+                        if (usuario.getMazoCentral().size() != 0) {
                             Carta cartaJug2 = usuario.getMazoCentral().get(usuario.getMazoCentral().size() - 1);
                             usuario.getMazoCentral().remove(cartaJug2);
                             usuarioSelect.getMazo().set(0, cartaJug2);
@@ -282,7 +282,7 @@ public class PieSocketListener extends WebSocketListener {
                                 usuario.getMazo().set(0, cartaJug2);
                                 quitarCartaPrincipe(cartaJug, "mazoCentral");
                             }
-                        }else{
+                        } else {
                             Carta cartaJug2 = usuario.getMazoOpcional().get(usuario.getMazoOpcional().size() - 1);
                             usuario.getMazoOpcional().remove(cartaJug2);
                             usuarioSelect.getMazo().set(0, cartaJug2);
@@ -317,10 +317,10 @@ public class PieSocketListener extends WebSocketListener {
                     cartaJugadorbaron = usuario1Baron.getMazo().get(0) != null ? usuario1Baron.getMazo().get(0) : usuario1Baron.getMazo().get(1);
                     cartaPropiabaron = usuario2Baron.getMazo().get(0) != null ? usuario2Baron.getMazo().get(0) : usuario2Baron.getMazo().get(1);
 
-                    if(cartaJugadorbaron.getValor() > cartaPropiabaron.getValor()){
+                    if (cartaJugadorbaron.getValor() > cartaPropiabaron.getValor()) {
                         usuario2Baron.setEliminado(true);
                         baronJugadoCarta(usuario2Baron.getU_alias());
-                    } else if(cartaJugadorbaron.getValor() < cartaPropiabaron.getValor()){
+                    } else if (cartaJugadorbaron.getValor() < cartaPropiabaron.getValor()) {
                         usuario1Baron.setEliminado(true);
                         baronJugadoCarta(usuario1Baron.getU_alias());
                     }
@@ -335,9 +335,9 @@ public class PieSocketListener extends WebSocketListener {
     private void aplicarPrincesa(String idJug, String tipo) {
         Usuario user = (Usuario) WaitingRoomActivity.usuarios.stream().filter(x -> x.getU_id() == Integer.parseInt(idJug)).findAny().get();
         user.setEliminado(true);
-        if(tipo.equals("principe")){
+        if (tipo.equals("principe")) {
             quitarCartaPrincipe2(user.getU_alias());
-        }else{
+        } else {
             princesaJugada(this.context, user);
         }
     }
@@ -391,9 +391,9 @@ public class PieSocketListener extends WebSocketListener {
 
                 int code2 = context.getResources().getIdentifier(usuario.getMazo().get(0).getNombre(), "drawable", context.getPackageName());
                 img1.setImageResource(code2);
-                if(mazo.equals("mazoOpcional")){
+                if (mazo.equals("mazoOpcional")) {
                     makeText(context, "Han aplicado un principe sobre ti usando el mazo opcional, por lo tanto has botado tu carta y recogido otra", LENGTH_LONG).show();
-                }else{
+                } else {
                     makeText(context, "Han aplicado un principe sobre ti, por lo tanto has botado tu carta y recogido otra", LENGTH_LONG).show();
                 }
             }
@@ -483,18 +483,22 @@ public class PieSocketListener extends WebSocketListener {
             @Override
             protected void onProgressUpdate(Float... variable) {
                 System.out.println("entrando a hilo de cambio de turno");
-                if (GameActivity.jugadorActual >= 0 && GameActivity.jugadorActual != WaitingRoomActivity.usuarios.size()-1) {
+                if (GameActivity.jugadorActual >= 0) {
                     System.out.println("entrando a condición");
-                    if(WaitingRoomActivity.usuarios.get(GameActivity.jugadorActual == -1 ? 0 : GameActivity.jugadorActual).isDoncella()){
+                    if (WaitingRoomActivity.usuarios.get(GameActivity.jugadorActual == -1 ? 0 :
+                            GameActivity.jugadorActual != WaitingRoomActivity.usuarios.size() ?
+                                    GameActivity.jugadorActual : 0).isDoncella()) {
                         WaitingRoomActivity.usuarios.get(GameActivity.jugadorActual == -1 ? 0 : GameActivity.jugadorActual).setDoncella(false);
                     }
-                    txv_turno.setText(WaitingRoomActivity.usuarios.get(GameActivity.jugadorActual == -1 ? 0 : GameActivity.jugadorActual).getU_alias());
+                    txv_turno.setText(WaitingRoomActivity.usuarios.get(GameActivity.jugadorActual == -1 ? 0 :
+                            GameActivity.jugadorActual != WaitingRoomActivity.usuarios.size() ?
+                                    GameActivity.jugadorActual : 0).getU_alias());
                     if (WaitingRoomActivity.usuarios.size() - 1 <= GameActivity.jugadorActual) {
                         System.out.println("entrando a condición #5");
                         GameActivity.jugadorActual = -1;
                     }
                 }
-                WaitingRoomActivity.usuarios.forEach(x->{
+                WaitingRoomActivity.usuarios.forEach(x -> {
                     System.out.println(x.getU_alias() + " " + x.isDoncella());
                 });
             }
