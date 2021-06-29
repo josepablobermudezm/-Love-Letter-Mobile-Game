@@ -412,8 +412,8 @@ public class GameActivity extends AppCompatActivity {
             if(!cancillerMode && !reyMode && !principeMode && !baronMode && !sacerdoteMode && !turnoJugado){
                 System.out.println("entrando a aquí sdjfkj");
                 listener.enviarMensaje(ws, "cambioTurno");
-                turnoJugado = false;
             }
+            turnoJugado = false;
             listener.enviarMensaje(ws, "SacarCarta," + Usuario.usuarioLogueado.getU_id() + "," + valor);
         } else {
             Toast.makeText(getApplicationContext(), "Debes de botar la condesa", Toast.LENGTH_SHORT).show();
