@@ -319,8 +319,10 @@ public class PieSocketListener extends WebSocketListener {
 
                     if(cartaJugadorbaron.getValor() > cartaPropiabaron.getValor()){
                         usuario2Baron.setEliminado(true);
+                        baronJugadoCarta(usuario2Baron.getU_alias());
                     } else if(cartaJugadorbaron.getValor() < cartaPropiabaron.getValor()){
                         usuario1Baron.setEliminado(true);
+                        baronJugadoCarta(usuario1Baron.getU_alias());
                     }
                     break;
                 default:
@@ -338,6 +340,21 @@ public class PieSocketListener extends WebSocketListener {
         }else{
             princesaJugada(this.context, user);
         }
+    }
+
+    public void baronJugadoCarta(String nombre) {
+        new AsyncTask<String, Float, Integer>() {
+            @Override
+            protected Integer doInBackground(String... strings) {
+                publishProgress();
+                return null;
+            }
+
+            @Override
+            protected void onProgressUpdate(Float... variable) {
+                makeText(context, "Han aplicado un baron sobre " + nombre + " y ha perdido el juego", LENGTH_LONG).show();
+            }
+        }.execute();
     }
 
     public void quitarCartaPrincipe2(String nombre) {
@@ -466,7 +483,7 @@ public class PieSocketListener extends WebSocketListener {
             @Override
             protected void onProgressUpdate(Float... variable) {
                 System.out.println("entrando a hilo de cambio de turno");
-                if (GameActivity.jugadorActual >= 0) {
+                if (GameActivity.jugadorActual >= 0 && GameActivity.jugadorActual != WaitingRoomActivity.usuarios.size()-1) {
                     System.out.println("entrando a condición");
                     if(WaitingRoomActivity.usuarios.get(GameActivity.jugadorActual == -1 ? 0 : GameActivity.jugadorActual).isDoncella()){
                         WaitingRoomActivity.usuarios.get(GameActivity.jugadorActual == -1 ? 0 : GameActivity.jugadorActual).setDoncella(false);
