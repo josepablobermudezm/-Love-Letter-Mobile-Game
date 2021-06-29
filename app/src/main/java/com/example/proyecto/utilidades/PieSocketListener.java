@@ -303,6 +303,26 @@ public class PieSocketListener extends WebSocketListener {
                     Usuario usuarioDoncella = (Usuario) WaitingRoomActivity.usuarios.stream().filter(x -> x.getU_id() == Integer.valueOf(idJugDoncella)).findAny().get();
                     usuarioDoncella.setDoncella(true);
                     break;
+                case "baronJugado":
+                    String idJugadorbaron = arrSplit_2[1];
+                    String idPropiobaron = arrSplit_2[2];
+                    Carta cartaJugadorbaron = new Carta();
+                    Carta cartaPropiabaron = new Carta();
+
+                    //Filtramos los dos usuarios que van a intercambiar cartas
+                    Usuario usuario1Baron = (Usuario) WaitingRoomActivity.usuarios.stream().filter(x -> x.getU_id() == Integer.valueOf(idJugadorbaron)).findAny().get();
+                    Usuario usuario2Baron = (Usuario) WaitingRoomActivity.usuarios.stream().filter(x -> x.getU_id() == Integer.valueOf(idPropiobaron)).findAny().get();
+
+                    // Se obtienen las cartas
+                    cartaJugadorbaron = usuario1Baron.getMazo().get(0) != null ? usuario1Baron.getMazo().get(0) : usuario1Baron.getMazo().get(1);
+                    cartaPropiabaron = usuario2Baron.getMazo().get(0) != null ? usuario2Baron.getMazo().get(0) : usuario2Baron.getMazo().get(1);
+
+                    if(cartaJugadorbaron.getValor() > cartaPropiabaron.getValor()){
+                        usuario2Baron.setEliminado(true);
+                    } else if(cartaJugadorbaron.getValor() < cartaPropiabaron.getValor()){
+                        usuario1Baron.setEliminado(true);
+                    }
+                    break;
                 default:
                     throw new IllegalStateException("Unexpected value: " + arrSplit_2[0]);
             }
