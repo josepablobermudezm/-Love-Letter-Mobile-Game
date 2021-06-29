@@ -1,5 +1,6 @@
 package com.example.proyecto.utilidades;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -325,10 +326,41 @@ public class PieSocketListener extends WebSocketListener {
                         baronJugadoCarta(usuario1Baron.getU_alias());
                     }
                     break;
+
+                case "sacerdoteJugado":
+                    String idSacerdote = arrSplit_2[1];
+                    String nombreCarta = arrSplit_2[2];
+                    String valorCarta = arrSplit_2[3];
+                    String nombreJugador = arrSplit_2[4];
+                    Usuario usuarioSacerdote = (Usuario) WaitingRoomActivity.usuarios.stream().filter(x -> x.getU_id() == Integer.valueOf(idSacerdote)).findAny().get();
+                    //Muestra la carta del usuario que aplico el sacerdote
+                    if(usuario.getU_id() == usuarioSacerdote.getU_id()){
+                        sacerdoteJugado(nombreCarta, valorCarta, nombreJugador);
+                    }
+
+                    break;
+
                 default:
                     throw new IllegalStateException("Unexpected value: " + arrSplit_2[0]);
             }
         }
+    }
+
+    public void sacerdoteJugado(String carta, String valor, String nombre) {
+        new AsyncTask<String, Float, Integer>() {
+            @Override
+            protected Integer doInBackground(String... strings) {
+                publishProgress();
+                return null;
+            }
+
+            @Override
+            protected void onProgressUpdate(Float... variable) {
+                AlertDialog.Builder alerta = new AlertDialog.Builder(context);
+                alerta.setMessage("La carta que tiene "+ nombre +" es "+ carta + " con un valor de "+ valor).setNegativeButton("Aceptar", null).create().show();
+                //makeText(context, "La carta que tiene "+ nombre +" es "+ carta + " con un valor de "+ valor, LENGTH_LONG).show();
+            }
+        }.execute();
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -470,6 +502,8 @@ public class PieSocketListener extends WebSocketListener {
             }
         }.execute();
     }
+
+
 
     public void cambioTurnoText() {
         new AsyncTask<String, Float, Integer>() {
