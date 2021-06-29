@@ -98,7 +98,6 @@
                     android:id="@+id/mazo2"
                     android:layout_width="63dp"
                     android:layout_height="99.5dp"
-                    android:onClick="repartir"
                     android:src="@drawable/escudoinactivo"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -157,20 +156,25 @@
                     app:layout_constraintVertical_bias="0.137"
                     app:srcCompat="@drawable/arrow" />
 
-                <LinearLayout
-                    android:id="@+id/cartasContainer"
-                    android:background="@drawable/customborder"
-                    android:layout_width="match_parent"
-                    android:layout_height="120dp"
-                    android:onClick="cartasJugadas"
-                    android:orientation="horizontal"
-                    android:visibility="visible"
+                <HorizontalScrollView
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/mazo"
-                    app:layout_constraintVertical_bias="0.215" />
+                    android:layout_width="match_parent"
+                    android:layout_height="120dp"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintVertical_bias="0.215"
+                    android:onClick="cartasJugadas"
+                    android:background="@drawable/customborder">
+                    <LinearLayout
+                        android:id="@+id/cartasContainer"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal"
+                        android:visibility="visible" />
+                </HorizontalScrollView>
+
 
                 <HorizontalScrollView
                     android:id="@+id/ScrollHorizontal"
@@ -195,6 +199,7 @@
                         app:layout_constraintVertical_bias="0.473">
                     </LinearLayout>
                 </HorizontalScrollView>
+
             </androidx.constraintlayout.widget.ConstraintLayout>
         </LinearLayout>
     </LinearLayout>

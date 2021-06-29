@@ -360,6 +360,7 @@ public class PieSocketListener extends WebSocketListener {
                 //alerta.setMessage("La carta que tiene "+ nombre +" es "+ carta + " con un valor de "+ valor).setNegativeButton("Aceptar", null).create().show();
                 makeText(context, "La carta que tiene "+ nombre +" es "+ carta + " con un valor de "+ valor, LENGTH_LONG).show();
             }
+
         }.execute();
     }
 
