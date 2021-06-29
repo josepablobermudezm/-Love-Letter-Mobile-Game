@@ -73,6 +73,7 @@ public class GameActivity extends AppCompatActivity {
     public static boolean reyMode = false;
     public static boolean principeMode = false;
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -344,6 +345,7 @@ public class GameActivity extends AppCompatActivity {
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     public void cartasJugadas(View view) {
         if (arrow1.getVisibility() == View.VISIBLE) {
             sacarCarta(img1, 0, arrow1);
@@ -352,6 +354,7 @@ public class GameActivity extends AppCompatActivity {
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     public void sacarCarta(ImageView img, int valor, ImageView arrow) {
         boolean puedeVotar = true;
         if((Usuario.usuarioLogueado.getMazo().get(0).getNombre().equals("condesa") || Usuario.usuarioLogueado.getMazo().get(1).getNombre().equals("condesa")) &&
@@ -410,28 +413,33 @@ public class GameActivity extends AppCompatActivity {
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     private void ListaJugadoresButton(){
-        for(Usuario u : WaitingRoomActivity.usuarios){
-            if((u.getU_id() != Usuario.usuarioLogueado.getU_id() || principeMode) && !u.isEliminado() && !u.isDoncella()){
-                Button button = new Button(this);
-                button.setText(u.getU_alias());
-                button.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-                setMargins(button, 10, 5, 0, 5);
-                button.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if(reyMode){
-                            listener.enviarMensaje(ws,"reyJugado," + u.getU_id() + "," + Usuario.usuarioLogueado.getU_id());
-                            reyMode = false;
-                        } else if(principeMode){
-                            listener.enviarMensaje(ws,"principeJugado," + u.getU_id());
-                            principeMode = false;
+        if(WaitingRoomActivity.usuarios.stream().filter(x->x.isDoncella() && !x.isEliminado()).count() < 2 && !principeMode){
+            listener.enviarMensaje(ws, "cambioTurno");
+        }else{
+            for(Usuario u : WaitingRoomActivity.usuarios){
+                if((u.getU_id() != Usuario.usuarioLogueado.getU_id() || principeMode) && !u.isEliminado() && !u.isDoncella()){
+                    Button button = new Button(this);
+                    button.setText(u.getU_alias());
+                    button.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+                    setMargins(button, 10, 5, 0, 5);
+                    button.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            if(reyMode){
+                                listener.enviarMensaje(ws,"reyJugado," + u.getU_id() + "," + Usuario.usuarioLogueado.getU_id());
+                                reyMode = false;
+                            } else if(principeMode){
+                                listener.enviarMensaje(ws,"principeJugado," + u.getU_id());
+                                principeMode = false;
+                            }
+                            listener.enviarMensaje(ws, "cambioTurno");
+                            ScrollHorizontal.setVisibility(View.INVISIBLE);
                         }
-                        listener.enviarMensaje(ws, "cambioTurno");
-                        ScrollHorizontal.setVisibility(View.INVISIBLE);
-                    }
-                });
-                parentJugadores.addView(button);
+                    });
+                    parentJugadores.addView(button);
+                }
             }
         }
     }
