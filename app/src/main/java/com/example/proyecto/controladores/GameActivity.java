@@ -74,6 +74,7 @@ public class GameActivity extends AppCompatActivity {
     public static boolean principeMode = false;
     public static boolean baronMode = false;
     public static boolean sacerdoteMode = false;
+    public static boolean turnoJugado = false;
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
@@ -408,8 +409,10 @@ public class GameActivity extends AppCompatActivity {
 
             Usuario.usuarioLogueado.getMazo().set(valor, null);
 
-            if(!cancillerMode && !reyMode && !principeMode && !baronMode && !sacerdoteMode){
+            if(!cancillerMode && !reyMode && !principeMode && !baronMode && !sacerdoteMode && !turnoJugado){
+                System.out.println("entrando a aquí sdjfkj");
                 listener.enviarMensaje(ws, "cambioTurno");
+                turnoJugado = false;
             }
             listener.enviarMensaje(ws, "SacarCarta," + Usuario.usuarioLogueado.getU_id() + "," + valor);
         } else {
@@ -440,6 +443,7 @@ public class GameActivity extends AppCompatActivity {
             principeMode = false;
             cancillerMode = false;
             baronMode = false;
+            turnoJugado = true;
             System.out.println("entrando a cambio de turno de carta sin efecto");
         } else {
             for (Usuario u : WaitingRoomActivity.usuarios) {
