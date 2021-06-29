@@ -356,9 +356,9 @@ public class PieSocketListener extends WebSocketListener {
 
             @Override
             protected void onProgressUpdate(Float... variable) {
-                AlertDialog.Builder alerta = new AlertDialog.Builder(context);
-                alerta.setMessage("La carta que tiene "+ nombre +" es "+ carta + " con un valor de "+ valor).setNegativeButton("Aceptar", null).create().show();
-                //makeText(context, "La carta que tiene "+ nombre +" es "+ carta + " con un valor de "+ valor, LENGTH_LONG).show();
+                //AlertDialog.Builder alerta = new AlertDialog.Builder(context);
+                //alerta.setMessage("La carta que tiene "+ nombre +" es "+ carta + " con un valor de "+ valor).setNegativeButton("Aceptar", null).create().show();
+                makeText(context, "La carta que tiene "+ nombre +" es "+ carta + " con un valor de "+ valor, LENGTH_LONG).show();
             }
         }.execute();
     }
