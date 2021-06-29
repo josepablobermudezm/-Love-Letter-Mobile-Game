@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="cartas_array">
+        <item>princesa</item>
+        <item>rey</item>
+        <item>condesa</item>
+        <item>espia</item>
+        <item>baron</item>
+        <item>sacerdote</item>
+        <item>doncella</item>
+        <item>canciller</item>
+        <item>principe</item>
+    </string-array>
+</resources>

@@ -1,5 +1,7 @@
 package com.example.proyecto.controladores;
 
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.hardware.SensorManager;
 import android.os.AsyncTask;
@@ -75,6 +77,7 @@ public class GameActivity extends AppCompatActivity {
     public static boolean baronMode = false;
     public static boolean sacerdoteMode = false;
     public static boolean turnoJugado = false;
+    public static boolean modoGuardia = false;
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
@@ -405,6 +408,11 @@ public class GameActivity extends AppCompatActivity {
                 ListaJugadoresButton();
             } else if (Usuario.usuarioLogueado.getMazo().get(valor).getNombre().equals("espia")) {
                 listener.enviarMensaje(ws, "espiaJugado," + Usuario.usuarioLogueado.getU_id());
+            }else if(Usuario.usuarioLogueado.getMazo().get(valor).getNombre().equals("espia")){
+                modoGuardia = true;
+                ScrollHorizontal.setVisibility(View.VISIBLE);
+                parentJugadores.removeAllViews();
+                ListaJugadoresButton();
             }
 
             Usuario.usuarioLogueado.getMazo().set(valor, null);
@@ -443,6 +451,7 @@ public class GameActivity extends AppCompatActivity {
             principeMode = false;
             cancillerMode = false;
             baronMode = false;
+            modoGuardia = false;
             turnoJugado = true;
             System.out.println("entrando a cambio de turno de carta sin efecto");
         } else {
@@ -472,6 +481,9 @@ public class GameActivity extends AppCompatActivity {
 
                                 sacerdoteMode = false;
                             }
+                            else if(modoGuardia){
+                                onCreateDialog();
+                            }
                             listener.enviarMensaje(ws, "cambioTurno");
                             ScrollHorizontal.setVisibility(View.INVISIBLE);
                         }
@@ -480,5 +492,17 @@ public class GameActivity extends AppCompatActivity {
                 }
             }
         }
+    }
+
+    public Dialog onCreateDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(GameActivity.this);
+        builder.setTitle("Selecciona una carta")
+                .setItems(R.array.cartas_array, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        System.out.println("carta seleccionada: ");
+                        System.out.println(which);
+                    }
+                });
+        return builder.create();
     }
 }

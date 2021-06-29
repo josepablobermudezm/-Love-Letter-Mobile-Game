@@ -140,16 +140,9 @@ public class PieSocketListener extends WebSocketListener {
                 case "agregarCarta":
 
                     //validando la carta del espia
-                    WaitingRoomActivity.usuarios.forEach(x-> System.out.println(x.isEspia() + " " + x.getU_alias()));
-                    System.out.println(WaitingRoomActivity.usuarios.stream().filter(x -> x.isEspia() && !x.isEliminado()).count() + " cantidad de usuarios espías no eliminados");
-                    System.out.println(usuario.getMazoCentral().size() + " cantidad de cartas en el mazo");
-                    System.out.println("estoy afuera");
-
                     if(((usuario.getMazoCentral().size() == 0) || (WaitingRoomActivity.usuarios.stream().filter(x -> !x.isEliminado()).count() == 1))
                             && (WaitingRoomActivity.usuarios.stream().filter(x -> x.isEspia() && !x.isEliminado()).count() == 1)){
-                        System.out.println("estoy adentro");
                         WaitingRoomActivity.usuarios.stream().filter(x->x.isEspia()).findAny().get().setFicha(WaitingRoomActivity.usuarios.stream().filter(x->x.isEspia()).findAny().get().getFicha()+1);
-                        System.out.println(WaitingRoomActivity.usuarios.stream().filter(x->x.isEspia()).findAny().get().getFicha() + "espía cantidad");
                     }
 
                     String id2 = arrSplit_2[1];
@@ -185,17 +178,11 @@ public class PieSocketListener extends WebSocketListener {
                     break;
                 case "cambioTurno":
                     //validando la carta del espia
-                    WaitingRoomActivity.usuarios.forEach(x-> System.out.println(x.isEspia() + " " + x.getU_alias()));
-                    System.out.println("estoy afuera");
                     if(((usuario.getMazoCentral().size() == 0) || (WaitingRoomActivity.usuarios.stream().filter(x -> !x.isEliminado()).count() == 1))
                             && (WaitingRoomActivity.usuarios.stream().filter(x -> x.isEspia() && !x.isEliminado()).count() == 1)){
-                        System.out.println("estoy adentro");
                         WaitingRoomActivity.usuarios.stream().filter(x->x.isEspia()).findAny().get().setFicha(WaitingRoomActivity.usuarios.stream().filter(x->x.isEspia()).findAny().get().getFicha()+1);
-                        System.out.println(WaitingRoomActivity.usuarios.stream().filter(x->x.isEspia()).findAny().get().getFicha() + "espía cantidad");
                     }
-                    System.out.println(GameActivity.jugadorActual + " tamaño");
                     GameActivity.jugadorActual++;
-                    System.out.println(GameActivity.jugadorActual + " tamaño después");
                     if (GameActivity.jugadorActual <= WaitingRoomActivity.usuarios.size() - 1 &&
                             WaitingRoomActivity.usuarios.get(GameActivity.jugadorActual).isEliminado()) {
                         GameActivity.jugadorActual++;
@@ -204,7 +191,6 @@ public class PieSocketListener extends WebSocketListener {
                         }
                     }
                     if (WaitingRoomActivity.usuarios.size() - 1 <= GameActivity.jugadorActual) {
-                        System.out.println("entra a condición #1");
                         cambioTurnoText();
                     }
                     if (GameActivity.jugadorActual != -1) {
@@ -282,7 +268,6 @@ public class PieSocketListener extends WebSocketListener {
                     usuario2.getMazo().set(0, cartaJugador); // usuario2 soy yo
                     usuario1.getMazo().set(1, null);
                     usuario2.getMazo().set(1, null);
-
                     break;
                 case "SacarCarta":
                     String ID = arrSplit_2[1];
@@ -362,11 +347,8 @@ public class PieSocketListener extends WebSocketListener {
                     }
                     break;
                 case "espiaJugado":
-                    System.out.println("braaaaah");
                     String idJugadorEspia = arrSplit_2[1];
-                    System.out.println(idJugadorEspia);
                     Usuario usuarioespia = (Usuario) WaitingRoomActivity.usuarios.stream().filter(x -> x.getU_id() == Integer.valueOf(idJugadorEspia)).findAny().get();
-                    System.out.println(usuarioespia);
                     usuarioespia.setEspia(true);
                     break;
                 default:
