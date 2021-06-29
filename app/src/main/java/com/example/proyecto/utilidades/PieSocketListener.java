@@ -173,9 +173,8 @@ public class PieSocketListener extends WebSocketListener {
                     //validando la carta del espia
                     WaitingRoomActivity.usuarios.forEach(x-> System.out.println(x.isEspia() + " " + x.getU_alias()));
                     System.out.println("estoy afuera");
-                    if((WaitingRoomActivity.usuarios.stream().filter(x -> x.isEspia()).count() == 1)
-                            && ((usuario.getMazoCentral().size() == 0) || (WaitingRoomActivity.usuarios.stream().filter(x -> !x.isEliminado()).count() == 1))
-                            && !WaitingRoomActivity.usuarios.stream().filter(x -> x.isEspia()).findAny().get().isEliminado()){
+                    if(((usuario.getMazoCentral().size() == 0) || (WaitingRoomActivity.usuarios.stream().filter(x -> !x.isEliminado()).count() == 1))
+                            && (WaitingRoomActivity.usuarios.stream().filter(x -> x.isEspia() && !x.isEliminado()).count() == 1)){
                         System.out.println("estoy adentro");
                         WaitingRoomActivity.usuarios.stream().filter(x->x.isEspia()).findAny().get().setFicha(WaitingRoomActivity.usuarios.stream().filter(x->x.isEspia()).findAny().get().getFicha()+1);
                         System.out.println(WaitingRoomActivity.usuarios.stream().filter(x->x.isEspia()).findAny().get().getFicha() + "espía cantidad");
@@ -529,9 +528,7 @@ public class PieSocketListener extends WebSocketListener {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             protected void onProgressUpdate(Float... variable) {
-                System.out.println("entrando a hilo de cambio de turno");
                 if (GameActivity.jugadorActual >= 0) {
-                    System.out.println("entrando a condición");
                     if (WaitingRoomActivity.usuarios.get(GameActivity.jugadorActual == -1 ? 0 :
                             GameActivity.jugadorActual != WaitingRoomActivity.usuarios.size() ?
                                     GameActivity.jugadorActual : 0).isDoncella()) {
@@ -541,13 +538,9 @@ public class PieSocketListener extends WebSocketListener {
                             GameActivity.jugadorActual != WaitingRoomActivity.usuarios.size() ?
                                     GameActivity.jugadorActual : 0).getU_alias());
                     if (WaitingRoomActivity.usuarios.size() - 1 <= GameActivity.jugadorActual) {
-                        System.out.println("entrando a condición #5");
                         GameActivity.jugadorActual = -1;
                     }
                 }
-                WaitingRoomActivity.usuarios.forEach(x -> {
-                    System.out.println(x.getU_alias() + " " + x.isDoncella());
-                });
             }
         }.execute();
     }
