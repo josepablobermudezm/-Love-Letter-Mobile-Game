@@ -172,9 +172,11 @@ public class PieSocketListener extends WebSocketListener {
                 case "cambioTurno":
                     //validando la carta del espia
                     WaitingRoomActivity.usuarios.forEach(x-> System.out.println(x.isEspia() + " " + x.getU_alias()));
+                    System.out.println("estoy afuera");
                     if((WaitingRoomActivity.usuarios.stream().filter(x -> x.isEspia()).count() == 1)
                             && ((usuario.getMazoCentral().size() == 0) || (WaitingRoomActivity.usuarios.stream().filter(x -> !x.isEliminado()).count() == 1))
                             && !WaitingRoomActivity.usuarios.stream().filter(x -> x.isEspia()).findAny().get().isEliminado()){
+                        System.out.println("estoy adentro");
                         WaitingRoomActivity.usuarios.stream().filter(x->x.isEspia()).findAny().get().setFicha(WaitingRoomActivity.usuarios.stream().filter(x->x.isEspia()).findAny().get().getFicha()+1);
                         System.out.println(WaitingRoomActivity.usuarios.stream().filter(x->x.isEspia()).findAny().get().getFicha() + "espía cantidad");
                     }
@@ -345,8 +347,11 @@ public class PieSocketListener extends WebSocketListener {
                     }
                     break;
                 case "espiaJugado":
+                    System.out.println("braaaaah");
                     String idJugadorEspia = arrSplit_2[1];
+                    System.out.println(idJugadorEspia);
                     Usuario usuarioespia = (Usuario) WaitingRoomActivity.usuarios.stream().filter(x -> x.getU_id() == Integer.valueOf(idJugadorEspia)).findAny().get();
+                    System.out.println(usuarioespia);
                     usuarioespia.setEspia(true);
                     break;
                 default:
@@ -512,8 +517,6 @@ public class PieSocketListener extends WebSocketListener {
             }
         }.execute();
     }
-
-
 
     public void cambioTurnoText() {
         new AsyncTask<String, Float, Integer>() {
