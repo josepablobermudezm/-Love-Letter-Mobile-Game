@@ -417,7 +417,7 @@ public class GameActivity extends AppCompatActivity {
 
             Usuario.usuarioLogueado.getMazo().set(valor, null);
 
-            if(!cancillerMode && !reyMode && !principeMode && !baronMode && !sacerdoteMode && !turnoJugado){
+            if(!cancillerMode && !reyMode && !principeMode && !baronMode && !sacerdoteMode && modoGuardia && !turnoJugado){
                 System.out.println("entrando a aquí sdjfkj");
                 listener.enviarMensaje(ws, "cambioTurno");
             }
@@ -482,7 +482,10 @@ public class GameActivity extends AppCompatActivity {
                                 sacerdoteMode = false;
                             }
                             else if(modoGuardia){
+                                System.out.println("entrando a metodo de guardia");
                                 onCreateDialog();
+
+                                modoGuardia = false;
                             }
                             listener.enviarMensaje(ws, "cambioTurno");
                             ScrollHorizontal.setVisibility(View.INVISIBLE);
