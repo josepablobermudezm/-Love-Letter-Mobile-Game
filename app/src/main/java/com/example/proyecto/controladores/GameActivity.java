@@ -421,7 +421,7 @@ public class GameActivity extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.N)
     private void ListaJugadoresButton(){
         System.out.println(WaitingRoomActivity.usuarios.stream().filter(x->x.isDoncella() && !x.isEliminado()).count() + "< 2 && " + !principeMode);
-        if(WaitingRoomActivity.usuarios.stream().filter(x->x.isDoncella() && !x.isEliminado()).count() < 2 && !principeMode){
+        if(WaitingRoomActivity.usuarios.stream().filter(x->!x.isDoncella() || !x.isEliminado()).count() < 2 && !principeMode){
             System.out.println("entrando al if");
             listener.enviarMensaje(ws, "cambioTurno");
         }else{
