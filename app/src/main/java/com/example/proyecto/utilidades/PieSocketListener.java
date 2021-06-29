@@ -170,6 +170,9 @@ public class PieSocketListener extends WebSocketListener {
                     }
                     break;
                 case "cambioTurno":
+                    WaitingRoomActivity.usuarios.forEach(x->{
+                        System.out.println(x.getU_alias() + " " + x.isDoncella());
+                    });
                     GameActivity.jugadorActual++;
                     if (WaitingRoomActivity.usuarios.get(GameActivity.jugadorActual).isEliminado()) {
                         GameActivity.jugadorActual++;
@@ -439,6 +442,7 @@ public class PieSocketListener extends WebSocketListener {
                 return null;
             }
 
+            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             protected void onProgressUpdate(Float... variable) {
                 System.out.println("entrando a hilo de cambio de turno");
@@ -453,7 +457,9 @@ public class PieSocketListener extends WebSocketListener {
                         GameActivity.jugadorActual = -1;
                     }
                 }
-
+                WaitingRoomActivity.usuarios.forEach(x->{
+                    System.out.println(x.getU_alias() + " " + x.isDoncella());
+                });
             }
         }.execute();
     }
