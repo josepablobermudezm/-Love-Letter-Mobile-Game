@@ -15,6 +15,7 @@ public class Usuario implements Serializable {
     private boolean turno = false;
     private boolean eliminado = false;
     private int edad;
+    private boolean doncella = false;
 
     public Usuario(int u_id, int u_cantidadPartidasJugadas, int u_cantidadPartidasGanadas, int u_cantidadAmigos, int u_nivel, int u_experiencia, String u_alias, String u_password, String u_rol, String u_picture, String u_fechaNacimiento) {
         this.u_id = u_id;
@@ -34,6 +35,14 @@ public class Usuario implements Serializable {
     public static class ChildClass implements Serializable {
 
         public ChildClass() {}
+    }
+
+    public boolean isDoncella() {
+        return doncella;
+    }
+
+    public void setDoncella(boolean doncella) {
+        this.doncella = doncella;
     }
 
     public ArrayList<Carta> getMazoOpcional() {

@@ -73,7 +73,6 @@ public class GameActivity extends AppCompatActivity {
     public static boolean reyMode = false;
     public static boolean principeMode = false;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -224,9 +223,6 @@ public class GameActivity extends AppCompatActivity {
                                 }
                             }
 
-
-
-
                         } else {
                             AlertDialog.Builder alerta = new AlertDialog.Builder(GameActivity.this);
                             alerta.setMessage("Fallo en la partida").setNegativeButton("Reintentar", null).create().show();
@@ -236,7 +232,6 @@ public class GameActivity extends AppCompatActivity {
                     }
                 }
             };
-
 
             CartaRequest r = new CartaRequest(respuesta);
             RequestQueue cola = Volley.newRequestQueue(GameActivity.this);
@@ -389,6 +384,8 @@ public class GameActivity extends AppCompatActivity {
                 principeMode = true;
                 parentJugadores.removeAllViews();
                 ListaJugadoresButton();
+            } else if(Usuario.usuarioLogueado.getMazo().get(valor).getNombre().equals("doncella")){
+                listener.enviarMensaje(ws, "doncellaJugada," + Usuario.usuarioLogueado.getU_id());
             }
             Usuario.usuarioLogueado.getMazo().set(valor, null);
             if(!cancillerMode && !reyMode && !principeMode){
@@ -415,7 +412,7 @@ public class GameActivity extends AppCompatActivity {
 
     private void ListaJugadoresButton(){
         for(Usuario u : WaitingRoomActivity.usuarios){
-            if((u.getU_id() != Usuario.usuarioLogueado.getU_id() || principeMode) && !u.isEliminado()){
+            if((u.getU_id() != Usuario.usuarioLogueado.getU_id() || principeMode) && !u.isEliminado() && !u.isDoncella()){
                 Button button = new Button(this);
                 button.setText(u.getU_alias());
                 button.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));

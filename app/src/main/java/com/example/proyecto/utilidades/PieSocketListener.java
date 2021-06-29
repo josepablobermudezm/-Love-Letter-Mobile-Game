@@ -170,30 +170,18 @@ public class PieSocketListener extends WebSocketListener {
                     }
                     break;
                 case "cambioTurno":
-                    System.out.println(usuario.getMazoOpcional().size() + " mazo opcional");
-                    System.out.println(usuario.getMazoCentral().size() + " mazo central");
                     GameActivity.jugadorActual++;
-                    System.out.println(GameActivity.jugadorActual);
                     if (WaitingRoomActivity.usuarios.get(GameActivity.jugadorActual).isEliminado()) {
-                        System.out.println("entrando a condición #1");
                         GameActivity.jugadorActual++;
-                        System.out.println(GameActivity.jugadorActual);
                         if (WaitingRoomActivity.usuarios.size() == GameActivity.jugadorActual) {
-                            System.out.println("entrando a condición #2");
                             GameActivity.jugadorActual = 0;
-                            System.out.println(GameActivity.jugadorActual);
                         }
                     }
-                    System.out.println(WaitingRoomActivity.usuarios.size() + " == " + GameActivity.jugadorActual);
                     if (WaitingRoomActivity.usuarios.size() - 1 <= GameActivity.jugadorActual) {
-                        System.out.println("entrando a condición #3");
                         cambioTurnoText();
-                        System.out.println(GameActivity.jugadorActual);
                     }
                     if (GameActivity.jugadorActual != -1) {
-                        System.out.println("entrando a condición #4");
                         cambioTurnoText();
-                        System.out.println(GameActivity.jugadorActual);
                     }
                     break;
                 case "princesaJugada":
@@ -306,6 +294,11 @@ public class PieSocketListener extends WebSocketListener {
                     if (cartaJug.getNombre().equals("princesa")) {
                         aplicarPrincesa(idJug, "principe");
                     }
+                    break;
+                case "doncellaJugada":
+                    String idJugDoncella = arrSplit_2[1];
+                    Usuario usuarioDoncella = (Usuario) WaitingRoomActivity.usuarios.stream().filter(x -> x.getU_id() == Integer.valueOf(idJugDoncella)).findAny().get();
+                    usuarioDoncella.setDoncella(true);
                     break;
                 default:
                     throw new IllegalStateException("Unexpected value: " + arrSplit_2[0]);
@@ -451,6 +444,9 @@ public class PieSocketListener extends WebSocketListener {
                 System.out.println("entrando a hilo de cambio de turno");
                 if (GameActivity.jugadorActual >= 0) {
                     System.out.println("entrando a condición");
+                    if(WaitingRoomActivity.usuarios.get(GameActivity.jugadorActual == -1 ? 0 : GameActivity.jugadorActual).isDoncella()){
+                        WaitingRoomActivity.usuarios.get(GameActivity.jugadorActual == -1 ? 0 : GameActivity.jugadorActual).setDoncella(false);
+                    }
                     txv_turno.setText(WaitingRoomActivity.usuarios.get(GameActivity.jugadorActual == -1 ? 0 : GameActivity.jugadorActual).getU_alias());
                     if (WaitingRoomActivity.usuarios.size() - 1 <= GameActivity.jugadorActual) {
                         System.out.println("entrando a condición #5");
