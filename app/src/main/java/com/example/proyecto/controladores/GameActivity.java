@@ -408,7 +408,7 @@ public class GameActivity extends AppCompatActivity {
                 ListaJugadoresButton();
             } else if (Usuario.usuarioLogueado.getMazo().get(valor).getNombre().equals("espia")) {
                 listener.enviarMensaje(ws, "espiaJugado," + Usuario.usuarioLogueado.getU_id());
-            }else if(Usuario.usuarioLogueado.getMazo().get(valor).getNombre().equals("espia")){
+            }else if(Usuario.usuarioLogueado.getMazo().get(valor).getNombre().equals("guardia")){
                 modoGuardia = true;
                 ScrollHorizontal.setVisibility(View.VISIBLE);
                 parentJugadores.removeAllViews();
