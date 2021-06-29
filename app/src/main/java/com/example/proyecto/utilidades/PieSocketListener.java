@@ -179,8 +179,9 @@ public class PieSocketListener extends WebSocketListener {
                         WaitingRoomActivity.usuarios.stream().filter(x->x.isEspia()).findAny().get().setFicha(WaitingRoomActivity.usuarios.stream().filter(x->x.isEspia()).findAny().get().getFicha()+1);
                         System.out.println(WaitingRoomActivity.usuarios.stream().filter(x->x.isEspia()).findAny().get().getFicha() + "espía cantidad");
                     }
-
+                    System.out.println(GameActivity.jugadorActual + " tamaño");
                     GameActivity.jugadorActual++;
+                    System.out.println(GameActivity.jugadorActual + " tamaño después");
                     if (GameActivity.jugadorActual <= WaitingRoomActivity.usuarios.size() - 1 &&
                             WaitingRoomActivity.usuarios.get(GameActivity.jugadorActual).isEliminado()) {
                         GameActivity.jugadorActual++;
@@ -189,6 +190,7 @@ public class PieSocketListener extends WebSocketListener {
                         }
                     }
                     if (WaitingRoomActivity.usuarios.size() - 1 <= GameActivity.jugadorActual) {
+                        System.out.println("entra a condición #1");
                         cambioTurnoText();
                     }
                     if (GameActivity.jugadorActual != -1) {
