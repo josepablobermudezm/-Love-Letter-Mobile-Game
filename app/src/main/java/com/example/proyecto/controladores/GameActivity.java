@@ -434,6 +434,11 @@ public class GameActivity extends AppCompatActivity {
     private void ListaJugadoresButton() {
         if (WaitingRoomActivity.usuarios.stream().filter(x -> x.isDoncella() || x.isEliminado()).count() == WaitingRoomActivity.usuarios.size()-1 && !principeMode) {
             listener.enviarMensaje(ws, "cambioTurno");
+            sacerdoteMode = false;
+            reyMode = false;
+            principeMode = false;
+            cancillerMode = false;
+            baronMode = false;
         } else {
             for (Usuario u : WaitingRoomActivity.usuarios) {
                 if ((u.getU_id() != Usuario.usuarioLogueado.getU_id() || principeMode) && !u.isEliminado() && !u.isDoncella()) {
