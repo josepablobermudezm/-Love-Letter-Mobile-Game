@@ -73,7 +73,6 @@ public class GameActivity extends AppCompatActivity {
     public static boolean reyMode = false;
     public static boolean principeMode = false;
     public static boolean baronMode = false;
-    public static boolean sacerdoteMode = false;
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
@@ -110,7 +109,7 @@ public class GameActivity extends AppCompatActivity {
 
     private void iniciar() {
         ScrollHorizontal = (HorizontalScrollView) findViewById(R.id.ScrollHorizontal);
-        parentJugadores = (LinearLayout) findViewById(R.id.parentJugadores);
+        parentJugadores =  (LinearLayout) findViewById(R.id.parentJugadores);
         parentLayout2 = (LinearLayout) findViewById(R.id.parentLayout2);
         parentLayout3 = findViewById(R.id.parentLayout3);
         mTextView = (TextView) findViewById(R.id.text);
@@ -183,7 +182,6 @@ public class GameActivity extends AppCompatActivity {
                                     break;
                                 case "rey":
                                     carta.setNombre((String) cartasJson.get(x));
-
                                     carta.setValor(7);
                                     break;
                                 case "condesa":
@@ -202,8 +200,8 @@ public class GameActivity extends AppCompatActivity {
                             int cantidadCartasOpcionales = WaitingRoomActivity.usuarios.size() == 2 ? 3 : 1;
 
                             //enviamos cartas de mazo opcional
-                            for (int i = 0; i < cantidadCartasOpcionales; i++) {
-                                Carta carta = cartas.remove(cartas.size() - 1);
+                            for(int i = 0; i < cantidadCartasOpcionales; i++){
+                                Carta carta = cartas.remove(cartas.size()-1);
                                 for (Usuario u : WaitingRoomActivity.usuarios) {
                                     listener.enviarMensaje(ws, "enviarCartas," + carta.getNombre() + "," + carta.getValor() + "," + u.getU_id()
                                             + ",mazoOpcional");
@@ -261,11 +259,9 @@ public class GameActivity extends AppCompatActivity {
         Collections.sort(WaitingRoomActivity.usuarios, new Comparator<Usuario>() {
             @Override
             public int compare(Usuario p1, Usuario p2) {
-
                 if (p1.getEdad() > p2.getEdad()) {
                     return 1;
                 }
-
                 if (p1.getEdad() < p2.getEdad()) {
                     return -1;
                 }
@@ -278,11 +274,11 @@ public class GameActivity extends AppCompatActivity {
     }
 
     public void repartir(View view) {
-        if (Usuario.usuarioLogueado.getU_id() == WaitingRoomActivity.usuarios.get(jugadorActual == -1 ? WaitingRoomActivity.usuarios.size() - 1 : jugadorActual).getU_id()) {
+        if (Usuario.usuarioLogueado.getU_id() == WaitingRoomActivity.usuarios.get(jugadorActual == -1 ? WaitingRoomActivity.usuarios.size()-1 : jugadorActual).getU_id()) {
             if (img2.getDrawable() == null || img1.getDrawable() == null) {
-                if (cancillerMode) {
+                if(cancillerMode){
                     listener.enviarMensaje(ws, "agregarCarta," + Usuario.usuarioLogueado.getU_id() + ",cancillerMode");
-                } else {
+                }else{
                     listener.enviarMensaje(ws, "agregarCarta," + Usuario.usuarioLogueado.getU_id());
                 }
                 Toast.makeText(view.getContext(), "Es tu turno", Toast.LENGTH_SHORT).show();
@@ -307,25 +303,25 @@ public class GameActivity extends AppCompatActivity {
     }
 
     public void actionCartaGenerico(int valor) {
-        if (Usuario.usuarioLogueado.getU_id() == WaitingRoomActivity.usuarios.get(jugadorActual == -1 ? WaitingRoomActivity.usuarios.size() - 1 : jugadorActual).getU_id()) {
+        if (Usuario.usuarioLogueado.getU_id() == WaitingRoomActivity.usuarios.get(jugadorActual == -1 ? WaitingRoomActivity.usuarios.size()-1 : jugadorActual).getU_id()) {
             String carta1 = "", carta2 = "";
-            if (cancillerMode) {
-                int code = this.getResources().getIdentifier(Usuario.usuarioLogueado.getMazo().get(valor - 1).getNombre(), "drawable", this.getPackageName());
-                if (valor == 1) {
+            if(cancillerMode){
+                int code = this.getResources().getIdentifier(Usuario.usuarioLogueado.getMazo().get(valor-1).getNombre(), "drawable", this.getPackageName());
+                if(valor == 1){
                     img1.setImageDrawable(null);
                     img2.setImageDrawable(null);
                     img3.setImageDrawable(null);
                     img1.setImageResource(code);
                     carta1 = Usuario.usuarioLogueado.getMazo().get(1) != null ? Usuario.usuarioLogueado.getMazo().get(1).getNombre() : "none";
                     carta2 = Usuario.usuarioLogueado.getMazo().get(2) != null ? Usuario.usuarioLogueado.getMazo().get(2).getNombre() : "none";
-                } else if (valor == 2) {
+                } else if(valor == 2){
                     img1.setImageDrawable(null);
                     img2.setImageDrawable(null);
                     img3.setImageDrawable(null);
                     img1.setImageResource(code);
                     carta1 = Usuario.usuarioLogueado.getMazo().get(0) != null ? Usuario.usuarioLogueado.getMazo().get(0).getNombre() : "none";
                     carta2 = Usuario.usuarioLogueado.getMazo().get(2) != null ? Usuario.usuarioLogueado.getMazo().get(2).getNombre() : "none";
-                } else if (valor == 3) {
+                } else if(valor == 3){
                     img1.setImageDrawable(null);
                     img2.setImageDrawable(null);
                     img3.setImageDrawable(null);
@@ -339,7 +335,8 @@ public class GameActivity extends AppCompatActivity {
                 listener.enviarMensaje(ws, "cancillerJugada," + Usuario.usuarioLogueado.getU_id() + "," + valor + "," + carta1 + "," + carta2);
                 listener.enviarMensaje(ws, "cambioTurno");
                 cancillerMode = false;
-            } else if (img2.getDrawable() != null && img1.getDrawable() != null) {
+            }
+            else if (img2.getDrawable() != null && img1.getDrawable() != null) {
                 arrow2.setVisibility(valor == 2 ? View.VISIBLE : View.INVISIBLE);
                 arrow1.setVisibility(valor == 2 ? View.INVISIBLE : View.VISIBLE);
             }
@@ -360,13 +357,13 @@ public class GameActivity extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.N)
     public void sacarCarta(ImageView img, int valor, ImageView arrow) {
         boolean puedeVotar = true;
-        if ((Usuario.usuarioLogueado.getMazo().get(0).getNombre().equals("condesa") || Usuario.usuarioLogueado.getMazo().get(1).getNombre().equals("condesa")) &&
+        if((Usuario.usuarioLogueado.getMazo().get(0).getNombre().equals("condesa") || Usuario.usuarioLogueado.getMazo().get(1).getNombre().equals("condesa")) &&
                 ((Usuario.usuarioLogueado.getMazo().get(0).getNombre().equals("principe") || Usuario.usuarioLogueado.getMazo().get(1).getNombre().equals("principe")) ||
-                        (Usuario.usuarioLogueado.getMazo().get(0).getNombre().equals("rey") || Usuario.usuarioLogueado.getMazo().get(1).getNombre().equals("rey")))
-        ) {
+                (Usuario.usuarioLogueado.getMazo().get(0).getNombre().equals("rey") || Usuario.usuarioLogueado.getMazo().get(1).getNombre().equals("rey")))
+        ){
             puedeVotar = Usuario.usuarioLogueado.getMazo().get(valor).getNombre().equals("condesa") ? true : false;
         }
-        if (puedeVotar) {
+        if(puedeVotar){
             int code = this.getResources().getIdentifier(Usuario.usuarioLogueado.getMazo().get(valor).getNombre(), "drawable", this.getPackageName());
             ImageView imageView = new ImageView(this);
             imageView.setImageResource(code);
@@ -374,43 +371,36 @@ public class GameActivity extends AppCompatActivity {
             img.setImageDrawable(null);
             arrow.setVisibility(View.INVISIBLE);
             cartasContainer.addView(imageView);
-            if (Usuario.usuarioLogueado.getMazo().get(valor).getNombre().equals("princesa")) {
+            if(Usuario.usuarioLogueado.getMazo().get(valor).getNombre().equals("princesa")){
                 listener.enviarMensaje(ws, "princesaJugada," + Usuario.usuarioLogueado.getU_id());
                 Toast.makeText(getApplicationContext(), "Has perdido por haber jugado la princesa", Toast.LENGTH_SHORT).show();
-            } else if (Usuario.usuarioLogueado.getMazo().get(valor).getNombre().equals("canciller")) {
+            } else if(Usuario.usuarioLogueado.getMazo().get(valor).getNombre().equals("canciller")){
                 Toast.makeText(getApplicationContext(), "Pide cartas del mazo", Toast.LENGTH_SHORT).show();
                 cancillerMode = true;
-            } else if (Usuario.usuarioLogueado.getMazo().get(valor).getNombre().equals("rey")) {
+            } else if(Usuario.usuarioLogueado.getMazo().get(valor).getNombre().equals("rey")){
                 ScrollHorizontal.setVisibility(View.VISIBLE);
                 reyMode = true;
                 parentJugadores.removeAllViews();
                 ListaJugadoresButton();
-            } else if (Usuario.usuarioLogueado.getMazo().get(valor).getNombre().equals("principe")) {
+            } else if (Usuario.usuarioLogueado.getMazo().get(valor).getNombre().equals("principe")){
                 ScrollHorizontal.setVisibility(View.VISIBLE);
                 principeMode = true;
                 parentJugadores.removeAllViews();
                 ListaJugadoresButton();
-            } else if (Usuario.usuarioLogueado.getMazo().get(valor).getNombre().equals("doncella")) {
+            } else if(Usuario.usuarioLogueado.getMazo().get(valor).getNombre().equals("doncella")){
                 listener.enviarMensaje(ws, "doncellaJugada," + Usuario.usuarioLogueado.getU_id());
-            } else if (Usuario.usuarioLogueado.getMazo().get(valor).getNombre().equals("baron")) {
+            } else if(Usuario.usuarioLogueado.getMazo().get(valor).getNombre().equals("baron")){
                 ScrollHorizontal.setVisibility(View.VISIBLE);
                 baronMode = true;
                 parentJugadores.removeAllViews();
                 ListaJugadoresButton();
-            } else if (Usuario.usuarioLogueado.getMazo().get(valor).getNombre().equals("sacerdote")) {
-                sacerdoteMode = true;
-                ScrollHorizontal.setVisibility(View.VISIBLE);
-                parentJugadores.removeAllViews();
-                ListaJugadoresButton();
             }
-
-
             Usuario.usuarioLogueado.getMazo().set(valor, null);
-            if (!cancillerMode && !reyMode && !principeMode) {
+            if(!cancillerMode && !reyMode && !principeMode && !baronMode){
                 listener.enviarMensaje(ws, "cambioTurno");
             }
-            listener.enviarMensaje(ws, "SacarCarta," + Usuario.usuarioLogueado.getU_id() + "," + valor);
-        } else {
+            listener.enviarMensaje(ws,"SacarCarta," + Usuario.usuarioLogueado.getU_id() + "," + valor);
+        }else{
             Toast.makeText(getApplicationContext(), "Debes de botar la condesa", Toast.LENGTH_SHORT).show();
         }
     }
@@ -420,7 +410,7 @@ public class GameActivity extends AppCompatActivity {
         return (int) (dps * scale + 0.5f);
     }
 
-    private void setMargins(View view, int left, int top, int right, int bottom) {
+    private void setMargins (View view, int left, int top, int right, int bottom) {
         if (view.getLayoutParams() instanceof ViewGroup.MarginLayoutParams) {
             ViewGroup.MarginLayoutParams p = (ViewGroup.MarginLayoutParams) view.getLayoutParams();
             p.setMargins(left, top, right, bottom);
@@ -429,15 +419,15 @@ public class GameActivity extends AppCompatActivity {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
-    private void ListaJugadoresButton() {
-        System.out.println(WaitingRoomActivity.usuarios.stream().filter(x -> x.isDoncella() && !x.isEliminado()).count() + "< 2 && " + !principeMode);
-        if (WaitingRoomActivity.usuarios.stream().filter(x -> !x.isDoncella() || !x.isEliminado()).count() < 2 && !principeMode) {
+    private void ListaJugadoresButton(){
+        System.out.println(WaitingRoomActivity.usuarios.stream().filter(x->x.isDoncella() && !x.isEliminado()).count() + "< 2 && " + !principeMode);
+        if(WaitingRoomActivity.usuarios.stream().filter(x->!x.isDoncella() || !x.isEliminado()).count() < 2 && !principeMode){
             System.out.println("entrando al if");
             listener.enviarMensaje(ws, "cambioTurno");
-        } else {
+        }else{
             System.out.println("entrnado al else");
-            for (Usuario u : WaitingRoomActivity.usuarios) {
-                if ((u.getU_id() != Usuario.usuarioLogueado.getU_id() || principeMode) && !u.isEliminado() && !u.isDoncella()) {
+            for(Usuario u : WaitingRoomActivity.usuarios){
+                if((u.getU_id() != Usuario.usuarioLogueado.getU_id() || principeMode) && !u.isEliminado() && !u.isDoncella()){
                     Button button = new Button(this);
                     button.setText(u.getU_alias());
                     button.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
@@ -445,22 +435,15 @@ public class GameActivity extends AppCompatActivity {
                     button.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            if (reyMode) {
-                                listener.enviarMensaje(ws, "reyJugado," + u.getU_id() + "," + Usuario.usuarioLogueado.getU_id());
+                            if(reyMode){
+                                listener.enviarMensaje(ws,"reyJugado," + u.getU_id() + "," + Usuario.usuarioLogueado.getU_id());
                                 reyMode = false;
-                            } else if (principeMode) {
-                                listener.enviarMensaje(ws, "principeJugado," + u.getU_id());
+                            } else if(principeMode){
+                                listener.enviarMensaje(ws,"principeJugado," + u.getU_id());
                                 principeMode = false;
-                            } else if (baronMode) {
-                                listener.enviarMensaje(ws, "baronJugado," + u.getU_id() + "," + Usuario.usuarioLogueado.getU_id());
+                            } else if(baronMode){
+                                listener.enviarMensaje(ws,"baronJugado," + u.getU_id()+ "," + Usuario.usuarioLogueado.getU_id());
                                 baronMode = false;
-                            } else if (sacerdoteMode) {
-                                listener.enviarMensaje(ws, "sacerdoteJugado," + Usuario.usuarioLogueado.getU_id() + "," +
-                                        ((u.getMazo().get(0) != null) ? u.getMazo().get(0).getNombre() : u.getMazo().get(1).getNombre()) + "," +
-                                        ((u.getMazo().get(0) != null) ? u.getMazo().get(0).getValor() : u.getMazo().get(1).getValor())+ ","+ u.getU_alias()
-                                );
-
-                                sacerdoteMode = false;
                             }
                             listener.enviarMensaje(ws, "cambioTurno");
                             ScrollHorizontal.setVisibility(View.INVISIBLE);
