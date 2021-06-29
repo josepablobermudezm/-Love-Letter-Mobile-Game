@@ -5,18 +5,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fillViewport="true"
-    >
+    android:fillViewport="true">
 
     <LinearLayout
         android:id="@+id/parentLayout"
         android:layout_width="match_parent"
-        android:background="@color/cardview_dark_background"
         android:layout_height="match_parent"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
+        android:background="@color/cardview_dark_background"
         android:orientation="vertical"
-        >
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp">
 
         <LinearLayout
             android:id="@+id/parentLayout3"
@@ -24,6 +22,7 @@
             android:layout_height="50dp"
             android:layout_gravity="center"
             android:orientation="horizontal">
+
             <TextView
                 android:id="@+id/textView3"
                 android:layout_width="wrap_content"
@@ -45,6 +44,7 @@
                 android:textSize="20sp" />
 
         </LinearLayout>
+
         <LinearLayout
             android:id="@+id/parentLayout2"
             android:layout_width="match_parent"
@@ -156,34 +156,40 @@
                     app:layout_constraintVertical_bias="0.137"
                     app:srcCompat="@drawable/arrow" />
 
-                <HorizontalScrollView
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/mazo"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="120dp"
-                    app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintVertical_bias="0.215"
+                    android:background="@drawable/customborder"
                     android:onClick="cartasJugadas"
-                    android:background="@drawable/customborder">
-                    <LinearLayout
-                        android:id="@+id/cartasContainer"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/mazo"
+                    app:layout_constraintVertical_bias="0.215">
+                    <HorizontalScrollView
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="horizontal"
-                        android:visibility="visible" />
-                </HorizontalScrollView>
+                        android:layout_height="match_parent">
+                        <LinearLayout
+                            android:id="@+id/cartasContainer"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal"
+                            android:visibility="visible" />
+                    </HorizontalScrollView>
+                </LinearLayout>
+
+
 
 
                 <HorizontalScrollView
                     android:id="@+id/ScrollHorizontal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:visibility="invisible"
                     app:layout_constraintBottom_toTopOf="@+id/mazo"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:visibility="invisible">
+                    app:layout_constraintTop_toTopOf="parent">
 
                     <LinearLayout
                         android:id="@+id/parentJugadores"
@@ -196,8 +202,7 @@
                         app:layout_constraintBottom_toTopOf="@+id/mazo"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintVertical_bias="0.473">
-                    </LinearLayout>
+                        app:layout_constraintVertical_bias="0.473"></LinearLayout>
                 </HorizontalScrollView>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
