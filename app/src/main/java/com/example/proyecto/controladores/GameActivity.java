@@ -396,7 +396,7 @@ public class GameActivity extends AppCompatActivity {
                 ListaJugadoresButton();
             }
             Usuario.usuarioLogueado.getMazo().set(valor, null);
-            if(!cancillerMode && !reyMode && !principeMode){
+            if(!cancillerMode && !reyMode && !principeMode && !baronMode){
                 listener.enviarMensaje(ws, "cambioTurno");
             }
             listener.enviarMensaje(ws,"SacarCarta," + Usuario.usuarioLogueado.getU_id() + "," + valor);
