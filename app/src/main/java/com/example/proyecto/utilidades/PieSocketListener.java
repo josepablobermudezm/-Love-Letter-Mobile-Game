@@ -380,7 +380,9 @@ public class PieSocketListener extends WebSocketListener {
                         guardiaJugado(usuario1Guardia.getU_alias(), "false");
                     }
                     GameActivity.modoGuardia = false;
-                    enviarMensaje(ws, "cambioTurno");
+                    if(usuario1Guardia.getU_id() == usuario.getU_id()){
+                        enviarMensaje(ws, "cambioTurno");
+                    }
                     break;
                 default:
                     throw new IllegalStateException("Unexpected value: " + arrSplit_2[0]);
