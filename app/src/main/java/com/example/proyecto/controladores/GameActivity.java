@@ -495,7 +495,9 @@ public class GameActivity extends AppCompatActivity {
                                 dialog.show();
                                 modoGuardia = false;
                             }
-                            listener.enviarMensaje(ws, "cambioTurno");
+                            if(!modoGuardia){
+                                listener.enviarMensaje(ws, "cambioTurno");
+                            }
                             ScrollHorizontal.setVisibility(View.INVISIBLE);
                         }
                     });
