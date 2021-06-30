@@ -492,6 +492,7 @@ public class GameActivity extends AppCompatActivity {
                                         });
 
                                 AlertDialog dialog = builder.create();
+                                dialog.setCancelable(false);
                                 dialog.show();
                             }
                             if(!modoGuardia){
