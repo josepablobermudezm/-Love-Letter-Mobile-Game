@@ -495,6 +495,7 @@ public class GameActivity extends AppCompatActivity {
                                 dialog.show();
                             }
                             if(!modoGuardia){
+                                System.out.println("entrando al cambio de turno que no debería de enrtrar");
                                 listener.enviarMensaje(ws, "cambioTurno");
                             }
                             ScrollHorizontal.setVisibility(View.INVISIBLE);
