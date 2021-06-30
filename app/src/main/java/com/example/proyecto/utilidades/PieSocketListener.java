@@ -352,11 +352,15 @@ public class PieSocketListener extends WebSocketListener {
                     usuarioespia.setEspia(true);
                     break;
                 case "guardiaJugado":
+                    System.out.println("entrando a metodo de guardia");
                     String idJugadorGuardia = arrSplit_2[1];
+                    System.out.println(idJugadorGuardia + " id del usuario");
+                    System.out.println(arrSplit_2[2] + " valor de la carta");
                     String cartaObt = stringCarta(arrSplit_2[2]);
+                    System.out.println(cartaObt + " carta");
                     Carta cartaJugadorGuardia = new Carta();
                     Usuario usuario1Guardia = (Usuario) WaitingRoomActivity.usuarios.stream().filter(x -> x.getU_id() == Integer.valueOf(idJugadorGuardia)).findAny().get();
-
+                    System.out.println(usuario1Guardia.getU_alias());
                     //Filtramos los dos usuarios que van a intercambiar cartas
                     if(usuario.getU_id() == Integer.valueOf(idJugadorGuardia)){
                         cartaJugadorGuardia = usuario1Guardia.getMazo().get(0) != null ? usuario1Guardia.getMazo().get(0) : usuario1Guardia.getMazo().get(1);
@@ -366,8 +370,10 @@ public class PieSocketListener extends WebSocketListener {
                     }
 
                     if(usuario1Guardia.isEliminado()){
+                        System.out.println("condición 1");
                         guardiaJugado(usuario1Guardia.getU_alias());
                     }else{
+                        System.out.println("condición 2");
                         guardiaNotJugado(usuario1Guardia.getU_alias());
                     }
                     break;
@@ -657,6 +663,8 @@ public class PieSocketListener extends WebSocketListener {
     }
 
     public String stringCarta(String valorCarta){
+        System.out.println(valorCarta);
+        System.out.println("retornando");
         switch (valorCarta) {
             case "0":
                 return "princesa";
@@ -676,7 +684,8 @@ public class PieSocketListener extends WebSocketListener {
                 return "canciller";
             case "8":
                 return "principe";
+            default :
+                return "brah";
         }
-        return "";
     }
 }
