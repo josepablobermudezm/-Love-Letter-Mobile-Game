@@ -187,7 +187,6 @@ public class GameActivity extends AppCompatActivity {
                                     break;
                                 case "rey":
                                     carta.setNombre((String) cartasJson.get(x));
-
                                     carta.setValor(7);
                                     break;
                                 case "condesa":
@@ -204,7 +203,7 @@ public class GameActivity extends AppCompatActivity {
                         boolean ok = jsonRespuesta.getBoolean("success");
                         if (ok) {
                             int cantidadCartasOpcionales = WaitingRoomActivity.usuarios.size() == 2 ? 3 : 1;
-/*
+
                             //enviamos cartas de mazo opcional
                             for (int i = 0; i < cantidadCartasOpcionales; i++) {
                                 Carta carta = cartas.remove(cartas.size() - 1);
@@ -212,7 +211,7 @@ public class GameActivity extends AppCompatActivity {
                                     listener.enviarMensaje(ws, "enviarCartas," + carta.getNombre() + "," + carta.getValor() + "," + u.getU_id()
                                             + ",mazoOpcional");
                                 }
-                            }*/
+                            }
 
                             // aquí le damos una carta inicial a cada jugador
                             for (Usuario u : WaitingRoomActivity.usuarios) {
@@ -479,21 +478,16 @@ public class GameActivity extends AppCompatActivity {
                                         ((u.getMazo().get(0) != null) ? u.getMazo().get(0).getNombre() : u.getMazo().get(1).getNombre()) + "," +
                                         ((u.getMazo().get(0) != null) ? u.getMazo().get(0).getValor() : u.getMazo().get(1).getValor())+ ","+ u.getU_alias()
                                 );
-
                                 sacerdoteMode = false;
-                            }
-                            else if(modoGuardia){
+                            } else if(modoGuardia){
                                 System.out.println("entrando a metodo de guardia");
-                                /*AlertDialog.Builder builder = new AlertDialog.Builder(GameActivity.this);
-                                builder.setMessage("R.string.dialog_message")
-                                        .setTitle("R.string.dialog_title");
-                                AlertDialog dialog = builder.create();*/
                                 AlertDialog.Builder builder = new AlertDialog.Builder(GameActivity.this);
                                 builder.setTitle("Selecciona una carta");
                                 builder.setItems(R.array.cartas_array, new DialogInterface.OnClickListener() {
                                             public void onClick(DialogInterface dialog, int which) {
                                                 System.out.println("carta seleccionada: ");
                                                 System.out.println(which);
+                                                listener.enviarMensaje(ws, "guardiaJugado," + "," + Usuario.usuarioLogueado.getU_id() + "," + String.valueOf(which));
                                             }
                                         });
 

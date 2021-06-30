@@ -351,10 +351,66 @@ public class PieSocketListener extends WebSocketListener {
                     Usuario usuarioespia = (Usuario) WaitingRoomActivity.usuarios.stream().filter(x -> x.getU_id() == Integer.valueOf(idJugadorEspia)).findAny().get();
                     usuarioespia.setEspia(true);
                     break;
+                case "guardiaJugado":
+                    String idJugadorGuardia = arrSplit_2[1];
+                    String cartaObt = stringCarta(arrSplit_2[2]);
+                    Carta cartaJugadorGuardia = new Carta();
+                    Usuario usuario1Guardia = (Usuario) WaitingRoomActivity.usuarios.stream().filter(x -> x.getU_id() == Integer.valueOf(idJugadorGuardia)).findAny().get();
+
+                    //Filtramos los dos usuarios que van a intercambiar cartas
+                    if(usuario.getU_id() == Integer.valueOf(idJugadorGuardia)){
+                        cartaJugadorGuardia = usuario1Guardia.getMazo().get(0) != null ? usuario1Guardia.getMazo().get(0) : usuario1Guardia.getMazo().get(1);
+                        if(cartaObt.equals(cartaJugadorGuardia.getNombre())){
+                            usuario1Guardia.setEliminado(true);
+                        }
+                    }
+
+                    if(usuario1Guardia.isEliminado()){
+                        guardiaJugado(usuario1Guardia.getU_alias());
+                    }else{
+                        guardiaNotJugado(usuario1Guardia.getU_alias());
+                    }
+                    break;
                 default:
                     throw new IllegalStateException("Unexpected value: " + arrSplit_2[0]);
             }
         }
+    }
+
+    public void guardiaNotJugado(String nombre) {
+        new AsyncTask<String, Float, Integer>() {
+            @Override
+            protected Integer doInBackground(String... strings) {
+                publishProgress();
+                return null;
+            }
+
+            @Override
+            protected void onProgressUpdate(Float... variable) {
+                //AlertDialog.Builder alerta = new AlertDialog.Builder(context);
+                //alerta.setMessage("La carta que tiene "+ nombre +" es "+ carta + " con un valor de "+ valor).setNegativeButton("Aceptar", null).create().show();
+                makeText(context, "Carta guardia no aplicada, las cartas no son iguales", LENGTH_LONG).show();
+            }
+
+        }.execute();
+    }
+
+    public void guardiaJugado(String nombre) {
+        new AsyncTask<String, Float, Integer>() {
+            @Override
+            protected Integer doInBackground(String... strings) {
+                publishProgress();
+                return null;
+            }
+
+            @Override
+            protected void onProgressUpdate(Float... variable) {
+                //AlertDialog.Builder alerta = new AlertDialog.Builder(context);
+                //alerta.setMessage("La carta que tiene "+ nombre +" es "+ carta + " con un valor de "+ valor).setNegativeButton("Aceptar", null).create().show();
+                makeText(context, "El jugador "+ nombre +" ha sido eliminado por el uso de la carta guardia", LENGTH_LONG).show();
+            }
+
+        }.execute();
     }
 
     public void sacerdoteJugado(String carta, String valor, String nombre) {
@@ -598,5 +654,29 @@ public class PieSocketListener extends WebSocketListener {
     public int calcularPixeles(int dps) {
         final float scale = context.getResources().getDisplayMetrics().density;
         return (int) (dps * scale + 0.5f);
+    }
+
+    public String stringCarta(String valorCarta){
+        switch (valorCarta) {
+            case "0":
+                return "princesa";
+            case "1":
+                return "rey";
+            case "2":
+                return "condesa";
+            case "3":
+                return "espia";
+            case "4":
+                return "baron";
+            case "5":
+                return "sacerdote";
+            case "6":
+                return "doncella";
+            case "7":
+                return "canciller";
+            case "8":
+                return "principe";
+        }
+        return "";
     }
 }
