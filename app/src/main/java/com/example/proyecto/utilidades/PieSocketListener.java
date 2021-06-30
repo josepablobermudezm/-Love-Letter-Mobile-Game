@@ -581,6 +581,9 @@ public class PieSocketListener extends WebSocketListener {
                                     GameActivity.jugadorActual : 0).isDoncella()) {
                         WaitingRoomActivity.usuarios.get(GameActivity.jugadorActual == -1 ? 0 : GameActivity.jugadorActual).setDoncella(false);
                     }
+                    System.out.println("a punto de cambiar el nombre de arriba con: " + WaitingRoomActivity.usuarios.get(GameActivity.jugadorActual == -1 ? 0 :
+                            GameActivity.jugadorActual != WaitingRoomActivity.usuarios.size() ?
+                                    GameActivity.jugadorActual : 0).getU_alias());
                     txv_turno.setText(WaitingRoomActivity.usuarios.get(GameActivity.jugadorActual == -1 ? 0 :
                             GameActivity.jugadorActual != WaitingRoomActivity.usuarios.size() ?
                                     GameActivity.jugadorActual : 0).getU_alias());
