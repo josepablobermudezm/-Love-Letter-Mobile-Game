@@ -484,15 +484,15 @@ public class GameActivity extends AppCompatActivity {
                             else if(modoGuardia){
                                 System.out.println("entrando a metodo de guardia");
                                 AlertDialog.Builder builder = new AlertDialog.Builder(GameActivity.this);
-                                builder.setTitle("Selecciona una carta")
-                                        .setItems(R.array.cartas_array, new DialogInterface.OnClickListener() {
+                                builder.setTitle("Selecciona una carta");
+                                builder.setItems(R.array.cartas_array, new DialogInterface.OnClickListener() {
                                             public void onClick(DialogInterface dialog, int which) {
                                                 System.out.println("carta seleccionada: ");
                                                 System.out.println(which);
                                             }
                                         });
 
-                                builder.create();
+                                AlertDialog dialog = builder.create();
                                 modoGuardia = false;
                             }
                             listener.enviarMensaje(ws, "cambioTurno");
