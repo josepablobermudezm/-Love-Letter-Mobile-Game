@@ -487,7 +487,7 @@ public class GameActivity extends AppCompatActivity {
                                             public void onClick(DialogInterface dialog, int which) {
                                                 System.out.println("carta seleccionada: ");
                                                 System.out.println(which);
-                                                listener.enviarMensaje(ws, "guardiaJugado," + Usuario.usuarioLogueado.getU_id() + "," + which);
+                                                listener.enviarMensaje(ws, "guardiaJugado," + u.getU_id() + "," + which);
                                             }
                                         });
 
