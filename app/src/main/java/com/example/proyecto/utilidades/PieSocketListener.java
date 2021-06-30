@@ -177,9 +177,6 @@ public class PieSocketListener extends WebSocketListener {
                     }
                     break;
                 case "cambioTurno":
-
-                    System.out.println("entrando a cambio de turno case");
-
                     //validando la carta del espia
                     if(((usuario.getMazoCentral().size() == 0) || (WaitingRoomActivity.usuarios.stream().filter(x -> !x.isEliminado()).count() == 1))
                             && (WaitingRoomActivity.usuarios.stream().filter(x -> x.isEspia() && !x.isEliminado()).count() == 1)){
@@ -355,28 +352,19 @@ public class PieSocketListener extends WebSocketListener {
                     usuarioespia.setEspia(true);
                     break;
                 case "guardiaJugado":
-                    System.out.println("entrando a metodo de guardia");
                     String idJugadorGuardia = arrSplit_2[1];
-                    System.out.println(idJugadorGuardia + " id del usuario");
-                    System.out.println(arrSplit_2[2] + " valor de la carta");
                     String cartaObt = stringCarta(arrSplit_2[2]);
-                    System.out.println(cartaObt + " carta");
                     Carta cartaJugadorGuardia = new Carta();
                     Usuario usuario1Guardia = (Usuario) WaitingRoomActivity.usuarios.stream().filter(x -> x.getU_id() == Integer.valueOf(idJugadorGuardia)).findAny().get();
-                    System.out.println(usuario1Guardia.getU_alias());
-                    System.out.println(usuario1Guardia.getMazo());
                     //Filtramos los dos usuarios que van a intercambiar cartas
                     cartaJugadorGuardia = usuario1Guardia.getMazo().get(0) != null ? usuario1Guardia.getMazo().get(0) : usuario1Guardia.getMazo().get(1);
-                    System.out.println(cartaObt + " == " + cartaJugadorGuardia.getNombre());
                     if(cartaObt.equals(cartaJugadorGuardia.getNombre())){
                         usuario1Guardia.setEliminado(true);
                     }
 
                     if(usuario1Guardia.isEliminado()){
-                        System.out.println("condición 1");
                         guardiaJugado(usuario1Guardia.getU_alias(), "true");
                     }else{
-                        System.out.println("condición 2");
                         guardiaJugado(usuario1Guardia.getU_alias(), "false");
                     }
                     GameActivity.modoGuardia = false;
@@ -583,9 +571,6 @@ public class PieSocketListener extends WebSocketListener {
                                     GameActivity.jugadorActual : 0).isDoncella()) {
                         WaitingRoomActivity.usuarios.get(GameActivity.jugadorActual == -1 ? 0 : GameActivity.jugadorActual).setDoncella(false);
                     }
-                    System.out.println("a punto de cambiar el nombre de arriba con: " + WaitingRoomActivity.usuarios.get(GameActivity.jugadorActual == -1 ? 0 :
-                            GameActivity.jugadorActual != WaitingRoomActivity.usuarios.size() ?
-                                    GameActivity.jugadorActual : 0).getU_alias());
                     txv_turno.setText(WaitingRoomActivity.usuarios.get(GameActivity.jugadorActual == -1 ? 0 :
                             GameActivity.jugadorActual != WaitingRoomActivity.usuarios.size() ?
                                     GameActivity.jugadorActual : 0).getU_alias());
@@ -655,8 +640,6 @@ public class PieSocketListener extends WebSocketListener {
     }
 
     public String stringCarta(String valorCarta){
-        System.out.println(valorCarta);
-        System.out.println("retornando");
         switch (valorCarta) {
             case "0":
                 return "princesa";
