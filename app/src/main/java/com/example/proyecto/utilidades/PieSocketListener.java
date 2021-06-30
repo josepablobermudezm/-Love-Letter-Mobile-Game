@@ -311,7 +311,7 @@ public class PieSocketListener extends WebSocketListener {
                     String idJugDoncella = arrSplit_2[1];
                     Usuario usuarioDoncella = (Usuario) WaitingRoomActivity.usuarios.stream().filter(x -> x.getU_id() == Integer.valueOf(idJugDoncella)).findAny().get();
                     usuarioDoncella.setDoncella(true);
-                    condesaJugadoCarta(usuarioDoncella.getU_alias());
+                    doncellaJugadoCarta(usuarioDoncella.getU_alias());
                     break;
                 case "baronJugado":
                     String idJugadorbaron = arrSplit_2[1];
@@ -426,7 +426,7 @@ public class PieSocketListener extends WebSocketListener {
         }
     }
 
-    public void condesaJugadoCarta(String nombre) {
+    public void doncellaJugadoCarta(String nombre) {
         new AsyncTask<String, Float, Integer>() {
             @Override
             protected Integer doInBackground(String... strings) {
@@ -436,7 +436,7 @@ public class PieSocketListener extends WebSocketListener {
 
             @Override
             protected void onProgressUpdate(Float... variable) {
-                makeText(context, nombre + " ha aplicado la condesa sobre si mismo", LENGTH_LONG).show();
+                makeText(context, nombre + " ha aplicado la doncella sobre si mismo", LENGTH_LONG).show();
             }
         }.execute();
     }
