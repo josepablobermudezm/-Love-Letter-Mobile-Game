@@ -371,12 +371,11 @@ public class PieSocketListener extends WebSocketListener {
 
                     if(usuario1Guardia.isEliminado()){
                         System.out.println("condición 1");
-                        guardiaJugado(usuario1Guardia.getU_alias());
+                        guardiaJugado(usuario1Guardia.getU_alias(), "true");
                     }else{
                         System.out.println("condición 2");
-                        guardiaNotJugado(usuario1Guardia.getU_alias());
+                        guardiaJugado(usuario1Guardia.getU_alias(), "false");
                     }
-
                     break;
                 default:
                     throw new IllegalStateException("Unexpected value: " + arrSplit_2[0]);
@@ -384,7 +383,7 @@ public class PieSocketListener extends WebSocketListener {
         }
     }
 
-    public void guardiaNotJugado(String nombre) {
+    public void guardiaJugado(String nombre, String tipo) {
         new AsyncTask<String, Float, Integer>() {
             @Override
             protected Integer doInBackground(String... strings) {
@@ -396,27 +395,8 @@ public class PieSocketListener extends WebSocketListener {
             protected void onProgressUpdate(Float... variable) {
                 //AlertDialog.Builder alerta = new AlertDialog.Builder(context);
                 //alerta.setMessage("La carta que tiene "+ nombre +" es "+ carta + " con un valor de "+ valor).setNegativeButton("Aceptar", null).create().show();
-                makeText(context, "Carta guardia no aplicada, las cartas no son iguales", LENGTH_LONG).show();
-                GameActivity.modoGuardia = false;
-                enviarMensaje(ws, "cambioTurno");
-            }
-
-        }.execute();
-    }
-
-    public void guardiaJugado(String nombre) {
-        new AsyncTask<String, Float, Integer>() {
-            @Override
-            protected Integer doInBackground(String... strings) {
-                publishProgress();
-                return null;
-            }
-
-            @Override
-            protected void onProgressUpdate(Float... variable) {
-                //AlertDialog.Builder alerta = new AlertDialog.Builder(context);
-                //alerta.setMessage("La carta que tiene "+ nombre +" es "+ carta + " con un valor de "+ valor).setNegativeButton("Aceptar", null).create().show();
-                makeText(context, "El jugador "+ nombre +" ha sido eliminado por el uso de la carta guardia", LENGTH_LONG).show();
+                System.out.println("entrnado a condición 3  jrowjd flñksj dñfalksdjf");
+                makeText(context, tipo.equals("true") ? "Carta guardia no aplicada, las cartas no son iguales" : "El jugador "+ nombre +" ha sido eliminado por el uso de la carta guardia" , LENGTH_LONG).show();
                 GameActivity.modoGuardia = false;
                 enviarMensaje(ws, "cambioTurno");
             }
