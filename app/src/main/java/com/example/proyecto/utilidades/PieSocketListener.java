@@ -363,12 +363,10 @@ public class PieSocketListener extends WebSocketListener {
                     System.out.println(usuario1Guardia.getU_alias());
                     System.out.println(usuario1Guardia.getMazo());
                     //Filtramos los dos usuarios que van a intercambiar cartas
-                    if(usuario.getU_id() == Integer.valueOf(idJugadorGuardia)){
-                        cartaJugadorGuardia = usuario1Guardia.getMazo().get(0) != null ? usuario1Guardia.getMazo().get(0) : usuario1Guardia.getMazo().get(1);
-                        System.out.println(cartaObt + " == " + cartaJugadorGuardia.getNombre());
-                        if(cartaObt.equals(cartaJugadorGuardia.getNombre())){
-                            usuario1Guardia.setEliminado(true);
-                        }
+                    cartaJugadorGuardia = usuario1Guardia.getMazo().get(0) != null ? usuario1Guardia.getMazo().get(0) : usuario1Guardia.getMazo().get(1);
+                    System.out.println(cartaObt + " == " + cartaJugadorGuardia.getNombre());
+                    if(cartaObt.equals(cartaJugadorGuardia.getNombre())){
+                        usuario1Guardia.setEliminado(true);
                     }
 
                     if(usuario1Guardia.isEliminado()){
