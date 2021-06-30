@@ -409,6 +409,7 @@ public class GameActivity extends AppCompatActivity {
             } else if (Usuario.usuarioLogueado.getMazo().get(valor).getNombre().equals("espia")) {
                 listener.enviarMensaje(ws, "espiaJugado," + Usuario.usuarioLogueado.getU_id());
             }else if(Usuario.usuarioLogueado.getMazo().get(valor).getNombre().equals("guardia")){
+                System.out.println("entrando al método de guardia inicial #1");
                 modoGuardia = true;
                 ScrollHorizontal.setVisibility(View.VISIBLE);
                 parentJugadores.removeAllViews();
@@ -483,6 +484,10 @@ public class GameActivity extends AppCompatActivity {
                             }
                             else if(modoGuardia){
                                 System.out.println("entrando a metodo de guardia");
+                                /*AlertDialog.Builder builder = new AlertDialog.Builder(GameActivity.this);
+                                builder.setMessage("R.string.dialog_message")
+                                        .setTitle("R.string.dialog_title");
+                                AlertDialog dialog = builder.create();*/
                                 AlertDialog.Builder builder = new AlertDialog.Builder(GameActivity.this);
                                 builder.setTitle("Selecciona una carta");
                                 builder.setItems(R.array.cartas_array, new DialogInterface.OnClickListener() {
@@ -493,6 +498,7 @@ public class GameActivity extends AppCompatActivity {
                                         });
 
                                 AlertDialog dialog = builder.create();
+                                dialog.show();
                                 modoGuardia = false;
                             }
                             listener.enviarMensaje(ws, "cambioTurno");
@@ -503,17 +509,5 @@ public class GameActivity extends AppCompatActivity {
                 }
             }
         }
-    }
-
-    public Dialog onCreateDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(GameActivity.this);
-        builder.setTitle("Selecciona una carta")
-                .setItems(R.array.cartas_array, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        System.out.println("carta seleccionada: ");
-                        System.out.println(which);
-                    }
-                });
-        return builder.create();
     }
 }
