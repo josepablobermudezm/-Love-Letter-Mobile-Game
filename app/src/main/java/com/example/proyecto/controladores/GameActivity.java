@@ -493,7 +493,6 @@ public class GameActivity extends AppCompatActivity {
 
                                 AlertDialog dialog = builder.create();
                                 dialog.show();
-                                modoGuardia = false;
                             }
                             if(!modoGuardia){
                                 listener.enviarMensaje(ws, "cambioTurno");
