@@ -418,7 +418,7 @@ public class GameActivity extends AppCompatActivity {
 
             Usuario.usuarioLogueado.getMazo().set(valor, null);
 
-            if(!cancillerMode && !reyMode && !principeMode && !baronMode && !sacerdoteMode && modoGuardia && !turnoJugado){
+            if(!cancillerMode && !reyMode && !principeMode && !baronMode && !sacerdoteMode && !modoGuardia && !turnoJugado){
                 System.out.println("entrando a aquí sdjfkj");
                 listener.enviarMensaje(ws, "cambioTurno");
             }
