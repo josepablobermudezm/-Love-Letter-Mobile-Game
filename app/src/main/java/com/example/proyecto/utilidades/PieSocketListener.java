@@ -379,6 +379,8 @@ public class PieSocketListener extends WebSocketListener {
                         System.out.println("condición 2");
                         guardiaJugado(usuario1Guardia.getU_alias(), "false");
                     }
+                    GameActivity.modoGuardia = false;
+                    enviarMensaje(ws, "cambioTurno");
                     break;
                 default:
                     throw new IllegalStateException("Unexpected value: " + arrSplit_2[0]);
@@ -398,10 +400,7 @@ public class PieSocketListener extends WebSocketListener {
             protected void onProgressUpdate(Float... variable) {
                 //AlertDialog.Builder alerta = new AlertDialog.Builder(context);
                 //alerta.setMessage("La carta que tiene "+ nombre +" es "+ carta + " con un valor de "+ valor).setNegativeButton("Aceptar", null).create().show();
-                System.out.println("entrnado a condición 3  jrowjd flñksj dñfalksdjf");
                 makeText(context, tipo.equals("false") ? "Carta guardia no aplicada, las cartas no son iguales" : "El jugador "+ nombre +" ha sido eliminado por el uso de la carta guardia" , LENGTH_LONG).show();
-                GameActivity.modoGuardia = false;
-                enviarMensaje(ws, "cambioTurno");
             }
 
         }.execute();
