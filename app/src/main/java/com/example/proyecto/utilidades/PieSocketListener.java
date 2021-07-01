@@ -447,8 +447,7 @@ public class PieSocketListener extends WebSocketListener {
                     getImg1().setImageDrawable(null);
                     getImg2().setImageDrawable(null);
                     getImg3().setImageDrawable(null);
-                    Usuario usuarioAdm = (Usuario) WaitingRoomActivity.usuarios.stream().filter(x -> x.getU_id() == Integer.valueOf(GameActivity.idAdministrador)).findAny().get();
-                    if(usuario.getU_id()==usuarioAdm.getU_id()){
+                    if(GameActivity.administrador.equals("true")){
                         reinicarCartas();
                     }
                 }
