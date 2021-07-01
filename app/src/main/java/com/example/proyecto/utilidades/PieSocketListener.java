@@ -1,6 +1,5 @@
 package com.example.proyecto.utilidades;
 
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -13,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AlertDialog;
 
 import com.example.proyecto.controladores.GameActivity;
 import com.example.proyecto.controladores.WaitingRoomActivity;
@@ -471,7 +471,9 @@ public class PieSocketListener extends WebSocketListener {
 
             @Override
             protected void onProgressUpdate(Float... variable) {
-                makeText(context, mensaje , LENGTH_LONG).show();
+                //makeText(context, mensaje , LENGTH_LONG).show();
+                AlertDialog.Builder alerta = new AlertDialog.Builder(context);
+                alerta.setMessage(mensaje).setPositiveButton("Aceptar", null).create().show();
             }
         }.execute();
     }
