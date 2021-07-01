@@ -145,6 +145,9 @@ public class PieSocketListener extends WebSocketListener {
                         WaitingRoomActivity.usuarios.stream().filter(x->x.isEspia()).findAny().get().setFicha(WaitingRoomActivity.usuarios.stream().filter(x->x.isEspia()).findAny().get().getFicha()+1);
                     }
 
+                    // se valida si el juego ya se terminó
+                    finJuego();
+
                     String id2 = arrSplit_2[1];
                     Carta carta = new Carta();
                     Usuario usuarioAux2 = (Usuario) WaitingRoomActivity.usuarios.stream().filter(x -> x.getU_id() == Integer.parseInt(id2)).findAny().get();
@@ -182,6 +185,10 @@ public class PieSocketListener extends WebSocketListener {
                             && (WaitingRoomActivity.usuarios.stream().filter(x -> x.isEspia() && !x.isEliminado()).count() == 1)){
                         WaitingRoomActivity.usuarios.stream().filter(x->x.isEspia()).findAny().get().setFicha(WaitingRoomActivity.usuarios.stream().filter(x->x.isEspia()).findAny().get().getFicha()+1);
                     }
+
+                    // se valida si el juego ya se terminó
+                    finJuego();
+
                     GameActivity.jugadorActual++;
                     if (GameActivity.jugadorActual <= WaitingRoomActivity.usuarios.size() - 1 &&
                             WaitingRoomActivity.usuarios.get(GameActivity.jugadorActual).isEliminado()) {
@@ -379,6 +386,32 @@ public class PieSocketListener extends WebSocketListener {
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    public void finJuego(){
+        if(((usuario.getMazoCentral().size() == 0) || (WaitingRoomActivity.usuarios.stream().filter(x -> !x.isEliminado()).count() == 1))){
+            ArrayList<Usuario> usuariosFinales = (ArrayList<Usuario>) WaitingRoomActivity.usuarios.stream().filter(x-> !x.isEliminado()).collect(Collectors.toList());
+            if(usuariosFinales.size()>1){
+                int maximo = usuariosFinales.stream().mapToInt(v -> v.getMazo().get(0) != null ?
+                        v.getMazo().get(0).getValor() : v.getMazo().get(1).getValor()).max().getAsInt();
+
+                ArrayList<Usuario> usuariosGanadores = (ArrayList<Usuario>)
+                        usuariosFinales.stream().filter(x -> (x.getMazo().get(0) != null ?
+                                x.getMazo().get(0).getValor() : x.getMazo().get(1).getValor()) == maximo).collect(Collectors.toList());
+
+                if(usuariosGanadores.size() > 1){
+                    String mensaje = "Hubo un empate entre los jugadores: ";
+                    for(Usuario u : usuariosGanadores){
+                        mensaje += u.getU_alias() + " ";
+                    }
+                    JuegoTerminado(mensaje);
+                }
+                else{
+                    JuegoTerminado("El ganador es: " + usuariosGanadores.get(0).getU_alias());
+                }
+            }
+        }
+    }
+
     public void guardiaJugado(String nombre, String tipo) {
         new AsyncTask<String, Float, Integer>() {
             @Override
@@ -426,6 +459,20 @@ public class PieSocketListener extends WebSocketListener {
         }
     }
 
+    public void JuegoTerminado(String mensaje) {
+        new AsyncTask<String, Float, Integer>() {
+            @Override
+            protected Integer doInBackground(String... strings) {
+                publishProgress();
+                return null;
+            }
+
+            @Override
+            protected void onProgressUpdate(Float... variable) {
+                makeText(context, mensaje , LENGTH_LONG).show();
+            }
+        }.execute();
+    }
     public void doncellaJugadoCarta(String nombre) {
         new AsyncTask<String, Float, Integer>() {
             @Override
