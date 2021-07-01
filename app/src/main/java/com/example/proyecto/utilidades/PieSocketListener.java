@@ -389,25 +389,26 @@ public class PieSocketListener extends WebSocketListener {
     @RequiresApi(api = Build.VERSION_CODES.N)
     public boolean finJuego(){
         if(((usuario.getMazoCentral().size() == 0) || (WaitingRoomActivity.usuarios.stream().filter(x -> !x.isEliminado()).count() == 1))){
+            System.out.println("Entrando en el primer IF");
             ArrayList<Usuario> usuariosFinales = (ArrayList<Usuario>) WaitingRoomActivity.usuarios.stream().filter(x-> !x.isEliminado()).collect(Collectors.toList());
-            if(usuariosFinales.size()>1){
-                int maximo = usuariosFinales.stream().mapToInt(v -> v.getMazo().get(0) != null ?
-                        v.getMazo().get(0).getValor() : v.getMazo().get(1).getValor()).max().getAsInt();
 
-                ArrayList<Usuario> usuariosGanadores = (ArrayList<Usuario>)
-                        usuariosFinales.stream().filter(x -> (x.getMazo().get(0) != null ?
-                                x.getMazo().get(0).getValor() : x.getMazo().get(1).getValor()) == maximo).collect(Collectors.toList());
+            int maximo = usuariosFinales.stream().mapToInt(v -> v.getMazo().get(0) != null ?
+                    v.getMazo().get(0).getValor() : v.getMazo().get(1).getValor()).max().getAsInt();
 
-                if(usuariosGanadores.size() > 1){
-                    String mensaje = "Hubo un empate entre los jugadores: ";
-                    for(Usuario u : usuariosGanadores){
-                        mensaje += u.getU_alias() + " ";
-                    }
-                    JuegoTerminado(mensaje);
+            ArrayList<Usuario> usuariosGanadores = (ArrayList<Usuario>)
+                    usuariosFinales.stream().filter(x -> (x.getMazo().get(0) != null ?
+                            x.getMazo().get(0).getValor() : x.getMazo().get(1).getValor()) == maximo).collect(Collectors.toList());
+
+            if(usuariosGanadores.size() > 1){
+                System.out.println("ENTRA AQUÍ !!");
+                String mensaje = "Hubo un empate entre los jugadores: ";
+                for(Usuario u : usuariosGanadores){
+                    mensaje += u.getU_alias() + " ";
                 }
-                else{
-                    JuegoTerminado("El ganador es: " + usuariosGanadores.get(0).getU_alias());
-                }
+                JuegoTerminado(mensaje);
+            }
+            else{
+                JuegoTerminado("El ganador es: " + usuariosGanadores.get(0).getU_alias());
             }
             return true;
         }
