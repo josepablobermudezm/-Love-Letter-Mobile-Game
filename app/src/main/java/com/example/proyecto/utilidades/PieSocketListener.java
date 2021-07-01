@@ -419,7 +419,6 @@ public class PieSocketListener extends WebSocketListener {
                 JuegoTerminado("El ganador es: " + usuariosGanadores.get(0).getU_alias());
                 usuariosGanadores.get(0).setFicha(usuariosGanadores.get(0).getFicha() + 1);
             }
-            GameActivity.cartasContainer.removeAllViews();
             WaitingRoomActivity.usuarios.forEach(x ->{
                 x.getMazo().clear();
                 x.getMazoCentral().clear();
@@ -444,12 +443,14 @@ public class PieSocketListener extends WebSocketListener {
 
                 @Override
                 protected void onProgressUpdate(Float... variable) {
+                    GameActivity.cartasContainer.removeAllViews();
                     getImg2().setImageDrawable(null);
                     getImg3().setImageDrawable(null);
                     reinicarCartas();
                 }
 
             }.execute();
+
             return true;
         }
         return false;
