@@ -187,21 +187,21 @@ public class PieSocketListener extends WebSocketListener {
                     }
 
                     // se valida si el juego ya se terminó
-                    finJuego();
-
-                    GameActivity.jugadorActual++;
-                    if (GameActivity.jugadorActual <= WaitingRoomActivity.usuarios.size() - 1 &&
-                            WaitingRoomActivity.usuarios.get(GameActivity.jugadorActual).isEliminado()) {
+                    if(!finJuego()){
                         GameActivity.jugadorActual++;
-                        if (WaitingRoomActivity.usuarios.size() == GameActivity.jugadorActual) {
-                            GameActivity.jugadorActual = 0;
+                        if (GameActivity.jugadorActual <= WaitingRoomActivity.usuarios.size() - 1 &&
+                                WaitingRoomActivity.usuarios.get(GameActivity.jugadorActual).isEliminado()) {
+                            GameActivity.jugadorActual++;
+                            if (WaitingRoomActivity.usuarios.size() == GameActivity.jugadorActual) {
+                                GameActivity.jugadorActual = 0;
+                            }
                         }
-                    }
-                    if (WaitingRoomActivity.usuarios.size() - 1 <= GameActivity.jugadorActual) {
-                        cambioTurnoText();
-                    }
-                    if (GameActivity.jugadorActual != -1) {
-                        cambioTurnoText();
+                        if (WaitingRoomActivity.usuarios.size() - 1 <= GameActivity.jugadorActual) {
+                            cambioTurnoText();
+                        }
+                        if (GameActivity.jugadorActual != -1) {
+                            cambioTurnoText();
+                        }
                     }
                     break;
                 case "princesaJugada":
@@ -387,7 +387,7 @@ public class PieSocketListener extends WebSocketListener {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
-    public void finJuego(){
+    public boolean finJuego(){
         if(((usuario.getMazoCentral().size() == 0) || (WaitingRoomActivity.usuarios.stream().filter(x -> !x.isEliminado()).count() == 1))){
             ArrayList<Usuario> usuariosFinales = (ArrayList<Usuario>) WaitingRoomActivity.usuarios.stream().filter(x-> !x.isEliminado()).collect(Collectors.toList());
             if(usuariosFinales.size()>1){
@@ -409,7 +409,9 @@ public class PieSocketListener extends WebSocketListener {
                     JuegoTerminado("El ganador es: " + usuariosGanadores.get(0).getU_alias());
                 }
             }
+            return true;
         }
+        return false;
     }
 
     public void guardiaJugado(String nombre, String tipo) {
