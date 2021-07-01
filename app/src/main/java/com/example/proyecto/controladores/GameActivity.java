@@ -363,9 +363,12 @@ public class GameActivity extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.N)
     public void sacarCarta(ImageView img, int valor, ImageView arrow) {
         boolean puedeVotar = true;
-        if ((Usuario.usuarioLogueado.getMazo().get(0).getNombre().equals("condesa") || Usuario.usuarioLogueado.getMazo().get(1).getNombre().equals("condesa")) &&
-                ((Usuario.usuarioLogueado.getMazo().get(0).getNombre().equals("principe") || Usuario.usuarioLogueado.getMazo().get(1).getNombre().equals("principe")) ||
-                        (Usuario.usuarioLogueado.getMazo().get(0).getNombre().equals("rey") || Usuario.usuarioLogueado.getMazo().get(1).getNombre().equals("rey")))
+        if (((Usuario.usuarioLogueado.getMazo().get(0) != null && Usuario.usuarioLogueado.getMazo().get(0).getNombre().equals("condesa"))
+                || (Usuario.usuarioLogueado.getMazo().get(1) != null && Usuario.usuarioLogueado.getMazo().get(1).getNombre().equals("condesa"))) &&
+                (((Usuario.usuarioLogueado.getMazo().get(0) != null && Usuario.usuarioLogueado.getMazo().get(0).getNombre().equals("principe"))
+                        || (Usuario.usuarioLogueado.getMazo().get(1) != null && Usuario.usuarioLogueado.getMazo().get(1).getNombre().equals("principe"))) ||
+                        ((Usuario.usuarioLogueado.getMazo().get(0) != null && Usuario.usuarioLogueado.getMazo().get(0).getNombre().equals("rey"))
+                                || (Usuario.usuarioLogueado.getMazo().get(1) != null && Usuario.usuarioLogueado.getMazo().get(1).getNombre().equals("rey"))))
         ) {
             puedeVotar = Usuario.usuarioLogueado.getMazo().get(valor).getNombre().equals("condesa") ? true : false;
         }
@@ -407,7 +410,7 @@ public class GameActivity extends AppCompatActivity {
                 ListaJugadoresButton();
             } else if (Usuario.usuarioLogueado.getMazo().get(valor).getNombre().equals("espia")) {
                 listener.enviarMensaje(ws, "espiaJugado," + Usuario.usuarioLogueado.getU_id());
-            }else if(Usuario.usuarioLogueado.getMazo().get(valor).getNombre().equals("guardia")){
+            } else if (Usuario.usuarioLogueado.getMazo().get(valor).getNombre().equals("guardia")) {
                 System.out.println("entrando al método de guardia inicial #1");
                 modoGuardia = true;
                 ScrollHorizontal.setVisibility(View.VISIBLE);
@@ -417,7 +420,7 @@ public class GameActivity extends AppCompatActivity {
 
             Usuario.usuarioLogueado.getMazo().set(valor, null);
 
-            if(!cancillerMode && !reyMode && !principeMode && !baronMode && !sacerdoteMode && !modoGuardia && !turnoJugado){
+            if (!cancillerMode && !reyMode && !principeMode && !baronMode && !sacerdoteMode && !modoGuardia && !turnoJugado) {
                 System.out.println("entrando a aquí sdjfkj");
                 listener.enviarMensaje(ws, "cambioTurno");
             }
@@ -443,8 +446,8 @@ public class GameActivity extends AppCompatActivity {
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     private void ListaJugadoresButton() {
-        System.out.println(WaitingRoomActivity.usuarios.stream().filter(x -> x.isDoncella() || x.isEliminado()).count() + " ==" + (WaitingRoomActivity.usuarios.size()-1) + "" + " && " + !principeMode);
-        if (WaitingRoomActivity.usuarios.stream().filter(x -> x.isDoncella() || x.isEliminado()).count() == WaitingRoomActivity.usuarios.size()-1 && !principeMode) {
+        System.out.println(WaitingRoomActivity.usuarios.stream().filter(x -> x.isDoncella() || x.isEliminado()).count() + " ==" + (WaitingRoomActivity.usuarios.size() - 1) + "" + " && " + !principeMode);
+        if (WaitingRoomActivity.usuarios.stream().filter(x -> x.isDoncella() || x.isEliminado()).count() == WaitingRoomActivity.usuarios.size() - 1 && !principeMode) {
             listener.enviarMensaje(ws, "cambioTurno");
             sacerdoteMode = false;
             reyMode = false;
@@ -476,26 +479,26 @@ public class GameActivity extends AppCompatActivity {
                             } else if (sacerdoteMode) {
                                 listener.enviarMensaje(ws, "sacerdoteJugado," + Usuario.usuarioLogueado.getU_id() + "," +
                                         ((u.getMazo().get(0) != null) ? u.getMazo().get(0).getNombre() : u.getMazo().get(1).getNombre()) + "," +
-                                        ((u.getMazo().get(0) != null) ? u.getMazo().get(0).getValor() : u.getMazo().get(1).getValor())+ ","+ u.getU_alias()
+                                        ((u.getMazo().get(0) != null) ? u.getMazo().get(0).getValor() : u.getMazo().get(1).getValor()) + "," + u.getU_alias()
                                 );
                                 sacerdoteMode = false;
-                            } else if(modoGuardia){
+                            } else if (modoGuardia) {
                                 System.out.println("entrando a metodo de guardia");
                                 AlertDialog.Builder builder = new AlertDialog.Builder(GameActivity.this);
                                 builder.setTitle("Selecciona una carta");
                                 builder.setItems(R.array.cartas_array, new DialogInterface.OnClickListener() {
-                                            public void onClick(DialogInterface dialog, int which) {
-                                                System.out.println("carta seleccionada: ");
-                                                System.out.println(which);
-                                                listener.enviarMensaje(ws, "guardiaJugado," + u.getU_id() + "," + which);
-                                            }
-                                        });
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        System.out.println("carta seleccionada: ");
+                                        System.out.println(which);
+                                        listener.enviarMensaje(ws, "guardiaJugado," + u.getU_id() + "," + which);
+                                    }
+                                });
 
                                 AlertDialog dialog = builder.create();
                                 dialog.setCancelable(false);
                                 dialog.show();
                             }
-                            if(!modoGuardia){
+                            if (!modoGuardia) {
                                 System.out.println("entrando al cambio de turno que no debería de enrtrar");
                                 listener.enviarMensaje(ws, "cambioTurno");
                             }
