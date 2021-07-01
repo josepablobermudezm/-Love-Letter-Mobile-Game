@@ -53,7 +53,7 @@ public class GameActivity extends AppCompatActivity {
     private LinearLayout parentLayout3;
     public HorizontalScrollView ScrollHorizontal;
     public LinearLayout parentJugadores;
-    public ArrayList<Carta> cartas = new ArrayList();
+    public static ArrayList<Carta> cartas = new ArrayList();
     private ArrayList<Carta> mazo = new ArrayList();
     private String administrador;
     public PieSocketListener listener;
@@ -112,7 +112,7 @@ public class GameActivity extends AppCompatActivity {
         rotacion.stop();
     }*/
 
-    private void iniciar() {
+    public void iniciar() {
         ScrollHorizontal = (HorizontalScrollView) findViewById(R.id.ScrollHorizontal);
         parentJugadores = (LinearLayout) findViewById(R.id.parentJugadores);
         parentLayout2 = (LinearLayout) findViewById(R.id.parentLayout2);
@@ -124,7 +124,6 @@ public class GameActivity extends AppCompatActivity {
         this.listener = WaitingRoomActivity.listener;
         Intent intent = this.getIntent();
         administrador = intent.getStringExtra("administrador");
-        usuario = (Usuario) intent.getSerializableExtra("usuario");
         img1 = (ImageView) findViewById(R.id.Carta1);
         img2 = (ImageView) findViewById(R.id.Carta2);
         img3 = (ImageView) findViewById(R.id.Carta3);

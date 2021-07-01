@@ -401,16 +401,34 @@ public class PieSocketListener extends WebSocketListener {
                             x.getMazo().get(0).getValor() : x.getMazo().get(1).getValor()) == maximo).collect(Collectors.toList());
 
             if(usuariosGanadores.size() > 1){
-                System.out.println("ENTRA AQUÍ !!");
                 String mensaje = "Hubo un empate entre los jugadores: ";
                 for(Usuario u : usuariosGanadores){
                     mensaje += u.getU_alias() + " ";
+                    u.setFicha(u.getFicha()+1);
                 }
                 JuegoTerminado(mensaje);
             }
             else{
                 JuegoTerminado("El ganador es: " + usuariosGanadores.get(0).getU_alias());
+                usuariosGanadores.get(0).setFicha(usuariosGanadores.get(0).getFicha() + 1);
             }
+            GameActivity.cartasContainer.removeAllViews();
+            WaitingRoomActivity.usuarios.forEach(x ->{
+                x.getMazo().clear();
+                x.getMazoCentral().clear();
+                x.getMazoOpcional().clear();
+                x.setEliminado(false);
+                x.setDoncella(false);
+                x.setEspia(false);
+            });
+            GameActivity.baronMode = false;
+            GameActivity.modoGuardia = false;
+            GameActivity.reyMode = false;
+            GameActivity.cancillerMode = false;
+            GameActivity.principeMode = false;
+            GameActivity.sacerdoteMode = false;
+            GameActivity prueba = new GameActivity();
+            prueba.iniciar();
             return true;
         }
         return false;
