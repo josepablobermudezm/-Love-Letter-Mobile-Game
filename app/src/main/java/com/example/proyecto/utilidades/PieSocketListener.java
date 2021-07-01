@@ -444,6 +444,7 @@ public class PieSocketListener extends WebSocketListener {
                 @Override
                 protected void onProgressUpdate(Float... variable) {
                     GameActivity.cartasContainer.removeAllViews();
+                    getImg1().setImageDrawable(null);
                     getImg2().setImageDrawable(null);
                     getImg3().setImageDrawable(null);
                     reinicarCartas();
@@ -519,7 +520,7 @@ public class PieSocketListener extends WebSocketListener {
                     boolean ok = jsonRespuesta.getBoolean("success");
                     if (ok) {
                         int cantidadCartasOpcionales = WaitingRoomActivity.usuarios.size() == 2 ? 3 : 1;
-
+                        System.out.println("ESTAMOS ENTRANDO!!!!!!!!");
                         //enviamos cartas de mazo opcional
                         for (int i = 0; i < cantidadCartasOpcionales; i++) {
                             Carta carta = GameActivity.cartas.remove(GameActivity.cartas.size() - 1);
