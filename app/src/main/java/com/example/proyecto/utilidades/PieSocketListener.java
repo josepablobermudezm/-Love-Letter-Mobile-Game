@@ -473,9 +473,9 @@ public class PieSocketListener extends WebSocketListener {
 
             @Override
             protected void onProgressUpdate(Float... variable) {
-                makeText(context, mensaje , LENGTH_LONG).show();
-                /*AlertDialog.Builder alerta = new AlertDialog.Builder(context);
-                alerta.setMessage(mensaje).setPositiveButton("Aceptar", null).create().show();*/
+                //makeText(context, mensaje , LENGTH_LONG).show();
+                AlertDialog.Builder alerta = new AlertDialog.Builder(context);
+                alerta.setMessage(mensaje).setPositiveButton("Aceptar", null).create().show();
             }
         }.execute();
     }
