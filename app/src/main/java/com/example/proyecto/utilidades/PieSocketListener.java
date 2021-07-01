@@ -15,11 +15,18 @@ import android.widget.Toast;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.Volley;
 import com.example.proyecto.controladores.GameActivity;
 import com.example.proyecto.controladores.WaitingRoomActivity;
 import com.example.proyecto.modelos.Carta;
 import com.example.proyecto.modelos.Partida;
 import com.example.proyecto.modelos.Usuario;
+import com.example.proyecto.servicios.CartaRequest;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -427,7 +434,8 @@ public class PieSocketListener extends WebSocketListener {
             GameActivity.cancillerMode = false;
             GameActivity.principeMode = false;
             GameActivity.sacerdoteMode = false;
-            new AsyncTask<String, Float, Integer>(){
+            GameActivity.cartas.clear();
+            new AsyncTask<String, Float, Integer>() {
                 @Override
                 protected Integer doInBackground(String... strings) {
                     publishProgress();
@@ -436,15 +444,119 @@ public class PieSocketListener extends WebSocketListener {
 
                 @Override
                 protected void onProgressUpdate(Float... variable) {
-                    GameActivity prueba = new GameActivity();
-                    prueba.iniciar();
+                    getImg2().setImageDrawable(null);
+                    getImg3().setImageDrawable(null);
+                    reinicarCartas();
                 }
+
             }.execute();
             return true;
         }
         return false;
     }
 
+    public void reinicarCartas(){
+        com.android.volley.Response.Listener<String> respuesta = new com.android.volley.Response.Listener<String>() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
+            @Override
+            public void onResponse(String response) {
+                try {
+                    response = response.replaceFirst("<font>.*?</font>", "");
+                    int jsonStart = response.indexOf("{");
+                    int jsonEnd = response.lastIndexOf("}");
+                    if (jsonStart >= 0 && jsonEnd >= 0 && jsonEnd > jsonStart) {
+                        response = response.substring(jsonStart, jsonEnd + 1);
+                    }
+                    JSONObject jsonRespuesta = new JSONObject(response);
+                    JSONArray cartasJson = jsonRespuesta.getJSONArray("cartas");
+                    for (int x = 0; x < cartasJson.length(); x++) {
+                        Carta carta = new Carta();
+                        switch ((String) cartasJson.get(x)) {
+                            case "espia":
+                                carta.setNombre((String) cartasJson.get(x));
+                                carta.setValor(0);
+                                break;
+                            case "guardia":
+                                carta.setNombre((String) cartasJson.get(x));
+                                carta.setValor(1);
+                                break;
+                            case "sacerdote":
+                                carta.setNombre((String) cartasJson.get(x));
+                                carta.setValor(2);
+                                break;
+                            case "baron":
+                                carta.setNombre((String) cartasJson.get(x));
+                                carta.setValor(3);
+                                break;
+                            case "doncella":
+                                carta.setNombre((String) cartasJson.get(x));
+                                carta.setValor(4);
+                                break;
+                            case "principe":
+                                carta.setNombre((String) cartasJson.get(x));
+                                carta.setValor(5);
+                                break;
+                            case "canciller":
+                                carta.setNombre((String) cartasJson.get(x));
+                                carta.setValor(6);
+                                break;
+                            case "rey":
+                                carta.setNombre((String) cartasJson.get(x));
+                                carta.setValor(7);
+                                break;
+                            case "condesa":
+                                carta.setNombre((String) cartasJson.get(x));
+                                carta.setValor(8);
+                                break;
+                            case "princesa":
+                                carta.setNombre((String) cartasJson.get(x));
+                                carta.setValor(9);
+                                break;
+                        }
+                        GameActivity.cartas.add(carta);
+                    }
+                    boolean ok = jsonRespuesta.getBoolean("success");
+                    if (ok) {
+                        int cantidadCartasOpcionales = WaitingRoomActivity.usuarios.size() == 2 ? 3 : 1;
+
+                        //enviamos cartas de mazo opcional
+                        for (int i = 0; i < cantidadCartasOpcionales; i++) {
+                            Carta carta = GameActivity.cartas.remove(GameActivity.cartas.size() - 1);
+                            for (Usuario u : WaitingRoomActivity.usuarios) {
+                                enviarMensaje(ws, "enviarCartas," + carta.getNombre() + "," + carta.getValor() + "," + u.getU_id()
+                                        + ",mazoOpcional");
+                            }
+                        }
+
+                        // aquí le damos una carta inicial a cada jugador
+                        for (Usuario u : WaitingRoomActivity.usuarios) {
+                            Carta carta = GameActivity.cartas.get(GameActivity.cartas.size() - 1);
+                            GameActivity.cartas.remove(carta);
+                            enviarMensaje(ws, "enviarCartas," + carta.getNombre() + "," + carta.getValor() + "," + u.getU_id()
+                                    + ",mazo");
+                        }
+
+                        // aquí enviamos el mazo a todos los jugadores
+                        for (Usuario u : WaitingRoomActivity.usuarios) {
+                            for (Carta c : GameActivity.cartas) {
+                                enviarMensaje(ws, "enviarCartas," + c.getNombre() + "," + c.getValor() + "," + u.getU_id()
+                                        + ",mazoCentral");
+                            }
+                        }
+
+                    } else {
+                        AlertDialog.Builder alerta = new AlertDialog.Builder(context);
+                        alerta.setMessage("Fallo en la partida").setNegativeButton("Reintentar", null).create().show();
+                    }
+                } catch (JSONException e) {
+                    System.out.println(e.getMessage());
+                }
+            }
+        };
+        CartaRequest r = new CartaRequest(respuesta);
+        RequestQueue cola = Volley.newRequestQueue(context);
+        cola.add(r);
+    }
     public void guardiaJugado(String nombre, String tipo) {
         new AsyncTask<String, Float, Integer>() {
             @Override
