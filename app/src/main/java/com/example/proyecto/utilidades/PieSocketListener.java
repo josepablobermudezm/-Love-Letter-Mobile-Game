@@ -419,6 +419,12 @@ public class PieSocketListener extends WebSocketListener {
                 JuegoTerminado("El ganador es: " + usuariosGanadores.get(0).getU_alias());
                 usuariosGanadores.get(0).setFicha(usuariosGanadores.get(0).getFicha() + 1);
             }
+            usuario.getMazo().clear();
+            usuario.getMazoOpcional().clear();
+            usuario.getMazoCentral().clear();
+            usuario.setEliminado(false);
+            usuario.setDoncella(false);
+            usuario.setEspia(false);
             WaitingRoomActivity.usuarios.forEach(x ->{
                 x.getMazo().clear();
                 x.getMazoCentral().clear();
