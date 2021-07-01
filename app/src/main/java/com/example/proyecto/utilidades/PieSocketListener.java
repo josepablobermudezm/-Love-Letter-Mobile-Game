@@ -447,7 +447,10 @@ public class PieSocketListener extends WebSocketListener {
                     getImg1().setImageDrawable(null);
                     getImg2().setImageDrawable(null);
                     getImg3().setImageDrawable(null);
-                    reinicarCartas();
+                    Usuario usuarioAdm = (Usuario) WaitingRoomActivity.usuarios.stream().filter(x -> x.getU_id() == Integer.valueOf(GameActivity.idAdministrador)).findAny().get();
+                    if(usuario.getU_id()==usuarioAdm.getU_id()){
+                        reinicarCartas();
+                    }
                 }
 
             }.execute();
@@ -521,6 +524,7 @@ public class PieSocketListener extends WebSocketListener {
                     if (ok) {
                         int cantidadCartasOpcionales = WaitingRoomActivity.usuarios.size() == 2 ? 3 : 1;
                         System.out.println("ESTAMOS ENTRANDO!!!!!!!!");
+                        System.out.println(GameActivity.cartas);
                         //enviamos cartas de mazo opcional
                         for (int i = 0; i < cantidadCartasOpcionales; i++) {
                             Carta carta = GameActivity.cartas.remove(GameActivity.cartas.size() - 1);

@@ -78,6 +78,7 @@ public class GameActivity extends AppCompatActivity {
     public static boolean sacerdoteMode = false;
     public static boolean turnoJugado = false;
     public static boolean modoGuardia = false;
+    public static int idAdministrador;
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
@@ -139,6 +140,7 @@ public class GameActivity extends AppCompatActivity {
         listener.setTurno(textView);
         listener.setContext(getApplicationContext());
         if (administrador.equals("true")) {
+            idAdministrador = Usuario.usuarioLogueado.getU_id();
             listener.setUsuarios(WaitingRoomActivity.usuarios);
             Response.Listener<String> respuesta = new Response.Listener<String>() {
                 @RequiresApi(api = Build.VERSION_CODES.N)
