@@ -421,9 +421,7 @@ public class PieSocketListener extends WebSocketListener {
             }
 
             WaitingRoomActivity.usuarios.forEach(x ->{
-                x.getMazo().set(0,null);
-                x.getMazo().set(1,null);
-                x.getMazo().set(2,null);
+                x.getMazo().clear();
                 x.getMazoCentral().clear();
                 x.getMazoOpcional().clear();
                 x.setEliminado(false);
@@ -447,9 +445,7 @@ public class PieSocketListener extends WebSocketListener {
                 @Override
                 protected void onProgressUpdate(Float... variable) {
                     GameActivity.cartasContainer.removeAllViews();
-                    usuario.getMazo().set(0,null);
-                    usuario.getMazo().set(1,null);
-                    usuario.getMazo().set(2,null);
+                    usuario.getMazo().clear();
                     usuario.getMazoOpcional().clear();
                     usuario.getMazoCentral().clear();
                     usuario.setEliminado(false);
