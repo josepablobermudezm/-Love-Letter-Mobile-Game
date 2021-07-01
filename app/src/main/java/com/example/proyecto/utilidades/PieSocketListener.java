@@ -427,8 +427,19 @@ public class PieSocketListener extends WebSocketListener {
             GameActivity.cancillerMode = false;
             GameActivity.principeMode = false;
             GameActivity.sacerdoteMode = false;
-            GameActivity prueba = new GameActivity();
-            prueba.iniciar();
+            new AsyncTask<String, Float, Integer>(){
+                @Override
+                protected Integer doInBackground(String... strings) {
+                    publishProgress();
+                    return null;
+                }
+
+                @Override
+                protected void onProgressUpdate(Float... variable) {
+                    GameActivity prueba = new GameActivity();
+                    prueba.iniciar();
+                }
+            }.execute();
             return true;
         }
         return false;
