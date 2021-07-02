@@ -501,13 +501,16 @@ public class GameActivity extends AppCompatActivity implements ListenerTerminado
 
     @Override
     public void onChange(boolean b) {
-        AlertDialog.Builder alerta = new AlertDialog.Builder(GameActivity.this);
-        alerta.setMessage("La partida ha terminado").setPositiveButton("ACEPTAR", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                ws.close(1000,null);
-                finish();
-            }
-        }).create().show();
+        if(b){
+            AlertDialog.Builder alerta = new AlertDialog.Builder(GameActivity.this);
+            alerta.setMessage("La partida ha terminado").setPositiveButton("ACEPTAR", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    ws.close(1000,null);
+                    finish();
+                }
+            }).create().show();
+        }
+
     }
 }
