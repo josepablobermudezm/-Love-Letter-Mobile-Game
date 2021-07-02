@@ -61,7 +61,7 @@ public class WaitingRoomActivity extends AppCompatActivity {
         partida = (Partida) i.getSerializableExtra("partida");
         administrador = i.getStringExtra("administrador");
         parentLayout3.removeView(administrador.equals("true") ? null : imageViewStart);
-        if(administrador.equals("true")){
+        if(administrador.equals("true") && partida.getP_tipo().equals("PR")){
             txtCodigo.setText("Codigo: " + partida.getP_codigo());
         }
         if (i.getStringExtra("listenerPieSocket").equals("true")) {
