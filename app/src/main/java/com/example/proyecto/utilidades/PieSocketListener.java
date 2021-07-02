@@ -154,38 +154,41 @@ public class PieSocketListener extends WebSocketListener {
                     }
 
                     // se valida si el juego ya se terminó
-                    finJuego();
-
-                    String id2 = arrSplit_2[1];
-                    Carta carta = new Carta();
-                    Usuario usuarioAux2 = (Usuario) WaitingRoomActivity.usuarios.stream().filter(x -> x.getU_id() == Integer.parseInt(id2)).findAny().get();
-                    carta = usuario.getMazoCentral().get(usuario.getMazoCentral().size() - 1);
-                    usuario.getMazoCentral().remove(carta);
-                    cartaAux2 = new Carta();
-                    usuarioAux2.getMazo().set((usuarioAux2.getMazo().get(0) != null ? 1 : 0), carta);
-                    if (arrSplit_2.length == 3 && (arrSplit_2[2].equals("cancillerMode") && usuario.getMazoCentral().size() == 0)) {
-                        enviarMensaje(ws, "cambioTurno");
-                        GameActivity.cancillerMode = false;
-                    }
-                    if (arrSplit_2.length == 3 && (arrSplit_2[2].equals("cancillerMode") && usuario.getMazoCentral().size() > 1)) {
-                        cartaAux2 = usuario.getMazoCentral().get(usuario.getMazoCentral().size() - 1);
-                        usuario.getMazoCentral().remove(cartaAux2);
-                        usuarioAux2.getMazo().set(2, cartaAux2);
-                    }
-                    if (id2.equals(String.valueOf(usuario.getU_id()))) {
-                        usuario.getMazo().set((usuario.getMazo().get(0) != null ? 1 : 0), carta);
-                        if (arrSplit_2.length == 3 && (arrSplit_2[2].equals("cancillerMode") && usuario.getMazoCentral().size() > 1)) {
-                            usuario.getMazo().set(2, cartaAux2);
+                    if(!finJuego()){
+                        String id2 = arrSplit_2[1];
+                        Carta carta = new Carta();
+                        Usuario usuarioAux2 = (Usuario) WaitingRoomActivity.usuarios.stream().filter(x -> x.getU_id() == Integer.parseInt(id2)).findAny().get();
+                        carta = usuario.getMazoCentral().get(usuario.getMazoCentral().size() - 1);
+                        usuario.getMazoCentral().remove(carta);
+                        cartaAux2 = new Carta();
+                        usuarioAux2.getMazo().set((usuarioAux2.getMazo().get(0) != null ? 1 : 0), carta);
+                        if (arrSplit_2.length == 3 && (arrSplit_2[2].equals("cancillerMode") && usuario.getMazoCentral().size() == 0)) {
+                            enviarMensaje(ws, "cambioTurno");
+                            GameActivity.cancillerMode = false;
                         }
-                        HiloImagenes hilo = new HiloImagenes(this.getContext(),
-                                this.getImg1(),
-                                this.getImg2(),
-                                this.getImg3(),
-                                (this.getImg1().getDrawable() != null) ? null : carta.getNombre(),
-                                (this.getImg2().getDrawable() != null) ? null : carta.getNombre(),
-                                ((cartaAux2 != null) && (usuario.getMazoCentral().size() > 1)) ? cartaAux2.getNombre() : null);
-                        hilo.execute();
+                        if (arrSplit_2.length == 3 && (arrSplit_2[2].equals("cancillerMode") && usuario.getMazoCentral().size() > 1)) {
+                            cartaAux2 = usuario.getMazoCentral().get(usuario.getMazoCentral().size() - 1);
+                            usuario.getMazoCentral().remove(cartaAux2);
+                            usuarioAux2.getMazo().set(2, cartaAux2);
+                        }
+                        if (id2.equals(String.valueOf(usuario.getU_id()))) {
+                            usuario.getMazo().set((usuario.getMazo().get(0) != null ? 1 : 0), carta);
+                            if (arrSplit_2.length == 3 && (arrSplit_2[2].equals("cancillerMode") && usuario.getMazoCentral().size() > 1)) {
+                                usuario.getMazo().set(2, cartaAux2);
+                            }
+                            HiloImagenes hilo = new HiloImagenes(this.getContext(),
+                                    this.getImg1(),
+                                    this.getImg2(),
+                                    this.getImg3(),
+                                    (this.getImg1().getDrawable() != null) ? null : carta.getNombre(),
+                                    (this.getImg2().getDrawable() != null) ? null : carta.getNombre(),
+                                    ((cartaAux2 != null) && (usuario.getMazoCentral().size() > 1)) ? cartaAux2.getNombre() : null);
+                            hilo.execute();
+                        }
                     }
+
+
+
                     break;
                 case "cambioTurno":
                     //validando la carta del espia
@@ -416,7 +419,7 @@ public class PieSocketListener extends WebSocketListener {
                     u.setFicha(u.getFicha()+1);
                 }
 
-                /*int j = (int) Math.random() * usuariosGanadores.size();
+                int j = (int) Math.random() * usuariosGanadores.size();
                 System.out.println(j + " VALOR ");
                 Usuario userG = usuariosGanadores.get(j);
                 Usuario userL = WaitingRoomActivity.usuarios.stream().filter(x->x.getU_id() == userG.getU_id()).findAny().get();
@@ -424,7 +427,7 @@ public class PieSocketListener extends WebSocketListener {
 
                 System.out.println(i + " VALOR 2");
 
-                GameActivity.jugadorActual = 1;*/
+                GameActivity.jugadorActual = 1;
 
                 JuegoTerminado(mensaje);
             }
