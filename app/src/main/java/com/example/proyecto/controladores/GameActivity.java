@@ -20,6 +20,7 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.content.ContextCompat;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -128,30 +129,33 @@ public class GameActivity extends AppCompatActivity {
         //Aplicamos un listener
         bv = new ListenerTerminado();
 
-        bv.setListener(new ListenerTerminado.ChangeListener() {
-            @Override
-            public void onChange() {
-                System.out.println("LISTENER ACTIVO");
+        ContextCompat.getMainExecutor(this).execute(() -> {
+            // This is where your UI code goes.
+            bv.setListener(new ListenerTerminado.ChangeListener() {
+                @Override
+                public void onChange() {
+                    System.out.println("LISTENER ACTIVO");
 
 
+                    /*Toast.makeText(GameActivity.this, "No es tu turno", Toast.LENGTH_SHORT).show();
 
+                    ws.close(1000, null);
+                    finish();*/
 
-                Toast.makeText(GameActivity.this, "No es tu turno", Toast.LENGTH_SHORT).show();
+                    AlertDialog.Builder alerta = new AlertDialog.Builder(GameActivity.this);
+                    alerta.setMessage("La partida ha terminado").setPositiveButton("ACEPTAR", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            ws.close(1000, null);
+                            finish();
+                        }
+                    }).create().show();
 
-                ws.close(1000, null);
-                finish();
+                }
+            });
 
-                /*AlertDialog.Builder alerta = new AlertDialog.Builder(getApplicationContext());
-                alerta.setMessage("La partida ha terminado").setPositiveButton("ACEPTAR", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        ws.close(1000, null);
-                        finish();
-                    }
-                }).create().show();*/
-
-            }
         });
+
 
         if (administrador.equals("true")) {
             listener.setUsuarios(WaitingRoomActivity.usuarios);
