@@ -416,14 +416,15 @@ public class PieSocketListener extends WebSocketListener {
                     u.setFicha(u.getFicha()+1);
                 }
 
-                int j = (int) Math.random() * usuariosGanadores.size();
+                /*int j = (int) Math.random() * usuariosGanadores.size();
                 System.out.println(j + " VALOR ");
                 Usuario userG = usuariosGanadores.get(j);
                 Usuario userL = WaitingRoomActivity.usuarios.stream().filter(x->x.getU_id() == userG.getU_id()).findAny().get();
                 int i = WaitingRoomActivity.usuarios.indexOf(userL);
 
                 System.out.println(i + " VALOR 2");
-                GameActivity.jugadorActual = i;
+
+                GameActivity.jugadorActual = 1;*/
 
                 JuegoTerminado(mensaje);
             }
@@ -478,10 +479,10 @@ public class PieSocketListener extends WebSocketListener {
                     getImg2().setImageDrawable(null);
                     getImg3().setImageDrawable(null);
 
-                    //cambioTurnoText();
+                    cambioTurnoText();
 
                     if(GameActivity.administrador.equals("true")){
-                        //reinicarCartas();
+                        reinicarCartas();
                     }
                 }
 
@@ -852,6 +853,7 @@ public class PieSocketListener extends WebSocketListener {
 
     @Override
     public void onFailure(WebSocket webSocket, Throwable t, Response response) {
+
         System.out.println("Error : " + t.getMessage());
     }
 
