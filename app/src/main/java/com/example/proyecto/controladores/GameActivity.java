@@ -98,6 +98,16 @@ public class GameActivity extends AppCompatActivity {
 
         //Inicializa las funciones del juego
         iniciar();
+
+        /*LinearLayout linearLayout = findViewById(R.id.cartasContainer);
+
+        linearLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(GameActivity.this, "You Clicked Me OH yeaaaaa", Toast.LENGTH_SHORT).show();
+            }
+        });*/
+
     }
 /*
     @Override

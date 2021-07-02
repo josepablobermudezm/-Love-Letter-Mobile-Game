@@ -204,6 +204,7 @@ public class PieSocketListener extends WebSocketListener {
                                 GameActivity.jugadorActual = 0;
                             }
                         }
+
                         if (WaitingRoomActivity.usuarios.size() - 1 <= GameActivity.jugadorActual) {
                             cambioTurnoText();
                         }
@@ -397,28 +398,43 @@ public class PieSocketListener extends WebSocketListener {
     @RequiresApi(api = Build.VERSION_CODES.N)
     public boolean finJuego(){
         if(((usuario.getMazoCentral().size() == 0) || (WaitingRoomActivity.usuarios.stream().filter(x -> !x.isEliminado()).count() == 1))){
-            System.out.println("Entrando en el primer IF");
+
             ArrayList<Usuario> usuariosFinales = (ArrayList<Usuario>) WaitingRoomActivity.usuarios.stream().filter(x-> !x.isEliminado()).collect(Collectors.toList());
 
             int maximo = usuariosFinales.stream().mapToInt(v -> v.getMazo().get(0) != null ?
                     v.getMazo().get(0).getValor() : v.getMazo().get(1).getValor()).max().getAsInt();
 
-            ArrayList<Usuario> usuariosGanadores = (ArrayList<Usuario>)
+            ArrayList <Usuario> usuariosGanadores = (ArrayList<Usuario>)
                     usuariosFinales.stream().filter(x -> (x.getMazo().get(0) != null ?
                             x.getMazo().get(0).getValor() : x.getMazo().get(1).getValor()) == maximo).collect(Collectors.toList());
 
-            if(usuariosGanadores.size() > 1){
+            if(usuariosGanadores.size() > 1){ //Cuando hay un empate entre jugadores
                 String mensaje = "Hubo un empate entre los jugadores: ";
+
                 for(Usuario u : usuariosGanadores){
                     mensaje += u.getU_alias() + " ";
                     u.setFicha(u.getFicha()+1);
                 }
+
+                int i = (int) Math.random()*usuariosGanadores.size();
+
+                GameActivity.jugadorActual = i;
+
                 JuegoTerminado(mensaje);
             }
-            else{
+            else{ // Cuando solo existe un ganador
+                Usuario userG = usuariosGanadores.get(0);
+                Usuario userL = WaitingRoomActivity.usuarios.stream().filter(x->x.getU_id() == userG.getU_id()).findAny().get();
+                int i = WaitingRoomActivity.usuarios.indexOf(userL);
+
+                GameActivity.jugadorActual = i;
+
                 JuegoTerminado("El ganador es: " + usuariosGanadores.get(0).getU_alias());
                 usuariosGanadores.get(0).setFicha(usuariosGanadores.get(0).getFicha() + 1);
+
             }
+
+            System.out.println("VALOR INDICE "+ GameActivity.jugadorActual);
 
             WaitingRoomActivity.usuarios.forEach(x ->{
                 x.getMazo().clear();
@@ -428,6 +444,7 @@ public class PieSocketListener extends WebSocketListener {
                 x.setDoncella(false);
                 x.setEspia(false);
             });
+
             GameActivity.baronMode = false;
             GameActivity.modoGuardia = false;
             GameActivity.reyMode = false;
@@ -435,6 +452,7 @@ public class PieSocketListener extends WebSocketListener {
             GameActivity.principeMode = false;
             GameActivity.sacerdoteMode = false;
             GameActivity.cartas.clear();
+
             new AsyncTask<String, Float, Integer>() {
                 @Override
                 protected Integer doInBackground(String... strings) {
@@ -454,6 +472,9 @@ public class PieSocketListener extends WebSocketListener {
                     getImg1().setImageDrawable(null);
                     getImg2().setImageDrawable(null);
                     getImg3().setImageDrawable(null);
+
+                    cambioTurnoText();
+
                     if(GameActivity.administrador.equals("true")){
                         reinicarCartas();
                     }

@@ -6,7 +6,7 @@
     android:background="@color/cardview_dark_background"
     android:orientation="vertical"
     android:padding="48dp"
-    tools:context=".login.LoginActivity">
+    tools:context="controladores.LoginActivity">
 
     <ImageView
         android:id="@+id/iv_login"
