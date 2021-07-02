@@ -5,6 +5,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -45,7 +46,7 @@ public class WaitingRoomActivity extends AppCompatActivity {
     private int cantidadUsuarios = 0;
     public static PieSocketListener listener;
     public static WebSocket ws;
-
+    public TextView txtCodigo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,11 +55,15 @@ public class WaitingRoomActivity extends AppCompatActivity {
         parentLayout2 = (LinearLayout) findViewById(R.id.parentLayout2);
         parentLayout3 = (ConstraintLayout) findViewById(R.id.parentLayout3);
         mTextView = (TextView) findViewById(R.id.text);
+        txtCodigo = (TextView) findViewById(R.id.txtCodigo);
         imageViewStart = (ImageView) findViewById(R.id.imageViewStart);
         Intent i = this.getIntent();
         partida = (Partida) i.getSerializableExtra("partida");
         administrador = i.getStringExtra("administrador");
         parentLayout3.removeView(administrador.equals("true") ? null : imageViewStart);
+        if(administrador.equals("true") && partida.getP_tipo().equals("PR")){
+            txtCodigo.setText("Codigo: " + partida.getP_codigo());
+        }
         if (i.getStringExtra("listenerPieSocket").equals("true")) {
             //web socket
             OkHttpClient client = new OkHttpClient();

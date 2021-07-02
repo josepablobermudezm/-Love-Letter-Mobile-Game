@@ -1,5 +1,6 @@
     package com.example.proyecto.controladores;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -60,8 +61,6 @@ import org.json.JSONObject;
 
         Intent i = this.getIntent();
         editActivity = i.getStringExtra("editActivity");
-
-
 
         if(editActivity.equals("true")){
             editPartida = (Partida) i.getSerializableExtra("editPartida");
@@ -174,9 +173,15 @@ import org.json.JSONObject;
                         JSONObject jsonRespuesta = new JSONObject(response);
                         boolean ok = jsonRespuesta.getBoolean("success");
                         if (ok) {
-                            Intent nextView = new Intent(CrearPartidaActivity.this, PartidaActivity.class);
-                            CrearPartidaActivity.this.startActivity(nextView);
-                            finish();
+                            AlertDialog.Builder codigo = new AlertDialog.Builder(CrearPartidaActivity.this);
+                            codigo.setMessage("Tu código es: " + p_codigo)
+                                    .setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            Intent nextView = new Intent(CrearPartidaActivity.this, PartidaActivity.class);
+                                            CrearPartidaActivity.this.startActivity(nextView);
+                                            finish();
+                                        }
+                                    }).create().show();
                         } else {
                             AlertDialog.Builder alerta = new AlertDialog.Builder(CrearPartidaActivity.this);
                             alerta.setMessage("Fallo en el registro")

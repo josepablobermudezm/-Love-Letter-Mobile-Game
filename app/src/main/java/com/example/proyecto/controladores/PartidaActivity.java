@@ -142,7 +142,6 @@ public class PartidaActivity extends AppCompatActivity {
                     nextView.putExtra("editPartida", partida);
                     nextView.putExtra("partidasActivity", "false");
                     PartidaActivity.this.startActivity(nextView);
-
                 }
             });
         }
@@ -197,50 +196,22 @@ public class PartidaActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     if(partida.getP_tipo().equals("PR")){
-                        if(Usuario.usuarioLogueado.getU_nivel()>=partida.getP_nivelMinimo()){
-                            Intent intent = new Intent(getApplicationContext(), CodigoActivity.class);
-                            intent.putExtra("partida",partida);
-                            startActivity(intent);
-                            finish();
-                        }
-                        else{
-                            Toast.makeText(v.getContext(), "Tu nivel no es suficiente para esta partida", Toast.LENGTH_SHORT).show();
+                        if(Usuario.usuarioLogueado.getU_id()!=partida.getP_fkUsuario()){
+                            if(Usuario.usuarioLogueado.getU_nivel()>=partida.getP_nivelMinimo()){
+                                Intent intent = new Intent(getApplicationContext(), CodigoActivity.class);
+                                intent.putExtra("partida",partida);
+                                startActivity(intent);
+                                finish();
+                            }
+                            else{
+                                Toast.makeText(v.getContext(), "Tu nivel no es suficiente para esta partida", Toast.LENGTH_SHORT).show();
+                            }
+                        }else{
+                            partidaAbierta(partida);
                         }
                     }
                     else{
-                        // agregamos el usuario a la partida
-                        Response.Listener<String> respuesta = new Response.Listener<String>() {
-                            @RequiresApi(api = Build.VERSION_CODES.N)
-                            @Override
-                            public void onResponse(String response) {
-                                try {
-                                    response = response.replaceFirst("<font>.*?</font>", "");
-                                    int jsonStart = response.indexOf("{");
-                                    int jsonEnd = response.lastIndexOf("}");
-                                    if (jsonStart >= 0 && jsonEnd >= 0 && jsonEnd > jsonStart) {
-                                        response = response.substring(jsonStart, jsonEnd + 1);
-                                    }
-                                    JSONObject jsonRespuesta = new JSONObject(response);
-                                    boolean ok = jsonRespuesta.getBoolean("success");
-                                    if (ok) {
-                                        Intent nextActivity = new Intent(PartidaActivity.this, WaitingRoomActivity.class);
-                                        nextActivity.putExtra("administrador", partida.getP_fkUsuario() == Usuario.usuarioLogueado.getU_id() ? "true" : "false");
-                                        nextActivity.putExtra("partida", partida);
-                                        nextActivity.putExtra("listenerPieSocket", "true");
-                                        PartidaActivity.this.startActivity(nextActivity);
-
-                                    } else {
-                                        AlertDialog.Builder alerta = new AlertDialog.Builder(PartidaActivity.this);
-                                        alerta.setMessage("Error al unirse a la partida").setNegativeButton("Reintentar", null).create().show();
-                                    }
-                                } catch (JSONException e) {
-                                    e.getMessage();
-                                }
-                            }
-                        };
-                        PartidaRequest r = new PartidaRequest(Usuario.usuarioLogueado.getU_id(), partida.getP_id(), respuesta);
-                        RequestQueue cola = Volley.newRequestQueue(PartidaActivity.this);
-                        cola.add(r);
+                        partidaAbierta(partida);
                     }
                 }
             });
@@ -255,6 +226,42 @@ public class PartidaActivity extends AppCompatActivity {
             buttonLinear.addView(joinbutton);
         }
         partidaLinear.addView(buttonLinear);
+    }
+
+    public void partidaAbierta(Partida partida){
+        // agregamos el usuario a la partida
+        Response.Listener<String> respuesta = new Response.Listener<String>() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
+            @Override
+            public void onResponse(String response) {
+                try {
+                    response = response.replaceFirst("<font>.*?</font>", "");
+                    int jsonStart = response.indexOf("{");
+                    int jsonEnd = response.lastIndexOf("}");
+                    if (jsonStart >= 0 && jsonEnd >= 0 && jsonEnd > jsonStart) {
+                        response = response.substring(jsonStart, jsonEnd + 1);
+                    }
+                    JSONObject jsonRespuesta = new JSONObject(response);
+                    boolean ok = jsonRespuesta.getBoolean("success");
+                    if (ok) {
+                        Intent nextActivity = new Intent(PartidaActivity.this, WaitingRoomActivity.class);
+                        nextActivity.putExtra("administrador", partida.getP_fkUsuario() == Usuario.usuarioLogueado.getU_id() ? "true" : "false");
+                        nextActivity.putExtra("partida", partida);
+                        nextActivity.putExtra("listenerPieSocket", "true");
+                        PartidaActivity.this.startActivity(nextActivity);
+
+                    } else {
+                        AlertDialog.Builder alerta = new AlertDialog.Builder(PartidaActivity.this);
+                        alerta.setMessage("Error al unirse a la partida").setNegativeButton("Reintentar", null).create().show();
+                    }
+                } catch (JSONException e) {
+                    e.getMessage();
+                }
+            }
+        };
+        PartidaRequest r = new PartidaRequest(Usuario.usuarioLogueado.getU_id(), partida.getP_id(), respuesta);
+        RequestQueue cola = Volley.newRequestQueue(PartidaActivity.this);
+        cola.add(r);
     }
 
     public int calcularPixeles(int dps) {
