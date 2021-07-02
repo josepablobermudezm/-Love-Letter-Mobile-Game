@@ -276,17 +276,19 @@ public class GameActivity extends AppCompatActivity {
             public void onResponse(String response) {
             }
         };
-        WaitingRoomActivity.usuarios.stream().forEach(editusuario ->{
-            editusuario.setU_cantidadPartidasJugadas(editusuario.getU_cantidadPartidasJugadas()+1);
-            editusuario.setU_cantidadAmigos(editusuario.getU_cantidadAmigos() + WaitingRoomActivity.usuarios.size()-1);
-            if(editusuario.isGanado()){
-                editusuario.setU_cantidadPartidasGanadas(editusuario.getU_cantidadPartidasGanadas()+1);
-            }
-            UsuariosRequest r = new UsuariosRequest(editusuario, respuesta);
-            RequestQueue cola = Volley.newRequestQueue(GameActivity.this);
-            cola.add(r);
-        });
 
+        if(administrador.equals("true")){
+            WaitingRoomActivity.usuarios.stream().forEach(editusuario ->{
+                editusuario.setU_cantidadPartidasJugadas(editusuario.getU_cantidadPartidasJugadas()+1);
+                editusuario.setU_cantidadAmigos(editusuario.getU_cantidadAmigos() + WaitingRoomActivity.usuarios.size()-1);
+                if(editusuario.isGanado()){
+                    editusuario.setU_cantidadPartidasGanadas(editusuario.getU_cantidadPartidasGanadas()+1);
+                }
+                UsuariosRequest r = new UsuariosRequest(editusuario, respuesta);
+                RequestQueue cola = Volley.newRequestQueue(GameActivity.this);
+                cola.add(r);
+            });
+        }
     }
 
     public void turno() {
