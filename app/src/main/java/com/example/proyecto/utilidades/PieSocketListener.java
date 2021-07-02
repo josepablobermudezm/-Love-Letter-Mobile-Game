@@ -417,11 +417,12 @@ public class PieSocketListener extends WebSocketListener {
                 }
 
                 int j = (int) Math.random() * usuariosGanadores.size();
-
+                System.out.println(j + " VALOR ");
                 Usuario userG = usuariosGanadores.get(j);
                 Usuario userL = WaitingRoomActivity.usuarios.stream().filter(x->x.getU_id() == userG.getU_id()).findAny().get();
                 int i = WaitingRoomActivity.usuarios.indexOf(userL);
 
+                System.out.println(i + " VALOR 2");
                 GameActivity.jugadorActual = i;
 
                 JuegoTerminado(mensaje);
@@ -435,7 +436,6 @@ public class PieSocketListener extends WebSocketListener {
 
                 JuegoTerminado("El ganador es: " + usuariosGanadores.get(0).getU_alias());
                 usuariosGanadores.get(0).setFicha(usuariosGanadores.get(0).getFicha() + 1);
-
             }
 
             System.out.println("VALOR INDICE "+ GameActivity.jugadorActual);
