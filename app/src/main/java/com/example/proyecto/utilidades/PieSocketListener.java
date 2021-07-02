@@ -426,7 +426,7 @@ public class PieSocketListener extends WebSocketListener {
                 }
 
                 Random rand = new Random();
-                int j = rand.nextInt(WaitingRoomActivity.usuarios.size()-1);
+                int j = rand.nextInt(usuariosGanadores.size());
 
                 System.out.println(j + " VALOR ");
                 Usuario userG = usuariosGanadores.get(j);
@@ -435,7 +435,7 @@ public class PieSocketListener extends WebSocketListener {
 
                 System.out.println(i + " VALOR 2");
 
-                GameActivity.jugadorActual = 1;
+                GameActivity.jugadorActual = i;
 
                 JuegoTerminado(mensaje);
             }
