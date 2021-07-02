@@ -285,6 +285,10 @@ public class GameActivity extends AppCompatActivity {
                 if(editusuario.isGanado()){
                     editusuario.setU_cantidadPartidasGanadas(editusuario.getU_cantidadPartidasGanadas()+1);
                 }
+                editusuario.setU_experiencia(editusuario.getU_cantidadPartidasJugadas() * 20);
+
+                editusuario.setU_nivel(editusuario.getU_experiencia()/100);
+
                 UsuariosRequest r = new UsuariosRequest(editusuario, respuesta);
                 RequestQueue cola = Volley.newRequestQueue(GameActivity.this);
                 cola.add(r);
