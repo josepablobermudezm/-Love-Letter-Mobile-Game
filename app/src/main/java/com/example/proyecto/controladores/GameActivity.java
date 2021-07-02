@@ -382,12 +382,14 @@ public class GameActivity extends AppCompatActivity {
             puedeVotar = Usuario.usuarioLogueado.getMazo().get(valor).getNombre().equals("condesa") ? true : false;
         }
         if (puedeVotar) {
+
             int code = this.getResources().getIdentifier(Usuario.usuarioLogueado.getMazo().get(valor).getNombre(), "drawable", this.getPackageName());
             ImageView imageView = new ImageView(this);
             imageView.setImageResource(code);
             imageView.setLayoutParams(new LinearLayout.LayoutParams(calcularPixeles(63), calcularPixeles(100)));
             img.setImageDrawable(null);
             arrow.setVisibility(View.INVISIBLE);
+
             cartasContainer.addView(imageView);
             if (Usuario.usuarioLogueado.getMazo().get(valor).getNombre().equals("princesa")) {
                 listener.enviarMensaje(ws, "princesaJugada," + Usuario.usuarioLogueado.getU_id());
@@ -420,7 +422,6 @@ public class GameActivity extends AppCompatActivity {
             } else if (Usuario.usuarioLogueado.getMazo().get(valor).getNombre().equals("espia")) {
                 listener.enviarMensaje(ws, "espiaJugado," + Usuario.usuarioLogueado.getU_id());
             } else if (Usuario.usuarioLogueado.getMazo().get(valor).getNombre().equals("guardia")) {
-                System.out.println("entrando al método de guardia inicial #1");
                 modoGuardia = true;
                 ScrollHorizontal.setVisibility(View.VISIBLE);
                 parentJugadores.removeAllViews();
@@ -430,7 +431,6 @@ public class GameActivity extends AppCompatActivity {
             Usuario.usuarioLogueado.getMazo().set(valor, null);
 
             if (!cancillerMode && !reyMode && !principeMode && !baronMode && !sacerdoteMode && !modoGuardia && !turnoJugado) {
-                System.out.println("entrando a aquí sdjfkj");
                 listener.enviarMensaje(ws, "cambioTurno");
             }
             turnoJugado = false;
