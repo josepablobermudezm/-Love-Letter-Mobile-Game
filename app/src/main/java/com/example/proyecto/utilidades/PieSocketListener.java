@@ -455,7 +455,7 @@ public class PieSocketListener extends WebSocketListener {
             GameActivity.cancillerMode = false;
             GameActivity.principeMode = false;
             GameActivity.sacerdoteMode = false;
-            GameActivity.cartas.clear();
+
 
             new AsyncTask<String, Float, Integer>() {
                 @Override
@@ -466,6 +466,7 @@ public class PieSocketListener extends WebSocketListener {
 
                 @Override
                 protected void onProgressUpdate(Float... variable) {
+                    GameActivity.cartas.clear();
                     GameActivity.cartasContainer.removeAllViews();
                     usuario.getMazo().clear();
                     usuario.getMazoOpcional().clear();
@@ -814,6 +815,7 @@ public class PieSocketListener extends WebSocketListener {
                                     GameActivity.jugadorActual : 0).isDoncella()) {
                         WaitingRoomActivity.usuarios.get(GameActivity.jugadorActual == -1 ? 0 : GameActivity.jugadorActual).setDoncella(false);
                     }
+
                     txv_turno.setText(WaitingRoomActivity.usuarios.get(GameActivity.jugadorActual == -1 ? 0 :
                             GameActivity.jugadorActual != WaitingRoomActivity.usuarios.size() ?
                                     GameActivity.jugadorActual : 0).getU_alias());
