@@ -183,10 +183,11 @@ import org.json.JSONObject;
                                                 finish();
                                             }
                                         }).create().show();
+                            }else{
+                                Intent nextView = new Intent(CrearPartidaActivity.this, PartidaActivity.class);
+                                CrearPartidaActivity.this.startActivity(nextView);
+                                finish();
                             }
-                            Intent nextView = new Intent(CrearPartidaActivity.this, PartidaActivity.class);
-                            CrearPartidaActivity.this.startActivity(nextView);
-                            finish();
                         } else {
                             AlertDialog.Builder alerta = new AlertDialog.Builder(CrearPartidaActivity.this);
                             alerta.setMessage("Fallo en el registro")

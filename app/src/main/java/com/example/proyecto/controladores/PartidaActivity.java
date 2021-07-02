@@ -40,6 +40,11 @@ public class PartidaActivity extends AppCompatActivity {
         setContentView(R.layout.activity_partida);
         parentLayout2 = (LinearLayout) findViewById(R.id.parentLayout2);
         mTextView = (TextView) findViewById(R.id.text);
+        Intent i = getIntent();
+        if(i.getStringExtra("finalJuego").equals("true")){
+            AlertDialog.Builder alerta = new AlertDialog.Builder(PartidaActivity.this);
+            alerta.setMessage("El juego ha terminado").setPositiveButton("Aceptar", null).create().show();
+        }
         cargarPartidas();
     }
 
