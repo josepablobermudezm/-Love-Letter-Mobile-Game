@@ -63,6 +63,14 @@ public class PieSocketListener extends WebSocketListener {
         this.context = context;
     }
 
+    public Partida getPartida() {
+        return partida;
+    }
+
+    public void setPartida(Partida partida) {
+        this.partida = partida;
+    }
+
     public ImageView getImg3() {
         return img3;
     }

@@ -28,6 +28,7 @@ import com.android.volley.toolbox.Volley;
 import com.example.proyecto.R;
 import com.example.proyecto.modelos.Carta;
 import com.example.proyecto.servicios.CartaRequest;
+import com.example.proyecto.servicios.PartidaRequest;
 import com.example.proyecto.servicios.UsuariosRequest;
 import com.example.proyecto.utilidades.HiloSegundoPlano;
 import com.example.proyecto.utilidades.ListenerTerminado;
@@ -288,6 +289,12 @@ public class GameActivity extends AppCompatActivity {
                 RequestQueue cola = Volley.newRequestQueue(GameActivity.this);
                 cola.add(r);
             });
+
+            // Cambiamos el estado de la partida a terminada
+            listener.getPartida().setP_tipo("T");
+            PartidaRequest p = new PartidaRequest(listener.getPartida(), respuesta);
+            RequestQueue cola = Volley.newRequestQueue(GameActivity.this);
+            cola.add(p);
         }
     }
 
