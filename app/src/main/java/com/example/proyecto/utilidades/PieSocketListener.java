@@ -485,16 +485,16 @@ public class PieSocketListener extends WebSocketListener {
 
             switch (WaitingRoomActivity.usuarios.size()) {//Condiciones para finalizar las rondas con respecto a la cantidad de usuarios
                 case 2:
-                    if (WaitingRoomActivity.usuarios.stream().anyMatch(x -> x.getFicha() == 1)) {
-                        WaitingRoomActivity.usuarios.stream().filter(x -> x.getFicha() == 1).forEach(x ->{
+                    if (WaitingRoomActivity.usuarios.stream().anyMatch(x -> x.getFicha() == 6)) {
+                        WaitingRoomActivity.usuarios.stream().filter(x -> x.getFicha() == 6).forEach(x ->{
                             x.setGanado(true);
                         });
                         GameActivity.bv.setBoo(true);
                     }
                     break;
                 case 3:
-                    if (WaitingRoomActivity.usuarios.stream().anyMatch(x -> x.getFicha() == 1)) {
-                        WaitingRoomActivity.usuarios.stream().filter(x -> x.getFicha() == 1).forEach(x ->{
+                    if (WaitingRoomActivity.usuarios.stream().anyMatch(x -> x.getFicha() == 5)) {
+                        WaitingRoomActivity.usuarios.stream().filter(x -> x.getFicha() == 5).forEach(x ->{
                             x.setGanado(true);
                         });
                         GameActivity.bv.setBoo(true);
