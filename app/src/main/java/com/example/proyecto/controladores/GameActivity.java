@@ -137,12 +137,12 @@ public class GameActivity extends AppCompatActivity {
                     System.out.println("LISTENER ACTIVO");
 
 
-                    /*Toast.makeText(GameActivity.this, "No es tu turno", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(GameActivity.this, "No es tu turno", Toast.LENGTH_SHORT).show();
 
                     ws.close(1000, null);
-                    finish();*/
+                    finish();
 
-                    AlertDialog.Builder alerta = new AlertDialog.Builder(GameActivity.this);
+                    /*AlertDialog.Builder alerta = new AlertDialog.Builder(GameActivity.this);
                     alerta.setMessage("La partida ha terminado").setPositiveButton("ACEPTAR", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
@@ -150,7 +150,7 @@ public class GameActivity extends AppCompatActivity {
                             finish();
                         }
                     }).create().show();
-
+*/
                 }
             });
 
