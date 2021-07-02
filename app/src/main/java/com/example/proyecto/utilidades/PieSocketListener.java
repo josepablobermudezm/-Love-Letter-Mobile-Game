@@ -30,6 +30,7 @@ import org.json.JSONObject;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.stream.Collectors;
 
 import okhttp3.Response;
@@ -292,8 +293,12 @@ public class PieSocketListener extends WebSocketListener {
                 case "SacarCarta":
                     String ID = arrSplit_2[1];
                     String index = arrSplit_2[2];
+
                     Usuario Usu = (Usuario) WaitingRoomActivity.usuarios.stream().filter(x -> x.getU_id() == Integer.valueOf(ID)).findAny().get();
-                    Usu.getMazo().set(Integer.parseInt(index), null);
+                    if(Usu.getMazo().size()!=0){
+                        Usu.getMazo().set(Integer.parseInt(index), null);
+                    }
+
                     break;
                 case "principeJugado":
                     String idJug = arrSplit_2[1];
@@ -420,7 +425,9 @@ public class PieSocketListener extends WebSocketListener {
                     u.setFicha(u.getFicha()+1);
                 }
 
-                int j = (int) Math.random() * usuariosGanadores.size();
+                Random rand = new Random();
+                int j = rand.nextInt(WaitingRoomActivity.usuarios.size()-1);
+
                 System.out.println(j + " VALOR ");
                 Usuario userG = usuariosGanadores.get(j);
                 Usuario userL = WaitingRoomActivity.usuarios.stream().filter(x->x.getU_id() == userG.getU_id()).findAny().get();
