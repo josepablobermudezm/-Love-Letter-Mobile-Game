@@ -478,7 +478,7 @@ public class PieSocketListener extends WebSocketListener {
                     getImg2().setImageDrawable(null);
                     getImg3().setImageDrawable(null);
 
-                    cambioTurnoText();
+                    //cambioTurnoText();
 
                     if(GameActivity.administrador.equals("true")){
                         reinicarCartas();
