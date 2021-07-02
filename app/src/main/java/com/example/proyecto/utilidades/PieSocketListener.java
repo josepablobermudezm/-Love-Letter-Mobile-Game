@@ -481,7 +481,7 @@ public class PieSocketListener extends WebSocketListener {
                     //cambioTurnoText();
 
                     if(GameActivity.administrador.equals("true")){
-                        reinicarCartas();
+                        //reinicarCartas();
                     }
                 }
 
