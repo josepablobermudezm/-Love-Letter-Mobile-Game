@@ -132,7 +132,14 @@ public class GameActivity extends AppCompatActivity {
             @Override
             public void onChange() {
                 System.out.println("LISTENER ACTIVO");
-                AlertDialog.Builder alerta = new AlertDialog.Builder(GameActivity.this);
+
+
+                /*ws.close(1000, null);
+                finish();*/
+
+                //Toast.makeText(view.getContext(), "No es tu turno", Toast.LENGTH_SHORT).show();
+
+                AlertDialog.Builder alerta = new AlertDialog.Builder(getApplicationContext());
                 alerta.setMessage("La partida ha terminado").setPositiveButton("ACEPTAR", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
