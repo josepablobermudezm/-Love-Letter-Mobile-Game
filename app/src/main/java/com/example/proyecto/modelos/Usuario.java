@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 public class Usuario implements Serializable {
-    private int u_id, u_cantidadPartidasJugadas, u_cantidadPartidasGanadas, u_cantidadAmigos, u_nivel, u_experiencia;
+    private int u_id, u_cantidadPartidasJugadas = 0, u_cantidadPartidasGanadas = 0, u_cantidadAmigos, u_nivel, u_experiencia;
     private String u_alias, u_password, u_rol, u_picture;
     private String u_fechaNacimiento;
     public static ArrayList<Usuario> usuarios = new ArrayList();
@@ -18,6 +18,7 @@ public class Usuario implements Serializable {
     private boolean doncella = false;
     private boolean espia = false;
     private int ficha = 0;
+    private boolean ganado = false;
 
     public Usuario(int u_id, int u_cantidadPartidasJugadas, int u_cantidadPartidasGanadas, int u_cantidadAmigos, int u_nivel, int u_experiencia, String u_alias, String u_password, String u_rol, String u_picture, String u_fechaNacimiento) {
         this.u_id = u_id;
@@ -37,6 +38,14 @@ public class Usuario implements Serializable {
     public static class ChildClass implements Serializable {
 
         public ChildClass() {}
+    }
+
+    public boolean isGanado() {
+        return ganado;
+    }
+
+    public void setGanado(boolean ganado) {
+        this.ganado = ganado;
     }
 
     public int getFicha() {

@@ -116,6 +116,7 @@ public class PieSocketListener extends WebSocketListener {
             intent.putExtra("administrador", administrador);
             intent.putExtra("usuario", usuario);
             context.startActivity(intent);
+            ((Activity) context).finish();
         } else {
             String[] arrSplit_2 = text.split(",", 5);
             switch (arrSplit_2[0]) {
@@ -477,31 +478,41 @@ public class PieSocketListener extends WebSocketListener {
             switch (WaitingRoomActivity.usuarios.size()) {//Condiciones para finalizar las rondas con respecto a la cantidad de usuarios
                 case 2:
                     if (WaitingRoomActivity.usuarios.stream().anyMatch(x -> x.getFicha() == 1)) {
-                        GameActivity.terminado = true;
+                        WaitingRoomActivity.usuarios.stream().filter(x -> x.getFicha() == 1).forEach(x ->{
+                            x.setGanado(true);
+                        });
                         GameActivity.bv.setBoo(true);
                     }
                     break;
                 case 3:
                     if (WaitingRoomActivity.usuarios.stream().anyMatch(x -> x.getFicha() == 5)) {
-                        GameActivity.terminado = true;
+                        WaitingRoomActivity.usuarios.stream().filter(x -> x.getFicha() == 5).forEach(x ->{
+                            x.setGanado(true);
+                        });
                         GameActivity.bv.setBoo(true);
                     }
                     break;
                 case 4:
                     if (WaitingRoomActivity.usuarios.stream().anyMatch(x -> x.getFicha() == 4)) {
-                        GameActivity.terminado = true;
+                        WaitingRoomActivity.usuarios.stream().filter(x -> x.getFicha() == 4).forEach(x ->{
+                            x.setGanado(true);
+                        });
                         GameActivity.bv.setBoo(true);
                     }
                     break;
                 case 5:
                     if (WaitingRoomActivity.usuarios.stream().anyMatch(x -> x.getFicha() == 3)) {
-                        GameActivity.terminado = true;
+                        WaitingRoomActivity.usuarios.stream().filter(x -> x.getFicha() == 3).forEach(x ->{
+                            x.setGanado(true);
+                        });
                         GameActivity.bv.setBoo(true);
                     }
                     break;
                 case 6:
                     if (WaitingRoomActivity.usuarios.stream().anyMatch(x -> x.getFicha() == 3)) {
-                        GameActivity.terminado = true;
+                        WaitingRoomActivity.usuarios.stream().filter(x -> x.getFicha() == 3).forEach(x ->{
+                            x.setGanado(true);
+                        });
                         GameActivity.bv.setBoo(true);
                     }
                     break;

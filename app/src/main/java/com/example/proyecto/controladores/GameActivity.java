@@ -28,6 +28,7 @@ import com.android.volley.toolbox.Volley;
 import com.example.proyecto.R;
 import com.example.proyecto.modelos.Carta;
 import com.example.proyecto.servicios.CartaRequest;
+import com.example.proyecto.servicios.UsuariosRequest;
 import com.example.proyecto.utilidades.HiloSegundoPlano;
 import com.example.proyecto.utilidades.ListenerTerminado;
 import com.example.proyecto.utilidades.PieSocketListener;
@@ -140,8 +141,12 @@ public class GameActivity extends AppCompatActivity {
 
                             AlertDialog.Builder alerta = new AlertDialog.Builder(GameActivity.this);
                             alerta.setMessage("La partida ha terminado").setPositiveButton("ACEPTAR", new DialogInterface.OnClickListener() {
+                                @RequiresApi(api = Build.VERSION_CODES.N)
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
+                                    EditarGanadores();
+                                    Intent i = new Intent(GameActivity.this, PartidaActivity.class);
+                                    startActivity(i);
                                     ws.close(1000, null);
                                     finish();
                                 }
@@ -262,6 +267,26 @@ public class GameActivity extends AppCompatActivity {
 
         turno();
         txv_turno.setText(" " + WaitingRoomActivity.usuarios.get(jugadorActual).getU_alias());
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    public void EditarGanadores(){
+        Response.Listener<String> respuesta = new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+            }
+        };
+        WaitingRoomActivity.usuarios.stream().forEach(editusuario ->{
+            editusuario.setU_cantidadPartidasJugadas(editusuario.getU_cantidadPartidasJugadas()+1);
+            editusuario.setU_cantidadAmigos(editusuario.getU_cantidadAmigos() + WaitingRoomActivity.usuarios.size()-1);
+            if(editusuario.isGanado()){
+                editusuario.setU_cantidadPartidasGanadas(editusuario.getU_cantidadPartidasGanadas()+1);
+            }
+            UsuariosRequest r = new UsuariosRequest(editusuario, respuesta);
+            RequestQueue cola = Volley.newRequestQueue(GameActivity.this);
+            cola.add(r);
+        });
+
     }
 
     public void turno() {
