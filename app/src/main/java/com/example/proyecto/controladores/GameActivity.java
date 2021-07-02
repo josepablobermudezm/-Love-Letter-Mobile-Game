@@ -28,6 +28,7 @@ import com.example.proyecto.R;
 import com.example.proyecto.modelos.Carta;
 import com.example.proyecto.servicios.CartaRequest;
 import com.example.proyecto.utilidades.HiloSegundoPlano;
+import com.example.proyecto.utilidades.ListenerTerminado;
 import com.example.proyecto.utilidades.PieSocketListener;
 import com.example.proyecto.modelos.Usuario;
 import com.example.proyecto.utilidades.Rotacion;
@@ -45,7 +46,7 @@ import java.util.GregorianCalendar;
 
 import okhttp3.WebSocket;
 
-public class GameActivity extends AppCompatActivity {
+public class GameActivity extends AppCompatActivity implements ListenerTerminado.listener {
 
     private TextView mTextView;
     private LinearLayout parentLayout;
@@ -79,6 +80,8 @@ public class GameActivity extends AppCompatActivity {
     public static boolean turnoJugado = false;
     public static boolean modoGuardia = false;
 
+    public static boolean terminado = false;
+
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,41 +89,12 @@ public class GameActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_game);
         mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
-/*        rotacion = new Rotacion(this, mSensorManager);
-        hilo = new HiloSegundoPlano(getApplicationContext());
-
-        if( Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB ) {
-            hilo.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-        } else {
-            hilo.execute();
-        }*/
-
 
         //Inicializa las funciones del juego
         iniciar();
 
-        /*LinearLayout linearLayout = findViewById(R.id.cartasContainer);
-
-        linearLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(GameActivity.this, "You Clicked Me OH yeaaaaa", Toast.LENGTH_SHORT).show();
-            }
-        });*/
-
-    }
-/*
-    @Override
-    protected void onResume() {
-        super.onResume();
-        rotacion.start();
     }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-        rotacion.stop();
-    }*/
 
     public void iniciar() {
         ScrollHorizontal = (HorizontalScrollView) findViewById(R.id.ScrollHorizontal);
@@ -148,6 +122,13 @@ public class GameActivity extends AppCompatActivity {
         TextView textView = findViewById(R.id.txv_turno);
         listener.setTurno(textView);
         listener.setContext(getApplicationContext());
+
+
+        //Aplicamos un listener
+        ListenerTerminado listenerT = new ListenerTerminado(terminado);
+        listenerT.setChangeListener(this);
+        listenerT.somethingChanged();
+
         if (administrador.equals("true")) {
             listener.setUsuarios(WaitingRoomActivity.usuarios);
             Response.Listener<String> respuesta = new Response.Listener<String>() {
@@ -247,6 +228,7 @@ public class GameActivity extends AppCompatActivity {
                     }
                 }
             };
+
 
             CartaRequest r = new CartaRequest(respuesta);
             RequestQueue cola = Volley.newRequestQueue(GameActivity.this);
@@ -455,7 +437,6 @@ public class GameActivity extends AppCompatActivity {
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     private void ListaJugadoresButton() {
-        System.out.println(WaitingRoomActivity.usuarios.stream().filter(x -> x.isDoncella() || x.isEliminado()).count() + " ==" + (WaitingRoomActivity.usuarios.size() - 1) + "" + " && " + !principeMode);
         if (WaitingRoomActivity.usuarios.stream().filter(x -> x.isDoncella() || x.isEliminado()).count() == WaitingRoomActivity.usuarios.size() - 1 && !principeMode) {
             listener.enviarMensaje(ws, "cambioTurno");
             sacerdoteMode = false;
@@ -465,7 +446,7 @@ public class GameActivity extends AppCompatActivity {
             baronMode = false;
             modoGuardia = false;
             turnoJugado = true;
-            System.out.println("entrando a cambio de turno de carta sin efecto");
+
         } else {
             for (Usuario u : WaitingRoomActivity.usuarios) {
                 if ((u.getU_id() != Usuario.usuarioLogueado.getU_id() || principeMode) && !u.isEliminado() && !u.isDoncella()) {
@@ -492,13 +473,12 @@ public class GameActivity extends AppCompatActivity {
                                 );
                                 sacerdoteMode = false;
                             } else if (modoGuardia) {
-                                System.out.println("entrando a metodo de guardia");
+
                                 AlertDialog.Builder builder = new AlertDialog.Builder(GameActivity.this);
                                 builder.setTitle("Selecciona una carta");
                                 builder.setItems(R.array.cartas_array, new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int which) {
-                                        System.out.println("carta seleccionada: ");
-                                        System.out.println(which);
+
                                         listener.enviarMensaje(ws, "guardiaJugado," + u.getU_id() + "," + which);
                                     }
                                 });
@@ -508,7 +488,6 @@ public class GameActivity extends AppCompatActivity {
                                 dialog.show();
                             }
                             if (!modoGuardia) {
-                                System.out.println("entrando al cambio de turno que no debería de enrtrar");
                                 listener.enviarMensaje(ws, "cambioTurno");
                             }
                             ScrollHorizontal.setVisibility(View.INVISIBLE);
@@ -518,5 +497,17 @@ public class GameActivity extends AppCompatActivity {
                 }
             }
         }
+    }
+
+    @Override
+    public void onChange(boolean b) {
+        AlertDialog.Builder alerta = new AlertDialog.Builder(GameActivity.this);
+        alerta.setMessage("La partida ha terminado").setPositiveButton("ACEPTAR", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                ws.close(1000,null);
+                finish();
+            }
+        }).create().show();
     }
 }
