@@ -1,26 +1,28 @@
 package com.example.proyecto.utilidades;
 
 public class ListenerTerminado {
-    boolean boo = false;
+    private boolean boo = false;
+    private ChangeListener listener;
 
-    public ListenerTerminado(boolean b){
-        boo = b;
+    public boolean isBoo() {
+        return boo;
     }
 
-    private listener l = null;
-
-    public interface listener{
-        public void onChange(boolean b);
+    public void setBoo(boolean boo) {
+        this.boo = boo;
+        if (listener != null) listener.onChange();
     }
 
-    public void setChangeListener(listener mListener){
-        l = mListener;
+    public ChangeListener getListener() {
+        return listener;
     }
 
-    public void somethingChanged(){
-        if(l != null){
-            l.onChange(boo);
-        }
+    public void setListener(ChangeListener listener) {
+        this.listener = listener;
+    }
+
+    public interface ChangeListener {
+        void onChange();
     }
 
 }

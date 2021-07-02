@@ -478,31 +478,31 @@ public class PieSocketListener extends WebSocketListener {
                 case 2:
                     if (WaitingRoomActivity.usuarios.stream().anyMatch(x -> x.getFicha() == 2)) {
                         GameActivity.terminado = true;
-                        GameActivity.listenerT.somethingChanged();
+                        GameActivity.bv.setBoo(true);
                     }
                     break;
                 case 3:
                     if (WaitingRoomActivity.usuarios.stream().anyMatch(x -> x.getFicha() == 5)) {
                         GameActivity.terminado = true;
-                        GameActivity.listenerT.somethingChanged();
+                        GameActivity.bv.setBoo(true);
                     }
                     break;
                 case 4:
                     if (WaitingRoomActivity.usuarios.stream().anyMatch(x -> x.getFicha() == 4)) {
                         GameActivity.terminado = true;
-                        GameActivity.listenerT.somethingChanged();
+                        GameActivity.bv.setBoo(true);
                     }
                     break;
                 case 5:
                     if (WaitingRoomActivity.usuarios.stream().anyMatch(x -> x.getFicha() == 3)) {
                         GameActivity.terminado = true;
-                        GameActivity.listenerT.somethingChanged();
+                        GameActivity.bv.setBoo(true);
                     }
                     break;
                 case 6:
                     if (WaitingRoomActivity.usuarios.stream().anyMatch(x -> x.getFicha() == 3)) {
                         GameActivity.terminado = true;
-                        GameActivity.listenerT.somethingChanged();
+                        GameActivity.bv.setBoo(true);
                     }
                     break;
                 default:

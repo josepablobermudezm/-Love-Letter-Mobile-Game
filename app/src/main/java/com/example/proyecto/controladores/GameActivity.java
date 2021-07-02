@@ -46,7 +46,7 @@ import java.util.GregorianCalendar;
 
 import okhttp3.WebSocket;
 
-public class GameActivity extends AppCompatActivity implements ListenerTerminado.listener {
+public class GameActivity extends AppCompatActivity {
 
     private TextView mTextView;
     private LinearLayout parentLayout;
@@ -81,7 +81,7 @@ public class GameActivity extends AppCompatActivity implements ListenerTerminado
     public static boolean modoGuardia = false;
 
     public static boolean terminado = false;
-    public static ListenerTerminado listenerT;
+    public static ListenerTerminado bv;
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
@@ -126,8 +126,24 @@ public class GameActivity extends AppCompatActivity implements ListenerTerminado
 
 
         //Aplicamos un listener
-        listenerT = new ListenerTerminado(terminado);
-        listenerT.setChangeListener(this);
+        bv = new ListenerTerminado();
+
+        bv.setListener(new ListenerTerminado.ChangeListener() {
+            @Override
+            public void onChange() {
+                System.out.println("LISTENER ACTIVO");
+                if(bv.isBoo()){
+                    AlertDialog.Builder alerta = new AlertDialog.Builder(GameActivity.this);
+                    alerta.setMessage("La partida ha terminado").setPositiveButton("ACEPTAR", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            ws.close(1000,null);
+                            finish();
+                        }
+                    }).create().show();
+                }
+            }
+        });
 
         if (administrador.equals("true")) {
             listener.setUsuarios(WaitingRoomActivity.usuarios);
@@ -499,18 +515,4 @@ public class GameActivity extends AppCompatActivity implements ListenerTerminado
         }
     }
 
-    @Override
-    public void onChange(boolean b) {
-        if(b){
-            AlertDialog.Builder alerta = new AlertDialog.Builder(GameActivity.this);
-            alerta.setMessage("La partida ha terminado").setPositiveButton("ACEPTAR", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    ws.close(1000,null);
-                    finish();
-                }
-            }).create().show();
-        }
-
-    }
 }
