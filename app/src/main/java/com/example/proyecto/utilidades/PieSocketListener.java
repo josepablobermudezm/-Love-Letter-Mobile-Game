@@ -153,6 +153,7 @@ public class PieSocketListener extends WebSocketListener {
                         WaitingRoomActivity.usuarios.stream().filter(x->x.isEspia()).findAny().get().setFicha(WaitingRoomActivity.usuarios.stream().filter(x->x.isEspia()).findAny().get().getFicha()+1);
                     }
 
+                    System.out.println("CARTAS "+ usuario.getMazoCentral().size());
                     // se valida si el juego ya se terminó
                     if(!finJuego()){
                         String id2 = arrSplit_2[1];
