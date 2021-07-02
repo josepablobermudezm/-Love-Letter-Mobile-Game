@@ -81,6 +81,7 @@ public class GameActivity extends AppCompatActivity implements ListenerTerminado
     public static boolean modoGuardia = false;
 
     public static boolean terminado = false;
+    public static ListenerTerminado listenerT;
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
@@ -125,9 +126,8 @@ public class GameActivity extends AppCompatActivity implements ListenerTerminado
 
 
         //Aplicamos un listener
-        ListenerTerminado listenerT = new ListenerTerminado(terminado);
+        listenerT = new ListenerTerminado(terminado);
         listenerT.setChangeListener(this);
-        listenerT.somethingChanged();
 
         if (administrador.equals("true")) {
             listener.setUsuarios(WaitingRoomActivity.usuarios);
