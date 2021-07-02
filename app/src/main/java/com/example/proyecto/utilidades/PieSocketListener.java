@@ -377,6 +377,12 @@ public class PieSocketListener extends WebSocketListener {
                     Usuario usuarioespia = (Usuario) WaitingRoomActivity.usuarios.stream().filter(x -> x.getU_id() == Integer.valueOf(idJugadorEspia)).findAny().get();
                     usuarioespia.setEspia(true);
                     break;
+
+                case "reinicio":
+                    String r = arrSplit_2[1];
+                    GameActivity.jugadorActual = Integer.valueOf(r);
+                    cambioTurnoText();
+                    break;
                 case "guardiaJugado":
                     String idJugadorGuardia = arrSplit_2[1];
                     String cartaObt = stringCarta(arrSplit_2[2]);
@@ -425,19 +431,23 @@ public class PieSocketListener extends WebSocketListener {
                     u.setFicha(u.getFicha()+1);
                 }
 
-                Random rand = new Random();
-                int j = rand.nextInt(usuariosGanadores.size());
+                if(GameActivity.administrador.equals("true")){
+                    Random rand = new Random();
+                    int j = rand.nextInt(usuariosGanadores.size());
 
-                System.out.println(j + " VALOR ");
-                Usuario userG = usuariosGanadores.get(j);
-                Usuario userL = WaitingRoomActivity.usuarios.stream().filter(x->x.getU_id() == userG.getU_id()).findAny().get();
-                int i = WaitingRoomActivity.usuarios.indexOf(userL);
+                    System.out.println(j + " VALOR ");
+                    Usuario userG = usuariosGanadores.get(j);
+                    Usuario userL = WaitingRoomActivity.usuarios.stream().filter(x->x.getU_id() == userG.getU_id()).findAny().get();
+                    int i = WaitingRoomActivity.usuarios.indexOf(userL);
 
-                System.out.println(i + " VALOR 2");
+                    System.out.println(i + " VALOR 2");
 
-                GameActivity.jugadorActual = i;
 
-                JuegoTerminado(mensaje);
+
+                    enviarMensaje(ws, "reinicio,"+i);
+
+                    JuegoTerminado(mensaje);
+                }
             }
             else{ // Cuando solo existe un ganador
                 Usuario userG = usuariosGanadores.get(0);
@@ -448,6 +458,8 @@ public class PieSocketListener extends WebSocketListener {
 
                 JuegoTerminado("El ganador es: " + usuariosGanadores.get(0).getU_alias());
                 usuariosGanadores.get(0).setFicha(usuariosGanadores.get(0).getFicha() + 1);
+
+                cambioTurnoText();
             }
 
             System.out.println("VALOR INDICE "+ GameActivity.jugadorActual);
@@ -490,7 +502,7 @@ public class PieSocketListener extends WebSocketListener {
                     getImg2().setImageDrawable(null);
                     getImg3().setImageDrawable(null);
 
-                    cambioTurnoText();
+                    //cambioTurnoText();
 
                     if(GameActivity.administrador.equals("true")){
                         reinicarCartas();
