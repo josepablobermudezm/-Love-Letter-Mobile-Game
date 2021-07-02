@@ -134,17 +134,9 @@ public class GameActivity extends AppCompatActivity {
             bv.setListener(new ListenerTerminado.ChangeListener() {
                 @Override
                 public void onChange() {
-                    System.out.println("LISTENER ACTIVO");
-
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-
-                            /*
-                            Toast.makeText(GameActivity.this, "No es tu turno", Toast.LENGTH_SHORT).show();
-
-                            ws.close(1000, null);
-                            finish(); */
 
                             AlertDialog.Builder alerta = new AlertDialog.Builder(GameActivity.this);
                             alerta.setMessage("La partida ha terminado").setPositiveButton("ACEPTAR", new DialogInterface.OnClickListener() {
@@ -156,22 +148,6 @@ public class GameActivity extends AppCompatActivity {
                             }).create().show();
                         }
                     });
-
-
-                    /*Toast.makeText(GameActivity.this, "No es tu turno", Toast.LENGTH_SHORT).show();
-
-                    ws.close(1000, null);
-                    finish();
-
-                    AlertDialog.Builder alerta = new AlertDialog.Builder(GameActivity.this);
-                    alerta.setMessage("La partida ha terminado").setPositiveButton("ACEPTAR", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            ws.close(1000, null);
-                            finish();
-                        }
-                    }).create().show();
-*/
                 }
             });
 
