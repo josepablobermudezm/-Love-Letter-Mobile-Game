@@ -173,15 +173,20 @@ import org.json.JSONObject;
                         JSONObject jsonRespuesta = new JSONObject(response);
                         boolean ok = jsonRespuesta.getBoolean("success");
                         if (ok) {
-                            AlertDialog.Builder codigo = new AlertDialog.Builder(CrearPartidaActivity.this);
-                            codigo.setMessage("Tu código es: " + p_codigo)
-                                    .setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int which) {
-                                            Intent nextView = new Intent(CrearPartidaActivity.this, PartidaActivity.class);
-                                            CrearPartidaActivity.this.startActivity(nextView);
-                                            finish();
-                                        }
-                                    }).create().show();
+                            if(!p_tipo.equals("PU")){
+                                AlertDialog.Builder codigo = new AlertDialog.Builder(CrearPartidaActivity.this);
+                                codigo.setMessage("Tu código es: " + p_codigo)
+                                        .setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                Intent nextView = new Intent(CrearPartidaActivity.this, PartidaActivity.class);
+                                                CrearPartidaActivity.this.startActivity(nextView);
+                                                finish();
+                                            }
+                                        }).create().show();
+                            }
+                            Intent nextView = new Intent(CrearPartidaActivity.this, PartidaActivity.class);
+                            CrearPartidaActivity.this.startActivity(nextView);
+                            finish();
                         } else {
                             AlertDialog.Builder alerta = new AlertDialog.Builder(CrearPartidaActivity.this);
                             alerta.setMessage("Fallo en el registro")
