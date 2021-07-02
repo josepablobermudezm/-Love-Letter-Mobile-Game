@@ -416,9 +416,15 @@ public class PieSocketListener extends WebSocketListener {
                     u.setFicha(u.getFicha()+1);
                 }
 
-                int i = (int) Math.random()*usuariosGanadores.size();
+                /*int j = (int) Math.random() * usuariosGanadores.size();
+                System.out.println(j + " VALOR ");
+                Usuario userG = usuariosGanadores.get(j);
+                Usuario userL = WaitingRoomActivity.usuarios.stream().filter(x->x.getU_id() == userG.getU_id()).findAny().get();
+                int i = WaitingRoomActivity.usuarios.indexOf(userL);
 
-                GameActivity.jugadorActual = i;
+                System.out.println(i + " VALOR 2");
+
+                GameActivity.jugadorActual = 1;*/
 
                 JuegoTerminado(mensaje);
             }
@@ -431,7 +437,6 @@ public class PieSocketListener extends WebSocketListener {
 
                 JuegoTerminado("El ganador es: " + usuariosGanadores.get(0).getU_alias());
                 usuariosGanadores.get(0).setFicha(usuariosGanadores.get(0).getFicha() + 1);
-
             }
 
             System.out.println("VALOR INDICE "+ GameActivity.jugadorActual);
@@ -451,7 +456,7 @@ public class PieSocketListener extends WebSocketListener {
             GameActivity.cancillerMode = false;
             GameActivity.principeMode = false;
             GameActivity.sacerdoteMode = false;
-            GameActivity.cartas.clear();
+
 
             new AsyncTask<String, Float, Integer>() {
                 @Override
@@ -462,6 +467,7 @@ public class PieSocketListener extends WebSocketListener {
 
                 @Override
                 protected void onProgressUpdate(Float... variable) {
+                    GameActivity.cartas.clear();
                     GameActivity.cartasContainer.removeAllViews();
                     usuario.getMazo().clear();
                     usuario.getMazoOpcional().clear();
@@ -550,8 +556,6 @@ public class PieSocketListener extends WebSocketListener {
                     boolean ok = jsonRespuesta.getBoolean("success");
                     if (ok) {
                         int cantidadCartasOpcionales = WaitingRoomActivity.usuarios.size() == 2 ? 3 : 1;
-                        System.out.println("ESTAMOS ENTRANDO!!!!!!!!");
-                        System.out.println(GameActivity.cartas);
                         //enviamos cartas de mazo opcional
                         for (int i = 0; i < cantidadCartasOpcionales; i++) {
                             Carta carta = GameActivity.cartas.remove(GameActivity.cartas.size() - 1);
@@ -812,6 +816,7 @@ public class PieSocketListener extends WebSocketListener {
                                     GameActivity.jugadorActual : 0).isDoncella()) {
                         WaitingRoomActivity.usuarios.get(GameActivity.jugadorActual == -1 ? 0 : GameActivity.jugadorActual).setDoncella(false);
                     }
+
                     txv_turno.setText(WaitingRoomActivity.usuarios.get(GameActivity.jugadorActual == -1 ? 0 :
                             GameActivity.jugadorActual != WaitingRoomActivity.usuarios.size() ?
                                     GameActivity.jugadorActual : 0).getU_alias());
@@ -848,6 +853,7 @@ public class PieSocketListener extends WebSocketListener {
 
     @Override
     public void onFailure(WebSocket webSocket, Throwable t, Response response) {
+
         System.out.println("Error : " + t.getMessage());
     }
 
