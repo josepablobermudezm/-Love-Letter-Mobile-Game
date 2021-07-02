@@ -493,8 +493,8 @@ public class PieSocketListener extends WebSocketListener {
                     }
                     break;
                 case 3:
-                    if (WaitingRoomActivity.usuarios.stream().anyMatch(x -> x.getFicha() == 5)) {
-                        WaitingRoomActivity.usuarios.stream().filter(x -> x.getFicha() == 5).forEach(x ->{
+                    if (WaitingRoomActivity.usuarios.stream().anyMatch(x -> x.getFicha() == 1)) {
+                        WaitingRoomActivity.usuarios.stream().filter(x -> x.getFicha() == 1).forEach(x ->{
                             x.setGanado(true);
                         });
                         GameActivity.bv.setBoo(true);
