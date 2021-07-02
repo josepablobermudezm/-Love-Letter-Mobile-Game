@@ -291,7 +291,7 @@ public class GameActivity extends AppCompatActivity {
             });
 
             // Cambiamos el estado de la partida a terminada
-            listener.getPartida().setP_tipo("T");
+            listener.getPartida().setP_estado("T");
             PartidaRequest p = new PartidaRequest(listener.getPartida(), respuesta);
             RequestQueue cola = Volley.newRequestQueue(GameActivity.this);
             cola.add(p);

@@ -45,6 +45,7 @@ public class PartidaRequest extends StringRequest {
         parametros.put("p_codigo", partida.getP_codigo()+"");
         parametros.put("p_nivelMinimo", partida.getP_nivelMinimo()+"");
         parametros.put("p_id", partida.getP_id()+"");
+        parametros.put("p_estado", partida.getP_estado()+"");
     }
 
     //agregamos en tb_partida_usuario

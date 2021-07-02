@@ -154,6 +154,7 @@ import org.json.JSONObject;
             editPartida.setP_cantidadJugadores((p_cantidadJugadores.isEmpty()) ? null : Integer.valueOf(p_cantidadJugadores));
             editPartida.setP_nivelMinimo((p_nivelMinimo.isEmpty()) ? null : Integer.valueOf(p_nivelMinimo));
             editPartida.setP_tipo(p_tipo);
+            editPartida.setP_estado("A");
         }
 
         partida = new Partida(null, (p_cantidadJugadores.isEmpty()) ? null : Integer.valueOf(p_cantidadJugadores), p_tipo, p_codigo, (p_nivelMinimo.isEmpty()) ? null : Integer.valueOf(p_nivelMinimo), p_fkUsuario);

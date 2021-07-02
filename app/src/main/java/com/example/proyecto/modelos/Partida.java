@@ -10,6 +10,7 @@ public class Partida implements Serializable {
     private String p_codigo;
     private Integer p_nivelMinimo;
     private Integer p_fkUsuario;
+    private String p_estado;
     public static ArrayList<Partida> partidas = new ArrayList<>();
 
     public Partida() {
@@ -22,6 +23,15 @@ public class Partida implements Serializable {
         this.p_codigo = p_codigo;
         this.p_nivelMinimo = p_nivelMinimo;
         this.p_fkUsuario = p_fkUsuario;
+    }
+
+
+    public String getP_estado() {
+        return p_estado;
+    }
+
+    public void setP_estado(String p_estado) {
+        this.p_estado = p_estado;
     }
 
     public Integer getP_id() {
